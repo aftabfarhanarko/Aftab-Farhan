@@ -37,21 +37,21 @@ export default function Hero() {
       />
 
       {/* Ambient glow blobs */}
-      <div className="absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-accent/5 blur-[140px] -z-10 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-accent/4 blur-[120px] -z-10 pointer-events-none" />
+      <div className="absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-foreground/5 blur-[140px] -z-10 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-foreground/4 blur-[120px] -z-10 pointer-events-none" />
 
       {/* === LEFT COLUMN === */}
       <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl">
         {/* Status badge */}
         <motion.div
           {...fadeLeft(0)}
-          className="flex items-center gap-2 w-fit px-4 py-1.5 rounded-full border border-accent/25 bg-accent/5 backdrop-blur-sm"
+          className="flex items-center gap-2 w-fit px-4 py-1.5 rounded-full border border-foreground/25 bg-foreground/5 backdrop-blur-sm"
         >
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-foreground"></span>
           </span>
-          <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-accent/80">
+          <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-foreground/80">
             Available for work
           </span>
         </motion.div>
@@ -69,7 +69,7 @@ export default function Hero() {
         <motion.div {...fadeLeft(0.18)}>
           <h1 className="text-[clamp(2rem,5vw,4rem)] font-black tracking-[-0.04em] leading-[0.9] uppercase">
             <span className="block text-foreground">Full Stack</span>
-            <span className="block text-accent italic">Developer</span>
+            <span className="block text-foreground italic">Developer</span>
           </h1>
         </motion.div>
 
@@ -87,11 +87,11 @@ export default function Hero() {
           className="text-sm text-foreground/40 max-w-lg leading-[1.85]"
         >
           I build end-to-end web solutions — from high-throughput{" "}
-          <span className="text-foreground/70 font-semibold border-b border-accent/35">
+          <span className="text-foreground/70 font-semibold border-b border-foreground/35">
             Django REST APIs
           </span>{" "}
           to performant{" "}
-          <span className="text-foreground/70 font-semibold border-b border-accent/35">
+          <span className="text-foreground/70 font-semibold border-b border-foreground/35">
             React & Next.js
           </span>{" "}
           frontends. Clean architecture, zero shortcuts.
@@ -110,7 +110,7 @@ export default function Hero() {
                   delay: 0.42 + i * 0.06,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="px-3 py-1 text-[10px] font-black tracking-wider uppercase rounded-md border border-accent/20 bg-accent/5 text-foreground/55 hover:border-accent/60 hover:text-accent hover:bg-accent/8 transition-all duration-200 cursor-default"
+                className="px-3 py-1 text-[10px] font-black tracking-wider uppercase rounded-md border border-white/10 bg-foreground/5 text-foreground/55 hover:border-foreground/60 hover:text-foreground hover:bg-foreground/8 transition-all duration-200 cursor-default"
               >
                 {tech}
               </motion.span>
@@ -124,7 +124,7 @@ export default function Hero() {
             href="#contact"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
-            className="group flex items-center gap-2.5 rounded-xl bg-accent px-7 py-3.5 text-sm font-black text-background shadow-[0_8px_32px_rgba(57,255,20,0.35)] hover:bg-accent/90 transition-colors"
+            className="group flex items-center gap-2.5 rounded-xl bg-foreground px-7 py-3.5 text-sm font-black text-background shadow-[0_8px_32px_rgba(57,255,20,0.35)] hover:bg-foreground/90 transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,7 @@ export default function Hero() {
             href="#project"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
-            className="rounded-xl border border-accent/40 px-7 py-3.5 text-sm font-black text-accent/80 hover:bg-accent/8 hover:border-accent hover:text-accent transition-all"
+            className="rounded-xl border border-foreground/40 px-7 py-3.5 text-sm font-black text-foreground/80 hover:bg-foreground/8 hover:border-foreground hover:text-foreground transition-all"
           >
             View Projects →
           </motion.a>
@@ -157,7 +157,7 @@ export default function Hero() {
         {/* Stats */}
         <motion.div
           {...fadeUp(0.6)}
-          className="flex gap-12 pt-8 mt-3 border-t border-accent/10"
+          className="flex gap-12 pt-8 mt-3 border-t border-white/10"
         >
           {[
             { value: "2+", label: "Years Experience" },
@@ -175,7 +175,7 @@ export default function Hero() {
               }}
               className="group cursor-default"
             >
-              <div className="text-3xl font-black text-foreground tracking-tighter group-hover:text-accent transition-colors duration-300">
+              <div className="text-3xl font-black text-foreground tracking-tighter group-hover:text-foreground transition-colors duration-300">
                 {value}
               </div>
               <div className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.22em] mt-1.5">
@@ -198,20 +198,20 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="absolute -top-24 -left-6 hidden xl:block z-20"
         >
-          <div className="rounded-xl border border-accent/20 bg-background/85 backdrop-blur-md shadow-2xl overflow-hidden w-52">
-            <div className="flex items-center gap-1.5 px-3 py-2 bg-accent/5 border-b border-accent/15">
+          <div className="rounded-xl border border-white/10 bg-background/85 backdrop-blur-md shadow-2xl overflow-hidden w-52">
+            <div className="flex items-center gap-1.5 px-3 py-2 bg-foreground/5 border-b border-foreground/15">
               <span className="w-2.5 h-2.5 rounded-full bg-red-500/70"></span>
               <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70"></span>
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500/70"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-foreground/70"></span>
               <span className="ml-2 text-[10px] text-foreground/30 font-mono">
                 terminal
               </span>
             </div>
             <div className="p-3 font-mono text-[11px] space-y-1">
               <p className="text-foreground/40">$ git status</p>
-              <p className="text-accent">On branch main</p>
+              <p className="text-foreground">On branch main</p>
               <p className="text-foreground/40">$ deploy --prod</p>
-              <p className="text-green-400">✓ Build success</p>
+              <p className="text-foreground">✓ Build success</p>
             </div>
           </div>
         </motion.div>
@@ -226,25 +226,25 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, -5, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="px-4 py-2.5 rounded-xl bg-background/85 border border-accent/25 backdrop-blur-md shadow-xl"
+            className="px-4 py-2.5 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md shadow-xl"
           >
             <div className="text-[10px] font-black text-foreground/30 uppercase tracking-widest">
               Current Stack
             </div>
-            <div className="text-xs font-bold text-accent mt-0.5">
+            <div className="text-xs font-bold text-foreground mt-0.5">
               Django · React · Docker
             </div>
           </motion.div>
         </motion.div>
 
         {/* Rings */}
-        <div className="absolute w-[460px] h-[460px] rounded-full border border-dashed border-accent/15 animate-[spin_80s_linear_infinite]" />
-        <div className="absolute w-[420px] h-[420px] rounded-full border border-accent/10 animate-[spin_50s_linear_infinite_reverse]" />
-        <div className="absolute w-[360px] h-[360px] rounded-full bg-accent/8 blur-[80px]" />
+        <div className="absolute w-[460px] h-[460px] rounded-full border border-dashed border-foreground/15 animate-[spin_80s_linear_infinite]" />
+        <div className="absolute w-[420px] h-[420px] rounded-full border border-white/10 animate-[spin_50s_linear_infinite_reverse]" />
+        <div className="absolute w-[360px] h-[360px] rounded-full bg-foreground/8 blur-[80px]" />
 
         {/* Profile image circle */}
-        <div className="relative w-[340px] h-[340px] sm:w-[380px] sm:h-[380px] rounded-full border-[3px] border-accent/60 p-2.5 shadow-[0_0_60px_rgba(57,255,20,0.2),inset_0_0_40px_rgba(57,255,20,0.05)] bg-background z-10 group">
-          <div className="w-full h-full rounded-full overflow-hidden bg-accent/5 relative">
+        <div className="relative w-[340px] h-[340px] sm:w-[380px] sm:h-[380px] rounded-full border-[3px] border-foreground/60 p-2.5 shadow-[0_0_60px_rgba(57,255,20,0.2),inset_0_0_40px_rgba(57,255,20,0.05)] bg-background z-10 group">
+          <div className="w-full h-full rounded-full overflow-hidden bg-foreground/5 relative">
             <Image
               src="/image.png"
               alt="Aftab Farha Arko - Full Stack Developer"
@@ -252,16 +252,16 @@ export default function Hero() {
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority
             />
-            <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-accent/20" />
+            <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
           </div>
 
           {/* Social links bottom arc */}
-          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-5 py-2 rounded-full bg-background/95 backdrop-blur-xl border border-accent/30 shadow-[0_8px_32px_rgba(0,0,0,0.4)] z-20 whitespace-nowrap">
+          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-5 py-2 rounded-full bg-background/95 backdrop-blur-xl border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.4)] z-20 whitespace-nowrap">
             <a
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-[11px] font-black text-foreground/70 hover:text-accent transition-colors"
+              className="flex items-center gap-1.5 text-[11px] font-black text-foreground/70 hover:text-foreground transition-colors"
             >
               <svg
                 width="13"
@@ -273,12 +273,12 @@ export default function Hero() {
               </svg>
               GitHub
             </a>
-            <span className="w-px h-3 bg-accent/20"></span>
+            <span className="w-px h-3 bg-foreground/20"></span>
             <a
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-[11px] font-black text-foreground/70 hover:text-accent transition-colors"
+              className="flex items-center gap-1.5 text-[11px] font-black text-foreground/70 hover:text-foreground transition-colors"
             >
               <svg
                 width="13"
@@ -297,7 +297,7 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, -7, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-6 right-2 p-3 rounded-xl bg-background/85 border border-accent/25 backdrop-blur-md text-accent/70 shadow-xl z-20 hover:text-accent hover:scale-110 hover:border-accent/50 transition-all duration-200 cursor-pointer"
+          className="absolute top-6 right-2 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-white/50 transition-all duration-200 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +318,7 @@ export default function Hero() {
         <motion.div
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-20 left-0 p-3 rounded-xl bg-background/85 border border-accent/25 backdrop-blur-md text-accent/70 shadow-xl z-20 hover:text-accent hover:scale-110 hover:border-accent/50 transition-all duration-200 cursor-pointer"
+          className="absolute bottom-20 left-0 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-white/50 transition-all duration-200 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -340,7 +340,7 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, 7, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-0 top-1/2 -translate-y-1/2 p-3 rounded-xl bg-background/85 border border-accent/25 backdrop-blur-md text-accent/70 shadow-xl z-20 hover:text-accent hover:scale-110 hover:border-accent/50 transition-all duration-200 cursor-pointer"
+          className="absolute right-0 top-1/2 -translate-y-1/2 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-white/50 transition-all duration-200 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -362,3 +362,6 @@ export default function Hero() {
     </section>
   );
 }
+
+
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from "react";
 
 const Services = () => {
@@ -38,9 +38,9 @@ const Services = () => {
         "Analytics & Reports",
       ],
       tech: ["Next.js", "Node.js", "MongoDB", "Stripe", "PayPal", "Redis"],
-      color: "from-blue-500/20 to-cyan-500/20",
-      borderColor: "border-blue-500/30",
-      iconColor: "text-blue-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
     },
     {
       id: 2,
@@ -81,9 +81,9 @@ const Services = () => {
         "Accessibility Compliance",
       ],
       tech: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Next.js"],
-      color: "from-purple-500/20 to-pink-500/20",
-      borderColor: "border-purple-500/30",
-      iconColor: "text-purple-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
     },
     {
       id: 3,
@@ -119,9 +119,9 @@ const Services = () => {
         "Scalable Infrastructure",
       ],
       tech: ["MERN Stack", "PostgreSQL", "GraphQL", "Docker", "AWS", "Redis"],
-      color: "from-green-500/20 to-emerald-500/20",
-      borderColor: "border-green-500/30",
-      iconColor: "text-green-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
     },
     {
       id: 4,
@@ -233,9 +233,9 @@ const Services = () => {
         "Design Systems",
       ],
       tech: ["React", "Tailwind", "Framer Motion", "GSAP", "Storybook"],
-      color: "from-pink-500/20 to-rose-500/20",
-      borderColor: "border-pink-500/30",
-      iconColor: "text-pink-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
     },
   ];
 
@@ -262,10 +262,10 @@ const Services = () => {
           <h2 className="text-3xl lg:text-4xl font-black text-foreground tracking-tight">
             Services
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-gradient-to-r from-accent to-accent/30 rounded-full" />
+          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
         </div>
-        <div className="h-px flex-1 bg-gradient-to-r from-accent/20 to-transparent" />
-        <span className="text-sm font-mono text-accent/60 hidden sm:block">
+        <div className="h-px flex-1 bg-foreground/10" />
+        <span className="text-sm font-mono text-foreground/40 hidden sm:block">
           &lt;what-i-do /&gt;
         </span>
       </div>
@@ -325,7 +325,7 @@ const Services = () => {
                   {service.features.slice(0, 6).map((feature) => (
                     <div key={feature} className="flex items-center gap-1.5">
                       <svg
-                        className="w-3 h-3 text-accent flex-shrink-0"
+                        className="w-3 h-3 text-foreground flex-shrink-0"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -358,16 +358,16 @@ const Services = () => {
       </div>
 
       {/* Additional Services */}
-      <div className="p-8 rounded-2xl bg-gradient-to-br from-accent-muted/10 to-transparent border border-accent-muted/20">
+      <div className="p-8 rounded-2xl bg-foreground/5 border border-white/10">
         <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-3">
-          <span className="w-2 h-2 bg-accent rounded-full" />
+          <span className="w-2 h-2 bg-foreground rounded-full" />
           Additional Services
         </h3>
         <div className="flex flex-wrap gap-2">
           {additionalServices.map((service) => (
             <span
               key={service}
-              className="px-4 py-2 text-sm bg-accent-muted/5 border border-accent-muted/10 rounded-full text-foreground/70 hover:text-foreground hover:border-accent/30 transition-colors cursor-default"
+              className="px-4 py-2 text-sm bg-foreground/5 border border-white/10 rounded-full text-foreground/70 hover:text-foreground hover:border-white/30 transition-colors cursor-default"
             >
               {service}
             </span>
@@ -376,7 +376,7 @@ const Services = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="mt-12 p-8 rounded-2xl bg-gradient-to-r from-accent/10 via-accent/5 to-transparent border border-accent/20">
+      <div className="mt-12 p-8 rounded-2xl bg-gradient-to-r from-foreground/10 via-foreground/5 to-transparent border border-white/10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-2xl font-bold text-foreground mb-2">
@@ -386,7 +386,7 @@ const Services = () => {
               Let's discuss your requirements and bring your vision to life.
             </p>
           </div>
-          <button className="px-8 py-3 bg-accent text-white rounded-full font-medium hover:bg-accent/90 transition-colors whitespace-nowrap">
+          <button className="px-8 py-3 bg-foreground text-white rounded-full font-medium hover:bg-foreground/90 transition-colors whitespace-nowrap">
             Get in Touch
           </button>
         </div>
@@ -396,3 +396,6 @@ const Services = () => {
 };
 
 export default Services;
+
+
+

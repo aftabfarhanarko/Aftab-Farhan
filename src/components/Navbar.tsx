@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
@@ -68,9 +68,9 @@ const Navbar = () => {
         }`}
         style={{
           backgroundColor: isScrolled
-            ? "rgba(5,13,5,0.85)"
-            : "rgba(5,13,5,0.7)",
-          borderColor: "rgba(74,222,128,0.15)",
+            ? "rgba(0,0,0,0.85)"
+            : "rgba(0,0,0,0.4)",
+          borderColor: "rgba(255,255,255,0.1)",
         }}
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -89,13 +89,12 @@ const Navbar = () => {
             whileTap={{ scale: 0.97 }}
           >
             <span
-              className="text-2xl font-black tracking-tight"
-              style={{ color: "#4ade80" }}
+              className="text-2xl font-black tracking-tight text-foreground"
             >
               Arko<span className="text-foreground/30">.</span>
             </span>
             <motion.span
-              className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"
+              className="absolute -bottom-1 left-0 w-0 h-0.5 bg-foreground group-hover:w-full transition-all duration-300"
               initial={{ width: 0 }}
               whileHover={{ width: "100%" }}
             />
@@ -113,8 +112,8 @@ const Navbar = () => {
                 }}
                 className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                   activeSection === item.id
-                    ? "text-accent bg-accent/10"
-                    : "text-foreground/60 hover:text-foreground hover:bg-accent/5"
+                    ? "text-foreground bg-foreground/10"
+                    : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
                 }`}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -124,7 +123,7 @@ const Navbar = () => {
                 {item.label}
                 {activeSection === item.id && (
                   <motion.span
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent rounded-full"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-foreground rounded-full"
                     layoutId="activeDot"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
@@ -138,7 +137,7 @@ const Navbar = () => {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden lg:flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-accent to-accent/80 text-background rounded-full text-sm font-bold transition-all hover:scale-105 hover:shadow-lg hover:shadow-accent/25"
+            className="hidden lg:flex items-center gap-2 px-5 py-2 bg-foreground text-background rounded-full text-sm font-bold transition-all hover:scale-105 hover:shadow-lg hover:shadow-white/10"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.4 }}
@@ -163,7 +162,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="lg:hidden p-2 rounded-lg bg-accent/10 text-accent"
+            className="lg:hidden p-2 rounded-lg bg-foreground/10 text-foreground"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -199,8 +198,8 @@ const Navbar = () => {
             <motion.div
               className="lg:hidden border-t"
               style={{
-                borderColor: "rgba(74,222,128,0.15)",
-                backgroundColor: "rgba(5,13,5,0.95)",
+                borderColor: "rgba(255,255,255,0.1)",
+                backgroundColor: "rgba(0,0,0,0.95)",
               }}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
@@ -218,8 +217,8 @@ const Navbar = () => {
                     }}
                     className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                       activeSection === item.id
-                        ? "text-accent bg-accent/10"
-                        : "text-foreground/60 hover:text-foreground hover:bg-accent/5"
+                        ? "text-foreground bg-foreground/10"
+                        : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
                     }`}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -234,7 +233,7 @@ const Navbar = () => {
                   href="/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-3 mt-4 bg-gradient-to-r from-accent to-accent/80 text-background rounded-lg text-sm font-bold"
+                  className="flex items-center justify-center gap-2 px-4 py-3 mt-4 bg-foreground text-background rounded-lg text-sm font-bold"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3, duration: 0.3 }}
@@ -267,3 +266,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+

@@ -16,7 +16,7 @@
     "Express.js",
     "MongoDB",
     "Tailwind CSS",
-    "Web Development",
+    "Software Engineering",
     "REST APIs",
     "GraphQL",
   ];
@@ -252,3 +252,6 @@
     </section>
   );
 }
+
+
+

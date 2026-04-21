@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from "react";
 
 const Projects = () => {
@@ -100,10 +100,10 @@ const Projects = () => {
           <h2 className="text-3xl lg:text-4xl font-black text-foreground tracking-tight">
             Projects
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-gradient-to-r from-accent to-accent/30 rounded-full" />
+          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
         </div>
-        <div className="h-px flex-1 bg-gradient-to-r from-accent/20 to-transparent" />
-        <span className="text-sm font-mono text-accent/60 hidden sm:block">
+        <div className="h-px flex-1 bg-foreground/10" />
+        <span className="text-sm font-mono text-foreground/40 hidden sm:block">
           &lt;portfolio /&gt;
         </span>
       </div>
@@ -111,14 +111,14 @@ const Projects = () => {
       {/* Featured Projects */}
       <div className="mb-12">
         <h3 className="text-lg font-bold text-foreground/80 mb-6 flex items-center gap-3">
-          <span className="w-2 h-2 bg-accent rounded-full" />
+          <span className="w-2 h-2 bg-foreground rounded-full" />
           Featured Work
         </h3>
         <div className="grid md:grid-cols-2 gap-6">
           {featuredProjects.slice(0, 2).map((project) => (
             <div
               key={project.id}
-              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-accent-muted/10 to-transparent border border-accent-muted/20 hover:border-accent/30 transition-all duration-300"
+              className="group relative overflow-hidden rounded-2xl bg-foreground/5 border border-white/10 hover:border-white/30 transition-all duration-300"
             >
               <div className="aspect-video overflow-hidden">
                 <img
@@ -138,7 +138,7 @@ const Projects = () => {
                       {project.client && `• ${project.client}`}
                     </p>
                   </div>
-                  <span className="px-2 py-1 text-xs font-medium bg-accent/10 text-accent rounded-full">
+                  <span className="px-2 py-1 text-xs font-medium bg-foreground/10 text-foreground rounded-full">
                     Featured
                   </span>
                 </div>
@@ -149,13 +149,13 @@ const Projects = () => {
                   {project.tech.slice(0, 4).map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-1 text-xs bg-accent-muted/5 border border-accent-muted/10 rounded-md text-foreground/60"
+                      className="px-2 py-1 text-xs bg-foreground/5 border border-white/10 rounded-md text-foreground/60"
                     >
                       {tech}
                     </span>
                   ))}
                   {project.tech.length > 4 && (
-                    <span className="px-2 py-1 text-xs bg-accent-muted/5 border border-accent-muted/10 rounded-md text-foreground/40">
+                    <span className="px-2 py-1 text-xs bg-foreground/5 border border-white/10 rounded-md text-foreground/40">
                       +{project.tech.length - 4}
                     </span>
                   )}
@@ -163,14 +163,14 @@ const Projects = () => {
                 <div className="flex gap-3">
                   <a
                     href={project.demoLink}
-                    className="px-4 py-2 text-sm font-medium bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
+                    className="px-4 py-2 text-sm font-medium bg-foreground text-white rounded-lg hover:bg-foreground/90 transition-colors"
                   >
                     Live Demo
                   </a>
                   {project.githubLink && (
                     <a
                       href={project.githubLink}
-                      className="px-4 py-2 text-sm font-medium border border-accent-muted/20 rounded-lg text-foreground/70 hover:border-accent/50 hover:text-foreground transition-colors"
+                      className="px-4 py-2 text-sm font-medium border border-white/10 rounded-lg text-foreground/70 hover:border-white/50 hover:text-foreground transition-colors"
                     >
                       GitHub
                     </a>
@@ -183,7 +183,7 @@ const Projects = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 mb-8 border-b border-accent-muted/20">
+      <div className="flex gap-2 mb-8 border-b border-white/10">
         {[
           { id: "all", label: "All Projects", count: allProjects.length },
           { id: "my", label: "My Projects", count: projects.my.length },
@@ -198,7 +198,7 @@ const Projects = () => {
             onClick={() => setActiveTab(tab.id as typeof activeTab)}
             className={`px-6 py-3 text-sm font-medium transition-all relative ${
               activeTab === tab.id
-                ? "text-accent"
+                ? "text-foreground"
                 : "text-foreground/50 hover:text-foreground/70"
             }`}
           >
@@ -207,15 +207,15 @@ const Projects = () => {
               <span
                 className={`text-xs px-2 py-0.5 rounded-full ${
                   activeTab === tab.id
-                    ? "bg-accent/10 text-accent"
-                    : "bg-accent-muted/10 text-foreground/40"
+                    ? "bg-foreground/10 text-foreground"
+                    : "bg-foreground/10 text-foreground/40"
                 }`}
               >
                 {tab.count}
               </span>
             </span>
             {activeTab === tab.id && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent rounded-full" />
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-foreground rounded-full" />
             )}
           </button>
         ))}
@@ -226,7 +226,7 @@ const Projects = () => {
         {getActiveProjects().map((project) => (
           <div
             key={project.id}
-            className="group rounded-xl bg-accent-muted/5 border border-accent-muted/10 hover:border-accent/30 overflow-hidden transition-all duration-300"
+            className="group rounded-xl bg-foreground/5 border border-white/10 hover:border-white/30 overflow-hidden transition-all duration-300"
           >
             <div className="aspect-video overflow-hidden">
               <img
@@ -238,7 +238,7 @@ const Projects = () => {
             <div className="p-5">
               <div className="flex items-start justify-between mb-2">
                 <h4 className="font-bold text-foreground">{project.title}</h4>
-                <span className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full">
+                <span className="text-xs px-2 py-1 bg-foreground/10 text-foreground rounded-full">
                   {project.category}
                 </span>
               </div>
@@ -253,13 +253,13 @@ const Projects = () => {
                 {project.tech.slice(0, 3).map((tech) => (
                   <span
                     key={tech}
-                    className="px-2 py-0.5 text-xs bg-accent-muted/5 border border-accent-muted/10 rounded-md text-foreground/50"
+                    className="px-2 py-0.5 text-xs bg-foreground/5 border border-white/10 rounded-md text-foreground/50"
                   >
                     {tech}
                   </span>
                 ))}
                 {project.tech.length > 3 && (
-                  <span className="px-2 py-0.5 text-xs bg-accent-muted/5 border border-accent-muted/10 rounded-md text-foreground/40">
+                  <span className="px-2 py-0.5 text-xs bg-foreground/5 border border-white/10 rounded-md text-foreground/40">
                     +{project.tech.length - 3}
                   </span>
                 )}
@@ -267,14 +267,14 @@ const Projects = () => {
               <div className="flex gap-2">
                 <a
                   href={project.demoLink}
-                  className="flex-1 px-3 py-2 text-xs font-medium text-center bg-accent/10 text-accent rounded-lg hover:bg-accent/20 transition-colors"
+                  className="flex-1 px-3 py-2 text-xs font-medium text-center bg-foreground/10 text-foreground rounded-lg hover:bg-foreground/20 transition-colors"
                 >
                   Demo
                 </a>
                 {project.githubLink && (
                   <a
                     href={project.githubLink}
-                    className="flex-1 px-3 py-2 text-xs font-medium text-center border border-accent-muted/20 rounded-lg text-foreground/60 hover:border-accent/50 transition-colors"
+                    className="flex-1 px-3 py-2 text-xs font-medium text-center border border-white/10 rounded-lg text-foreground/60 hover:border-white/50 transition-colors"
                   >
                     Code
                   </a>
@@ -295,7 +295,7 @@ const Projects = () => {
 
       {/* View More Button */}
       <div className="text-center mt-12">
-        <button className="px-8 py-3 border border-accent/30 rounded-full text-accent font-medium hover:bg-accent/10 transition-colors">
+        <button className="px-8 py-3 border border-white/30 rounded-full text-foreground font-medium hover:bg-foreground/10 transition-colors">
           View All Projects
         </button>
       </div>
@@ -304,3 +304,6 @@ const Projects = () => {
 };
 
 export default Projects;
+
+
+

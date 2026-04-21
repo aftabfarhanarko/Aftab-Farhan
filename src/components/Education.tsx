@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from "react";
 
 const Education = () => {
@@ -19,12 +19,12 @@ const Education = () => {
       description:
         "Comprehensive diploma program covering computer programming, database management, networking, and software development fundamentals.",
       logo: "RPI",
-      color: "from-blue-500/20 to-cyan-500/20",
-      borderColor: "border-blue-500/30",
-      iconBg: "bg-blue-500/10",
-      iconColor: "text-blue-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconBg: "bg-foreground/10",
+      iconColor: "text-foreground",
       achievements: [
-        "Specialized in Web Development and Software Engineering",
+        "Specialized in Software Engineering and Software Engineering",
         "Completed final year project on E-Commerce Platform",
         "Active member of Programming Club",
         "Participated in National Hackathon 2019",
@@ -33,7 +33,7 @@ const Education = () => {
         "Programming in C & C++",
         "Data Structures & Algorithms",
         "Database Management Systems",
-        "Web Development (HTML, CSS, JavaScript)",
+        "Software Engineering (HTML, CSS, JavaScript)",
         "Computer Networking",
         "Object-Oriented Programming",
         "Software Engineering",
@@ -45,12 +45,12 @@ const Education = () => {
   const certifications = [
     {
       id: 1,
-      title: "MERN Stack Development",
+      title: "Full Stack Development",
       issuer: "Programming Hero",
       year: "2021",
       credential: "Certificate ID: PH-MERN-2021-089",
-      color: "from-green-500/20 to-emerald-500/20",
-      borderColor: "border-green-500/30",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
     },
     {
       id: 2,
@@ -58,8 +58,8 @@ const Education = () => {
       issuer: "Udemy",
       year: "2022",
       credential: "Certificate ID: UD-REACT-2022-156",
-      color: "from-purple-500/20 to-pink-500/20",
-      borderColor: "border-purple-500/30",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
     },
     {
       id: 3,
@@ -76,8 +76,8 @@ const Education = () => {
       issuer: "Udemy",
       year: "2023",
       credential: "Certificate ID: UD-TS-2023-078",
-      color: "from-cyan-500/20 to-blue-500/20",
-      borderColor: "border-cyan-500/30",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
     },
   ];
 
@@ -89,16 +89,16 @@ const Education = () => {
           <h2 className="text-3xl lg:text-4xl font-black text-foreground tracking-tight">
             Education
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-gradient-to-r from-accent to-accent/30 rounded-full" />
+          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
         </div>
-        <div className="h-px flex-1 bg-gradient-to-r from-accent/20 to-transparent" />
-        <span className="text-sm font-mono text-accent/60 hidden sm:block">
+        <div className="h-px flex-1 bg-foreground/10" />
+        <span className="text-sm font-mono text-foreground/40 hidden sm:block">
           &lt;qualifications /&gt;
         </span>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 mb-8 border-b border-accent-muted/20">
+      <div className="flex gap-2 mb-8 border-b border-white/10">
         {[
           { id: "education", label: "Academic Education" },
           { id: "certifications", label: "Certifications" },
@@ -108,13 +108,13 @@ const Education = () => {
             onClick={() => setActiveTab(tab.id as typeof activeTab)}
             className={`px-6 py-3 text-sm font-medium transition-all relative ${
               activeTab === tab.id
-                ? "text-accent"
+                ? "text-foreground"
                 : "text-foreground/50 hover:text-foreground/70"
             }`}
           >
             {tab.label}
             {activeTab === tab.id && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent rounded-full" />
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-foreground rounded-full" />
             )}
           </button>
         ))}
@@ -144,15 +144,15 @@ const Education = () => {
                         <h3 className="text-2xl font-bold text-foreground">
                           {edu.degree}
                         </h3>
-                        <p className="text-accent font-medium mt-0.5">
+                        <p className="text-foreground font-medium mt-0.5">
                           {edu.field}
                         </p>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="px-3 py-1.5 bg-accent/10 text-accent rounded-full text-xs font-medium">
+                        <span className="px-3 py-1.5 bg-foreground/10 text-foreground rounded-full text-xs font-medium">
                           {edu.grade}
                         </span>
-                        <span className="text-sm font-medium text-foreground/60 bg-accent-muted/10 px-3 py-1.5 rounded-full">
+                        <span className="text-sm font-medium text-foreground/60 bg-foreground/10 px-3 py-1.5 rounded-full">
                           {edu.period}
                         </span>
                       </div>
@@ -194,7 +194,7 @@ const Education = () => {
                         {edu.achievements.map((achievement, index) => (
                           <div key={index} className="flex items-start gap-2">
                             <svg
-                              className="w-4 h-4 text-accent mt-0.5 flex-shrink-0"
+                              className="w-4 h-4 text-foreground mt-0.5 flex-shrink-0"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -268,7 +268,7 @@ const Education = () => {
                     {cert.issuer}
                   </p>
                   <div className="flex items-center gap-2 mt-2">
-                    <span className="text-xs text-accent">{cert.year}</span>
+                    <span className="text-xs text-foreground">{cert.year}</span>
                     <span className="text-xs text-foreground/30">•</span>
                     <span className="text-xs text-foreground/40">
                       {cert.credential}
@@ -282,7 +282,7 @@ const Education = () => {
       )}
 
       {/* Continuous Learning */}
-      <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-accent/5 to-transparent border-l-4 border-l-accent">
+      <div className="mt-8 p-6 rounded-xl bg-foreground/5 border-l-4 border-l-foreground">
         <div className="flex items-start gap-4">
           <div className="text-3xl">📚</div>
           <div>
@@ -300,7 +300,7 @@ const Education = () => {
       </div>
 
       {/* Education Summary */}
-      <div className="mt-6 p-5 rounded-xl bg-accent-muted/5 border border-accent-muted/10">
+      <div className="mt-6 p-5 rounded-xl bg-foreground/5 border border-white/10">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <span className="text-2xl">🎓</span>
@@ -314,7 +314,7 @@ const Education = () => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1.5 bg-accent/10 text-accent rounded-full text-xs font-medium">
+            <span className="px-3 py-1.5 bg-foreground/10 text-foreground rounded-full text-xs font-medium">
               CGPA 3.75/4.00
             </span>
           </div>
@@ -325,3 +325,6 @@ const Education = () => {
 };
 
 export default Education;
+
+
+

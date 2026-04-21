@@ -33,7 +33,7 @@ export default function RootLayout({
     >
       <body
         className="min-h-full flex flex-col relative overflow-x-hidden"
-        style={{ backgroundColor: "#050d05", color: "#e2f0e2" }}
+        style={{ backgroundColor: "#000000", color: "#ffffff" }}
       >
         {/* ── Background Effects ── */}
         <div className="fixed inset-0 z-0 pointer-events-none">
@@ -42,8 +42,8 @@ export default function RootLayout({
             className="absolute inset-0 opacity-10"
             style={{
               backgroundImage: `
-                linear-gradient(rgba(74,222,128,0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(74,222,128,0.15) 1px, transparent 1px)
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
               `,
               backgroundSize: "40px 40px",
             }}
@@ -56,7 +56,7 @@ export default function RootLayout({
               width: "40%",
               height: "40%",
               background:
-                "radial-gradient(circle, rgba(34,197,94,0.25) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)",
             }}
             animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -83,7 +83,7 @@ export default function RootLayout({
               width: "25%",
               height: "25%",
               background:
-                "radial-gradient(circle, rgba(74,222,128,0.15) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)",
             }}
             animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
             transition={{
@@ -116,7 +116,7 @@ export default function RootLayout({
         <motion.footer
           className="border-t py-8 relative z-10 backdrop-blur-sm"
           style={{
-            borderColor: "rgba(74,222,128,0.15)",
+            borderColor: "rgba(255,255,255,0.05)",
             backgroundColor: "rgba(5,13,5,0.8)",
           }}
           initial={{ opacity: 0 }}
@@ -136,3 +136,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+

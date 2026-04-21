@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from "react";
 
 const SoftSkills = () => {
@@ -23,9 +23,9 @@ const SoftSkills = () => {
           />
         </svg>
       ),
-      color: "from-blue-500/20 to-cyan-500/20",
-      borderColor: "border-blue-500/30",
-      iconColor: "text-blue-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
       level: 95,
       description:
         "Clear and effective communication with clients, team members, and stakeholders.",
@@ -61,9 +61,9 @@ const SoftSkills = () => {
           />
         </svg>
       ),
-      color: "from-green-500/20 to-emerald-500/20",
-      borderColor: "border-green-500/30",
-      iconColor: "text-green-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
       level: 92,
       description:
         "Working effectively within cross-functional teams to achieve common goals.",
@@ -99,9 +99,9 @@ const SoftSkills = () => {
           />
         </svg>
       ),
-      color: "from-purple-500/20 to-pink-500/20",
-      borderColor: "border-purple-500/30",
-      iconColor: "text-purple-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
       level: 90,
       description:
         "Guiding teams, making strategic decisions, and taking ownership of projects.",
@@ -175,9 +175,9 @@ const SoftSkills = () => {
           />
         </svg>
       ),
-      color: "from-pink-500/20 to-rose-500/20",
-      borderColor: "border-pink-500/30",
-      iconColor: "text-pink-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
       level: 91,
       description:
         "Quickly learning new technologies and adapting to changing requirements.",
@@ -213,9 +213,9 @@ const SoftSkills = () => {
           />
         </svg>
       ),
-      color: "from-cyan-500/20 to-blue-500/20",
-      borderColor: "border-cyan-500/30",
-      iconColor: "text-cyan-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconColor: "text-foreground",
       level: 89,
       description:
         "Efficiently managing multiple projects and meeting deadlines consistently.",
@@ -254,23 +254,23 @@ const SoftSkills = () => {
           <h2 className="text-3xl lg:text-4xl font-black text-foreground tracking-tight">
             Soft Skills
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-gradient-to-r from-accent to-accent/30 rounded-full" />
+          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
         </div>
-        <div className="h-px flex-1 bg-gradient-to-r from-accent/20 to-transparent" />
-        <span className="text-sm font-mono text-accent/60 hidden sm:block">
+        <div className="h-px flex-1 bg-foreground/10" />
+        <span className="text-sm font-mono text-foreground/40 hidden sm:block">
           &lt;professional-qualities /&gt;
         </span>
       </div>
 
       {/* Intro */}
-      <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-accent/5 to-transparent border-l-4 border-l-accent">
+      <div className="mb-8 p-6 rounded-2xl bg-foreground/5 border-l-4 border-l-foreground">
         <p className="text-foreground/70 text-lg leading-relaxed">
           Beyond technical expertise, I bring strong interpersonal skills that
           enable effective collaboration, clear communication, and successful
           project outcomes. These qualities have been essential in my roles as{" "}
-          <span className="text-accent font-medium">COO</span>,{" "}
-          <span className="text-accent font-medium">Project Manager</span>, and{" "}
-          <span className="text-accent font-medium">Senior Developer</span>.
+          <span className="text-foreground font-medium">COO</span>,{" "}
+          <span className="text-foreground font-medium">Project Manager</span>, and{" "}
+          <span className="text-foreground font-medium">Senior Developer</span>.
         </p>
       </div>
 
@@ -283,7 +283,7 @@ const SoftSkills = () => {
           {coreStrengths.map((strength, index) => (
             <div
               key={index}
-              className="px-4 py-3 bg-accent-muted/5 border border-accent-muted/10 rounded-xl flex items-center gap-2 hover:border-accent/30 transition-all cursor-default"
+              className="px-4 py-3 bg-foreground/5 border border-white/10 rounded-xl flex items-center gap-2 hover:border-white/30 transition-all cursor-default"
             >
               <span className="text-xl">{strength.icon}</span>
               <span className="text-sm font-medium text-foreground/70">
@@ -333,7 +333,7 @@ const SoftSkills = () => {
                         <span className="text-foreground/60">{sub.name}</span>
                         <span className="text-foreground/40">{sub.level}%</span>
                       </div>
-                      <div className="h-1.5 bg-accent-muted/20 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-foreground-muted/20 rounded-full overflow-hidden">
                         <div
                           className={`h-full bg-gradient-to-r ${skill.iconColor.replace("text", "from")} to-transparent rounded-full transition-all duration-500`}
                           style={{ width: `${sub.level}%` }}
@@ -344,7 +344,7 @@ const SoftSkills = () => {
               </div>
 
               {/* Expand/Collapse Indicator */}
-              <button className="mt-3 text-xs text-accent/60 hover:text-accent transition-colors">
+              <button className="mt-3 text-xs text-foreground/40 hover:text-foreground transition-colors">
                 {activeSkill === skill.id
                   ? "Show Less"
                   : `+${skill.subSkills.length - 3} More Skills`}
@@ -352,7 +352,7 @@ const SoftSkills = () => {
 
               {/* Examples (shown on hover/expand) */}
               {activeSkill === skill.id && (
-                <div className="mt-4 pt-4 border-t border-accent-muted/20">
+                <div className="mt-4 pt-4 border-t border-white/10">
                   <p className="text-xs font-semibold text-foreground/40 uppercase tracking-wider mb-2">
                     Real-World Application
                   </p>
@@ -360,7 +360,7 @@ const SoftSkills = () => {
                     {skill.examples.map((example, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <svg
-                          className="w-3.5 h-3.5 text-accent mt-0.5 flex-shrink-0"
+                          className="w-3.5 h-3.5 text-foreground mt-0.5 flex-shrink-0"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -387,7 +387,7 @@ const SoftSkills = () => {
 
       {/* Communication & Collaboration Highlight */}
       <div className="mt-8 grid md:grid-cols-2 gap-6">
-        <div className="p-6 rounded-xl bg-gradient-to-br from-blue-500/10 to-transparent border border-blue-500/20">
+        <div className="p-6 rounded-xl bg-gradient-to-br from-foreground/5 to-transparent border border-white/10">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-2xl">🗣️</span>
             <h4 className="font-bold text-foreground">
@@ -401,7 +401,7 @@ const SoftSkills = () => {
             style to the audience.
           </p>
         </div>
-        <div className="p-6 rounded-xl bg-gradient-to-br from-green-500/10 to-transparent border border-green-500/20">
+        <div className="p-6 rounded-xl bg-gradient-to-br from-foreground/5 to-transparent border border-white/10">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-2xl">🤝</span>
             <h4 className="font-bold text-foreground">
@@ -418,7 +418,7 @@ const SoftSkills = () => {
       </div>
 
       {/* Quote */}
-      <div className="mt-8 p-6 rounded-xl bg-accent/5 border border-accent/20 text-center">
+      <div className="mt-8 p-6 rounded-xl bg-foreground/5 border border-white/10 text-center">
         <p className="text-foreground/70 italic">
           "Technical skills get the job done, but soft skills make the journey
           successful. My ability to communicate clearly, collaborate
@@ -431,3 +431,6 @@ const SoftSkills = () => {
 };
 
 export default SoftSkills;
+
+
+

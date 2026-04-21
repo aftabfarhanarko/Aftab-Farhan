@@ -47,10 +47,10 @@ export default function Contact() {
       label: "Email",
       value: "arko@nexoviasoft.com",
       link: "mailto:arko@nexoviasoft.com",
-      color: "from-blue-500/20 to-cyan-500/20",
-      borderColor: "border-blue-500/30",
-      iconBg: "bg-blue-500/10",
-      iconColor: "text-blue-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconBg: "bg-foreground/10",
+      iconColor: "text-foreground",
     },
     {
       icon: (
@@ -71,10 +71,10 @@ export default function Contact() {
       label: "Phone",
       value: "+880 1234 567890",
       link: "tel:+8801234567890",
-      color: "from-green-500/20 to-emerald-500/20",
-      borderColor: "border-green-500/30",
-      iconBg: "bg-green-500/10",
-      iconColor: "text-green-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconBg: "bg-foreground/10",
+      iconColor: "text-foreground",
     },
     {
       icon: (
@@ -96,10 +96,10 @@ export default function Contact() {
       label: "Location",
       value: "Dhaka, Bangladesh",
       link: "#",
-      color: "from-purple-500/20 to-pink-500/20",
-      borderColor: "border-purple-500/30",
-      iconBg: "bg-purple-500/10",
-      iconColor: "text-purple-500",
+      color: "from-foreground/5 to-transparent",
+      borderColor: "border-white/10",
+      iconBg: "bg-foreground/10",
+      iconColor: "text-foreground",
     },
   ];
 
@@ -118,7 +118,7 @@ export default function Contact() {
         </svg>
       ),
       url: "https://github.com/arko",
-      color: "hover:bg-gray-800",
+      color: "hover:bg-white/10",
     },
     {
       name: "LinkedIn",
@@ -134,7 +134,7 @@ export default function Contact() {
         </svg>
       ),
       url: "https://linkedin.com/in/arko",
-      color: "hover:bg-blue-600",
+      color: "hover:bg-white/10",
     },
     {
       name: "Twitter",
@@ -150,7 +150,7 @@ export default function Contact() {
         </svg>
       ),
       url: "https://twitter.com/arko",
-      color: "hover:bg-sky-500",
+      color: "hover:bg-white/10",
     },
   ];
 
@@ -162,10 +162,10 @@ export default function Contact() {
           <h2 className="text-3xl lg:text-4xl font-black text-foreground tracking-tight">
             Get in Touch
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-gradient-to-r from-accent to-accent/30 rounded-full" />
+          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
         </div>
-        <div className="h-px flex-1 bg-gradient-to-r from-accent/20 to-transparent" />
-        <span className="text-sm font-mono text-accent/60 hidden sm:block">
+        <div className="h-px flex-1 bg-foreground/10" />
+        <span className="text-sm font-mono text-foreground/40 hidden sm:block">
           &lt;let's-connect /&gt;
         </span>
       </div>
@@ -174,10 +174,10 @@ export default function Contact() {
         {/* Left Column - Contact Info */}
         <div className="lg:col-span-2 space-y-6">
           {/* Availability Badge */}
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-green-500/5 border border-green-500/20">
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-foreground/5 border border-white/10">
             <div className="relative">
-              <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-              <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-green-500 animate-ping" />
+              <div className="w-2.5 h-2.5 rounded-full bg-foreground" />
+              <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-foreground animate-ping" />
             </div>
             <span className="text-sm font-medium text-foreground/70">
               Available for opportunities
@@ -185,7 +185,7 @@ export default function Contact() {
           </div>
 
           {/* Intro Text */}
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-accent-muted/10 to-transparent border border-accent-muted/20">
+          <div className="p-6 rounded-2xl bg-foreground/5 border border-white/10">
             <p className="text-foreground/70 text-base leading-relaxed mb-4">
               Have a project in mind? Looking for a senior developer to join
               your team? Or just want to say hello? I'd love to hear from you!
@@ -227,7 +227,7 @@ export default function Contact() {
           </div>
 
           {/* Social Links */}
-          <div className="p-5 rounded-xl bg-accent-muted/5 border border-accent-muted/10">
+          <div className="p-5 rounded-xl bg-foreground/5 border border-white/10">
             <h4 className="text-xs font-bold text-foreground/40 uppercase tracking-wider mb-3">
               Connect with me
             </h4>
@@ -238,7 +238,7 @@ export default function Contact() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`w-10 h-10 rounded-lg bg-accent-muted/10 border border-accent-muted/20 flex items-center justify-center text-foreground/60 transition-all ${social.color} hover:text-white hover:border-transparent`}
+                  className={`w-10 h-10 rounded-lg bg-foreground/10 border border-white/10 flex items-center justify-center text-foreground/60 transition-all ${social.color} hover:text-white hover:border-transparent`}
                 >
                   {social.icon}
                 </a>
@@ -247,7 +247,7 @@ export default function Contact() {
           </div>
 
           {/* Quick Response Promise */}
-          <div className="p-5 rounded-xl bg-gradient-to-r from-accent/5 to-transparent border-l-4 border-l-accent">
+          <div className="p-5 rounded-xl bg-foreground/5 border-l-4 border-l-foreground">
             <div className="flex items-center gap-3">
               <span className="text-2xl">⚡</span>
               <div>
@@ -266,7 +266,7 @@ export default function Contact() {
         <div className="lg:col-span-3">
           <form
             onSubmit={handleSubmit}
-            className="p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-accent-muted/10 to-transparent border border-accent-muted/20"
+            className="p-6 lg:p-8 rounded-2xl bg-foreground/5 border border-white/10"
           >
             <div className="space-y-5">
               {/* Name & Email Row */}
@@ -281,7 +281,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="John Doe"
-                    className="w-full p-3.5 border border-accent-muted/20 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                    className="w-full p-3.5 border border-white/10 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-white/10 transition-all"
                     required
                   />
                 </div>
@@ -295,7 +295,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="john@example.com"
-                    className="w-full p-3.5 border border-accent-muted/20 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                    className="w-full p-3.5 border border-white/10 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-white/10 transition-all"
                     required
                   />
                 </div>
@@ -312,7 +312,7 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="Project Inquiry / Job Opportunity / Other"
-                  className="w-full p-3.5 border border-accent-muted/20 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+                  className="w-full p-3.5 border border-white/10 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-white/10 transition-all"
                   required
                 />
               </div>
@@ -328,7 +328,7 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="Tell me about your project or opportunity..."
                   rows={5}
-                  className="w-full p-3.5 border border-accent-muted/20 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all resize-none"
+                  className="w-full p-3.5 border border-white/10 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-white/10 transition-all resize-none"
                   required
                 ></textarea>
               </div>
@@ -337,7 +337,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full p-4 bg-gradient-to-r from-accent to-accent/80 text-background rounded-xl font-bold uppercase tracking-wider text-sm transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-accent/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full p-4 bg-foreground text-background rounded-xl font-bold uppercase tracking-wider text-sm transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -390,3 +390,6 @@ export default function Contact() {
     </section>
   );
 }
+
+
+
