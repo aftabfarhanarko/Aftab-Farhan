@@ -1,171 +1,333 @@
-﻿import Image from "next/image";
+﻿"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+
+const fadeLeft = (delay = 0) => ({
+  initial: { opacity: 0, x: -32 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay },
+});
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay },
+});
+
+const scaleIn = (delay = 0) => ({
+  initial: { opacity: 0, scale: 0.88 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay },
+});
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative mb-32 flex flex-col lg:flex-row items-center justify-between gap-12 pt-16"
+      className="relative mb-32 flex flex-col lg:flex-row items-center justify-between gap-16  min-h-[90vh]"
     >
-      {/* Floating Badges */}
-      <div className="absolute left-[-4rem] top-24 hidden xl:block animate-bounce duration-[3000ms]">
-        <div className="px-4 py-2 rounded-xl bg-accent-muted/10 border border-accent/20 backdrop-blur-md text-accent text-xs font-mono shadow-[0_0_15px_rgba(57,255,20,0.1)]">
-          def build():
-        </div>
-      </div>
-      <div className="absolute right-[-2rem] bottom-32 hidden xl:block animate-pulse">
-        <div className="px-4 py-2 rounded-xl bg-accent-muted/10 border border-accent/20 backdrop-blur-md text-accent text-xs font-mono shadow-[0_0_15px_rgba(57,255,20,0.1)]">
-          api.response(200)
-        </div>
-      </div>
+      {/* Background grid pattern */}
+      <div
+        className="absolute inset-0 -z-10 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(57,255,20,1) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,1) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
+        }}
+      />
 
-      {/* Left Content */}
-      <div className="flex-1 flex flex-col items-start gap-8 z-10">
-        <div className="space-y-4">
-          <h3 className="text-xl font-medium text-foreground/80 animate-in fade-in slide-in-from-left duration-700">
-            Hi, I''m{" "}
-            <span className="font-bold text-foreground">Md Mim Shifat</span>
-          </h3>
-          <h1 className="text-6xl sm:text-8xl font-black tracking-tighter text-accent uppercase italic leading-[0.9] animate-in fade-in slide-in-from-left duration-1000 delay-100">
-            Full Stack Developer
+      {/* Ambient glow blobs */}
+      <div className="absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-accent/5 blur-[140px] -z-10 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-accent/4 blur-[120px] -z-10 pointer-events-none" />
+
+      {/* === LEFT COLUMN === */}
+      <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl">
+        {/* Status badge */}
+        <motion.div
+          {...fadeLeft(0)}
+          className="flex items-center gap-2 w-fit px-4 py-1.5 rounded-full border border-accent/25 bg-accent/5 backdrop-blur-sm"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+          </span>
+          <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-accent/80">
+            Available for work
+          </span>
+        </motion.div>
+
+        {/* Greeting */}
+        <motion.p
+          {...fadeLeft(0.1)}
+          className="text-lg font-medium text-foreground/50 tracking-wide"
+        >
+          Hi, I&apos;m{" "}
+          <span className="text-foreground font-bold">Aftab Farha Arko</span>
+        </motion.p>
+
+        {/* Headline — smaller size */}
+        <motion.div {...fadeLeft(0.18)}>
+          <h1 className="text-[clamp(2rem,5vw,4rem)] font-black tracking-[-0.04em] leading-[0.9] uppercase">
+            <span className="block text-foreground">Full Stack</span>
+            <span className="block text-accent italic">Developer</span>
           </h1>
-          <h4 className="text-2xl font-bold text-foreground/90 mt-4 tracking-tight animate-in fade-in slide-in-from-left duration-1000 delay-200">
-            Building Reliable, Scalable Web Solutions
-          </h4>
-        </div>
+        </motion.div>
 
-        <p className="text-xl text-foreground/60 max-w-xl leading-relaxed animate-in fade-in slide-in-from-left duration-1000 delay-300">
-          I design robust{" "}
-          <span className="text-foreground font-bold border-b-2 border-accent/30">
-            system architectures
+        {/* Sub-headline — professional */}
+        <motion.h2
+          {...fadeLeft(0.26)}
+          className="text-base sm:text-lg font-semibold text-foreground/55 tracking-tight max-w-md"
+        >
+          Designing systems that scale. Shipping products that matter.
+        </motion.h2>
+
+        {/* Description */}
+        <motion.p
+          {...fadeLeft(0.34)}
+          className="text-sm text-foreground/40 max-w-lg leading-[1.85]"
+        >
+          I build end-to-end web solutions — from high-throughput{" "}
+          <span className="text-foreground/70 font-semibold border-b border-accent/35">
+            Django REST APIs
           </span>{" "}
-          to solve complex problems. I build scalable, high-performance web
-          solutions that are reliable and help your business grow.
-        </p>
+          to performant{" "}
+          <span className="text-foreground/70 font-semibold border-b border-accent/35">
+            React & Next.js
+          </span>{" "}
+          frontends. Clean architecture, zero shortcuts.
+        </motion.p>
 
-        <div className="flex flex-wrap gap-6 mt-4 animate-in fade-in slide-in-from-left duration-1000 delay-400">
-          <a
+        {/* Tech stack pills */}
+        <motion.div {...fadeLeft(0.4)} className="flex flex-wrap gap-2">
+          {["Python", "Django", "React", "Next.js", "PostgreSQL", "Docker"].map(
+            (tech, i) => (
+              <motion.span
+                key={tech}
+                initial={{ opacity: 0, scale: 0.75 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: 0.42 + i * 0.06,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="px-3 py-1 text-[10px] font-black tracking-wider uppercase rounded-md border border-accent/20 bg-accent/5 text-foreground/55 hover:border-accent/60 hover:text-accent hover:bg-accent/8 transition-all duration-200 cursor-default"
+              >
+                {tech}
+              </motion.span>
+            ),
+          )}
+        </motion.div>
+
+        {/* CTA buttons */}
+        <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-4 mt-1">
+          <motion.a
             href="#contact"
-            className="flex items-center gap-3 rounded-xl bg-accent px-8 py-4 text-sm font-black text-background transition-all hover:bg-accent/90 hover:scale-105 active:scale-95 shadow-[0_10px_40px_rgba(57,255,20,0.4)] group"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="group flex items-center gap-2.5 rounded-xl bg-accent px-7 py-3.5 text-sm font-black text-background shadow-[0_8px_32px_rgba(57,255,20,0.35)] hover:bg-accent/90 transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="15"
+              height="15"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="group-hover:translate-y-0.5 transition-transform"
+              className="group-hover:translate-y-0.5 transition-transform duration-200"
             >
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" x2="12" y1="15" y2="3" />
             </svg>
-            View Resume
-          </a>
-          <a
+            Download Resume
+          </motion.a>
+          <motion.a
             href="#project"
-            className="rounded-xl border-2 border-accent px-8 py-4 text-sm font-black text-accent transition-all hover:bg-accent/10 hover:scale-105 active:scale-95"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="rounded-xl border border-accent/40 px-7 py-3.5 text-sm font-black text-accent/80 hover:bg-accent/8 hover:border-accent hover:text-accent transition-all"
           >
-            View Projects
-          </a>
-        </div>
+            View Projects →
+          </motion.a>
+        </motion.div>
 
-        {/* Stats Section */}
-        <div className="flex gap-16 mt-12 pt-10 border-t border-accent-muted/20 w-full animate-in fade-in slide-in-from-bottom duration-1000 delay-500">
-          <div>
-            <div className="text-4xl font-black text-foreground tracking-tighter">
-              2+
-            </div>
-            <div className="text-[11px] font-black text-foreground/40 uppercase tracking-[0.2em] mt-2">
-              Years Experience
-            </div>
-          </div>
-          <div>
-            <div className="text-4xl font-black text-foreground tracking-tighter">
-              5+
-            </div>
-            <div className="text-[11px] font-black text-foreground/40 uppercase tracking-widest mt-2">
-              Projects
-            </div>
-          </div>
-          <div>
-            <div className="text-4xl font-black text-foreground tracking-tighter">
-              150+
-            </div>
-            <div className="text-[11px] font-black text-foreground/40 uppercase tracking-[0.2em] mt-2">
-              Problems Solved
-            </div>
-          </div>
-        </div>
+        {/* Stats */}
+        <motion.div
+          {...fadeUp(0.6)}
+          className="flex gap-12 pt-8 mt-3 border-t border-accent/10"
+        >
+          {[
+            { value: "2+", label: "Years Experience" },
+            { value: "5+", label: "Projects Shipped" },
+            { value: "150+", label: "Problems Solved" },
+          ].map(({ value, label }, i) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.65 + i * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="group cursor-default"
+            >
+              <div className="text-3xl font-black text-foreground tracking-tighter group-hover:text-accent transition-colors duration-300">
+                {value}
+              </div>
+              <div className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.22em] mt-1.5">
+                {label}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* Right Content - Circular Profile */}
-      <div className="relative flex-shrink-0 lg:w-[500px] lg:h-[500px] flex items-center justify-center animate-in fade-in zoom-in duration-1000">
-        {/* Outer Rotating Dash Ring */}
-        <div className="absolute inset-0 rounded-full border-2 border-dashed border-accent/20 animate-[spin_60s_linear_infinite]"></div>
+      {/* === RIGHT COLUMN === */}
+      <motion.div
+        {...scaleIn(0.2)}
+        className="relative flex-shrink-0 flex items-center justify-center"
+      >
+        {/* Terminal card — positioned higher above the circle */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute -top-24 -left-6 hidden xl:block z-20"
+        >
+          <div className="rounded-xl border border-accent/20 bg-background/85 backdrop-blur-md shadow-2xl overflow-hidden w-52">
+            <div className="flex items-center gap-1.5 px-3 py-2 bg-accent/5 border-b border-accent/15">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500/70"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500/70"></span>
+              <span className="ml-2 text-[10px] text-foreground/30 font-mono">
+                terminal
+              </span>
+            </div>
+            <div className="p-3 font-mono text-[11px] space-y-1">
+              <p className="text-foreground/40">$ git status</p>
+              <p className="text-accent">On branch main</p>
+              <p className="text-foreground/40">$ deploy --prod</p>
+              <p className="text-green-400">✓ Build success</p>
+            </div>
+          </div>
+        </motion.div>
 
-        {/* Inner Glowing Rings */}
-        <div className="absolute inset-8 rounded-full border border-accent/30 animate-[spin_40s_linear_infinite_reverse]"></div>
-        <div className="absolute inset-[-40px] rounded-full bg-accent/10 blur-[100px] opacity-60"></div>
+        {/* Current Stack chip — further below the circle */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute -bottom-20 right-0 hidden xl:block z-20"
+        >
+          <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="px-4 py-2.5 rounded-xl bg-background/85 border border-accent/25 backdrop-blur-md shadow-xl"
+          >
+            <div className="text-[10px] font-black text-foreground/30 uppercase tracking-widest">
+              Current Stack
+            </div>
+            <div className="text-xs font-bold text-accent mt-0.5">
+              Django · React · Docker
+            </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Profile Circle Container */}
-        <div className="relative w-80 h-80 sm:w-96 sm:h-96 rounded-full border-[6px] border-accent/80 p-3 shadow-[0_0_80px_rgba(57,255,20,0.3)] bg-background z-10 group">
-          <div className="w-full h-full rounded-full overflow-hidden relative bg-accent-muted/10">
+        {/* Rings */}
+        <div className="absolute w-[460px] h-[460px] rounded-full border border-dashed border-accent/15 animate-[spin_80s_linear_infinite]" />
+        <div className="absolute w-[420px] h-[420px] rounded-full border border-accent/10 animate-[spin_50s_linear_infinite_reverse]" />
+        <div className="absolute w-[360px] h-[360px] rounded-full bg-accent/8 blur-[80px]" />
+
+        {/* Profile image circle */}
+        <div className="relative w-[340px] h-[340px] sm:w-[380px] sm:h-[380px] rounded-full border-[3px] border-accent/60 p-2.5 shadow-[0_0_60px_rgba(57,255,20,0.2),inset_0_0_40px_rgba(57,255,20,0.05)] bg-background z-10 group">
+          <div className="w-full h-full rounded-full overflow-hidden bg-accent/5 relative">
             <Image
               src="/image.png"
-              alt="Profile"
+              alt="Aftab Farha Arko - Full Stack Developer"
               fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority
             />
+            <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-accent/20" />
           </div>
 
-          {/* Tech Stack Badge - Bottom of circle */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-2.5 rounded-full bg-background/90 backdrop-blur-xl border border-accent/40 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 whitespace-nowrap">
-            <div className="flex items-center gap-2 text-xs font-black text-foreground/90">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></span>{" "}
-              Python
-            </div>
-            <div className="flex items-center gap-2 text-xs font-black text-foreground/90 border-l border-accent-muted/30 pl-4">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></span>{" "}
-              Django
-            </div>
-            <div className="flex items-center gap-2 text-xs font-black text-foreground/90 border-l border-accent-muted/30 pl-4">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]"></span>{" "}
-              React
-            </div>
+          {/* Social links bottom arc */}
+          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-5 py-2 rounded-full bg-background/95 backdrop-blur-xl border border-accent/30 shadow-[0_8px_32px_rgba(0,0,0,0.4)] z-20 whitespace-nowrap">
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[11px] font-black text-foreground/70 hover:text-accent transition-colors"
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+              GitHub
+            </a>
+            <span className="w-px h-3 bg-accent/20"></span>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[11px] font-black text-foreground/70 hover:text-accent transition-colors"
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+              LinkedIn
+            </a>
           </div>
         </div>
 
-        {/* Floating Action Icons */}
-        <div className="absolute top-12 right-12 p-3 rounded-xl bg-background/80 border border-accent/30 backdrop-blur-md text-accent shadow-2xl z-20 animate-bounce hover:scale-110 transition-transform cursor-pointer">
+        {/* Floating icon badges with Framer Motion */}
+        <motion.div
+          animate={{ y: [0, -7, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-6 right-2 p-3 rounded-xl bg-background/85 border border-accent/25 backdrop-blur-md text-accent/70 shadow-xl z-20 hover:text-accent hover:scale-110 hover:border-accent/50 transition-all duration-200 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="3"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           >
             <polyline points="16 18 22 12 16 6" />
             <polyline points="8 6 2 12 8 18" />
           </svg>
-        </div>
-        <div className="absolute bottom-24 left-4 p-3 rounded-xl bg-background/80 border border-accent/30 backdrop-blur-md text-accent shadow-2xl z-20 animate-pulse hover:scale-110 transition-transform cursor-pointer">
+        </motion.div>
+
+        <motion.div
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-20 left-0 p-3 rounded-xl bg-background/85 border border-accent/25 backdrop-blur-md text-accent/70 shadow-xl z-20 hover:text-accent hover:scale-110 hover:border-accent/50 transition-all duration-200 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="3"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           >
@@ -173,16 +335,21 @@ export default function Hero() {
             <path d="M3 5V19A9 3 0 0 0 21 19V5" />
             <path d="M3 12A9 3 0 0 0 21 12" />
           </svg>
-        </div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 p-3 rounded-xl bg-background/80 border border-accent/30 backdrop-blur-md text-accent shadow-2xl z-20 animate-[bounce_4s_infinite] hover:scale-110 transition-transform cursor-pointer">
+        </motion.div>
+
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute right-0 top-1/2 -translate-y-1/2 p-3 rounded-xl bg-background/85 border border-accent/25 backdrop-blur-md text-accent/70 shadow-xl z-20 hover:text-accent hover:scale-110 hover:border-accent/50 transition-all duration-200 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="3"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           >
@@ -190,8 +357,8 @@ export default function Hero() {
             <line x1="3" x2="21" y1="9" y2="9" />
             <line x1="9" x2="9" y1="21" y2="9" />
           </svg>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
