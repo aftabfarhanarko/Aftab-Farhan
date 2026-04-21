@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
@@ -16,8 +17,116 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Note: metadata must be in a separate server file if using "use client"
-// export const metadata: Metadata = { ... }
+// ── Single Typing Line ──
+function TypingLine({
+  text,
+  style,
+  delay,
+  duration,
+}: {
+  text: string;
+  style: React.CSSProperties;
+  delay: number;
+  duration: number;
+}) {
+  const [displayed, setDisplayed] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+  const [phase, setPhase] = useState<"wait" | "typing" | "hold" | "erasing">("wait");
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setPhase("typing");
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [delay]);
+
+  useEffect(() => {
+    if (phase === "typing") {
+      if (displayed.length < text.length) {
+        const t = setTimeout(
+          () => setDisplayed(text.slice(0, displayed.length + 1)),
+          duration / text.length
+        );
+        return () => clearTimeout(t);
+      } else {
+        const t = setTimeout(() => setPhase("erasing"), 2800);
+        return () => clearTimeout(t);
+      }
+    }
+    if (phase === "erasing") {
+      if (displayed.length > 0) {
+        const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 18);
+        return () => clearTimeout(t);
+      } else {
+        const t = setTimeout(() => setPhase("typing"), 1200 + Math.random() * 2500);
+        return () => clearTimeout(t);
+      }
+    }
+  }, [phase, displayed, text, duration]);
+
+  useEffect(() => {
+    const t = setInterval(() => setShowCursor((v) => !v), 530);
+    return () => clearInterval(t);
+  }, []);
+
+  if (phase === "wait" && displayed.length === 0) return null;
+
+  return (
+    <span style={style}>
+      {displayed}
+      {showCursor && <span style={{ opacity: 0.7 }}>▌</span>}
+    </span>
+  );
+}
+
+// ── Ambient Typing Background ──
+function AmbientTypingBackground() {
+  const snippets = [
+    { text: "const passion = () => code + design;",           top: "7%",  left: "2%",  opacity: 0.14 },
+    { text: "git commit -m 'ship it'",                        top: "13%", left: "61%", opacity: 0.11 },
+    { text: "npm run build && vercel deploy --prod",          top: "21%", left: "4%",  opacity: 0.10 },
+    { text: "export default function Portfolio()",            top: "27%", left: "54%", opacity: 0.13 },
+    { text: "type Dream = Vision & Execution",                top: "35%", left: "2%",  opacity: 0.11 },
+    { text: "// 3+ years of shipping real products",         top: "41%", left: "67%", opacity: 0.12 },
+    { text: "const stack = ['Next.js', 'TypeScript', 'Tailwind']", top: "49%", left: "3%", opacity: 0.10 },
+    { text: "interface Dev { curious: true; tired: never }",  top: "56%", left: "51%", opacity: 0.11 },
+    { text: "useEffect(() => { keepLearning() }, [])",        top: "63%", left: "2%",  opacity: 0.13 },
+    { text: "200 OK — feature shipped on time",               top: "69%", left: "64%", opacity: 0.10 },
+    { text: "async function solve(problem: Hard): Promise<Solution>", top: "76%", left: "4%", opacity: 0.11 },
+    { text: "return <CleanCode readable elegant />",          top: "82%", left: "57%", opacity: 0.12 },
+    { text: "docker build -t prod . && docker push",          top: "88%", left: "2%",  opacity: 0.09 },
+    { text: "zod.object({ email: z.string().email() })",      top: "93%", left: "68%", opacity: 0.10 },
+  ];
+
+  return (
+    <div
+      className="absolute inset-0 overflow-hidden pointer-events-none select-none"
+      style={{
+        fontFamily: "'Geist Mono', 'Fira Code', 'Courier New', monospace",
+        fontSize: "11px",
+      }}
+    >
+      {snippets.map((s, i) => (
+        <div
+          key={i}
+          className="absolute whitespace-nowrap"
+          style={{ top: s.top, left: s.left }}
+        >
+          <TypingLine
+            text={s.text}
+            delay={i * 350 + 200}
+            duration={s.text.length * 60}
+            style={{
+              color: `rgba(134, 239, 172, ${s.opacity})`,
+              textShadow: `0 0 10px rgba(22, 163, 74, 0.5)`,
+              letterSpacing: "0.03em",
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function RootLayout({
   children,
@@ -39,15 +148,18 @@ export default function RootLayout({
         <div className="fixed inset-0 z-0 pointer-events-none">
           {/* Grid pattern */}
           <div
-            className="absolute inset-0 opacity-10"
+            className="absolute inset-0"
             style={{
               backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)
               `,
               backgroundSize: "40px 40px",
             }}
           />
+
+          {/* Ambient Typing */}
+          <AmbientTypingBackground />
 
           {/* Glow blobs */}
           <motion.div
@@ -55,8 +167,7 @@ export default function RootLayout({
             style={{
               width: "40%",
               height: "40%",
-              background:
-                "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)",
             }}
             animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -66,39 +177,27 @@ export default function RootLayout({
             style={{
               width: "30%",
               height: "30%",
-              background:
-                "radial-gradient(circle, rgba(22,163,74,0.2) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(22,163,74,0.15) 0%, transparent 70%)",
             }}
-            animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.45, 0.25] }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
+            animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
           <motion.div
             className="absolute top-[20%] right-[10%] rounded-full blur-[80px]"
             style={{
               width: "25%",
               height: "25%",
-              background:
-                "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)",
             }}
             animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 4,
-            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
           />
         </div>
 
         {/* ── Navbar ── */}
         <Navbar />
 
-        {/* ── Page Content with fade transition ── */}
+        {/* ── Page Content ── */}
         <AnimatePresence mode="wait">
           <motion.main
             key={pathname}
@@ -136,5 +235,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
