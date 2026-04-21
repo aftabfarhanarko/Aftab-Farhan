@@ -1,6 +1,10 @@
-import type { Metadata } from "next";
+﻿"use client";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,52 +16,122 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Arko's Portfolio",
-  description: "A professional portfolio of Aftab Farhan Arko",
-};
+// Note: metadata must be in a separate server file if using "use client"
+// export const metadata: Metadata = { ... }
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased selection:bg-accent/30 selection:text-accent dark`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground relative overflow-x-hidden">
-        {/* Background Effects */}
+      <body
+        className="min-h-full flex flex-col relative overflow-x-hidden"
+        style={{ backgroundColor: "#050d05", color: "#e2f0e2" }}
+      >
+        {/* ── Background Effects ── */}
         <div className="fixed inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 grid-background opacity-20"></div>
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] glow-spot opacity-50"></div>
-          <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] glow-spot opacity-30"></div>
-          <div className="absolute top-[20%] right-[10%] w-[25%] h-[25%] glow-spot opacity-20"></div>
+          {/* Grid pattern */}
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(74,222,128,0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74,222,128,0.15) 1px, transparent 1px)
+              `,
+              backgroundSize: "40px 40px",
+            }}
+          />
+
+          {/* Glow blobs */}
+          <motion.div
+            className="absolute top-[-10%] left-[-10%] rounded-full blur-[120px]"
+            style={{
+              width: "40%",
+              height: "40%",
+              background:
+                "radial-gradient(circle, rgba(34,197,94,0.25) 0%, transparent 70%)",
+            }}
+            animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-[10%] right-[-5%] rounded-full blur-[100px]"
+            style={{
+              width: "30%",
+              height: "30%",
+              background:
+                "radial-gradient(circle, rgba(22,163,74,0.2) 0%, transparent 70%)",
+            }}
+            animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.45, 0.25] }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+          />
+          <motion.div
+            className="absolute top-[20%] right-[10%] rounded-full blur-[80px]"
+            style={{
+              width: "25%",
+              height: "25%",
+              background:
+                "radial-gradient(circle, rgba(74,222,128,0.15) 0%, transparent 70%)",
+            }}
+            animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 4,
+            }}
+          />
         </div>
 
-        <header className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-md border-b border-accent-muted/30">
-          <nav className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
-            <a href="#hero" className="text-lg font-bold tracking-tight text-accent">Arko.</a>
-            <div className="flex gap-4 sm:gap-6 text-xs sm:text-sm font-medium overflow-x-auto pb-2 sm:pb-0">
-              <a href="#about" className="text-foreground/60 transition-colors hover:text-accent whitespace-nowrap">About</a>
-              <a href="#skill" className="text-foreground/60 transition-colors hover:text-accent whitespace-nowrap">Skill</a>
-              <a href="#client-project" className="text-foreground/60 transition-colors hover:text-accent whitespace-nowrap">Client Project</a>
-              <a href="#project" className="text-foreground/60 transition-colors hover:text-accent whitespace-nowrap">Project</a>
-              <a href="#contact" className="text-foreground/60 transition-colors hover:text-accent whitespace-nowrap">Contact</a>
-            </div>
-          </nav>
-        </header>
+        {/* ── Navbar ── */}
+        <Navbar />
 
-        <main className="flex-1 pt-20 relative z-10">
-          {children}
-        </main>
+        {/* ── Page Content with fade transition ── */}
+        <AnimatePresence mode="wait">
+          <motion.main
+            key={pathname}
+            className="flex-1 pt-20 relative z-10"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.45, ease: "easeInOut" }}
+          >
+            {children}
+          </motion.main>
+        </AnimatePresence>
 
-        <footer className="border-t border-accent-muted/30 py-8 relative z-10 bg-background/80 backdrop-blur-sm">
-          <div className="mx-auto max-w-3xl px-6 text-center text-sm text-foreground/40">
-            © {new Date().getFullYear()} Aftab Farhan Arko. Built with Next.js and Tailwind CSS.
+        {/* ── Footer ── */}
+        <motion.footer
+          className="border-t py-8 relative z-10 backdrop-blur-sm"
+          style={{
+            borderColor: "rgba(74,222,128,0.15)",
+            backgroundColor: "rgba(5,13,5,0.8)",
+          }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div
+            className="mx-auto max-w-3xl px-6 text-center text-sm"
+            style={{ color: "rgba(226,240,226,0.35)" }}
+          >
+            © {new Date().getFullYear()} Aftab Farhan Arko. Built with Next.js &
+            Tailwind CSS.
           </div>
-        </footer>
+        </motion.footer>
       </body>
     </html>
   );
