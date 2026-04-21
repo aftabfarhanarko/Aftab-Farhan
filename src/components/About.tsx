@@ -29,11 +29,11 @@
           <h2 className="text-3xl lg:text-4xl font-black text-foreground tracking-tight">
             About Me
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-gradient-to-r from-accent to-accent/30 rounded-full" />
+          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
         </div>
-        <div className="h-px flex-1 bg-gradient-to-r from-accent/20 to-transparent" />
-        <span className="text-sm font-mono text-accent/60 hidden sm:block">
-          &lt;mern-stack /&gt;
+        <div className="h-px flex-1 bg-foreground/10" />
+        <span className="text-sm font-mono text-foreground/40 hidden sm:block">
+          &lt;full-stack-dev /&gt;
         </span>
       </div>
 
@@ -41,24 +41,23 @@
         {/* Main Content - 3 columns */}
         <div className="lg:col-span-3 space-y-8">
           {/* Introduction Card */}
-          <div className="relative p-8 rounded-2xl bg-gradient-to-br from-accent-muted/5 via-transparent to-transparent border border-accent-muted/10">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl -z-10" />
+          <div className="relative p-8 rounded-2xl bg-foreground/[0.02] border border-white/10">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-foreground/5 rounded-full blur-3xl -z-10" />
 
             <p className="text-foreground/80 text-lg leading-relaxed mb-4">
               <span className="text-4xl font-black text-foreground block mb-2 tracking-tight">
                 Arko
               </span>
-              <span className="text-accent font-medium">
-                MERN Stack Developer
+              <span className="text-foreground font-medium">
+                Senior Full Stack Developer
               </span>{" "}
               based in Bangladesh
             </p>
 
             <p className="text-foreground/60 text-base leading-relaxed">
               I architect and build high-performance web applications that
-              scale. With deep expertise in the MERN ecosystem and modern web
-              technologies, I transform complex business requirements into
-              elegant, production-ready solutions.
+              scale. With deep expertise in modern web technologies, I transform 
+              complex business requirements into elegant, production-ready solutions.
             </p>
           </div>
 
@@ -71,7 +70,7 @@
               {coreExpertise.map((skill) => (
                 <span
                   key={skill}
-                  className="px-4 py-2 text-sm font-medium bg-accent-muted/5 border border-accent-muted/10 rounded-full text-foreground/70 hover:text-accent hover:border-accent/30 transition-colors cursor-default"
+                  className="px-4 py-2 text-sm font-medium bg-foreground/5 border border-white/10 rounded-full text-foreground/70 hover:text-foreground hover:border-white/30 transition-colors cursor-default"
                 >
                   {skill}
                 </span>
@@ -80,7 +79,7 @@
           </div>
 
           {/* MERN Stack Highlight */}
-          <div className="p-6 rounded-xl bg-gradient-to-r from-accent/5 to-transparent border-l-4 border-l-accent">
+          <div className="p-6 rounded-xl bg-gradient-to-r from-foreground/5 to-transparent border-l-4 border-l-foreground">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl">⚡</span>
               <h3 className="font-bold text-foreground">
@@ -102,9 +101,9 @@
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="p-5 rounded-xl bg-accent-muted/5 border border-accent-muted/10 text-center hover:border-accent/20 transition-colors"
+                className="p-5 rounded-xl bg-foreground/5 border border-white/10 text-center hover:border-white/20 transition-colors"
               >
-                <div className="text-2xl lg:text-3xl font-black text-accent mb-1">
+                <div className="text-2xl lg:text-3xl font-black text-foreground mb-1">
                   {stat.value}
                 </div>
                 <div className="text-xs font-medium text-foreground/40 uppercase tracking-wider">
@@ -115,10 +114,10 @@
           </div>
 
           {/* Professional Info - No Education */}
-          <div className="p-6 rounded-xl bg-gradient-to-br from-accent-muted/10 to-transparent border border-accent-muted/10 space-y-5">
-            {/* MERN Stack Badge */}
+          <div className="p-6 rounded-xl bg-foreground/[0.03] border border-white/10 space-y-5">
+            {/* Specialization */}
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-foreground/10 flex items-center justify-center text-foreground shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -140,17 +139,17 @@
                   Specialization
                 </h4>
                 <p className="text-xs text-foreground/40 mt-0.5">
-                  MERN Stack Development
+                  Full Stack Development
                 </p>
                 <p className="text-xs text-foreground/50">
-                  Full-Stack JavaScript
+                  Modern Web Apps
                 </p>
               </div>
             </div>
 
             {/* Experience */}
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-foreground/10 flex items-center justify-center text-foreground shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -171,7 +170,7 @@
                   Experience
                 </h4>
                 <p className="text-xs text-foreground/40 mt-0.5">
-                  Web Development
+                  Software Engineering
                 </p>
                 <p className="text-xs text-foreground/50">
                   6+ years, Senior Level
@@ -181,7 +180,7 @@
 
             {/* Tech Stack Summary */}
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-foreground/10 flex items-center justify-center text-foreground shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -204,17 +203,17 @@
                   Tech Stack
                 </h4>
                 <p className="text-xs text-foreground/40 mt-0.5">
-                  JavaScript • TypeScript
+                  JS • TS • Python
                 </p>
                 <p className="text-xs text-foreground/50">
-                  React • Next.js • Node.js
+                  React • Next • Node
                 </p>
               </div>
             </div>
 
             {/* Location */}
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-foreground/10 flex items-center justify-center text-foreground shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -239,10 +238,10 @@
           </div>
 
           {/* Availability Badge */}
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-green-500/5 border border-green-500/20">
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-foreground/5 border border-white/10">
             <div className="relative">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              <div className="absolute inset-0 w-2 h-2 rounded-full bg-green-500 animate-ping" />
+              <div className="w-2 h-2 rounded-full bg-foreground" />
+              <div className="absolute inset-0 w-2 h-2 rounded-full bg-foreground animate-ping" />
             </div>
             <span className="text-sm font-medium text-foreground/70">
               Available for opportunities
