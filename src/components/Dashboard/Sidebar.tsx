@@ -12,6 +12,7 @@ const Sidebar = () => {
     { id: "hero", label: "Hero Section", href: "/dashboard/hero", icon: "🏠" },
     { id: "about", label: "About Me", href: "/dashboard/about", icon: "👤" },
     { id: "skills", label: "Skills", href: "/dashboard/skills", icon: "⚡" },
+    { id: "soft-skills", label: "Soft Skills", href: "/dashboard/soft-skills", icon: "🧠" },
     { id: "projects", label: "Projects", href: "/dashboard/projects", icon: "📁" },
     { id: "experience", label: "Experience", href: "/dashboard/experience", icon: "💼" },
     { id: "services", label: "Services", href: "/dashboard/services", icon: "🛠️" },
@@ -42,11 +43,7 @@ const Sidebar = () => {
             <Link
               key={item.id}
               href={item.href}
-              className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all relative group ${
-                isActive 
-                  ? "bg-white/10 text-white" 
-                  : "text-foreground/60 hover:text-white hover:bg-white/5"
-              }`}
+              className={lex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all relative group }
             >
               {isActive && (
                 <motion.div
@@ -64,7 +61,7 @@ const Sidebar = () => {
 
       {/* Footer */}
       <div className="p-6 border-t border-white/5">
-        <Link 
+        <Link
           href="/"
           className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-white/10 text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-white"
         >
