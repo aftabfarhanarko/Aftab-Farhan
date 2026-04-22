@@ -25,7 +25,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative mb-32 flex flex-col lg:flex-row items-center justify-between gap-16  min-h-[90vh]"
+      className="relative mb-32 flex flex-col lg:flex-row items-center justify-between gap-16 -mt-25  min-h-[90vh]"
     >
       {/* Background grid pattern */}
       <div

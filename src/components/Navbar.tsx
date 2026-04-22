@@ -67,9 +67,7 @@ const Navbar = () => {
             : "backdrop-blur-sm border-b border-transparent"
         }`}
         style={{
-          backgroundColor: isScrolled
-            ? "rgba(0,0,0,0.85)"
-            : "rgba(0,0,0,0.4)",
+          backgroundColor: isScrolled ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.4)",
           borderColor: "rgba(255,255,255,0.1)",
         }}
         initial={{ y: -60, opacity: 0 }}
@@ -88,9 +86,7 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
           >
-            <span
-              className="text-2xl font-black tracking-tight text-foreground"
-            >
+            <span className="text-2xl font-black tracking-tight text-foreground">
               Arko<span className="text-foreground/30">.</span>
             </span>
             <motion.span
@@ -132,64 +128,118 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Resume Button */}
-          <motion.a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden lg:flex items-center gap-2 px-5 py-2 bg-foreground text-background rounded-full text-sm font-bold transition-all hover:scale-105 hover:shadow-lg hover:shadow-white/10"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.4 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {/* Right side buttons */}
+          <div className="hidden lg:flex items-center gap-3">
+            {/* Login Icon */}
+            <motion.a
+              href="/login"
+              className="p-2 rounded-full text-foreground/70 hover:text-foreground hover:bg-foreground/10 transition-all"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              title="Login"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-            Resume
-          </motion.a>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </motion.a>
+
+            {/* Resume Button */}
+            <motion.a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-5 py-2 bg-foreground text-background rounded-full text-sm font-bold transition-all hover:scale-105 hover:shadow-lg hover:shadow-white/10"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.4 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              Resume
+            </motion.a>
+          </div>
 
           {/* Mobile Menu Button */}
-          <motion.button
-            className="lg:hidden p-2 rounded-lg bg-foreground/10 text-foreground"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <div className="flex lg:hidden items-center gap-2">
+            {/* Mobile Login Icon */}
+            <motion.a
+              href="/login"
+              className="p-2 rounded-lg bg-foreground/10 text-foreground"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              title="Login"
             >
-              {isMobileMenuOpen ? (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                 />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </motion.button>
+              </svg>
+            </motion.a>
+
+            <motion.button
+              className="p-2 rounded-lg bg-foreground/10 text-foreground"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {isMobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </motion.button>
+          </div>
         </nav>
 
         {/* Mobile Menu */}
@@ -228,12 +278,36 @@ const Navbar = () => {
                   </motion.a>
                 ))}
 
+                {/* Mobile Login Button */}
+                <motion.a
+                  href="/login"
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-all"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.25, duration: 0.3 }}
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                  Login
+                </motion.a>
+
                 {/* Mobile Resume Button */}
                 <motion.a
                   href="/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-3 mt-4 bg-foreground text-background rounded-lg text-sm font-bold"
+                  className="flex items-center justify-center gap-2 px-4 py-3 mt-2 bg-foreground text-background rounded-lg text-sm font-bold"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3, duration: 0.3 }}
@@ -266,6 +340,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
