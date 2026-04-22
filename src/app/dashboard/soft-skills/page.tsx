@@ -21,6 +21,7 @@ const SoftSkillsManager = () => {
       examples: ["Resolved critical production bugs under tight deadlines"] 
     },
   ]);
+  // oiawjdffoijf
 
   const addSkill = () => {
     const newSkill = { 
