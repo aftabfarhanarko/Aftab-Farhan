@@ -31,7 +31,9 @@ function TypingLine({
 }) {
   const [displayed, setDisplayed] = useState("");
   const [showCursor, setShowCursor] = useState(true);
-  const [phase, setPhase] = useState<"wait" | "typing" | "hold" | "erasing">("wait");
+  const [phase, setPhase] = useState<"wait" | "typing" | "hold" | "erasing">(
+    "wait",
+  );
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -45,7 +47,7 @@ function TypingLine({
       if (displayed.length < text.length) {
         const t = setTimeout(
           () => setDisplayed(text.slice(0, displayed.length + 1)),
-          duration / text.length
+          duration / text.length,
         );
         return () => clearTimeout(t);
       } else {
@@ -58,7 +60,10 @@ function TypingLine({
         const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 18);
         return () => clearTimeout(t);
       } else {
-        const t = setTimeout(() => setPhase("typing"), 1200 + Math.random() * 2500);
+        const t = setTimeout(
+          () => setPhase("typing"),
+          1200 + Math.random() * 2500,
+        );
         return () => clearTimeout(t);
       }
     }
@@ -82,20 +87,85 @@ function TypingLine({
 // ── Ambient Typing Background ──
 function AmbientTypingBackground() {
   const snippets = [
-    { text: "const passion = () => code + design;",           top: "7%",  left: "2%",  opacity: 0.14 },
-    { text: "git commit -m 'ship it'",                        top: "13%", left: "61%", opacity: 0.11 },
-    { text: "npm run build && vercel deploy --prod",          top: "21%", left: "4%",  opacity: 0.10 },
-    { text: "export default function Portfolio()",            top: "27%", left: "54%", opacity: 0.13 },
-    { text: "type Dream = Vision & Execution",                top: "35%", left: "2%",  opacity: 0.11 },
-    { text: "// 3+ years of shipping real products",         top: "41%", left: "67%", opacity: 0.12 },
-    { text: "const stack = ['Next.js', 'TypeScript', 'Tailwind']", top: "49%", left: "3%", opacity: 0.10 },
-    { text: "interface Dev { curious: true; tired: never }",  top: "56%", left: "51%", opacity: 0.11 },
-    { text: "useEffect(() => { keepLearning() }, [])",        top: "63%", left: "2%",  opacity: 0.13 },
-    { text: "200 OK — feature shipped on time",               top: "69%", left: "64%", opacity: 0.10 },
-    { text: "async function solve(problem: Hard): Promise<Solution>", top: "76%", left: "4%", opacity: 0.11 },
-    { text: "return <CleanCode readable elegant />",          top: "82%", left: "57%", opacity: 0.12 },
-    { text: "docker build -t prod . && docker push",          top: "88%", left: "2%",  opacity: 0.09 },
-    { text: "zod.object({ email: z.string().email() })",      top: "93%", left: "68%", opacity: 0.10 },
+    {
+      text: "const passion = () => code + design;",
+      top: "7%",
+      left: "2%",
+      opacity: 0.14,
+    },
+    { text: "git commit -m 'ship it'", top: "13%", left: "61%", opacity: 0.11 },
+    {
+      text: "npm run build && vercel deploy --prod",
+      top: "21%",
+      left: "4%",
+      opacity: 0.1,
+    },
+    {
+      text: "export default function Portfolio()",
+      top: "27%",
+      left: "54%",
+      opacity: 0.13,
+    },
+    {
+      text: "type Dream = Vision & Execution",
+      top: "35%",
+      left: "2%",
+      opacity: 0.11,
+    },
+    {
+      text: "// 3+ years of shipping real products",
+      top: "41%",
+      left: "67%",
+      opacity: 0.12,  
+    },
+    {
+      text: "const stack = ['Next.js', 'TypeScript', 'Tailwind']",
+      top: "49%",
+      left: "3%",
+      opacity: 0.1,
+    },
+    {
+      text: "interface Dev { curious: true; tired: never }",
+      top: "56%",
+      left: "51%",
+      opacity: 0.11,
+    },
+    {
+      text: "useEffect(() => { keepLearning() }, [])",
+      top: "63%",
+      left: "2%",
+      opacity: 0.13,
+    },
+    {
+      text: "200 OK — feature shipped on time",
+      top: "69%",
+      left: "64%",
+      opacity: 0.1,
+    },
+    {
+      text: "async function solve(problem: Hard): Promise<Solution>",
+      top: "76%",
+      left: "4%",
+      opacity: 0.11,
+    },
+    {
+      text: "return <CleanCode readable elegant />",
+      top: "82%",
+      left: "57%",
+      opacity: 0.12,
+    },
+    {
+      text: "docker build -t prod . && docker push",
+      top: "88%",
+      left: "2%",
+      opacity: 0.09,
+    },
+    {
+      text: "zod.object({ email: z.string().email() })",
+      top: "93%",
+      left: "68%",
+      opacity: 0.1,
+    },
   ];
 
   return (
@@ -167,7 +237,8 @@ export default function RootLayout({
             style={{
               width: "40%",
               height: "40%",
-              background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)",
+              background:
+                "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)",
             }}
             animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -177,20 +248,32 @@ export default function RootLayout({
             style={{
               width: "30%",
               height: "30%",
-              background: "radial-gradient(circle, rgba(22,163,74,0.15) 0%, transparent 70%)",
+              background:
+                "radial-gradient(circle, rgba(22,163,74,0.15) 0%, transparent 70%)",
             }}
             animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
           />
           <motion.div
             className="absolute top-[20%] right-[10%] rounded-full blur-[80px]"
             style={{
               width: "25%",
               height: "25%",
-              background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)",
+              background:
+                "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)",
             }}
             animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 4,
+            }}
           />
         </div>
 
