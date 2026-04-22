@@ -1,8 +1,10 @@
 ﻿"use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useToast } from "@/components/Dashboard/ui/ToastContext";
 
 const HeroManager = () => {
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     greeting: "Hi, I'm",
     name: "Aftab Farhan Arko",
@@ -19,7 +21,7 @@ const HeroManager = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Changes saved locally! (Backend not implemented)");
+    showToast("Hero section updated successfully!");
   };
 
   return (

@@ -21,7 +21,6 @@ const SoftSkillsManager = () => {
       examples: ["Resolved critical production bugs under tight deadlines"] 
     },
   ]);
-  // oiawjdffoijf
 
   const addSkill = () => {
     const newSkill = { 
@@ -94,7 +93,7 @@ const SoftSkillsManager = () => {
                         <span>{sub.level}%</span>
                       </div>
                       <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-white/20" style={{ width: ${sub.level}% }} />
+                        <div className="h-full bg-white/20" style={{ width: `${sub.level}%` }} />
                       </div>
                     </div>
                   ))}

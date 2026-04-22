@@ -43,7 +43,11 @@ const Sidebar = () => {
             <Link
               key={item.id}
               href={item.href}
-              className={lex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all relative group }
+              className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all relative group ${
+                isActive
+                  ? "bg-white/10 text-white"
+                  : "text-foreground/60 hover:text-white hover:bg-white/5"
+              }`}
             >
               {isActive && (
                 <motion.div
