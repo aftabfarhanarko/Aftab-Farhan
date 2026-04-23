@@ -5,17 +5,17 @@ import Link from "next/link";
 
 const DashboardOverview = () => {
   const stats = [
-    { label: "Total Projects", value: "12", icon: "📁", color: "bg-blue-500/10 text-blue-500" },
-    { label: "Experience", value: "3+ Years", icon: "💼", color: "bg-green-500/10 text-green-500" },
-    { label: "Skills", value: "24", icon: "⚡", color: "bg-yellow-500/10 text-yellow-500" },
-    { label: "Messages", value: "5 New", icon: "✉️", color: "bg-purple-500/10 text-purple-500" },
+    { label: "Total Projects", value: "12", icon: "??", color: "bg-blue-500/10 text-blue-500" },
+    { label: "Experience", value: "3+ Years", icon: "??", color: "bg-green-500/10 text-green-500" },
+    { label: "Skills", value: "24", icon: "?", color: "bg-yellow-500/10 text-yellow-500" },
+    { label: "Messages", value: "5 New", icon: "??", color: "bg-purple-500/10 text-purple-500" },
   ];
 
   const quickActions = [
-    { title: "Update Bio", desc: "Edit your 'About Me' section", href: "/dashboard/about", icon: "👤" },
-    { title: "Add Project", desc: "Showcase your latest work", href: "/dashboard/projects", icon: "➕" },
-    { title: "Edit Experience", desc: "Update your career path", href: "/dashboard/experience", icon: "💼" },
-    { title: "Contact Info", desc: "Manage social links", href: "/dashboard/contact", icon: "📱" },
+    { title: "Update Bio", desc: "Edit your 'About Me' section", href: "/dashboard/about", icon: "??" },
+    { title: "Add Project", desc: "Showcase your latest work", href: "/dashboard/projects", icon: "?" },
+    { title: "Edit Experience", desc: "Update your career path", href: "/dashboard/experience", icon: "??" },
+    { title: "Contact Info", desc: "Manage social links", href: "/dashboard/contact", icon: "??" },
   ];
 
   return (
@@ -43,7 +43,7 @@ const DashboardOverview = () => {
             transition={{ delay: i * 0.1 }}
             className="p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:border-white/10 transition-colors group"
           >
-            <div className={w-12 h-12 rounded-2xl  flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform}>
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform ${stat.color}`}>
               {stat.icon}
             </div>
             <div className="text-3xl font-black mb-1">{stat.value}</div>
