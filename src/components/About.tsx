@@ -1,4 +1,6 @@
-﻿export default function About() {
+﻿// import { createPlant } from "@/models/plant.model";
+
+export default async function About() {
   const stats = [
     { label: "Years Experience", value: "6+" },
     { label: "Projects Completed", value: "50+" },
@@ -20,6 +22,16 @@
     "REST APIs",
     "GraphQL",
   ];
+
+  // const newPlant = await createPlant({
+  //   name: "Rose",
+  //   description: "Beautiful flower",
+  //   title: "Premium",
+  //   subtitle: "Best Quality",
+  //   userId: "user123",
+  //   imageUrl: "https://example.com/rose.jpg",
+  // });
+  // console.log("Created:", newPlant);
 
   return (
     <section id="about" className="mb-32 scroll-mt-24">
@@ -56,8 +68,9 @@
 
             <p className="text-foreground/60 text-base leading-relaxed">
               I architect and build high-performance web applications that
-              scale. With deep expertise in modern web technologies, I transform 
-              complex business requirements into elegant, production-ready solutions.
+              scale. With deep expertise in modern web technologies, I transform
+              complex business requirements into elegant, production-ready
+              solutions.
             </p>
           </div>
 
@@ -141,9 +154,7 @@
                 <p className="text-xs text-foreground/40 mt-0.5">
                   Full Stack Development
                 </p>
-                <p className="text-xs text-foreground/50">
-                  Modern Web Apps
-                </p>
+                <p className="text-xs text-foreground/50">Modern Web Apps</p>
               </div>
             </div>
 
@@ -252,6 +263,3 @@
     </section>
   );
 }
-
-
-
