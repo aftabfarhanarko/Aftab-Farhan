@@ -22,38 +22,78 @@ The core frameworks and libraries used in this project are listed below:
 
 ### Database & ORM
 - **Prisma ORM**: Providing type-safe database queries and schema management.
-- **PostgreSQL**: Scalable data storage solutions.
+- **MongoDB/PostgreSQL**: Scalable data storage solutions.
 
 ### State Management & Data Fetching
 - **Redux Toolkit**: Managing global application state (e.g., user authentication info).
 - **TanStack Query (React Query)**: Handling server state, caching, and efficient data fetching.
 - **React Redux**: Connecting Redux state to React components.
 
-## 🛠️ Folder Structure
+## 📂 Project Structure
 
-- `src/app`: Next.js App Router, pages, and layouts.
-- `src/components`: Reusable UI components.
-- `src/providers`: Configuration for Redux, TanStack Query, and other context providers.
-- `src/store`: Redux Toolkit store configuration and slices.
-- `src/models`: Database query functions and data models.
-- `prisma`: Database schema and migration files.
-
-## 🏁 Getting Started
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Configure environment variables (`.env`):
-```env
-DATABASE_URL="your_database_url"
-AUTH_SECRET="your_secret_key"
-```
-
-3. Run the development server:
-```bash
-npm run dev
+```text
+arko-protflieo/
+├── prisma/
+│   └── schema.prisma
+├── public/
+│   ├── image.png
+│   └── (static assets)
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── auth/
+│   │   │   └── register/
+│   │   ├── dashboard/
+│   │   │   ├── about/
+│   │   │   ├── contact/
+│   │   │   ├── education/
+│   │   │   ├── experience/
+│   │   │   ├── hero/
+│   │   │   ├── projects/
+│   │   │   ├── services/
+│   │   │   ├── skills/
+│   │   │   └── soft-skills/
+│   │   ├── login/
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── Dashboard/
+│   │   │   ├── ui/
+│   │   │   └── Sidebar.tsx
+│   │   ├── Home/
+│   │   │   ├── About/
+│   │   │   ├── Contact/
+│   │   │   ├── Education/
+│   │   │   ├── Experience/
+│   │   │   ├── Hero/
+│   │   │   ├── Projects/
+│   │   │   ├── Services/
+│   │   │   ├── Skills/
+│   │   │   └── SoftSkills/
+│   │   ├── ui/
+│   │   ├── Navbar.tsx
+│   │   └── Threads.tsx
+│   ├── lib/
+│   │   ├── prisma.ts
+│   │   └── utils.ts
+│   ├── models/
+│   │   ├── About/
+│   │   ├── Users/
+│   │   └── (feature models)
+│   ├── providers/
+│   │   ├── QueryProvider.tsx
+│   │   └── ReduxProvider.tsx
+│   ├── store/
+│   │   ├── slices/
+│   │   └── store.ts
+│   ├── auth.config.ts
+│   ├── auth.ts
+│   └── middleware.ts
+├── .env
+├── next.config.ts
+├── package.json
+├── prisma.config.ts
+└── tsconfig.json
 ```
 
 ---
