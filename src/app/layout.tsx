@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
+import QueryProvider from "@/providers/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -194,7 +195,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const isDashboard = pathname.startsWith("/dashboard") || pathname === "/login";
+  const isDashboard =
+    pathname.startsWith("/dashboard") || pathname === "/login";
 
   return (
     <html
@@ -272,18 +274,20 @@ export default function RootLayout({
         {!isDashboard && <Navbar />}
 
         {/* ── Page Content ── */}
-        <AnimatePresence mode="wait">
-          <motion.main
-            key={pathname}
-            className={`flex-1 relative z-10 ${!isDashboard ? "pt-20" : ""}`}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.45, ease: "easeInOut" }}
-          >
-            {children}
-          </motion.main>
-        </AnimatePresence>
+        <QueryProvider>
+          <AnimatePresence mode="wait">
+            <motion.main
+              key={pathname}
+              className={`flex-1 relative z-10 ${!isDashboard ? "pt-20" : ""}`}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.45, ease: "easeInOut" }}
+            >
+              {children}
+            </motion.main>
+          </AnimatePresence>
+        </QueryProvider>
 
         {/* ── Footer ── */}
         {!isDashboard && (
@@ -302,8 +306,8 @@ export default function RootLayout({
               className="mx-auto max-w-3xl px-6 text-center text-sm"
               style={{ color: "rgba(226,240,226,0.35)" }}
             >
-              © {new Date().getFullYear()} Aftab Farhan Arko. Built with Next.js &
-              Tailwind CSS.
+              © {new Date().getFullYear()} Aftab Farhan Arko. Built with Next.js
+              & Tailwind CSS.
             </div>
           </motion.footer>
         )}

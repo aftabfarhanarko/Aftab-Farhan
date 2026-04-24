@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -246,11 +246,12 @@ export default function Hero() {
         <div className="relative w-[340px] h-[340px] sm:w-[380px] sm:h-[380px] rounded-full border-[3px] border-foreground/60 p-2.5 shadow-[0_0_60px_rgba(57,255,20,0.2),inset_0_0_40px_rgba(57,255,20,0.05)] bg-background z-10 group">
           <div className="w-full h-full rounded-full overflow-hidden bg-foreground/5 relative">
             <Image
-              src="/image.png"
-              alt="Aftab Farha Arko - Full Stack Developer"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              priority
+                src="/image.png"
+                alt="Aftab Farha Arko - Full Stack Developer"
+                fill
+                sizes="(max-width: 768px) 340px, 380px"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                priority
             />
             <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
           </div>
