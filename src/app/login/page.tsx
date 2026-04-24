@@ -2,22 +2,39 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate auth
-    setTimeout(() => {
+    setError("");
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid email or password");
+        setLoading(false);
+      } else {
+        router.push("/dashboard");
+        router.refresh();
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
       setLoading(false);
-      router.push("/dashboard");
-    }, 1500);
+    }
   };
 
   return (
@@ -33,9 +50,6 @@ export default function LoginPage() {
       >
         <div className="p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 backdrop-blur-xl shadow-2xl relative">
           <div className="mb-10 text-center">
-            <div className="w-16 h-16 bg-white text-black rounded-2xl flex items-center justify-center font-black text-3xl mx-auto mb-6 shadow-lg shadow-white/10">
-              A
-            </div>
             <h2 className="text-3xl font-black text-white tracking-tight mb-2">
               Welcome back.
             </h2>
@@ -45,6 +59,12 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-bold uppercase tracking-widest p-4 rounded-xl text-center">
+                {error}
+              </div>
+            )}
+
             <div className="space-y-2">
               <label className="block text-[10px] font-bold tracking-widest uppercase text-foreground/40 px-1">
                 Email Address
