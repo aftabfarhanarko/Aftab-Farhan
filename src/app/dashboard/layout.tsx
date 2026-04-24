@@ -1,7 +1,8 @@
-﻿import React from "react";
+import React from "react";
 import Sidebar from "@/components/Dashboard/Sidebar";
 import { ToastProvider } from "@/components/Dashboard/ui/ToastContext";
 import QueryProvider from "@/providers/QueryProvider";
+import ReduxProvider from "@/providers/ReduxProvider";
 
 export default function DashboardLayout({
   children,
@@ -14,7 +15,9 @@ export default function DashboardLayout({
         <Sidebar />
         <main className="flex-1 p-8 overflow-y-auto max-h-screen">
           <div className="max-w-5xl mx-auto">
-            <QueryProvider>{children}</QueryProvider>
+            <QueryProvider>
+              <ReduxProvider>{children}</ReduxProvider>
+            </QueryProvider>
           </div>
         </main>
       </div>

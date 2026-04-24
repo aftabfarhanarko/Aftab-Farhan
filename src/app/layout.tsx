@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import QueryProvider from "@/providers/QueryProvider";
+import ReduxProvider from "@/providers/ReduxProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -275,18 +276,20 @@ export default function RootLayout({
 
         {/* ── Page Content ── */}
         <QueryProvider>
-          <AnimatePresence mode="wait">
-            <motion.main
-              key={pathname}
-              className={`flex-1 relative z-10 ${!isDashboard ? "pt-20" : ""}`}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.45, ease: "easeInOut" }}
-            >
-              {children}
-            </motion.main>
-          </AnimatePresence>
+          <ReduxProvider>
+            <AnimatePresence mode="wait">
+              <motion.main
+                key={pathname}
+                className={`flex-1 relative z-10 ${!isDashboard ? "pt-20" : ""}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.45, ease: "easeInOut" }}
+              >
+                {children}
+              </motion.main>
+            </AnimatePresence>
+          </ReduxProvider>
         </QueryProvider>
 
         {/* ── Footer ── */}
