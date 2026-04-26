@@ -18,8 +18,8 @@ const experiences = [
     logo: "N",
     logoColor: "#6366F1",
     url: "https://www.nexoviasoft.com",
-    location: "Dhaka, Bangladesh",
-    period: "2023 – Present",
+    location: "Ragpur, Bangladesh",
+    period: "2026 – Present",
     type: "current",
     roles: [
       {
@@ -30,7 +30,7 @@ const experiences = [
           "Led daily operations and strategic planning for company growth",
           "Managed cross-functional teams including development, design, and marketing",
           "Optimized workflow processes resulting in 40% faster project delivery",
-          "Oversaw resource allocation and budget management for 50+ projects",
+          "Oversaw resource allocation and budget management for 9+ projects",
           "Established company policies and operational frameworks",
           "Drove business development and client relationship management",
         ],
@@ -49,103 +49,120 @@ const experiences = [
         ],
       },
     ],
-    techStack: ["React", "Next.js", "Node.js", "AWS", "MongoDB", "PostgreSQL", "Docker"],
+    techStack: [
+      "React",
+      "Typescript",
+      "Next.js",
+      "Node.js",
+      "MongoDB",
+      "PostgreSQL",
+    ],
     achievements: [
-      { metric: "50+", label: "Projects Delivered" },
-      { metric: "40%", label: "Efficiency Increase" },
-      { metric: "30+", label: "Enterprise Clients" },
-      { metric: "15+", label: "Team Members" },
+      { metric: "9+", label: "Projects Delivered" },
+      { metric: "60%", label: "Efficiency Increase" },
+      { metric: "8+", label: "Enterprise Clients" },
+      { metric: "8+", label: "Team Members" },
     ],
   },
-  {
-    id: 2,
-    company: "TechSolutions Ltd",
-    logo: "T",
-    logoColor: "#10B981",
-    url: "#",
-    location: "Remote · Dhaka, Bangladesh",
-    period: "2021 – 2023",
-    type: "previous",
-    roles: [
-      {
-        title: "Senior Full-Stack Developer",
-        subtitle: "Full-time · Team Lead",
-        Icon: Code2,
-        responsibilities: [
-          "Led a team of 5 developers in building scalable web applications",
-          "Architected and developed RESTful APIs serving 100K+ daily requests",
-          "Implemented microservices architecture reducing system downtime by 60%",
-          "Mentored junior developers and conducted thorough code reviews",
-          "Optimized database queries resulting in 45% faster response times",
-          "Integrated third-party services including payment gateways and analytics",
-        ],
-      },
-    ],
-    techStack: ["React", "Node.js", "Express", "MySQL", "Redis", "Docker", "GitHub Actions"],
-    achievements: [
-      { metric: "15+", label: "Apps Launched" },
-      { metric: "100K+", label: "Daily Users" },
-      { metric: "45%", label: "Performance Gain" },
-      { metric: "5", label: "Team Members Led" },
-    ],
-  },
-  {
-    id: 3,
-    company: "DigitalCraft Agency",
-    logo: "D",
-    logoColor: "#F59E0B",
-    url: "#",
-    location: "Dhaka, Bangladesh",
-    period: "2019 – 2021",
-    type: "previous",
-    roles: [
-      {
-        title: "Web Developer",
-        subtitle: "Full-time · Frontend Focus",
-        Icon: Code2,
-        responsibilities: [
-          "Developed responsive and interactive web applications for 20+ clients",
-          "Converted Figma designs into pixel-perfect React components",
-          "Implemented state management with Redux and Context API",
-          "Optimized website performance achieving 95+ Lighthouse scores",
-          "Collaborated closely with designers and backend developers",
-          "Built custom e-commerce solutions with payment integrations",
-        ],
-      },
-    ],
-    techStack: ["React", "JavaScript", "Redux", "SASS", "Webpack", "Jest", "Storybook"],
-    achievements: [
-      { metric: "20+", label: "Websites Built" },
-      { metric: "95+", label: "Performance Score" },
-      { metric: "100%", label: "Client Satisfaction" },
-      { metric: "10+", label: "E-comm Stores" },
-    ],
-  },
-];
-
-const companyServices = [
-  "Custom Software Solutions",
-  "Secure Cloud Infrastructure",
-  "Advanced AI Integration",
-  "DevOps & Cloud Deployment",
-  "UI/UX Design",
-  "Digital Marketing",
-  "E-Commerce Development",
-  "Odoo ERP Solutions",
+  // {
+  //   id: 2,
+  //   company: "TechSolutions Ltd",
+  //   logo: "T",
+  //   logoColor: "#10B981",
+  //   url: "#",
+  //   location: "Remote · Dhaka, Bangladesh",
+  //   period: "2021 – 2023",
+  //   type: "previous",
+  //   roles: [
+  //     {
+  //       title: "Senior Full-Stack Developer",
+  //       subtitle: "Full-time · Team Lead",
+  //       Icon: Code2,
+  //       responsibilities: [
+  //         "Led a team of 5 developers in building scalable web applications",
+  //         "Architected and developed RESTful APIs serving 100K+ daily requests",
+  //         "Implemented microservices architecture reducing system downtime by 60%",
+  //         "Mentored junior developers and conducted thorough code reviews",
+  //         "Optimized database queries resulting in 45% faster response times",
+  //         "Integrated third-party services including payment gateways and analytics",
+  //       ],
+  //     },
+  //   ],
+  //   techStack: [
+  //     "React",
+  //     "Node.js",
+  //     "Express",
+  //     "MySQL",
+  //     "Redis",
+  //     "Docker",
+  //     "GitHub Actions",
+  //   ],
+  //   achievements: [
+  //     { metric: "15+", label: "Apps Launched" },
+  //     { metric: "100K+", label: "Daily Users" },
+  //     { metric: "45%", label: "Performance Gain" },
+  //     { metric: "5", label: "Team Members Led" },
+  //   ],
+  // },
+  // {
+  //   id: 3,
+  //   company: "DigitalCraft Agency",
+  //   logo: "D",
+  //   logoColor: "#F59E0B",
+  //   url: "#",
+  //   location: "Dhaka, Bangladesh",
+  //   period: "2019 – 2021",
+  //   type: "previous",
+  //   roles: [
+  //     {
+  //       title: "Web Developer",
+  //       subtitle: "Full-time · Frontend Focus",
+  //       Icon: Code2,
+  //       responsibilities: [
+  //         "Developed responsive and interactive web applications for 20+ clients",
+  //         "Converted Figma designs into pixel-perfect React components",
+  //         "Implemented state management with Redux and Context API",
+  //         "Optimized website performance achieving 95+ Lighthouse scores",
+  //         "Collaborated closely with designers and backend developers",
+  //         "Built custom e-commerce solutions with payment integrations",
+  //       ],
+  //     },
+  //   ],
+  //   techStack: [
+  //     "React",
+  //     "JavaScript",
+  //     "Redux",
+  //     "SASS",
+  //     "Webpack",
+  //     "Jest",
+  //     "Storybook",
+  //   ],
+  //   achievements: [
+  //     { metric: "20+", label: "Websites Built" },
+  //     { metric: "95+", label: "Performance Score" },
+  //     { metric: "100%", label: "Client Satisfaction" },
+  //     { metric: "10+", label: "E-comm Stores" },
+  //   ],
+  // },
 ];
 
 export default function Experience() {
-  const [activeTab, setActiveTab] = useState<"all" | "current" | "previous">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "current" | "previous">(
+    "all",
+  );
 
   const filtered =
-    activeTab === "all" ? experiences : experiences.filter((e) => e.type === activeTab);
+    activeTab === "all"
+      ? experiences
+      : experiences.filter((e) => e.type === activeTab);
 
   return (
-    <section id="experience" className="mb-16 sm:mb-24 lg:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0">
-
+    <section
+      id="experience"
+      className="mb-16 sm:mb-24 lg:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0"
+    >
       {/* ── Two-column layout: left sticky title + right timeline ── */}
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
-
         {/* ── LEFT: sticky title panel ── */}
         <div className="lg:sticky lg:top-28">
           {/* Career Path badge */}
@@ -171,7 +188,7 @@ export default function Experience() {
           <div className="grid grid-cols-2 gap-3 mb-8">
             {[
               { v: "1.5+", l: "Years Exp." },
-              { v: "45+", l: "Projects" },
+              { v: "10+", l: "Projects" },
               { v: "7+", l: "Clients" },
               { v: "12+", l: "Tech Stack" },
             ].map(({ v, l }) => (
@@ -186,27 +203,6 @@ export default function Experience() {
               </div>
             ))}
           </div>
-
-          {/* Filter tabs */}
-          <div className="flex flex-col gap-1">
-            {[
-              { id: "all", label: "All Experience" },
-              { id: "current", label: "Current Role" },
-              { id: "previous", label: "Previous Roles" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                className={`text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? "bg-foreground text-background"
-                    : "text-foreground/50 hover:text-foreground hover:bg-foreground/5"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* ── RIGHT: timeline cards ── */}
@@ -217,7 +213,6 @@ export default function Experience() {
           <div className="space-y-6">
             {filtered.map((exp) => (
               <div key={exp.id} className="relative sm:pl-14">
-
                 {/* Timeline dot */}
                 <div
                   className="absolute left-5 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-background hidden sm:block"
@@ -247,9 +242,15 @@ export default function Experience() {
                         {/* Logo */}
                         <div
                           className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl font-black shrink-0"
-                          style={{ background: `${exp.logoColor}22`, border: `1.5px solid ${exp.logoColor}44` }}
+                          style={{
+                            background: `${exp.logoColor}22`,
+                            border: `1.5px solid ${exp.logoColor}44`,
+                          }}
                         >
-                          <Briefcase className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: exp.logoColor }} />
+                          <Briefcase
+                            className="w-5 h-5 sm:w-6 sm:h-6"
+                            style={{ color: exp.logoColor }}
+                          />
                         </div>
 
                         <div>
@@ -280,13 +281,23 @@ export default function Experience() {
                       {/* Period + current badge */}
                       <div className="flex flex-col items-end gap-1.5 shrink-0">
                         {exp.type === "current" && (
-                          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider"
-                            style={{ borderColor: `${exp.logoColor}55`, color: exp.logoColor, background: `${exp.logoColor}15` }}>
+                          <span
+                            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider"
+                            style={{
+                              borderColor: `${exp.logoColor}55`,
+                              color: exp.logoColor,
+                              background: `${exp.logoColor}15`,
+                            }}
+                          >
                             <span className="relative flex h-1.5 w-1.5">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                                style={{ background: exp.logoColor }} />
-                              <span className="relative inline-flex rounded-full h-1.5 w-1.5"
-                                style={{ background: exp.logoColor }} />
+                              <span
+                                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                                style={{ background: exp.logoColor }}
+                              />
+                              <span
+                                className="relative inline-flex rounded-full h-1.5 w-1.5"
+                                style={{ background: exp.logoColor }}
+                              />
                             </span>
                             Present
                           </span>
@@ -309,13 +320,18 @@ export default function Experience() {
                                 className="p-1.5 rounded-lg border border-white/10"
                                 style={{ background: `${exp.logoColor}18` }}
                               >
-                                <RIcon className="w-4 h-4" style={{ color: exp.logoColor }} />
+                                <RIcon
+                                  className="w-4 h-4"
+                                  style={{ color: exp.logoColor }}
+                                />
                               </div>
                               <div>
                                 <h4 className="text-sm sm:text-base font-bold text-foreground leading-tight">
                                   {role.title}
                                 </h4>
-                                <p className="text-[10px] sm:text-xs text-foreground/40">{role.subtitle}</p>
+                                <p className="text-[10px] sm:text-xs text-foreground/40">
+                                  {role.subtitle}
+                                </p>
                               </div>
                             </div>
 
@@ -384,31 +400,6 @@ export default function Experience() {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* ── Services footer ── */}
-      <div className="mt-10 sm:mt-14 p-5 sm:p-6 rounded-2xl bg-foreground/[0.03] border border-white/10">
-        <h4 className="font-bold text-foreground text-sm sm:text-base mb-4 flex items-center gap-2">
-          <span
-            className="w-2 h-2 rounded-full bg-foreground"
-            style={{ background: "#6366F1" }}
-          />
-          Services I Oversee at NexoviaSoft
-        </h4>
-        <div className="flex flex-wrap gap-2">
-          {companyServices.map((s) => (
-            <span
-              key={s}
-              className="px-3 py-1.5 text-xs sm:text-sm bg-foreground/[0.04] border border-white/10 rounded-full text-foreground/65 hover:text-foreground hover:border-white/25 transition-colors"
-            >
-              {s}
-            </span>
-          ))}
-        </div>
-        <p className="text-xs sm:text-sm text-foreground/40 mt-4 italic">
-          "Leading operations and project delivery for a premium web development and digital
-          solutions company serving enterprise clients worldwide."
-        </p>
       </div>
     </section>
   );
