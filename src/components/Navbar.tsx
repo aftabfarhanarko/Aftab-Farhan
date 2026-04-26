@@ -17,24 +17,32 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { id: "hero",       label: "Home",       icon: Home },
-  { id: "about",      label: "About",      icon: User },
-  { id: "skills",     label: "Skills",     icon: Layers },
-  { id: "projects",   label: "Projects",   icon: FolderKanban, highlight: true },
+  { id: "hero", label: "Home", icon: Home },
+  { id: "about", label: "About", icon: User },
+  { id: "skills", label: "Skills", icon: Layers },
+  { id: "projects", label: "Projects", icon: FolderKanban, highlight: true },
   { id: "experience", label: "Experience", icon: Briefcase },
-  { id: "soft-skills",label: "Soft Skills",icon: Smile },
-  { id: "education",  label: "Education",  icon: GraduationCap },
-  { id: "contact",    label: "Contact",    icon: Mail },
+  { id: "soft-skills", label: "Soft Skills", icon: Smile },
+  { id: "education", label: "Education", icon: GraduationCap },
+  { id: "contact", label: "Contact", icon: Mail },
 ];
 
 const mobileNavItems = navItems.filter((n) =>
-  ["hero","about","skills","projects","experience","education","contact"].includes(n.id)
+  [
+    "hero",
+    "about",
+    "skills",
+    "projects",
+    "experience",
+    "education",
+    "contact",
+  ].includes(n.id),
 );
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("hero");
-  const [isScrolled, setIsScrolled]       = useState(false);
-  const [isDark, setIsDark]               = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -65,28 +73,30 @@ export default function Navbar() {
   };
 
   const p = {
-    bg:       isDark ? "rgba(10,10,14,0.88)"     : "rgba(250,250,252,0.88)",
-    pillBg:   isDark ? "rgba(22,22,28,0.96)"     : "rgba(238,238,242,0.96)",
-    border:   isDark ? "rgba(255,255,255,0.08)"  : "rgba(0,0,0,0.08)",
-    text:     isDark ? "#EFEFEF"                 : "#111111",
-    muted:    isDark ? "rgba(239,239,239,0.42)"  : "rgba(17,17,17,0.40)",
-    activeBg: isDark ? "rgba(255,255,255,0.10)"  : "rgba(0,0,0,0.08)",
-    hoverBg:  isDark ? "rgba(255,255,255,0.05)"  : "rgba(0,0,0,0.04)",
-    accent:       "#22c55e",
-    accentGlow:   "rgba(34,197,94,0.40)",
-    accentGrad:   "linear-gradient(135deg,#22c55e,#16a34a)",
-    shadow:   isDark ? "0 2px 40px rgba(0,0,0,0.60)" : "0 2px 40px rgba(0,0,0,0.10)",
-    btmBg:    isDark ? "rgba(12,12,16,0.97)"     : "rgba(255,255,255,0.97)",
-    btmBorder:isDark ? "rgba(255,255,255,0.08)"  : "rgba(0,0,0,0.08)",
-    btmIcon:  isDark ? "rgba(255,255,255,0.45)"  : "rgba(30,30,30,0.40)",
-    btmActive:isDark ? "#FFFFFF"                 : "#111111",
+    bg: isDark ? "rgba(10,10,14,0.88)" : "rgba(250,250,252,0.88)",
+    pillBg: isDark ? "rgba(22,22,28,0.96)" : "rgba(238,238,242,0.96)",
+    border: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)",
+    text: isDark ? "#EFEFEF" : "#111111",
+    muted: isDark ? "rgba(239,239,239,0.42)" : "rgba(17,17,17,0.40)",
+    activeBg: isDark ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.08)",
+    hoverBg: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
+    accent: "#22c55e",
+    accentGlow: "rgba(34,197,94,0.40)",
+    accentGrad: "linear-gradient(135deg,#22c55e,#16a34a)",
+    shadow: isDark
+      ? "0 2px 40px rgba(0,0,0,0.60)"
+      : "0 2px 40px rgba(0,0,0,0.10)",
+    btmBg: isDark ? "rgba(12,12,16,0.97)" : "rgba(255,255,255,0.97)",
+    btmBorder: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)",
+    btmIcon: isDark ? "rgba(255,255,255,0.45)" : "rgba(30,30,30,0.40)",
+    btmActive: isDark ? "#FFFFFF" : "#111111",
   };
 
   return (
     <>
       {/* ═══════════ TOP BAR ═══════════ */}
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50"
+        className="fixed top-0 left-0 right-0 z-50 max-w-7xl mx-auto rounded-2xl mt-5"
         style={{
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
@@ -112,27 +122,19 @@ export default function Navbar() {
           >
             <span
               style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: "'Roboto', sans-serif",
                 fontSize: 20,
                 fontWeight: 900,
                 letterSpacing: "-0.02em",
-                color: p.text,
+                color: "#ffffff",
               }}
             >
-              Arko
+              {"<aftab farhan arko />"}
             </span>
-            <span style={{ color: p.accent, fontSize: 28, lineHeight: 1, marginTop: -4 }}>.</span>
           </motion.button>
 
           {/* ── Desktop: single pill nav ── */}
-          <div
-            className="hidden lg:flex items-center gap-0.5 px-2 py-1.5 rounded-full"
-            style={{
-              background: p.pillBg,
-              border: `1px solid ${p.border}`,
-              boxShadow: "0 1px 12px rgba(0,0,0,0.18)",
-            }}
-          >
+          <div className="hidden lg:flex items-center gap-0.5 px-2 py-1.5 rounded-full">
             {navItems.map((item, i) => {
               const active = activeSection === item.id;
               return (
@@ -142,7 +144,11 @@ export default function Navbar() {
                   className="relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold border-none cursor-pointer whitespace-nowrap"
                   style={{
                     color: active ? (isDark ? "#fff" : "#000") : p.muted,
-                    backgroundColor: active ? (isDark ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.08)") : "transparent",
+                    backgroundColor: active
+                      ? isDark
+                        ? "rgba(255,255,255,0.10)"
+                        : "rgba(0,0,0,0.08)"
+                      : "transparent",
                     fontFamily: "'DM Sans', sans-serif",
                     transition: "background-color 0.2s, color 0.2s",
                     fontSize: 13,
@@ -152,7 +158,9 @@ export default function Navbar() {
                   transition={{ delay: 0.05 + i * 0.03 }}
                   whileHover={{
                     backgroundColor: active
-                      ? (isDark ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.08)")
+                      ? isDark
+                        ? "rgba(255,255,255,0.10)"
+                        : "rgba(0,0,0,0.08)"
                       : p.hoverBg,
                     color: active ? (isDark ? "#fff" : "#000") : p.text,
                   }}
@@ -163,10 +171,16 @@ export default function Navbar() {
                       layoutId="activePill"
                       className="absolute inset-0 rounded-full"
                       style={{
-                        background: isDark ? "rgba(255,255,255,0.09)" : "rgba(0,0,0,0.07)",
+                        background: isDark
+                          ? "rgba(255,255,255,0.09)"
+                          : "rgba(0,0,0,0.07)",
                         zIndex: -1,
                       }}
-                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 32,
+                      }}
                     />
                   )}
                   {item.label}
@@ -176,8 +190,17 @@ export default function Navbar() {
                     <motion.span
                       layoutId="navDot"
                       className="inline-block rounded-full"
-                      style={{ width: 5, height: 5, background: p.accent, flexShrink: 0 }}
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      style={{
+                        width: 5,
+                        height: 5,
+                        background: p.accent,
+                        flexShrink: 0,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </motion.button>
@@ -209,7 +232,11 @@ export default function Navbar() {
                   animate={{ rotate: 0, opacity: 1, scale: 1 }}
                   exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
                   transition={{ duration: 0.2 }}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
                   {isDark ? <Moon size={16} /> : <Sun size={16} />}
                 </motion.span>
@@ -229,7 +256,10 @@ export default function Navbar() {
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 13,
               }}
-              whileHover={{ scale: 1.05, boxShadow: `0 8px 26px ${p.accentGlow}` }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: `0 8px 26px ${p.accentGlow}`,
+              }}
               whileTap={{ scale: 0.95 }}
             >
               <Download size={14} strokeWidth={2.5} color="#fff" />
@@ -253,7 +283,10 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="flex items-end justify-around" style={{ height: 66, paddingBottom: 6 }}>
+        <div
+          className="flex items-end justify-around"
+          style={{ height: 66, paddingBottom: 6 }}
+        >
           {mobileNavItems.map((item) => {
             const active = activeSection === item.id;
             const Icon = item.icon;
@@ -280,12 +313,16 @@ export default function Navbar() {
                   >
                     <Icon size={24} color="#ffffff" strokeWidth={2} />
                   </motion.div>
-                  <span style={{
-                    fontSize: 10, fontWeight: 700,
-                    color: isDark ? "#ffffff" : p.accent,
-                    fontFamily: "'DM Sans', sans-serif",
-                    marginTop: 3, lineHeight: 1.2,
-                  }}>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: isDark ? "#ffffff" : p.accent,
+                      fontFamily: "'DM Sans', sans-serif",
+                      marginTop: 3,
+                      lineHeight: 1.2,
+                    }}
+                  >
                     {item.label}
                   </span>
                 </motion.button>
@@ -304,23 +341,35 @@ export default function Navbar() {
                   <motion.span
                     layoutId="mobileTopLine"
                     className="absolute top-0 left-1/2 -translate-x-1/2 rounded-full"
-                    style={{ width: 20, height: 2.5, backgroundColor: isDark ? "#fff" : p.accent }}
+                    style={{
+                      width: 20,
+                      height: 2.5,
+                      backgroundColor: isDark ? "#fff" : p.accent,
+                    }}
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
                 <motion.span
                   animate={{ scale: active ? 1.18 : 1 }}
                   transition={{ type: "spring", stiffness: 420, damping: 26 }}
-                  style={{ color: active ? p.btmActive : p.btmIcon, display: "flex", marginBottom: 3 }}
+                  style={{
+                    color: active ? p.btmActive : p.btmIcon,
+                    display: "flex",
+                    marginBottom: 3,
+                  }}
                 >
                   <Icon size={22} strokeWidth={active ? 2.4 : 1.8} />
                 </motion.span>
-                <span style={{
-                  fontSize: 10, fontWeight: active ? 700 : 500,
-                  color: active ? p.btmActive : p.btmIcon,
-                  fontFamily: "'DM Sans', sans-serif",
-                  lineHeight: 1.1, whiteSpace: "nowrap",
-                }}>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: active ? 700 : 500,
+                    color: active ? p.btmActive : p.btmIcon,
+                    fontFamily: "'DM Sans', sans-serif",
+                    lineHeight: 1.1,
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   {item.label}
                 </span>
               </motion.button>
