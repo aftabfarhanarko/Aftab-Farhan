@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -97,7 +98,7 @@ function TypingLine({
 }
 
 function AmbientTypingBackground() {
-  const snippets = [  
+  const snippets = [
     {
       text: "const portfolio = new Developer();",
       top: "15%",
@@ -293,27 +294,7 @@ export default function RootLayout({
         </QueryProvider>
 
         {/* ── Footer ── */}
-        {!isDashboard && (
-          <motion.footer
-            className="border-t py-8 relative z-10 backdrop-blur-sm"
-            style={{
-              borderColor: "rgba(255,255,255,0.05)",
-              backgroundColor: "rgba(5,13,5,0.8)",
-            }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div
-              className="mx-auto max-w-3xl px-6 text-center text-sm"
-              style={{ color: "rgba(226,240,226,0.35)" }}
-            >
-              © {new Date().getFullYear()} Aftab Farhan Arko. Built with Next.js
-              & Tailwind CSS.
-            </div>
-          </motion.footer>
-        )}
+        {!isDashboard && <Footer />}
       </body>
     </html>
   );
