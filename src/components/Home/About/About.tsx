@@ -11,26 +11,26 @@ export default function About() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15 },
+      transition: { staggerChildren: 0.12 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.55, ease: "easeOut" },
     },
   };
 
-  const techStack = [
-    "Node.js",
-    "Express.js",
-    "Prisma ORM",
-    "PostgreSQL",
-    // "System Design",
-    // "DevOps",
+  const techStack = ["Node.js", "Express.js", "Prisma ORM", "PostgreSQL"];
+
+  const stats = [
+    { num: "4+", label: "Years Exp." },
+    { num: "10+", label: "Projects" },
+    { num: "7+", label: "Clients" },
+    { num: "12+", label: "Tech Stack" },
   ];
 
   return (
@@ -38,183 +38,148 @@ export default function About() {
       id="about"
       className="mb-16 sm:mb-24 lg:mb-32 scroll-mt-24 px-4 md:-mt-30 sm:px-6 lg:px-0"
     >
-      {/* Header with same styling */}
-      <div className="flex items-center gap-4 sm:gap-6 mb-8 sm:mb-12">
-        <div className="relative">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground tracking-tight">
-            About Me
-          </h2>
-          <div className="absolute -bottom-2 sm:-bottom-3 left-0 w-16 sm:w-20 h-1 bg-foreground rounded-full" />
-        </div>
-        <div className="h-px flex-1 bg-foreground/10" />
-        <span className="text-xs sm:text-sm font-mono text-foreground/40 hidden sm:block">
-          &lt;backend-engineer /&gt;
-        </span>
-      </div>
-
       <motion.div
         ref={ref}
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="grid lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12"
+        className="grid lg:grid-cols-5 gap-8 lg:gap-14 items-start"
       >
-        {/* Main content - 3 columns */}
-        <div className="lg:col-span-3 space-y-6 sm:space-y-8">
-          {/* Introduction Card */}
-          <motion.div
-            variants={itemVariants}
-            className="relative p-5 sm:p-8 rounded-2xl bg-foreground/[0.02] border border-white/10 overflow-hidden"
-          >
-            {/* decorative blurred orb */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-foreground/5 rounded-full blur-3xl -z-10" />
+        {/* ── Left column ── */}
+        <div className="lg:col-span-2 flex flex-col gap-8">
+          {/* Section label + headline */}
+          <motion.div variants={itemVariants}>
+            <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-foreground/40 border border-white/10 rounded-full px-4 py-1.5 mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-foreground/30 inline-block" />
+              backend engineer
+            </span>
 
-            <div className="space-y-4">
-              <div>
-                <span className="text-3xl sm:text-4xl font-black text-foreground block mb-1 tracking-tight">
-                  Aftab Farhan Arko
-                </span>
-                <span className="text-foreground/70 text-sm sm:text-base">
-                  Passionate Web Developer • Backend Engineer • Mentor
-                </span>
-              </div>
+            <h2 className="font-black tracking-tight leading-none text-foreground"
+              style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(40px, 6vw, 58px)" }}>
+              About
+              <span className=" text-foreground/30">Me.</span>
+            </h2>
 
-              <div className="space-y-3 text-foreground/70 text-sm sm:text-base leading-relaxed">
-                <p>
-                  Hi, I’m{" "}
-                  <span className="font-semibold text-foreground">
-                    Aftab Farhan Arko
-                  </span>{" "}
-                  - a passionate web developer with over{" "}
-                  <span className="font-semibold text-foreground">
-                    4 years+ of experience
-                  </span>{" "}
-                  building modern full-stack applications. I love transforming
-                  ideas into scalable, intelligent, and impactful digital
-                  products that solve real-world problems.
-                </p>
-                <p>
-                  I specialize in{" "}
-                  <span className="font-semibold text-foreground">
-                    robust backend systems
-                  </span>{" "}
-                  and{" "}
-                  <span className="font-semibold text-foreground">
-                    efficient workflows
-                  </span>{" "}
-                  using tools like Node.js, Express.js, Prisma ORM, and
-                  PostgreSQL. My focus is on ,{" "}
-                  <span className="font-semibold text-foreground">
-                    Backend Engineering
-                  </span>
-                  , and DevOps, ensuring every project I build is maintainable,
-                  secure, and future-ready.
-                </p>
-                <p>
-                  Beyond coding, I’m passionate about{" "}
-                  <span className="font-semibold text-foreground">
-                    mentoring students
-                  </span>{" "}
-                  and{" "}
-                  <span className="font-semibold text-foreground">
-                    junior developers
-                  </span>
-                  , sharing knowledge, and simplifying complex concepts. I enjoy
-                  collaborating in teams, reviewing code, and helping others
-                  grow alongside me.
-                </p>
-                <p>
-                  I am constantly{" "}
-                  <span className="font-semibold text-foreground">
-                    exploring new technologies
-                  </span>
-                  , experimenting with innovative solutions, and staying updated
-                  with the latest trends in web development. I believe in
-                  continuous learning, building boldly, and turning ideas into
-                  practical projects.
-                </p>
-                <p>
-                  Ultimately, my goal is to create{" "}
-                  <span className="font-semibold text-foreground">
-                    impactful software
-                  </span>{" "}
-                  that empowers users, simplifies processes, and transforms
-                  ideas into reality.
-                </p>
-              </div>
-            </div>
+            <p className="mt-4 text-sm text-foreground/50 font-light leading-relaxed max-w-xs">
+              Crafting scalable systems and guiding the next generation of
+              developers along the way.
+            </p>
           </motion.div>
 
-          {/* Tech Focus Tags */}
-          <motion.div variants={itemVariants} className="space-y-3">
-            <h3 className="text-xs sm:text-sm font-bold text-foreground/40 uppercase tracking-wider">
-              Core Focus
-            </h3>
-            <div className="flex flex-wrap gap-2">
+          {/* Stats 2×2 grid */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-2 gap-2.5"
+          >
+            {stats.map(({ num, label }) => (
+              <div
+                key={label}
+                className="relative overflow-hidden rounded-xl bg-foreground/[0.03] border border-white/[0.07] px-5 py-4 group hover:border-white/20 transition-colors duration-300"
+              >
+                {/* decorative orb */}
+                <div className="absolute -top-5 -right-5 w-14 h-14 rounded-full bg-foreground/5 group-hover:bg-foreground/8 transition-colors duration-300" />
+                <p
+                  className="text-3xl font-black text-foreground leading-none mb-1"
+                  style={{ fontFamily: "'Syne', sans-serif" }}
+                >
+                  {num}
+                </p>
+                <p className="text-[10px] uppercase tracking-widest text-foreground/35 font-normal">
+                  {label}
+                </p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* ── Right column ── */}
+        <div className="lg:col-span-3 flex flex-col gap-3.5">
+          {/* Intro card */}
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl bg-foreground/[0.02] border border-white/[0.07] px-6 py-7"
+          >
+            <p
+              className="text-xl font-black text-foreground mb-0.5 tracking-tight"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              Aftab Farhan Arko
+            </p>
+            <p className="text-xs text-foreground/40 font-light tracking-wide mb-5">
+              Passionate Web Developer · Backend Engineer · Mentor
+            </p>
+
+            <div className="space-y-3 text-sm text-foreground/60 font-light leading-relaxed">
+              <p>
+                Hi, I'm{" "}
+                <span className="text-foreground font-normal">Aftab Farhan Arko</span>{" "}
+                — a web developer with over{" "}
+                <span className="text-foreground font-normal">4+ years of experience</span>{" "}
+                building modern full-stack applications. I love transforming ideas into
+                scalable, intelligent, and impactful digital products.
+              </p>
+              <p>
+                I specialize in{" "}
+                <span className="text-foreground font-normal">robust backend systems</span>{" "}
+                using Node.js, Express.js, Prisma ORM, and PostgreSQL — focused on{" "}
+                <span className="text-foreground font-normal">
+                  maintainability, security, and scale
+                </span>
+                .
+              </p>
+              <p>
+                Beyond coding, I'm passionate about{" "}
+                <span className="text-foreground font-normal">mentoring students</span>{" "}
+                and junior developers, simplifying complex concepts and helping others
+                grow alongside me.
+              </p>
+            </div>
+
+            {/* Tech tags */}
+            <div className="flex flex-wrap gap-2 mt-5 pt-5 border-t border-white/[0.07]">
               {techStack.map((tech) => (
                 <span
                   key={tech}
-                  className="px-4 py-2 text-xs sm:text-sm font-medium bg-foreground/5 border border-white/10 rounded-full text-foreground/70 hover:text-foreground hover:border-foreground/30 transition-colors cursor-default"
+                  className="text-[11px] px-3 py-1.5 rounded-full border border-white/10 text-foreground/50 bg-foreground/[0.03] hover:border-white/20 hover:text-foreground/70 transition-colors cursor-default tracking-wide"
                 >
                   {tech}
                 </span>
               ))}
             </div>
           </motion.div>
-        </div>
 
-        {/* Sidebar - 2 columns */}
-        <div className="lg:col-span-2 space-y-5 sm:space-y-6">
-          {/* Experience Highlight */}
+          {/* Quote card */}
           <motion.div
             variants={itemVariants}
-            className="p-5 sm:p-6 rounded-xl bg-foreground/[0.02] border border-white/10 text-center"
+            className="rounded-2xl bg-foreground/[0.02] border border-white/[0.07] border-l-2 border-l-foreground/20 px-6 py-5"
+            style={{ borderRadius: "0 16px 16px 0" }}
           >
-            <div className="text-4xl sm:text-5xl font-black text-foreground mb-1">
-              4+
-            </div>
-            <div className="text-sm text-foreground/40 uppercase tracking-wider">
-              Years of Experience
-            </div>
-            <div className="mt-2 text-xs text-foreground/50">
-              Full-Stack & Backend
-            </div>
-          </motion.div>
-
-          {/* Quote Card */}
-          <motion.div
-            variants={itemVariants}
-            className="relative p-5 sm:p-6 rounded-xl bg-gradient-to-br from-foreground/5 to-transparent border border-white/10"
-          >
-            {/* large soft quote mark */}
-            <div className="absolute -top-4 -left-2 text-6xl text-foreground/10 font-serif leading-none select-none">
-              “
-            </div>
-            <blockquote className="relative z-10 text-sm sm:text-base text-foreground/80 italic leading-relaxed pl-4 border-l-2 border-foreground/20">
-              “For me, coding isn’t just logic - it’s an art of connecting
-              systems, people, and ideas through technology.”
+            <blockquote className="text-sm text-foreground/55 italic font-light leading-relaxed">
+              "Coding isn't just logic — it's an art of connecting systems,
+              people, and ideas through technology."
             </blockquote>
-            <div className="mt-3 text-right text-xs text-foreground/40">
+            <p className="text-right text-[11px] text-foreground/30 mt-2">
               — Aftab Farhan Arko
-            </div>
+            </p>
           </motion.div>
 
-          {/* Mentoring & Collaboration Badge */}
+          {/* Mentor badge */}
           <motion.div
             variants={itemVariants}
-            className="flex items-center gap-3 p-4 rounded-xl bg-foreground/5 border border-white/10"
+            className="flex items-center gap-3 rounded-xl bg-foreground/[0.02] border border-white/[0.07] px-4 py-3.5"
           >
-            <div className="w-10 h-10 rounded-lg bg-foreground/10 flex items-center justify-center text-foreground">
+            <div className="w-9 h-9 rounded-lg bg-foreground/[0.05] border border-white/[0.07] flex items-center justify-center shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="15"
+                height="15"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="text-foreground/50"
               >
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                 <circle cx="9" cy="7" r="4" />
@@ -223,10 +188,10 @@ export default function About() {
               </svg>
             </div>
             <div>
-              <h4 className="font-semibold text-foreground text-sm">
+              <p className="text-sm font-medium text-foreground/80 leading-none mb-1">
                 Mentoring & Collaboration
-              </h4>
-              <p className="text-xs text-foreground/50">
+              </p>
+              <p className="text-xs text-foreground/35 font-light">
                 Helping students & junior devs grow
               </p>
             </div>
