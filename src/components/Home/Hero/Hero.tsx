@@ -32,7 +32,7 @@ export default function Hero() {
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-foreground/4 blur-[120px] -z-10 pointer-events-none" />
 
       {/* === LEFT COLUMN === */}
-      <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl">
+      <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl order-2 md:order-1 ">
         {/* Greeting */}
         <motion.p
           {...fadeLeft(0.1)}
@@ -43,9 +43,8 @@ export default function Hero() {
         </motion.p>
 
         <motion.div {...fadeLeft(0.18)}>
-          <h1 className="text-xl   ">
-            <span className="block text-foreground">Full Stack</span>
-            <span className="block text-foreground italic">Developer</span>
+          <h1 className=" text-3xl md:text-5xl   ">
+            <span className="block text-foreground">Full Stack Developer</span>
           </h1>
         </motion.div>
 
@@ -133,7 +132,7 @@ export default function Hero() {
       {/* === RIGHT COLUMN === */}
       <motion.div
         {...scaleIn(0.2)}
-        className="relative flex-shrink-0 flex items-center justify-center"
+        className="relative flex-shrink-0 flex items-center md:mt-0 mt-10 justify-center order-1 md:order-2 "
       >
         {/* Terminal card — positioned higher above the circle */}
         <motion.div
