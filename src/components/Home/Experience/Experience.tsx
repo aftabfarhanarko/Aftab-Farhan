@@ -173,9 +173,9 @@ export default function Experience() {
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] mb-4">
-            <span className="text-foreground">Work</span>
-            <br />
+          <h2 className="text-3xl  lg:text-4xl font-black tracking-tight leading-[1.05] mb-4">
+            <span className="text-foreground">Work </span>
+        
             <span className="text-foreground/25">Experience</span>
           </h2>
 

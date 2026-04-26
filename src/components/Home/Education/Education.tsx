@@ -48,7 +48,7 @@ export default function Education() {
             </span>
           </div>
 
-          <h2 className=" text-3xl lg:text-5xl font-black tracking-tight leading-[1.05] mb-4">
+          <h2 className=" text-3xl lg:text-4xl font-black tracking-tight leading-[1.05] mb-4">
             <span className="text-foreground">My </span>
 
             <span className="text-foreground/25">Education</span>

@@ -54,8 +54,13 @@ export default function About() {
               backend engineer
             </span>
 
-            <h2 className="font-black tracking-tight leading-none text-foreground"
-              style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(40px, 6vw, 58px)" }}>
+            <h2
+              className="font-black tracking-tight leading-none text-foreground"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: "clamp(40px, 6vw, 58px)",
+              }}
+            >
               About
               <span className=" text-foreground/30">Me.</span>
             </h2>
@@ -112,16 +117,24 @@ export default function About() {
             <div className="space-y-3 text-sm text-foreground/60 font-light leading-relaxed">
               <p>
                 Hi, I'm{" "}
-                <span className="text-foreground font-normal">Aftab Farhan Arko</span>{" "}
+                <span className="text-foreground font-normal">
+                  Aftab Farhan Arko
+                </span>{" "}
                 — a web developer with over{" "}
-                <span className="text-foreground font-normal">4+ years of experience</span>{" "}
-                building modern full-stack applications. I love transforming ideas into
-                scalable, intelligent, and impactful digital products.
+                <span className="text-foreground font-normal">
+                  4+ years of experience
+                </span>{" "}
+                building modern full-stack applications. I love transforming
+                ideas into scalable, intelligent, and impactful digital
+                products.
               </p>
               <p>
                 I specialize in{" "}
-                <span className="text-foreground font-normal">robust backend systems</span>{" "}
-                using Node.js, Express.js, Prisma ORM, and PostgreSQL — focused on{" "}
+                <span className="text-foreground font-normal">
+                  robust backend systems
+                </span>{" "}
+                using Node.js, Express.js, Prisma ORM, and PostgreSQL — focused
+                on{" "}
                 <span className="text-foreground font-normal">
                   maintainability, security, and scale
                 </span>
@@ -129,9 +142,11 @@ export default function About() {
               </p>
               <p>
                 Beyond coding, I'm passionate about{" "}
-                <span className="text-foreground font-normal">mentoring students</span>{" "}
-                and junior developers, simplifying complex concepts and helping others
-                grow alongside me.
+                <span className="text-foreground font-normal">
+                  mentoring students
+                </span>{" "}
+                and junior developers, simplifying complex concepts and helping
+                others grow alongside me.
               </p>
             </div>
 
