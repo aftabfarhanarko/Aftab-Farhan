@@ -19,6 +19,7 @@ model Plant {
   imageUrl    String?
 }
 
+// User Data Saved
 model User {
   id        String   @id @default(cuid())
   email     String   @unique

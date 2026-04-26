@@ -27,35 +27,12 @@ export default function Hero() {
       id="hero"
       className="relative mb-32 flex flex-col lg:flex-row items-center justify-between gap-16 -mt-25  min-h-[90vh]"
     >
-      {/* Background grid pattern */}
-      <div
-        className="absolute inset-0 -z-10 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(57,255,20,1) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,1) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
-
       {/* Ambient glow blobs */}
       <div className="absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-foreground/5 blur-[140px] -z-10 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-foreground/4 blur-[120px] -z-10 pointer-events-none" />
 
       {/* === LEFT COLUMN === */}
       <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl">
-        {/* Status badge */}
-        <motion.div
-          {...fadeLeft(0)}
-          className="flex items-center gap-2 w-fit px-4 py-1.5 rounded-full border border-foreground/25 bg-foreground/5 backdrop-blur-sm"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-foreground"></span>
-          </span>
-          <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-foreground/80">
-            Available for work
-          </span>
-        </motion.div>
-
         {/* Greeting */}
         <motion.p
           {...fadeLeft(0.1)}
@@ -65,58 +42,25 @@ export default function Hero() {
           <span className="text-foreground font-bold">Aftab Farha Arko</span>
         </motion.p>
 
-        {/* Headline — smaller size */}
         <motion.div {...fadeLeft(0.18)}>
-          <h1 className="text-[clamp(2rem,5vw,4rem)] font-black tracking-[-0.04em] leading-[0.9] uppercase">
+          <h1 className="text-xl   ">
             <span className="block text-foreground">Full Stack</span>
             <span className="block text-foreground italic">Developer</span>
           </h1>
         </motion.div>
 
-        {/* Sub-headline — professional */}
-        <motion.h2
-          {...fadeLeft(0.26)}
-          className="text-base sm:text-lg font-semibold text-foreground/55 tracking-tight max-w-md"
-        >
-          Designing systems that scale. Shipping products that matter.
-        </motion.h2>
-
         {/* Description */}
         <motion.p
           {...fadeLeft(0.34)}
-          className="text-sm text-foreground/40 max-w-lg leading-[1.85]"
+          className="text-sm text-foreground/90 max-w-lg leading-[1.85]"
         >
-          I build end-to-end web solutions — from high-throughput{" "}
-          <span className="text-foreground/70 font-semibold border-b border-foreground/35">
-            Django REST APIs
-          </span>{" "}
-          to performant{" "}
-          <span className="text-foreground/70 font-semibold border-b border-foreground/35">
-            React & Next.js
-          </span>{" "}
-          frontends. Clean architecture, zero shortcuts.
+          Full Stack Developer with 1+ years of experience delivering full-cycle
+          client projects using React.js, Next.js, TypeScript, and Node.js.
+          Specializes in building scalable, high-performance web applications
+          that align with business objectives. Accelerates development with
+          AI-powered code generation, debugging, and intelligent workflows to
+          deliver user-centric, maintainable solutions.
         </motion.p>
-
-        {/* Tech stack pills */}
-        <motion.div {...fadeLeft(0.4)} className="flex flex-wrap gap-2">
-          {["Python", "Django", "React", "Next.js", "PostgreSQL", "Docker"].map(
-            (tech, i) => (
-              <motion.span
-                key={tech}
-                initial={{ opacity: 0, scale: 0.75 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.4,
-                  delay: 0.42 + i * 0.06,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="px-3 py-1 text-[10px] font-black tracking-wider uppercase rounded-md border border-white/10 bg-foreground/5 text-foreground/55 hover:border-foreground/60 hover:text-foreground hover:bg-foreground/8 transition-all duration-200 cursor-default"
-              >
-                {tech}
-              </motion.span>
-            ),
-          )}
-        </motion.div>
 
         {/* CTA buttons */}
         <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-4 mt-1">
@@ -124,7 +68,7 @@ export default function Hero() {
             href="#contact"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
-            className="group flex items-center gap-2.5 rounded-xl bg-foreground px-7 py-3.5 text-sm font-black text-background shadow-[0_8px_32px_rgba(57,255,20,0.35)] hover:bg-foreground/90 transition-colors"
+            className="group flex items-center gap-2.5 rounded-xl bg-foreground px-7 py-3.5 text-sm font-black text-background hover:bg-foreground/90 transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -160,9 +104,9 @@ export default function Hero() {
           className="flex gap-12 pt-8 mt-3 border-t border-white/10"
         >
           {[
-            { value: "2+", label: "Years Experience" },
-            { value: "5+", label: "Projects Shipped" },
-            { value: "150+", label: "Problems Solved" },
+            { value: "1.5+", label: "Years Experience" },
+            { value: "7+", label: "Happy Client" },
+            { value: "45+", label: "Problems Solved" },
           ].map(({ value, label }, i) => (
             <motion.div
               key={label}
@@ -178,7 +122,7 @@ export default function Hero() {
               <div className="text-3xl font-black text-foreground tracking-tighter group-hover:text-foreground transition-colors duration-300">
                 {value}
               </div>
-              <div className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.22em] mt-1.5">
+              <div className="text-[10px] font-black uppercase tracking-[0.10em] mt-1.5">
                 {label}
               </div>
             </motion.div>
@@ -232,7 +176,7 @@ export default function Hero() {
               Current Stack
             </div>
             <div className="text-xs font-bold text-foreground mt-0.5">
-              Django · React · Docker
+              Typescripet · React · Next
             </div>
           </motion.div>
         </motion.div>
@@ -246,12 +190,12 @@ export default function Hero() {
         <div className="relative w-[340px] h-[340px] sm:w-[380px] sm:h-[380px] rounded-full border-[3px] border-foreground/60 p-2.5 shadow-[0_0_60px_rgba(57,255,20,0.2),inset_0_0_40px_rgba(57,255,20,0.05)] bg-background z-10 group">
           <div className="w-full h-full rounded-full overflow-hidden bg-foreground/5 relative">
             <Image
-                src="/image.png"
-                alt="Aftab Farha Arko - Full Stack Developer"
-                fill
-                sizes="(max-width: 768px) 340px, 380px"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                priority
+              src="/image.png"
+              alt="Aftab Farha Arko - Full Stack Developer"
+              fill
+              sizes="(max-width: 768px) 340px, 380px"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              priority
             />
             <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
           </div>
@@ -363,6 +307,3 @@ export default function Hero() {
     </section>
   );
 }
-
-
-

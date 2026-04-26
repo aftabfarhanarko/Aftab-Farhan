@@ -97,7 +97,7 @@ function TypingLine({
 }
 
 function AmbientTypingBackground() {
-  const snippets = [
+  const snippets = [  
     {
       text: "const portfolio = new Developer();",
       top: "15%",
