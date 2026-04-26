@@ -1,489 +1,415 @@
-﻿"use client"
+﻿"use client";
 import React, { useState } from "react";
+import {
+  Shield,
+  ClipboardList,
+  Code2,
+  CheckCircle2,
+  MapPin,
+  ExternalLink,
+  Briefcase,
+  Star,
+} from "lucide-react";
 
-const Experience = () => {
-  const [activeTab, setActiveTab] = useState<"all" | "current" | "previous">(
-    "all",
-  );
+const experiences = [
+  {
+    id: 1,
+    company: "NexoviaSoft",
+    logo: "N",
+    logoColor: "#6366F1",
+    url: "https://www.nexoviasoft.com",
+    location: "Dhaka, Bangladesh",
+    period: "2023 – Present",
+    type: "current",
+    roles: [
+      {
+        title: "Chief Operating Officer",
+        subtitle: "COO · Full-time",
+        Icon: Shield,
+        responsibilities: [
+          "Led daily operations and strategic planning for company growth",
+          "Managed cross-functional teams including development, design, and marketing",
+          "Optimized workflow processes resulting in 40% faster project delivery",
+          "Oversaw resource allocation and budget management for 50+ projects",
+          "Established company policies and operational frameworks",
+          "Drove business development and client relationship management",
+        ],
+      },
+      {
+        title: "Senior Project Manager",
+        subtitle: "Project Management · Full-time",
+        Icon: ClipboardList,
+        responsibilities: [
+          "Managed end-to-end delivery of 30+ enterprise web development projects",
+          "Coordinated between clients and technical teams for clear communication",
+          "Implemented Agile/Scrum methodologies for efficient project execution",
+          "Monitored project timelines, milestones, and deliverables",
+          "Conducted quality assurance and ensured premium solution delivery",
+          "Led client meetings, requirement gathering, and project planning sessions",
+        ],
+      },
+    ],
+    techStack: ["React", "Next.js", "Node.js", "AWS", "MongoDB", "PostgreSQL", "Docker"],
+    achievements: [
+      { metric: "50+", label: "Projects Delivered" },
+      { metric: "40%", label: "Efficiency Increase" },
+      { metric: "30+", label: "Enterprise Clients" },
+      { metric: "15+", label: "Team Members" },
+    ],
+  },
+  {
+    id: 2,
+    company: "TechSolutions Ltd",
+    logo: "T",
+    logoColor: "#10B981",
+    url: "#",
+    location: "Remote · Dhaka, Bangladesh",
+    period: "2021 – 2023",
+    type: "previous",
+    roles: [
+      {
+        title: "Senior Full-Stack Developer",
+        subtitle: "Full-time · Team Lead",
+        Icon: Code2,
+        responsibilities: [
+          "Led a team of 5 developers in building scalable web applications",
+          "Architected and developed RESTful APIs serving 100K+ daily requests",
+          "Implemented microservices architecture reducing system downtime by 60%",
+          "Mentored junior developers and conducted thorough code reviews",
+          "Optimized database queries resulting in 45% faster response times",
+          "Integrated third-party services including payment gateways and analytics",
+        ],
+      },
+    ],
+    techStack: ["React", "Node.js", "Express", "MySQL", "Redis", "Docker", "GitHub Actions"],
+    achievements: [
+      { metric: "15+", label: "Apps Launched" },
+      { metric: "100K+", label: "Daily Users" },
+      { metric: "45%", label: "Performance Gain" },
+      { metric: "5", label: "Team Members Led" },
+    ],
+  },
+  {
+    id: 3,
+    company: "DigitalCraft Agency",
+    logo: "D",
+    logoColor: "#F59E0B",
+    url: "#",
+    location: "Dhaka, Bangladesh",
+    period: "2019 – 2021",
+    type: "previous",
+    roles: [
+      {
+        title: "Web Developer",
+        subtitle: "Full-time · Frontend Focus",
+        Icon: Code2,
+        responsibilities: [
+          "Developed responsive and interactive web applications for 20+ clients",
+          "Converted Figma designs into pixel-perfect React components",
+          "Implemented state management with Redux and Context API",
+          "Optimized website performance achieving 95+ Lighthouse scores",
+          "Collaborated closely with designers and backend developers",
+          "Built custom e-commerce solutions with payment integrations",
+        ],
+      },
+    ],
+    techStack: ["React", "JavaScript", "Redux", "SASS", "Webpack", "Jest", "Storybook"],
+    achievements: [
+      { metric: "20+", label: "Websites Built" },
+      { metric: "95+", label: "Performance Score" },
+      { metric: "100%", label: "Client Satisfaction" },
+      { metric: "10+", label: "E-comm Stores" },
+    ],
+  },
+];
 
-  const experiences = [
-    {
-      id: 1,
-      company: "NexoviaSoft",
-      logo: "N",
-      url: "https://www.nexoviasoft.com",
-      location: "Dhaka, Bangladesh",
-      period: "2023 - Present",
-      type: "current",
-      roles: [
-        {
-          title: "Chief Operating Officer",
-          type: "COO • Full-time",
-          icon: "shield",
-          responsibilities: [
-            "Led daily operations and strategic planning for company growth",
-            "Managed cross-functional teams including development, design, and marketing",
-            "Optimized workflow processes resulting in 40% faster project delivery",
-            "Oversaw resource allocation and budget management for 50+ projects",
-            "Established company policies and operational frameworks",
-            "Drove business development and client relationship management",
-          ],
-        },
-        {
-          title: "Senior Project Manager",
-          type: "Project Management • Full-time",
-          icon: "project",
-          responsibilities: [
-            "Managed end-to-end delivery of 30+ enterprise web development projects",
-            "Coordinated between clients and technical teams to ensure clear communication",
-            "Implemented Agile/Scrum methodologies for efficient project execution",
-            "Monitored project timelines, milestones, and deliverables",
-            "Conducted quality assurance and ensured premium solution delivery",
-            "Led client meetings, requirement gathering, and project planning sessions",
-          ],
-        },
-      ],
-      techStack: [
-        "React",
-        "Next.js",
-        "Node.js",
-        "AWS",
-        "MongoDB",
-        "PostgreSQL",
-        "Docker",
-      ],
-      achievements: [
-        { metric: "50+", label: "Projects Delivered" },
-        { metric: "40%", label: "Efficiency Increase" },
-        { metric: "30+", label: "Enterprise Clients" },
-        { metric: "15+", label: "Team Members" },
-      ],
-    },
-    {
-      id: 2,
-      company: "TechSolutions Ltd",
-      logo: "T",
-      url: "#",
-      location: "Remote / Dhaka, Bangladesh",
-      period: "2021 - 2023",
-      type: "previous",
-      roles: [
-        {
-          title: "Senior Full-Stack Developer",
-          type: "Full-time • Team Lead",
-          icon: "code",
-          responsibilities: [
-            "Led a team of 5 developers in building scalable web applications",
-            "Architected and developed RESTful APIs serving 100K+ daily requests",
-            "Implemented microservices architecture reducing system downtime by 60%",
-            "Mentored junior developers and conducted code reviews",
-            "Optimized database queries resulting in 45% faster response times",
-            "Integrated third-party services including payment gateways and analytics",
-          ],
-        },
-      ],
-      techStack: [
-        "React",
-        "Node.js",
-        "Express",
-        "MySQL",
-        "Redis",
-        "Docker",
-        "GitHub Actions",
-      ],
-      achievements: [
-        { metric: "15+", label: "Apps Launched" },
-        { metric: "100K+", label: "Daily Users" },
-        { metric: "45%", label: "Performance Gain" },
-        { metric: "5", label: "Team Members Led" },
-      ],
-    },
-    {
-      id: 3,
-      company: "DigitalCraft Agency",
-      logo: "D",
-      url: "#",
-      location: "Dhaka, Bangladesh",
-      period: "2019 - 2021",
-      type: "previous",
-      roles: [
-        {
-          title: "Web Developer",
-          type: "Full-time • Frontend Focus",
-          icon: "code",
-          responsibilities: [
-            "Developed responsive and interactive web applications for 20+ clients",
-            "Converted Figma designs into pixel-perfect React components",
-            "Implemented state management with Redux and Context API",
-            "Optimized website performance achieving 95+ Lighthouse scores",
-            "Collaborated with designers and backend developers",
-            "Built custom e-commerce solutions with payment integrations",
-          ],
-        },
-      ],
-      techStack: [
-        "React",
-        "JavaScript",
-        "Redux",
-        "SASS",
-        "Webpack",
-        "Jest",
-        "Storybook",
-      ],
-      achievements: [
-        { metric: "20+", label: "Websites Built" },
-        { metric: "95+", label: "Performance Score" },
-        { metric: "100%", label: "Client Satisfaction" },
-        { metric: "10+", label: "E-comm Stores" },
-      ],
-    },
-  ];
+const companyServices = [
+  "Custom Software Solutions",
+  "Secure Cloud Infrastructure",
+  "Advanced AI Integration",
+  "DevOps & Cloud Deployment",
+  "UI/UX Design",
+  "Digital Marketing",
+  "E-Commerce Development",
+  "Odoo ERP Solutions",
+];
 
-  const companyServices = [
-    "Custom Software Solutions",
-    "Secure Cloud Infrastructure",
-    "Advanced AI Integration",
-    "DevOps & Cloud Deployment",
-    "UI/UX Design",
-    "Digital Marketing",
-    "E-Commerce Development",
-    "Odoo ERP Solutions",
-  ];
+export default function Experience() {
+  const [activeTab, setActiveTab] = useState<"all" | "current" | "previous">("all");
 
-  const filteredExperiences =
-    activeTab === "all"
-      ? experiences
-      : experiences.filter((exp) => exp.type === activeTab);
-
-  const getIcon = (type: string) => {
-    switch (type) {
-      case "shield":
-        return (
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-            />
-          </svg>
-        );
-      case "project":
-        return (
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-            />
-          </svg>
-        );
-      case "code":
-        return (
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-            />
-          </svg>
-        );
-      default:
-        return null;
-    }
-  };
+  const filtered =
+    activeTab === "all" ? experiences : experiences.filter((e) => e.type === activeTab);
 
   return (
-    <section id="experience" className="mb-32 scroll-mt-24">
-      {/* Header */}
-      <div className="flex items-center gap-6 mb-12">
-        <div className="relative">
-          <h2 className="text-3xl lg:text-4xl font-black text-foreground tracking-tight">
-            Experience
+    <section id="experience" className="mb-16 sm:mb-24 lg:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0">
+
+      {/* ── Two-column layout: left sticky title + right timeline ── */}
+      <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
+
+        {/* ── LEFT: sticky title panel ── */}
+        <div className="lg:sticky lg:top-28">
+          {/* Career Path badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-foreground/5 mb-5">
+            <Star className="w-3.5 h-3.5 text-foreground/50" />
+            <span className="text-xs font-semibold text-foreground/50 uppercase tracking-widest">
+              Career Path
+            </span>
+          </div>
+
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] mb-4">
+            <span className="text-foreground">Work</span>
+            <br />
+            <span className="text-foreground/25">Experience</span>
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
-        </div>
-        <div className="h-px flex-1 bg-foreground/10" />
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-mono text-foreground/40 hidden sm:block">
-            &lt;6+ years /&gt;
-          </span>
-          <span className="text-xs px-3 py-1 bg-foreground/10 text-foreground rounded-full font-medium">
-            Senior Level
-          </span>
-        </div>
-      </div>
 
-      {/* Summary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="p-4 rounded-xl bg-foreground/5 border border-white/10 text-center">
-          <div className="text-2xl font-black text-foreground">6+</div>
-          <div className="text-xs text-foreground/50">Years Experience</div>
-        </div>
-        <div className="p-4 rounded-xl bg-foreground/5 border border-white/10 text-center">
-          <div className="text-2xl font-black text-foreground">50+</div>
-          <div className="text-xs text-foreground/50">Projects Completed</div>
-        </div>
-        <div className="p-4 rounded-xl bg-foreground/5 border border-white/10 text-center">
-          <div className="text-2xl font-black text-foreground">30+</div>
-          <div className="text-xs text-foreground/50">Happy Clients</div>
-        </div>
-        <div className="p-4 rounded-xl bg-foreground/5 border border-white/10 text-center">
-          <div className="text-2xl font-black text-foreground">15+</div>
-          <div className="text-xs text-foreground/50">Tech Stack</div>
-        </div>
-      </div>
+          <p className="text-sm sm:text-base text-foreground/50 leading-relaxed mb-8 max-w-xs">
+            A chronological timeline of my professional journey, highlighting
+            the teams I've worked with and the impact I've made along the way.
+          </p>
 
-      {/* Tabs */}
-      <div className="flex gap-2 mb-8 border-b border-white/10">
-        {[
-          { id: "all", label: "All Experience" },
-          { id: "current", label: "Current Role" },
-          { id: "previous", label: "Previous Roles" },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as typeof activeTab)}
-            className={`px-5 py-2.5 text-sm font-medium transition-all relative ${
-              activeTab === tab.id
-                ? "text-foreground"
-                : "text-foreground/50 hover:text-foreground/70"
-            }`}
-          >
-            {tab.label}
-            {activeTab === tab.id && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-foreground rounded-full" />
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Timeline */}
-      <div className="relative">
-        {/* Vertical Line */}
-        <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-foreground/30 via-foreground/20 to-transparent hidden md:block" />
-
-        <div className="space-y-8">
-          {filteredExperiences.map((exp, index) => (
-            <div key={exp.id} className="relative">
-              {/* Timeline Dot */}
+          {/* Mini stats */}
+          <div className="grid grid-cols-2 gap-3 mb-8">
+            {[
+              { v: "1.5+", l: "Years Exp." },
+              { v: "45+", l: "Projects" },
+              { v: "7+", l: "Clients" },
+              { v: "12+", l: "Tech Stack" },
+            ].map(({ v, l }) => (
               <div
-                className="absolute left-8 -translate-x-1/2 w-4 h-4 rounded-full bg-foreground border-4 border-background hidden md:block"
-                style={{ top: "2rem" }}
-              />
+                key={l}
+                className="p-3 rounded-xl bg-foreground/[0.04] border border-white/10 text-center"
+              >
+                <div className="text-xl font-black text-foreground">{v}</div>
+                <div className="text-[10px] font-medium text-foreground/40 uppercase tracking-wide mt-0.5">
+                  {l}
+                </div>
+              </div>
+            ))}
+          </div>
 
-              {/* Experience Card */}
-              <div className="md:ml-16">
-                {/* Company Header */}
+          {/* Filter tabs */}
+          <div className="flex flex-col gap-1">
+            {[
+              { id: "all", label: "All Experience" },
+              { id: "current", label: "Current Role" },
+              { id: "previous", label: "Previous Roles" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                className={`text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                  activeTab === tab.id
+                    ? "bg-foreground text-background"
+                    : "text-foreground/50 hover:text-foreground hover:bg-foreground/5"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── RIGHT: timeline cards ── */}
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-white/20 via-white/10 to-transparent hidden sm:block" />
+
+          <div className="space-y-6">
+            {filtered.map((exp) => (
+              <div key={exp.id} className="relative sm:pl-14">
+
+                {/* Timeline dot */}
                 <div
-                  className={`p-6 rounded-2xl bg-gradient-to-br ${
+                  className="absolute left-5 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-background hidden sm:block"
+                  style={{ background: exp.logoColor, top: "1.75rem" }}
+                />
+
+                {/* Card */}
+                <div
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
                     exp.type === "current"
-                      ? "from-foreground/10 via-foreground/5 to-transparent border-white/30"
-                      : "from-foreground-muted/10 to-transparent border-white/10"
-                  } border mb-4`}
+                      ? "border-white/20 bg-foreground/[0.05]"
+                      : "border-white/10 bg-foreground/[0.02]"
+                  }`}
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                    <div className="flex items-center gap-4">
-                      <div
-                        className={`w-14 h-14 rounded-xl bg-gradient-to-br flex items-center justify-center text-white text-xl font-black ${
-                          exp.type === "current"
-                            ? "from-foreground to-foreground/60"
-                            : "from-foreground/30 to-foreground/10"
-                        }`}
-                      >
-                        {exp.logo}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-foreground">
-                          {exp.company}
-                        </h3>
-                        <div className="flex items-center gap-2 text-sm text-foreground/40">
-                          <span>{exp.location}</span>
-                          <span>•</span>
-                          {exp.url !== "#" ? (
-                            <a
-                              href={exp.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="hover:text-foreground transition-colors inline-flex items-center gap-1"
-                            >
-                              {exp.url.replace("https://www.", "")}
-                              <svg
-                                className="w-3 h-3"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                />
-                              </svg>
-                            </a>
-                          ) : (
-                            <span>Previous Company</span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      {exp.type === "current" && (
-                        <span className="px-3 py-1.5 bg-foreground/10 text-foreground rounded-full text-xs font-medium flex items-center gap-1.5">
-                          <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-foreground"></span>
-                          </span>
-                          Current
-                        </span>
-                      )}
-                      <span className="text-sm font-medium text-foreground/60 bg-foreground/10 px-3 py-1.5 rounded-full">
-                        {exp.period}
-                      </span>
-                    </div>
-                  </div>
+                  {/* Card top accent line */}
+                  <div
+                    className="h-[2px] w-full"
+                    style={{
+                      background: `linear-gradient(90deg, ${exp.logoColor}, transparent)`,
+                    }}
+                  />
 
-                  {/* Roles */}
-                  <div className="space-y-4">
-                    {exp.roles.map((role, roleIndex) => (
-                      <div key={roleIndex} className="pl-2">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div
-                            className={`p-1.5 rounded-md ${
-                              exp.type === "current"
-                                ? "bg-foreground/10 text-foreground"
-                                : "bg-foreground/10 text-foreground/60"
-                            }`}
-                          >
-                            {getIcon(role.icon)}
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-foreground">
-                              {role.title}
-                            </h4>
-                            <p className="text-xs text-foreground/40">
-                              {role.type}
-                            </p>
-                          </div>
-                        </div>
-                        <ul className="grid md:grid-cols-2 gap-x-4 gap-y-1.5 ml-11">
-                          {role.responsibilities.map((item, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <svg
-                                className="w-3.5 h-3.5 text-foreground mt-1 flex-shrink-0"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2.5}
-                                  d="M5 13l4 4L19 7"
-                                />
-                              </svg>
-                              <span className="text-sm text-foreground/70">
-                                {item}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Tech Stack */}
-                  <div className="mt-4 pt-4 border-t border-white/10">
-                    <p className="text-xs font-semibold text-foreground/40 uppercase tracking-wider mb-2">
-                      Tech Stack & Tools
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {exp.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 text-xs bg-foreground/5 border border-white/10 rounded-md text-foreground/60"
+                  <div className="p-5 sm:p-6">
+                    {/* Company header */}
+                    <div className="flex items-start justify-between gap-3 mb-5">
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        {/* Logo */}
+                        <div
+                          className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl font-black shrink-0"
+                          style={{ background: `${exp.logoColor}22`, border: `1.5px solid ${exp.logoColor}44` }}
                         >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                          <Briefcase className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: exp.logoColor }} />
+                        </div>
 
-                  {/* Achievements for Current Role */}
-                  {exp.type === "current" && (
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                      <p className="text-xs font-semibold text-foreground/40 uppercase tracking-wider mb-3">
-                        Key Achievements at {exp.company}
+                        <div>
+                          <h3 className="text-base sm:text-lg font-bold text-foreground leading-tight">
+                            {exp.company}
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-1.5 mt-0.5 text-xs text-foreground/40">
+                            <MapPin className="w-3 h-3" />
+                            <span>{exp.location}</span>
+                            {exp.url !== "#" && (
+                              <>
+                                <span>·</span>
+                                <a
+                                  href={exp.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+                                >
+                                  {exp.url.replace("https://www.", "")}
+                                  <ExternalLink className="w-2.5 h-2.5" />
+                                </a>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Period + current badge */}
+                      <div className="flex flex-col items-end gap-1.5 shrink-0">
+                        {exp.type === "current" && (
+                          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider"
+                            style={{ borderColor: `${exp.logoColor}55`, color: exp.logoColor, background: `${exp.logoColor}15` }}>
+                            <span className="relative flex h-1.5 w-1.5">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                                style={{ background: exp.logoColor }} />
+                              <span className="relative inline-flex rounded-full h-1.5 w-1.5"
+                                style={{ background: exp.logoColor }} />
+                            </span>
+                            Present
+                          </span>
+                        )}
+                        <span className="text-xs font-semibold text-foreground/50 bg-foreground/[0.06] px-3 py-1 rounded-full border border-white/10 whitespace-nowrap">
+                          {exp.period}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Roles */}
+                    <div className="space-y-5">
+                      {exp.roles.map((role, ri) => {
+                        const RIcon = role.Icon;
+                        return (
+                          <div key={ri}>
+                            {ri > 0 && <div className="h-px bg-white/8 mb-5" />}
+                            <div className="flex items-center gap-2.5 mb-3">
+                              <div
+                                className="p-1.5 rounded-lg border border-white/10"
+                                style={{ background: `${exp.logoColor}18` }}
+                              >
+                                <RIcon className="w-4 h-4" style={{ color: exp.logoColor }} />
+                              </div>
+                              <div>
+                                <h4 className="text-sm sm:text-base font-bold text-foreground leading-tight">
+                                  {role.title}
+                                </h4>
+                                <p className="text-[10px] sm:text-xs text-foreground/40">{role.subtitle}</p>
+                              </div>
+                            </div>
+
+                            <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-1.5 ml-0 sm:ml-9">
+                              {role.responsibilities.map((item, i) => (
+                                <li key={i} className="flex items-start gap-2">
+                                  <CheckCircle2
+                                    className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
+                                    style={{ color: exp.logoColor }}
+                                  />
+                                  <span className="text-xs sm:text-sm text-foreground/65 leading-relaxed">
+                                    {item}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Tech Stack */}
+                    <div className="mt-5 pt-4 border-t border-white/8">
+                      <p className="text-[10px] font-bold text-foreground/30 uppercase tracking-widest mb-2">
+                        Tech Stack
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {exp.techStack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2.5 py-1 text-[11px] sm:text-xs font-medium bg-foreground/[0.05] border border-white/10 rounded-lg text-foreground/60 hover:text-foreground hover:border-white/25 transition-all"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Achievements */}
+                    <div className="mt-4 pt-4 border-t border-white/8">
+                      <p className="text-[10px] font-bold text-foreground/30 uppercase tracking-widest mb-3">
+                        Key Achievements
                       </p>
                       <div className="grid grid-cols-4 gap-2">
-                        {exp.achievements.map((item, i) => (
+                        {exp.achievements.map((a, i) => (
                           <div
                             key={i}
-                            className="text-center p-2 rounded-lg bg-foreground/5"
+                            className="text-center p-2 sm:p-3 rounded-xl bg-foreground/[0.04] border border-white/8"
                           >
-                            <div className="text-lg font-black text-foreground">
-                              {item.metric}
+                            <div
+                              className="text-base sm:text-lg font-black"
+                              style={{ color: exp.logoColor }}
+                            >
+                              {a.metric}
                             </div>
-                            <div className="text-xs text-foreground/50">
-                              {item.label}
+                            <div className="text-[9px] sm:text-[10px] text-foreground/40 leading-tight mt-0.5">
+                              {a.label}
                             </div>
                           </div>
                         ))}
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Current Company Services (Only for NexoviaSoft) */}
-      <div className="mt-8 p-6 rounded-xl bg-foreground/5 border border-white/10">
-        <h4 className="font-bold text-foreground mb-4 flex items-center gap-2">
-          <span className="w-2 h-2 bg-foreground rounded-full" />
+      {/* ── Services footer ── */}
+      <div className="mt-10 sm:mt-14 p-5 sm:p-6 rounded-2xl bg-foreground/[0.03] border border-white/10">
+        <h4 className="font-bold text-foreground text-sm sm:text-base mb-4 flex items-center gap-2">
+          <span
+            className="w-2 h-2 rounded-full bg-foreground"
+            style={{ background: "#6366F1" }}
+          />
           Services I Oversee at NexoviaSoft
         </h4>
         <div className="flex flex-wrap gap-2">
-          {companyServices.map((service) => (
+          {companyServices.map((s) => (
             <span
-              key={service}
-              className="px-3 py-1.5 text-sm bg-foreground/5 border border-white/10 rounded-full text-foreground/70 hover:text-foreground hover:border-white/30 transition-colors"
+              key={s}
+              className="px-3 py-1.5 text-xs sm:text-sm bg-foreground/[0.04] border border-white/10 rounded-full text-foreground/65 hover:text-foreground hover:border-white/25 transition-colors"
             >
-              {service}
+              {s}
             </span>
           ))}
         </div>
-        <p className="text-sm text-foreground/50 mt-4 italic">
-          "Leading operations and project delivery for a premium web development
-          and digital solutions company serving 30+ enterprise clients
-          worldwide."
+        <p className="text-xs sm:text-sm text-foreground/40 mt-4 italic">
+          "Leading operations and project delivery for a premium web development and digital
+          solutions company serving enterprise clients worldwide."
         </p>
       </div>
     </section>
   );
-};
-
-export default Experience;
-
-
-
+}
