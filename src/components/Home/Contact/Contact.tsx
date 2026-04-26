@@ -47,10 +47,8 @@ export default function Contact() {
       label: "Email",
       value: "arko@nexoviasoft.com",
       link: "mailto:arko@nexoviasoft.com",
-      color: "from-foreground/5 to-transparent",
-      borderColor: "border-white/10",
-      iconBg: "bg-foreground/10",
-      iconColor: "text-foreground",
+      iconBg: "bg-black dark:bg-white/5",
+      iconColor: "text-black dark:text-white",
     },
     {
       icon: (
@@ -71,10 +69,8 @@ export default function Contact() {
       label: "Phone",
       value: "+880 1234 567890",
       link: "tel:+8801234567890",
-      color: "from-foreground/5 to-transparent",
-      borderColor: "border-white/10",
-      iconBg: "bg-foreground/10",
-      iconColor: "text-foreground",
+      iconBg: "bg-black dark:bg-white/5",
+      iconColor: "text-black dark:text-white",
     },
     {
       icon: (
@@ -96,10 +92,8 @@ export default function Contact() {
       label: "Location",
       value: "Dhaka, Bangladesh",
       link: "#",
-      color: "from-foreground/5 to-transparent",
-      borderColor: "border-white/10",
-      iconBg: "bg-foreground/10",
-      iconColor: "text-foreground",
+      iconBg: "bg-black dark:bg-white/5",
+      iconColor: "text-black dark:text-white",
     },
   ];
 
@@ -114,11 +108,10 @@ export default function Contact() {
           viewBox="0 0 24 24"
           fill="currentColor"
         >
-          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.837 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
         </svg>
       ),
       url: "https://github.com/arko",
-      color: "hover:bg-white/10",
     },
     {
       name: "LinkedIn",
@@ -134,7 +127,6 @@ export default function Contact() {
         </svg>
       ),
       url: "https://linkedin.com/in/arko",
-      color: "hover:bg-white/10",
     },
     {
       name: "Twitter",
@@ -150,22 +142,21 @@ export default function Contact() {
         </svg>
       ),
       url: "https://twitter.com/arko",
-      color: "hover:bg-white/10",
     },
   ];
 
   return (
-    <section id="contact" className="mb-32 scroll-mt-24">
+    <section id="contact" className="mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0">
       {/* Header */}
       <div className="flex items-center gap-6 mb-12">
         <div className="relative">
-          <h2 className="text-3xl lg:text-4xl font-black text-foreground tracking-tight">
-            Get in Touch
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.05] mb-4">
+            <span className="text-black dark:text-white">Get in </span>
+            <span className="text-black/25 dark:text-white/25"> Touch</span>
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
         </div>
-        <div className="h-px flex-1 bg-foreground/10" />
-        <span className="text-sm font-mono text-foreground/40 hidden sm:block">
+        <div className="h-px flex-1 bg-black/10 dark:bg-white/10" />
+        <span className="text-sm font-mono text-black/40 dark:text-white/40 hidden sm:block">
           &lt;let's-connect /&gt;
         </span>
       </div>
@@ -174,23 +165,23 @@ export default function Contact() {
         {/* Left Column - Contact Info */}
         <div className="lg:col-span-2 space-y-6">
           {/* Availability Badge */}
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-foreground/5 border border-white/10">
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
             <div className="relative">
-              <div className="w-2.5 h-2.5 rounded-full bg-foreground" />
-              <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-foreground animate-ping" />
+              <div className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white" />
+              <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-black dark:bg-white animate-ping" />
             </div>
-            <span className="text-sm font-medium text-foreground/70">
+            <span className="text-sm font-medium text-black/70 dark:text-white/70">
               Available for opportunities
             </span>
           </div>
 
           {/* Intro Text */}
-          <div className="p-6 rounded-2xl bg-foreground/5 border border-white/10">
-            <p className="text-foreground/70 text-base leading-relaxed mb-4">
+          <div className="p-6 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
+            <p className="text-black/70 dark:text-white/70 text-base leading-relaxed mb-4">
               Have a project in mind? Looking for a senior developer to join
               your team? Or just want to say hello? I'd love to hear from you!
             </p>
-            <p className="text-foreground/50 text-sm">
+            <p className="text-black/50 dark:text-white/50 text-sm">
               I typically respond within 24 hours.
             </p>
           </div>
@@ -207,7 +198,7 @@ export default function Contact() {
                     ? "noopener noreferrer"
                     : undefined
                 }
-                className={`block p-4 rounded-xl bg-gradient-to-br ${info.color} border ${info.borderColor} backdrop-blur-sm transition-all hover:scale-[1.02] hover:shadow-lg`}
+                className="block p-4 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 backdrop-blur-sm transition-all hover:scale-[1.02] hover:shadow-lg hover:border-black/20 dark:hover:border-white/20"
               >
                 <div className="flex items-center gap-4">
                   <div
@@ -216,10 +207,12 @@ export default function Contact() {
                     {info.icon}
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-foreground/40 uppercase tracking-wider mb-0.5">
+                    <h4 className="text-xs font-bold text-black/40 dark:text-white/40 uppercase tracking-wider mb-0.5">
                       {info.label}
                     </h4>
-                    <p className="text-foreground font-medium">{info.value}</p>
+                    <p className="text-black dark:text-white font-medium">
+                      {info.value}
+                    </p>
                   </div>
                 </div>
               </a>
@@ -227,8 +220,8 @@ export default function Contact() {
           </div>
 
           {/* Social Links */}
-          <div className="p-5 rounded-xl bg-foreground/5 border border-white/10">
-            <h4 className="text-xs font-bold text-foreground/40 uppercase tracking-wider mb-3">
+          <div className="p-5 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
+            <h4 className="text-xs font-bold text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">
               Connect with me
             </h4>
             <div className="flex gap-2">
@@ -238,7 +231,7 @@ export default function Contact() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`w-10 h-10 rounded-lg bg-foreground/10 border border-white/10 flex items-center justify-center text-foreground/60 transition-all ${social.color} hover:text-white hover:border-transparent`}
+                  className="w-10 h-10 rounded-lg bg-black/[0.05] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 flex items-center justify-center text-black/60 dark:text-white/60 transition-all hover:text-black dark:hover:text-white hover:border-black/25 dark:hover:border-white/25 hover:bg-black/[0.08] dark:hover:bg-white/[0.08]"
                 >
                   {social.icon}
                 </a>
@@ -247,14 +240,14 @@ export default function Contact() {
           </div>
 
           {/* Quick Response Promise */}
-          <div className="p-5 rounded-xl bg-foreground/5 border-l-4 border-l-foreground">
+          <div className="p-5 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border-l-4 border-l-black dark:border-l-white">
             <div className="flex items-center gap-3">
               <span className="text-2xl">⚡</span>
               <div>
-                <p className="text-sm font-medium text-foreground">
+                <p className="text-sm font-medium text-black dark:text-white">
                   Fast Response Guaranteed
                 </p>
-                <p className="text-xs text-foreground/50">
+                <p className="text-xs text-black/50 dark:text-white/50">
                   I'll get back to you within 24 hours
                 </p>
               </div>
@@ -266,13 +259,12 @@ export default function Contact() {
         <div className="lg:col-span-3">
           <form
             onSubmit={handleSubmit}
-            className="p-6 lg:p-8 rounded-2xl bg-foreground/5 border border-white/10"
+            className="p-6 lg:p-8 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10"
           >
             <div className="space-y-5">
-              {/* Name & Email Row */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider">
+                  <label className="block text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
                     Full Name
                   </label>
                   <input
@@ -281,12 +273,12 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="John Doe"
-                    className="w-full p-3.5 border border-white/10 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-white/10 transition-all"
+                    className="w-full p-3.5 border border-black/10 dark:border-white/10 rounded-xl bg-transparent text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-black dark:focus:border-white focus:ring-2 focus:ring-black/10 dark:focus:ring-white/10 transition-all"
                     required
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider">
+                  <label className="block text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
                     Email Address
                   </label>
                   <input
@@ -295,15 +287,14 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="john@example.com"
-                    className="w-full p-3.5 border border-white/10 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-white/10 transition-all"
+                    className="w-full p-3.5 border border-black/10 dark:border-white/10 rounded-xl bg-transparent text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-black dark:focus:border-white focus:ring-2 focus:ring-black/10 dark:focus:ring-white/10 transition-all"
                     required
                   />
                 </div>
               </div>
 
-              {/* Subject */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider">
+                <label className="block text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
                   Subject
                 </label>
                 <input
@@ -312,14 +303,13 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="Project Inquiry / Job Opportunity / Other"
-                  className="w-full p-3.5 border border-white/10 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-white/10 transition-all"
+                  className="w-full p-3.5 border border-black/10 dark:border-white/10 rounded-xl bg-transparent text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-black dark:focus:border-white focus:ring-2 focus:ring-black/10 dark:focus:ring-white/10 transition-all"
                   required
                 />
               </div>
 
-              {/* Message */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-foreground/50 uppercase tracking-wider">
+                <label className="block text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
                   Message
                 </label>
                 <textarea
@@ -328,16 +318,15 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="Tell me about your project or opportunity..."
                   rows={5}
-                  className="w-full p-3.5 border border-white/10 rounded-xl bg-background/50 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-white/10 transition-all resize-none"
+                  className="w-full p-3.5 border border-black/10 dark:border-white/10 rounded-xl bg-transparent text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-black dark:focus:border-white focus:ring-2 focus:ring-black/10 dark:focus:ring-white/10 transition-all resize-none"
                   required
                 ></textarea>
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full p-4 bg-foreground text-background rounded-xl font-bold uppercase tracking-wider text-sm transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full p-4 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold uppercase tracking-wider text-sm transition-all hover:scale-[1.02] active:scale-95 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -390,6 +379,3 @@ export default function Contact() {
     </section>
   );
 }
-
-
-
