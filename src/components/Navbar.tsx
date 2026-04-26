@@ -243,28 +243,7 @@ export default function Navbar() {
               </AnimatePresence>
             </motion.button>
 
-            {/* Resume button */}
-            <motion.a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold no-underline"
-              style={{
-                background: p.accentGrad,
-                color: "#ffffff",
-                boxShadow: `0 4px 18px ${p.accentGlow}`,
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 13,
-              }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: `0 8px 26px ${p.accentGlow}`,
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Download size={14} strokeWidth={2.5} color="#fff" />
-              Resume
-            </motion.a>
+         
           </div>
         </nav>
       </motion.header>
