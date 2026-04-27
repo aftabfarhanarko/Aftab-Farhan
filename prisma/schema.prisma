@@ -30,9 +30,34 @@ model User {
 }
 
 // Hero Sections
-model Hero{
-  id  String @id @default(cuid())
-  name String
-  title String
+model Hero {
+  id          String @id @default(cuid())
+  name        String
+  title       String
   description String
+  image       String
+
+  stats   HeroStat[]
+  socials HeroSocial[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HeroStat {
+  id    String @id @default(cuid())
+  label String
+  value String
+
+  heroId String
+  hero   Hero   @relation(fields: [heroId], references: [id])
+}
+
+model HeroSocial {
+  id       String @id @default(cuid())
+  platform String
+  url      String
+
+  heroId String
+  hero   Hero   @relation(fields: [heroId], references: [id])
 }
