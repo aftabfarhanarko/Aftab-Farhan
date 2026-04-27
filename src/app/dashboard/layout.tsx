@@ -3,6 +3,7 @@ import Sidebar from "@/components/Dashboard/Sidebar";
 import { ToastProvider } from "@/components/Dashboard/ui/ToastContext";
 import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
+import TopNavbar from "@/components/Dashboard/TopNavbar";
 
 export default function DashboardLayout({
   children,
@@ -12,14 +13,23 @@ export default function DashboardLayout({
   return (
     <ToastProvider>
       <div className="flex min-h-screen bg-black text-white">
+        {/* Sidebar — fixed left */}
         <Sidebar />
-        <main className="flex-1 p-8 overflow-y-auto max-h-screen">
-          <div className="max-w-5xl mx-auto">
-            <QueryProvider>
-              <ReduxProvider>{children}</ReduxProvider>
-            </QueryProvider>
-          </div>
-        </main>
+
+        {/* Right side — navbar + scrollable content */}
+        <div className="flex flex-col flex-1 min-w-0 max-h-screen overflow-hidden">
+          {/* Top Navbar */}
+          <TopNavbar />
+
+          {/* Page content */}
+          <main className="flex-1 overflow-y-auto p-8">
+            <div className="max-w-5xl mx-auto">
+              <QueryProvider>
+                <ReduxProvider>{children}</ReduxProvider>
+              </QueryProvider>
+            </div>
+          </main>
+        </div>
       </div>
     </ToastProvider>
   );
