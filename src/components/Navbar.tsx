@@ -13,6 +13,8 @@ import {
   Mail,
   Moon,
   Sun,
+  LogIn,
+  LogInIcon,
 } from "lucide-react";
 
 // Custom GitHub icon
@@ -87,6 +89,11 @@ const socialLinks = [
     icon: LinkedinIcon,
     href: "https://linkedin.com/in/aftabfarhanarko",
   },
+  {
+    label:"Login",
+    icon : LogInIcon,
+    href: "/login"
+  }
 ];
 
 export default function Navbar() {
