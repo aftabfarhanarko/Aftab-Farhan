@@ -280,7 +280,7 @@ export default function RootLayout({
           <ReduxProvider>
             <AnimatePresence mode="wait">
               <motion.main
-                key={pathname}
+                key={isDashboard ? "dashboard" : pathname}
                 className={`flex-1 relative z-10 ${!isDashboard ? "pt-20" : ""}`}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -299,3 +299,4 @@ export default function RootLayout({
     </html>
   );
 }
+
