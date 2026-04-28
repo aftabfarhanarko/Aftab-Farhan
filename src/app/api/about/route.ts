@@ -9,7 +9,7 @@ export async function GET() {
     console.error("About GET Error:", error);
     return NextResponse.json(
       { error: "Failed to fetch about data" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
     console.error("About POST Error:", error);
     return NextResponse.json(
       { error: "Failed to update about data" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
