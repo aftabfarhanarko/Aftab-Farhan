@@ -61,3 +61,25 @@ model HeroSocial {
   heroId String
   hero   Hero   @relation(fields: [heroId], references: [id])
 }
+
+
+model About {
+  id               Int    @id @default(autoincrement())
+  fullName         String // Aftab Farhan Arko
+  roleTag          String // Full Stack Developer
+  roleDescription  String // Full Stack Developer  Specialist in ...
+
+  introParagraphs  Json
+  clientFocusedText String
+  stats            Json
+  frontendSkills   Json
+  backendSkills    Json
+  tools            Json
+  projects         Json
+  quoteText        String
+  quoteAuthor      String
+  mentorTitle       String
+  mentorDescription String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
