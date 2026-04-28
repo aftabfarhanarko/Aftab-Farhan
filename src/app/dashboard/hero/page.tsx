@@ -272,5 +272,5 @@ const HeroManager = () => {
     </div>
   );
 };
-// uywehtfiuhweiur
+// uywehtfiuhweiur ff es
 export default HeroManager;
