@@ -83,3 +83,37 @@ model About {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
+
+
+// Experience
+model Experience {
+  id              Int           @id @default(autoincrement())
+  company         String
+  url             String
+  location        String
+  period          String
+  type            String        // "current" or "previous"
+  techStack       String[]      // PostgreSQL array of strings
+  roles           Role[]
+  achievements    Achievement[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Role {
+  id              Int           @id @default(autoincrement())
+  title           String        // e.g., "Chief Operating Officer"
+  subtitle        String        // e.g., "COO · Full-time"
+  iconName        String        // e.g., "Shield", "ClipboardList"
+  responsibilities String[]     // list of responsibilities
+  experienceId    Int
+  experience      Experience    @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+}
+
+model Achievement {
+  id           Int           @id @default(autoincrement())
+  metric       String
+  label        String
+  experienceId Int
+  experience   Experience    @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+}
