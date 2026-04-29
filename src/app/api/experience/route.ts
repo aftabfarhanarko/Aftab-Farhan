@@ -1,6 +1,26 @@
-﻿// app/api/experiences/route.ts
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+
+export async function GET() {
+  try {
+    const experiences = await prisma.experience.findMany({
+      include: {
+        roles: true,
+        achievements: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return NextResponse.json(experiences);
+  } catch (error) {
+    console.error("Experience GET Error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch experiences" },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -16,7 +36,6 @@ export async function POST(request: Request) {
       achievements,
     } = body;
 
-    // বেসিক ভ্যালিডেশন (নিজের মতো করে আরও যোগ করতে পারো)
     if (!company || !type || !period) {
       return NextResponse.json(
         { error: "company, type, and period are required" },
@@ -27,8 +46,8 @@ export async function POST(request: Request) {
     const experience = await prisma.experience.create({
       data: {
         company,
-        url,
-        location,
+        url: url || "",
+        location: location || "",
         period,
         type,
         techStack: techStack || [],
@@ -54,10 +73,10 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(experience, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Experience POST Error:", error);
     return NextResponse.json(
-      { error: "Failed to create experience" },
+      { error: "Failed to create experience", details: error.message },
       { status: 500 }
     );
   }

@@ -50,13 +50,13 @@ const menuItems = [
     icon: Zap,
     color: "#fbbf24",
   },
-  {
-    id: "soft-skills",
-    label: "Soft Skills",
-    href: "/dashboard/soft-skills",
-    icon: Brain,
-    color: "#f472b6",
-  },
+  // {
+  //   id: "soft-skills",
+  //   label: "Soft Skills",
+  //   href: "/dashboard/soft-skills",
+  //   icon: Brain,
+  //   color: "#f472b6",
+  // },
   {
     id: "projects",
     label: "Projects",
@@ -72,26 +72,19 @@ const menuItems = [
     color: "#fb923c",
   },
   {
-    id: "services",
-    label: "Services",
-    href: "/dashboard/services",
-    icon: Wrench,
-    color: "#a3e635",
-  },
-  {
     id: "education",
     label: "Education",
     href: "/dashboard/education",
     icon: GraduationCap,
     color: "#e879f9",
   },
-  {
-    id: "contact",
-    label: "Contact",
-    href: "/dashboard/contact",
-    icon: Phone,
-    color: "#2dd4bf",
-  },
+  // {
+  //   id: "contact",
+  //   label: "Contact",
+  //   href: "/dashboard/contact",
+  //   icon: Phone,
+  //   color: "#2dd4bf",
+  // },
 ];
 
 /* ─────────────────── Sidebar ─────────────────── */

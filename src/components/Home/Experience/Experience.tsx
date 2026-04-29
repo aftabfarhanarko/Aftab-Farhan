@@ -194,7 +194,11 @@ export default function Experience() {
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-1 hover:text-black dark:hover:text-white transition-colors"
                                 >
-                                  {exp.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0]}
+                                  {
+                                    exp.url
+                                      .replace(/^https?:\/\/(www\.)?/, "")
+                                      .split("/")[0]
+                                  }
                                   <ExternalLink className="w-2.5 h-2.5" />
                                 </a>
                               </>
