@@ -1,12 +1,10 @@
 ﻿"use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   MessageSquare,
   Users,
   ShieldCheck,
   Lightbulb,
-  ChevronDown,
-  ChevronUp,
   CheckCircle2,
   Zap,
   Target,
@@ -22,20 +20,16 @@ const softSkills = [
     title: "Communication",
     Icon: MessageSquare,
     level: 95,
-    description:
-      "Clear and effective communication with clients, team members, and stakeholders at every level.",
+    description: "Clear communication with clients, teams, and stakeholders at every level.",
     subSkills: [
       { name: "Client Communication", level: 95 },
       { name: "Technical Documentation", level: 90 },
       { name: "Presentation Skills", level: 88 },
-      { name: "Active Listening", level: 92 },
-      { name: "Requirement Gathering", level: 94 },
     ],
     examples: [
-      "Led 50+ client meetings and requirement gathering sessions",
-      "Created comprehensive technical documentation for projects",
-      "Bridged communication between technical and non-technical stakeholders",
-      "Conducted project presentations and demo sessions",
+      "Led 50+ client meetings and requirement sessions",
+      "Bridged technical and non-technical stakeholders",
+      "Created comprehensive project documentation",
     ],
   },
   {
@@ -43,20 +37,16 @@ const softSkills = [
     title: "Team Collaboration",
     Icon: Users,
     level: 92,
-    description:
-      "Working effectively within cross-functional teams to achieve common goals together.",
+    description: "Working effectively within cross-functional teams to achieve common goals.",
     subSkills: [
       { name: "Cross-functional Collaboration", level: 93 },
       { name: "Mentoring & Knowledge Sharing", level: 90 },
       { name: "Conflict Resolution", level: 88 },
-      { name: "Agile/Scrum Participation", level: 94 },
-      { name: "Pair Programming", level: 85 },
     ],
     examples: [
-      "Collaborated with 15+ team members across dev, design, and marketing",
-      "Mentored junior developers in best practices and coding standards",
-      "Facilitated daily stand-ups and sprint planning sessions",
-      "Worked with remote teams across different time zones",
+      "Collaborated with 15+ team members across dev & design",
+      "Mentored junior developers in best practices",
+      "Facilitated sprints and stand-ups across time zones",
     ],
   },
   {
@@ -64,20 +54,16 @@ const softSkills = [
     title: "Leadership",
     Icon: ShieldCheck,
     level: 90,
-    description:
-      "Guiding teams, making strategic decisions, and taking full ownership of projects.",
+    description: "Guiding teams, making strategic decisions, and owning projects end-to-end.",
     subSkills: [
       { name: "Team Leadership", level: 92 },
       { name: "Strategic Planning", level: 88 },
       { name: "Decision Making", level: 90 },
-      { name: "Delegation", level: 87 },
-      { name: "Project Ownership", level: 93 },
     ],
     examples: [
-      "Led a team of 5 developers as Senior Full-Stack Developer",
+      "Led a team of 5 developers as Senior Full-Stack Dev",
       "Managed 30+ enterprise projects as Project Manager",
-      "Established operational frameworks and company policies",
-      "Oversaw end-to-end project lifecycles from kickoff to delivery",
+      "Established operational frameworks and policies",
     ],
   },
   {
@@ -85,20 +71,16 @@ const softSkills = [
     title: "Problem Solving",
     Icon: Lightbulb,
     level: 94,
-    description:
-      "Analytical thinking and creative solutions for complex technical challenges.",
+    description: "Analytical thinking and creative solutions for complex technical challenges.",
     subSkills: [
       { name: "Analytical Thinking", level: 95 },
       { name: "Debugging & Troubleshooting", level: 93 },
       { name: "System Architecture", level: 90 },
-      { name: "Performance Optimization", level: 92 },
-      { name: "Creative Solutions", level: 91 },
     ],
     examples: [
-      "Optimized database queries resulting in 45% faster response times",
-      "Reduced system downtime by 60% through microservices architecture",
-      "Improved workflow processes for 40% faster project delivery",
-      "Resolved critical production issues with minimal downtime",
+      "Optimized queries for 45% faster response times",
+      "Reduced downtime by 60% via microservices",
+      "Improved delivery speed by 40% through workflow fixes",
     ],
   },
 ];
@@ -114,29 +96,127 @@ const coreStrengths = [
   { name: "Negotiation", Icon: Briefcase },
 ];
 
-export default function SoftSkills() {
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const [loaded, setLoaded] = useState(false);
+// Fires once when the element scrolls into view
+function useInView(threshold = 0.2) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
 
-  const toggle = (id: string) =>
-    setExpanded((prev) => (prev === id ? null : id));
+  return { ref, inView };
+}
 
+function SkillCard({
+  skill,
+  delay = 0,
+}: {
+  skill: (typeof softSkills)[0];
+  delay?: number;
+}) {
+  const { ref, inView } = useInView(0.2);
+  const { title, Icon, level, description, subSkills, examples } = skill;
+
+  return (
+    <div
+      ref={ref}
+      className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 overflow-hidden"
+    >
+      <div className="p-5 sm:p-6">
+
+        {/* Header */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
+            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white" />
+          </div>
+          <div className="text-right">
+            <div className="text-2xl sm:text-3xl font-black text-black dark:text-white leading-none">
+              {level}%
+            </div>
+            <div className="text-[11px] sm:text-xs text-black/40 dark:text-white/40 mt-0.5">
+              Proficiency
+            </div>
+          </div>
+        </div>
+
+        <h3 className="text-base sm:text-lg font-bold text-black dark:text-white mb-1.5">
+          {title}
+        </h3>
+        <p className="text-xs sm:text-sm text-black/50 dark:text-white/50 leading-relaxed mb-5">
+          {description}
+        </p>
+
+        {/* 3 Progress Bars — animate when scrolled into view */}
+        <div className="space-y-3 sm:space-y-4">
+          {subSkills.map((sub, i) => (
+            <div key={sub.name}>
+              <div className="flex justify-between text-xs sm:text-sm mb-1.5">
+                <span className="text-black/60 dark:text-white/60 font-medium">
+                  {sub.name}
+                </span>
+                <span className="text-black/35 dark:text-white/35">{sub.level}%</span>
+              </div>
+              <div className="h-1.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-black dark:bg-white rounded-full"
+                  style={{
+                    width: inView ? `${sub.level}%` : "0%",
+                    transition: `width 900ms cubic-bezier(0.4, 0, 0.2, 1) ${delay + i * 120}ms`,
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Real-World Examples */}
+        <div className="mt-5 pt-4 border-t border-black/[0.07] dark:border-white/[0.07]">
+          <p className="text-[10px] sm:text-[11px] font-bold text-black/35 dark:text-white/35 uppercase tracking-wider mb-2.5">
+            Real-World Application
+          </p>
+          <ul className="space-y-1.5 sm:space-y-2">
+            {examples.map((ex, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-black/40 dark:text-white/40" />
+                <span className="text-xs sm:text-sm text-black/55 dark:text-white/55 leading-relaxed">
+                  {ex}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+export default function SoftSkills() {
   return (
     <section
       id="soft-skills"
       className="mb-16 sm:mb-24 lg:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0"
     >
-      <div className="grid lg:grid-cols-[1fr_320px] gap-10 lg:gap-16 items-start">
-        {/* Left: content (data) */}
+      <div className="grid lg:grid-cols-[1fr_300px] gap-10 lg:gap-16 items-start">
+
+        {/* Left */}
         <div>
-          {/* Core Strengths chips */}
-          <div className="mb-8 sm:mb-10">
-            <h3 className="text-xs sm:text-xs font-bold text-black/40 dark:text-white/40 uppercase tracking-wider mb-3 sm:mb-4">
+          {/* Core Strengths */}
+          <div className="mb-8">
+            <h3 className="text-xs font-bold text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">
               Core Professional Strengths
             </h3>
             <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -154,114 +234,15 @@ export default function SoftSkills() {
             </div>
           </div>
 
-          {/* Skills grid */}
-          <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-2">
-            {softSkills.map((skill) => {
-              const {
-                id,
-                title,
-                Icon,
-                level,
-                description,
-                subSkills,
-                examples,
-              } = skill;
-              const isOpen = expanded === id;
-              const visibleSubs = isOpen ? subSkills : subSkills.slice(0, 3);
-
-              return (
-                <div
-                  key={id}
-                  className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-all duration-300 overflow-hidden"
-                >
-                  <div className="p-4 sm:p-5">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white" />
-                      </div>
-                      <div className="text-right">
-                        <div className="text-xl sm:text-2xl font-black text-black dark:text-white">
-                          {level}%
-                        </div>
-                        <div className="text-[10px] sm:text-xs text-black/40 dark:text-white/40">
-                          Proficiency
-                        </div>
-                      </div>
-                    </div>
-
-                    <h3 className="text-sm sm:text-base font-bold text-black dark:text-white mb-1">
-                      {title}
-                    </h3>
-                    <p className="text-xs sm:text-xs text-black/55 dark:text-white/55 leading-relaxed mb-4">
-                      {description}
-                    </p>
-
-                    <div className="space-y-2.5 sm:space-y-3">
-                      {visibleSubs.map((sub) => (
-                        <div key={sub.name}>
-                          <div className="flex justify-between text-[10px] sm:text-xs mb-1">
-                            <span className="text-black/60 dark:text-white/60">
-                              {sub.name}
-                            </span>
-                            <span className="text-black/40 dark:text-white/40">
-                              {sub.level}%
-                            </span>
-                          </div>
-                          <div className="h-1 sm:h-1.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
-                            <div
-                              className="h-full rounded-full transition-all duration-1000 ease-out"
-                              style={{
-                                width: loaded ? `${sub.level}%` : "0%",
-                                backgroundColor: "currentColor",
-                                color: "inherit",
-                              }}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => toggle(id)}
-                      className="mt-3 sm:mt-4 flex items-center gap-1 text-xs font-semibold transition-colors text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
-                    >
-                      {isOpen ? (
-                        <>
-                          <ChevronUp className="w-3.5 h-3.5" /> Show Less
-                        </>
-                      ) : (
-                        <>
-                          <ChevronDown className="w-3.5 h-3.5" />
-                          <span>+{subSkills.length - 3} More Skills</span>
-                        </>
-                      )}
-                    </button>
-
-                    {isOpen && (
-                      <div className="mt-4 pt-4 border-t border-black/10 dark:border-white/10">
-                        <p className="text-[10px] sm:text-xs font-bold text-black/40 dark:text-white/40 uppercase tracking-wider mb-2">
-                          Real-World Application
-                        </p>
-                        <ul className="space-y-1.5 sm:space-y-2">
-                          {examples.map((ex, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-black dark:text-white" />
-                              <span className="text-[11px] sm:text-xs text-black/60 dark:text-white/60 leading-relaxed">
-                                {ex}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+          {/* Skills Grid */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {softSkills.map((skill, i) => (
+              <SkillCard key={skill.id} skill={skill} delay={i * 80} />
+            ))}
           </div>
         </div>
 
-        {/* Right: sticky title panel */}
+        {/* Right: sticky panel */}
         <div className="lg:sticky lg:top-28">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/5 mb-5">
             <Star className="w-3.5 h-3.5 text-black/40 dark:text-white/50" />
@@ -282,19 +263,15 @@ export default function SoftSkills() {
           </p>
 
           <div className="p-4 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
-            <p className="text-xs text-black/50 dark:text-white/50 leading-relaxed">
+            <p className="text-xs sm:text-sm text-black/50 dark:text-white/50 leading-relaxed">
               These qualities have been essential in my roles as{" "}
-              <span className="text-black dark:text-white font-semibold">
-                Developer
-              </span>{" "}
+              <span className="text-black dark:text-white font-semibold">Developer</span>{" "}
               and{" "}
-              <span className="text-black dark:text-white font-semibold">
-                Project Lead
-              </span>
-              .
+              <span className="text-black dark:text-white font-semibold">Project Lead</span>.
             </p>
           </div>
         </div>
+
       </div>
     </section>
   );
