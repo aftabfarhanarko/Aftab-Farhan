@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Mail } from "lucide-react";
 
-// Custom SVG icons (same as used in Navbar)
+// --- Custom Brand Icons (same as Contact component) ---
 const GithubIcon = (props: React.ComponentProps<"svg">) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +40,76 @@ const LinkedinIcon = (props: React.ComponentProps<"svg">) => (
   </svg>
 );
 
+const TwitterIcon = (props: React.ComponentProps<"svg">) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+  </svg>
+);
+
+const FacebookIcon = (props: React.ComponentProps<"svg">) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const InstagramIcon = (props: React.ComponentProps<"svg">) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+);
+
+const WhatsAppIcon = (props: React.ComponentProps<"svg">) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+  </svg>
+);
+
 const navLinks = [
   { label: "Home", id: "hero" },
   { label: "About", id: "about" },
@@ -53,9 +123,7 @@ const Footer = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setShowScrollTop(window.scrollY > 600);
-    };
+    const onScroll = () => setShowScrollTop(window.scrollY > 600);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -70,25 +138,31 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative border-t border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] pt-16 pb-10 px-4 sm:px-6 lg:px-0 mt-24">
+    <footer className="relative border-t border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] pt-10 pb-6 px-4 sm:px-6 lg:px-0 mt-20">
       <div className="max-w-7xl mx-auto">
-        {/* Top grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-          {/* Brand column */}
+        {/* Top grid – shorter height */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {/* Brand + description */}
           <div className="lg:col-span-2">
             <span
-              className="inline-block text-lg font-black tracking-tight bg-gradient-to-r from-green-500 to-green-600 bg-clip-text text-transparent mb-3"
+              className="inline-block text-lg font-black tracking-tight bg-gradient-to-r from-green-500 to-green-600 bg-clip-text text-transparent mb-2"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               {"<aftab farhan arko />"}
             </span>
             <p className="text-sm text-black/50 dark:text-white/50 max-w-xs leading-relaxed">
               Full‑stack developer specializing in React, Next.js, and Node.js.
-              Building scalable, high‑performance web applications with clean
-              code and modern best practices.
+              Building scalable, high‑performance web applications.
             </p>
-            {/* Social links */}
-            <div className="flex gap-3 mt-5">
+          </div>
+
+          {/* Social icons – all platforms + Email */}
+          <div>
+            <h4 className="text-xs font-bold text-black/40 dark:text-white/40 uppercase tracking-widest mb-3">
+              Connect
+            </h4>
+            <div className="grid grid-cols-6">
+              {/* GitHub */}
               <a
                 href="https://github.com/aftabfhan"
                 target="_blank"
@@ -96,8 +170,9 @@ const Footer = () => {
                 className="w-9 h-9 rounded-lg border border-black/10 dark:border-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 transition-colors"
                 aria-label="GitHub"
               >
-                <GithubIcon />
+                <GithubIcon width={16} height={16} />
               </a>
+              {/* LinkedIn */}
               <a
                 href="https://linkedin.com/in/aftabfarhanarko"
                 target="_blank"
@@ -105,19 +180,60 @@ const Footer = () => {
                 className="w-9 h-9 rounded-lg border border-black/10 dark:border-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 transition-colors"
                 aria-label="LinkedIn"
               >
-                <LinkedinIcon />
+                <LinkedinIcon width={16} height={16} />
+              </a>
+              {/* Twitter */}
+              <a
+                href="https://twitter.com/aftabfarhan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg border border-black/10 dark:border-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 transition-colors"
+                aria-label="Twitter"
+              >
+                <TwitterIcon width={16} height={16} />
+              </a>
+              {/* Facebook */}
+              <a
+                href="https://facebook.com/aftabfarhan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg border border-black/10 dark:border-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 transition-colors"
+                aria-label="Facebook"
+              >
+                <FacebookIcon width={16} height={16} />
+              </a>
+              {/* Instagram */}
+              <a
+                href="https://instagram.com/aftabfarhan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg border border-black/10 dark:border-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 transition-colors"
+                aria-label="Instagram"
+              >
+                <InstagramIcon width={16} height={16} />
+              </a>
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/8801234567890"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg border border-black/10 dark:border-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:border-black/30 dark:hover:border-white/30 transition-colors"
+                aria-label="WhatsApp"
+              >
+                <WhatsAppIcon width={16} height={16} />
               </a>
             </div>
           </div>
 
-          {/* Contact info */}
+          {/* Contact info with Email icon */}
           <div>
-            <h4 className="text-xs font-bold text-black/40 dark:text-white/40 uppercase tracking-widest mb-4">
+            <h4 className="text-xs font-bold text-black/40 dark:text-white/40 uppercase tracking-widest mb-3">
               Contact
             </h4>
             <ul className="space-y-2 text-sm text-black/60 dark:text-white/60">
               <li>Dhaka, Bangladesh</li>
-              <li>
+              <li className="flex items-center gap-2">
+                <Mail size={14} className="text-black/40 dark:text-white/40 shrink-0" />
                 <a
                   href="mailto:arko@nexoviasoft.com"
                   className="hover:text-black dark:hover:text-white transition-colors"
@@ -137,12 +253,12 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-black/10 dark:border-white/10">
+        {/* Bottom bar – shorter */}
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-5 border-t border-black/10 dark:border-white/10">
           <p className="text-xs text-black/40 dark:text-white/40">
             © {new Date().getFullYear()} Aftab Farhan Arko. All rights reserved.
           </p>
-          <p className="text-xs text-black/30 dark:text-white/30 mt-2 sm:mt-0">
+          <p className="text-xs text-black/30 dark:text-white/30 mt-1 sm:mt-0">
             Crafted with clean code & modern stack.
           </p>
         </div>
