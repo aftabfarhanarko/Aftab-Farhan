@@ -1,5 +1,5 @@
-﻿"use client";
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import {
   Shield,
   ClipboardList,
@@ -9,71 +9,95 @@ import {
   ExternalLink,
   Briefcase,
   Star,
+  Settings,
+  Terminal,
+  Cpu,
+  Globe,
+  Layout,
+  Server,
+  Database,
+  Layers,
+  Zap,
 } from "lucide-react";
 
-const experiences = [
-  {
-    id: 1,
-    company: "NexoviaSoft",
-    url: "https://www.nexoviasoft.com",
-    location: "Rangpur, Bangladesh",
-    period: "2026 – Present",
-    type: "current",
-    roles: [
-      {
-        title: "Chief Operating Officer",
-        subtitle: "COO · Full-time",
-        Icon: Shield,
-        responsibilities: [
-          "Led daily operations and strategic planning for company growth",
-          "Managed cross-functional teams including development, design, and marketing",
-          "Optimized workflow processes resulting in 40% faster project delivery",
-          "Oversaw resource allocation and budget management for 9+ projects",
-          "Established company policies and operational frameworks",
-          "Drove business development and client relationship management",
-        ],
-      },
-      {
-        title: "Senior Project Manager",
-        subtitle: "Project Management · Full-time",
-        Icon: ClipboardList,
-        responsibilities: [
-          "Managed end-to-end delivery of 30+ enterprise web development projects",
-          "Coordinated between clients and technical teams for clear communication",
-          "Implemented Agile/Scrum methodologies for efficient project execution",
-          "Monitored project timelines, milestones, and deliverables",
-          "Conducted quality assurance and ensured premium solution delivery",
-          "Led client meetings, requirement gathering, and project planning sessions",
-        ],
-      },
-    ],
-    techStack: [
-      "React",
-      "Typescript",
-      "Next.js",
-      "Node.js",
-      "MongoDB",
-      "PostgreSQL",
-    ],
-    achievements: [
-      { metric: "9+", label: "Projects Delivered" },
-      { metric: "60%", label: "Efficiency Increase" },
-      { metric: "8+", label: "Enterprise Clients" },
-      { metric: "8+", label: "Team Members" },
-    ],
-  },
-  // (additional experiences can be added here, following the same structure without logoColor)
-];
+const ICON_MAP: Record<string, any> = {
+  Shield,
+  ClipboardList,
+  Code2,
+  Briefcase,
+  Settings,
+  Terminal,
+  Cpu,
+  Globe,
+  Layout,
+  Server,
+  Database,
+  Layers,
+  Zap,
+};
+
+interface Role {
+  title: string;
+  subtitle: string;
+  iconName: string;
+  responsibilities: string[];
+}
+
+interface Achievement {
+  metric: string;
+  label: string;
+}
+
+interface Experience {
+  id: number;
+  company: string;
+  url: string;
+  location: string;
+  period: string;
+  type: string;
+  techStack: string[];
+  roles: Role[];
+  achievements: Achievement[];
+}
 
 export default function Experience() {
+  const [experiences, setExperiences] = useState<Experience[]>([]);
   const [activeTab, setActiveTab] = useState<"all" | "current" | "previous">(
     "all",
   );
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        const res = await fetch("/api/experience");
+        if (res.ok) {
+          const data = await res.json();
+          setExperiences(data);
+        }
+      } catch (error) {
+        console.error("Error fetching experiences:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchExperiences();
+  }, []);
 
   const filtered =
     activeTab === "all"
       ? experiences
       : experiences.filter((e) => e.type === activeTab);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="w-8 h-8 border-2 border-black/10 dark:border-white/10 border-t-black dark:border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (experiences.length === 0) return null;
 
   return (
     <section
@@ -161,7 +185,7 @@ export default function Experience() {
                           <div className="flex flex-wrap items-center gap-1.5 mt-0.5 text-xs text-black/40 dark:text-white/40">
                             <MapPin className="w-3 h-3" />
                             <span>{exp.location}</span>
-                            {exp.url !== "#" && (
+                            {exp.url && exp.url !== "#" && (
                               <>
                                 <span>·</span>
                                 <a
@@ -170,7 +194,7 @@ export default function Experience() {
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-1 hover:text-black dark:hover:text-white transition-colors"
                                 >
-                                  {exp.url.replace("https://www.", "")}
+                                  {exp.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0]}
                                   <ExternalLink className="w-2.5 h-2.5" />
                                 </a>
                               </>
@@ -199,7 +223,7 @@ export default function Experience() {
                     {/* Roles */}
                     <div className="space-y-5">
                       {exp.roles.map((role, ri) => {
-                        const RIcon = role.Icon;
+                        const RIcon = ICON_MAP[role.iconName] || Briefcase;
                         return (
                           <div key={ri}>
                             {ri > 0 && (
@@ -235,43 +259,47 @@ export default function Experience() {
                     </div>
 
                     {/* Tech Stack */}
-                    <div className="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
-                      <p className="text-[10px] font-bold text-black/30 dark:text-white/30 uppercase tracking-widest mb-2">
-                        Tech Stack
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {exp.techStack.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2.5 py-1 text-[11px] sm:text-xs font-medium bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-lg text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:border-black/25 dark:hover:border-white/25 transition-all"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                    {exp.techStack && exp.techStack.length > 0 && (
+                      <div className="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
+                        <p className="text-[10px] font-bold text-black/30 dark:text-white/30 uppercase tracking-widest mb-2">
+                          Tech Stack
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {exp.techStack.map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-2.5 py-1 text-[11px] sm:text-xs font-medium bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-lg text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:border-black/25 dark:hover:border-white/25 transition-all"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Achievements */}
-                    <div className="mt-4 pt-4 border-t border-black/10 dark:border-white/10">
-                      <p className="text-[10px] font-bold text-black/30 dark:text-white/30 uppercase tracking-widest mb-3">
-                        Key Achievements
-                      </p>
-                      <div className="grid grid-cols-4 gap-2">
-                        {exp.achievements.map((a, i) => (
-                          <div
-                            key={i}
-                            className="text-center p-2 sm:p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10"
-                          >
-                            <div className="text-base sm:text-lg font-black text-black dark:text-white">
-                              {a.metric}
+                    {exp.achievements && exp.achievements.length > 0 && (
+                      <div className="mt-4 pt-4 border-t border-black/10 dark:border-white/10">
+                        <p className="text-[10px] font-bold text-black/30 dark:text-white/30 uppercase tracking-widest mb-3">
+                          Key Achievements
+                        </p>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          {exp.achievements.map((a, i) => (
+                            <div
+                              key={i}
+                              className="text-center p-2 sm:p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10"
+                            >
+                              <div className="text-base sm:text-lg font-black text-black dark:text-white">
+                                {a.metric}
+                              </div>
+                              <div className="text-[9px] sm:text-[10px] text-black/40 dark:text-white/40 leading-tight mt-0.5">
+                                {a.label}
+                              </div>
                             </div>
-                            <div className="text-[9px] sm:text-[10px] text-black/40 dark:text-white/40 leading-tight mt-0.5">
-                              {a.label}
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
