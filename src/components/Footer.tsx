@@ -3,49 +3,68 @@ import React from "react";
 import { motion } from "framer-motion";
 
 // ----------------------------------------------------
-// Skill definition (hardcoded – portfolio static)
+// All skill groups from your image – no extra labels
 // ----------------------------------------------------
 const skillGroups = [
   {
-    title: "Frontend",
-    description: "Pixel‑perfect interfaces with modern libraries",
+    title: "Frontend & Languages",
+    description: "Modern JavaScript ecosystems & frameworks",
     skills: [
-      { name: "React.js", level: 95, icon: "⚛️" },
-      { name: "Next.js 16", level: 90, icon: "▲" },
-      { name: "TypeScript", level: 88, icon: "TS" },
-      { name: "Tailwind CSS", level: 95, icon: "🎨" },
-      { name: "Shadcn/ui", level: 85, icon: "🧩" },
-      { name: "Framer Motion", level: 80, icon: "🌀" },
+      { name: "JavaScript", level: 95, icon: "🟨" },
+      { name: "TypeScript", level: 88, icon: "🔷" },
+      { name: "React", level: 95, icon: "⚛️" },
+      { name: "Next.js", level: 90, icon: "▲" },
     ],
   },
   {
-    title: "Backend & Data",
-    description: "Robust APIs and database architecture",
+    title: "Animation & Motion",
+    description: "Smooth, interactive user experiences",
+    skills: [
+      { name: "Framer Motion", level: 80, icon: "🌀" },
+      { name: "GSAP", level: 75, icon: "💚" },
+      { name: "CSS Animations", level: 90, icon: "🎞️" },
+      { name: "Tailwind Animations", level: 85, icon: "🌊" },
+      { name: "Scroll Animations", level: 82, icon: "📜" },
+      { name: "Micro Interactions", level: 78, icon: "🖱️" },
+      { name: "UX Principles", level: 70, icon: "🧠" },
+    ],
+  },
+  {
+    title: "Backend & APIs",
+    description: "Server‑side logic and RESTful services",
     skills: [
       { name: "Node.js", level: 90, icon: "🟢" },
       { name: "Express.js", level: 88, icon: "🚂" },
-      { name: "PostgreSQL", level: 82, icon: "🐘" },
-      { name: "MongoDB", level: 78, icon: "🍃" },
-      { name: "Prisma ORM", level: 85, icon: "🔺" },
-      { name: "GraphQL", level: 75, icon: "◈" },
     ],
   },
   {
-    title: "Tools & Workflow",
-    description: "DevOps, testing and collaboration",
+    title: "Database & Storage",
+    description: "Data modelling, caching, and cloud integration",
     skills: [
-      { name: "Git & GitHub", level: 92, icon: "🔧" },
-      { name: "Docker", level: 70, icon: "🐳" },
-      { name: "Vercel / Netlify", level: 88, icon: "☁️" },
-      { name: "Redux Toolkit", level: 90, icon: "🔄" },
-      { name: "RTK Query", level: 85, icon: "⏳" },
-      { name: "Jest / Vitest", level: 72, icon: "🧪" },
+      { name: "MongoDB", level: 78, icon: "🍃" },
+      { name: "PostgreSQL", level: 82, icon: "🐘" },
+      { name: "Firebase", level: 70, icon: "🔥" },
+    ],
+  },
+  {
+    title: "Development Tools & Workflow",
+    description: "Efficiency, collaboration, and code quality",
+    skills: [
+      { name: "VS Code", level: 98, icon: "🖥️" },
+      { name: "Postman", level: 90, icon: "📮" },
+      { name: "MongoDB Atlas", level: 75, icon: "☁️" },
+      { name: "Prisma", level: 85, icon: "🔺" },
+      { name: "Figma", level: 70, icon: "🎨" },
+      { name: "Chrome DevTools", level: 92, icon: "🔍" },
+      { name: "npm", level: 95, icon: "📦" },
+      { name: "ESLint", level: 85, icon: "🛡️" },
+      { name: "Prettier", level: 90, icon: "✨" },
     ],
   },
 ];
 
 // ----------------------------------------------------
-// Reusable Skill Bar Component
+// Reusable Skill Bar (premium micro‑animation)
 // ----------------------------------------------------
 const SkillBar = ({
   name,
@@ -61,8 +80,8 @@ const SkillBar = ({
   <motion.div
     initial={{ opacity: 0, x: -20 }}
     whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+    viewport={{ once: true, margin: "-40px" }}
+    transition={{ duration: 0.35, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
     className="flex items-center gap-3 group"
   >
     {/* Icon */}
@@ -70,13 +89,13 @@ const SkillBar = ({
       {icon}
     </div>
 
-    {/* Text + Bar */}
+    {/* Name + Progress */}
     <div className="flex-1 min-w-0">
       <div className="flex items-center justify-between mb-1">
-        <span className="text-sm font-medium text-black/80 dark:text-white/80 truncate">
+        <span className="text-xs sm:text-sm font-medium text-black/80 dark:text-white/80 truncate">
           {name}
         </span>
-        <span className="text-xs font-mono text-black/40 dark:text-white/40 ml-2">
+        <span className="text-[10px] font-mono text-black/40 dark:text-white/40 ml-2">
           {level}%
         </span>
       </div>
@@ -85,7 +104,7 @@ const SkillBar = ({
           initial={{ width: 0 }}
           whileInView={{ width: `${level}%` }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 + index * 0.05, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.1 + index * 0.04, ease: "easeOut" }}
           className="h-full rounded-full bg-gradient-to-r from-black/30 to-black dark:from-white/40 dark:to-white/20"
         />
       </div>
@@ -96,13 +115,13 @@ const SkillBar = ({
 // ----------------------------------------------------
 // Main Skills Component
 // ----------------------------------------------------
-const Skills = () => {
-  const container = {
+export default function Skills() {
+  const containerVariants = {
     hidden: {},
     show: { transition: { staggerChildren: 0.1 } },
   };
 
-  const item = {
+  const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     show: {
       opacity: 1,
@@ -120,7 +139,7 @@ const Skills = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6 }}
         className="mb-12"
       >
@@ -140,19 +159,19 @@ const Skills = () => {
         </h2>
       </motion.div>
 
-      {/* Skills Grid */}
+      {/* Skills Cards Grid */}
       <motion.div
-        variants={container}
+        variants={containerVariants}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-80px" }}
-        className="grid lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         {skillGroups.map((group) => (
           <motion.div
             key={group.title}
-            variants={item}
-            className="rounded-2xl border border-black/[0.07] dark:border-white/[0.07] bg-black/[0.02] dark:bg-white/[0.02] p-6 lg:p-8 hover:border-black/15 dark:hover:border-white/15 transition-colors"
+            variants={itemVariants}
+            className="rounded-2xl border border-black/[0.07] dark:border-white/[0.07] bg-black/[0.02] dark:bg-white/[0.02] p-6 lg:p-8 hover:border-black/15 dark:hover:border-white/15 transition-colors group/card"
           >
             {/* Group Header */}
             <div className="mb-6">
@@ -180,7 +199,7 @@ const Skills = () => {
         ))}
       </motion.div>
 
-      {/* Decorative bottom note */}
+      {/* Subtle footer note */}
       <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -192,6 +211,4 @@ const Skills = () => {
       </motion.p>
     </section>
   );
-};
-
-export default Skills;
+}
