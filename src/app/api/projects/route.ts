@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { 
       title, tagline, description, image, category, year, 
-      featured, client, demoLink, githubLink, techStack 
+      featured, client, demoLink, githubLink, techStack, projectType 
     } = body;
 
     if (!title || !tagline || !description || !image || !category || !year || !demoLink) {
@@ -37,6 +37,7 @@ export async function POST(request: Request) {
         category,
         year,
         featured: featured || false,
+        projectType: projectType || "My Project",
         client,
         demoLink,
         githubLink,

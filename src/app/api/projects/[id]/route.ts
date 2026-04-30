@@ -14,7 +14,7 @@ export async function PUT(
     const body = await request.json();
     const { 
       title, tagline, description, image, category, year, 
-      featured, client, demoLink, githubLink, techStack 
+      featured, client, demoLink, githubLink, techStack, projectType 
     } = body;
 
     const updatedProject = await prisma.project.update({
@@ -27,6 +27,7 @@ export async function PUT(
         category,
         year,
         featured,
+        projectType,
         client,
         demoLink,
         githubLink,

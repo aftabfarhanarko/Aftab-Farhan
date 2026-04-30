@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { uploadImageToImgBB } from "@/lib/upload";
+import { Loader2 } from "lucide-react";
 
 interface Tech {
   id: number;
@@ -17,6 +19,7 @@ interface Project {
   category: string;
   year: string;
   featured: boolean;
+  projectType: string;
   client: string | null;
   demoLink: string;
   githubLink: string | null;
@@ -31,6 +34,7 @@ const initialFormState = {
   category: "",
   year: "",
   featured: false,
+  projectType: "My Project",
   client: "",
   demoLink: "",
   githubLink: "",
@@ -42,6 +46,7 @@ export default function ProjectsManager() {
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState(initialFormState);
+  const [isUploading, setIsUploading] = useState(false);
 
   // GET: Fetch Projects
   const { data: projects = [], isLoading: loading } = useQuery<Project[]>({
@@ -113,6 +118,7 @@ export default function ProjectsManager() {
       category: project.category,
       year: project.year,
       featured: project.featured,
+      projectType: project.projectType || "My Project",
       client: project.client || "",
       demoLink: project.demoLink,
       githubLink: project.githubLink || "",
@@ -122,9 +128,30 @@ export default function ProjectsManager() {
     setIsAdding(true);
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setIsUploading(true);
+      try {
+        const url = await uploadImageToImgBB(file);
+        setFormData(prev => ({ ...prev, image: url }));
+      } catch (error) {
+        console.error("Image upload failed", error);
+        alert("Failed to upload image. Please try again.");
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formData.image) {
+      alert("Please upload an image first!");
+      return;
+    }
+
     const techStackArray = formData.techStack
       .split(",")
       .map(t => t.trim())
@@ -148,7 +175,7 @@ export default function ProjectsManager() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-7xl mx-auto p-6">
       <div className="flex items-center justify-between mb-10">
         <div>
           <h1 className="text-4xl font-black tracking-tight mb-2">Projects</h1>
@@ -167,7 +194,9 @@ export default function ProjectsManager() {
       </div>
 
       {loading ? (
-        <div className="text-center py-20">Loading...</div>
+        <div className="flex justify-center items-center py-20">
+          <Loader2 className="w-8 h-8 animate-spin text-white/50" />
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
@@ -185,6 +214,11 @@ export default function ProjectsManager() {
                   {project.featured && (
                     <div className="absolute top-3 right-3 bg-yellow-500 text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">
                       Featured
+                    </div>
+                  )}
+                  {project.projectType && (
+                    <div className="absolute top-3 left-3 bg-blue-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shadow-md">
+                      {project.projectType}
                     </div>
                   )}
                 </div>
@@ -282,18 +316,57 @@ export default function ProjectsManager() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="space-y-1">
-                    <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Image URL *</label>
-                    <input
-                      required type="text" value={formData.image}
-                      onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/20 transition-colors font-medium text-sm"
-                    />
+                    <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Project Cover Image *</label>
+                    <div className="flex items-center gap-4">
+                      {formData.image && (
+                        <div className="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-white/5 border border-white/10">
+                          <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      <div className="relative flex-1">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          disabled={isUploading}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                        />
+                        <div className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex items-center justify-between transition-colors font-medium text-sm ${isUploading ? 'opacity-50' : 'hover:border-white/20'}`}>
+                          <span className="text-foreground/70 truncate">
+                            {isUploading ? "Uploading..." : (formData.image ? "Change Image" : "Choose Image")}
+                          </span>
+                          {isUploading && <Loader2 className="w-4 h-4 animate-spin text-white/70" />}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Year *</label>
                     <input
                       required type="text" value={formData.year}
                       onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/20 transition-colors font-medium text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Project Type *</label>
+                    <select
+                      value={formData.projectType}
+                      onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                      className="w-full bg-[#121212] border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/20 transition-colors font-medium text-sm appearance-none"
+                    >
+                      <option value="My Project">My Project</option>
+                      <option value="Team Project">Team Project</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Client (Optional)</label>
+                    <input
+                      type="text" value={formData.client}
+                      onChange={(e) => setFormData({ ...formData, client: e.target.value })}
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/20 transition-colors font-medium text-sm"
                     />
                   </div>
@@ -318,23 +391,13 @@ export default function ProjectsManager() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Tech Stack (comma separated)</label>
-                    <input
-                      type="text" value={formData.techStack} placeholder="React, Node.js, Tailwind"
-                      onChange={(e) => setFormData({ ...formData, techStack: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/20 transition-colors font-medium text-sm"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Client (Optional)</label>
-                    <input
-                      type="text" value={formData.client}
-                      onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/20 transition-colors font-medium text-sm"
-                    />
-                  </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Tech Stack (comma separated)</label>
+                  <input
+                    type="text" value={formData.techStack} placeholder="React, Node.js, Tailwind"
+                    onChange={(e) => setFormData({ ...formData, techStack: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/20 transition-colors font-medium text-sm"
+                  />
                 </div>
 
                 <div className="flex items-center gap-3 py-2 px-1">
@@ -360,7 +423,7 @@ export default function ProjectsManager() {
                   </button>
                   <button
                     type="submit"
-                    disabled={createMutation.isPending || updateMutation.isPending}
+                    disabled={createMutation.isPending || updateMutation.isPending || isUploading}
                     className="flex-1 py-4 bg-white text-black rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
                   >
                     {createMutation.isPending || updateMutation.isPending ? 'Saving...' : (editingId ? 'Save Changes' : 'Create Project')}
