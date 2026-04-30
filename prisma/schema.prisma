@@ -4,20 +4,9 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
 }
 
-model Plant {
-  id          String   @id @default(cuid())
-  name        String
-  title       String
-  subtitle    String
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  userId      String
-  imageUrl    String?
-}
 
 // User Data Saved
 model User {
@@ -116,4 +105,37 @@ model Achievement {
   label        String
   experienceId Int
   experience   Experience    @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+}
+
+// Projects Showcase
+model Project {
+  id          Int       @id @default(autoincrement())
+  title       String
+  tagline     String
+  description String
+  image       String
+  category    String
+  year        String
+  featured    Boolean   @default(false)
+
+  // optional (client project এর জন্য)
+  client      String?
+
+  // links
+  demoLink    String
+  githubLink  String?
+
+  // relation
+  techStack   Tech[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Tech {
+  id        Int      @id @default(autoincrement())
+  name      String
+
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
 }

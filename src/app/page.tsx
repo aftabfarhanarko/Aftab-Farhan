@@ -7,11 +7,8 @@ import Experience from "@/components/Home/Experience/Experience";
 // import Services from "@/components/Home/Services/Services";
 import SoftSkills from "@/components/Home/SoftSkills/Soft-Skills";
 import Education from "@/components/Home/Education/Education";
-import { getAllPlants } from "@/models/plant.model";
 
-export default async function Home() {
-  const creatNow = await getAllPlants();
-  console.log("ALL Data", creatNow);
+export default  function Home() {
   return (
     <div className="mx-auto max-w-7xl px-6 py-12">
       <Hero />
