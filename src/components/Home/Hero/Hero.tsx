@@ -119,7 +119,7 @@ export default function Hero() {
     );
 
   // ── API থেকে আসা data destructure ──
-  const { name, title, description, image, socials = [], stats = [] } = data;
+  const { name, title, description, image, socials = [], stats = [] } = data || "";
 
   return (
     <section
