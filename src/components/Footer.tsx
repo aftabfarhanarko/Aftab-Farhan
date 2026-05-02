@@ -5,22 +5,112 @@ import { motion } from "framer-motion";
 
 const currentYear = new Date().getFullYear();
 
-const footerLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
-];
+const GithubIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+);
+
+const LinkedinIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
+const TwitterIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+  </svg>
+);
+
+const FacebookIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const MailIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
 
 const socialLinks = [
-  { href: "https://github.com/yourusername", label: "GitHub", icon: "🐙" },
-  { href: "https://linkedin.com/in/yourusername", label: "LinkedIn", icon: "💼" },
-  { href: "https://twitter.com/yourusername", label: "Twitter", icon: "🐦" },
+  {
+    href: "https://github.com/yourusername",
+    label: "GitHub",
+    icon: GithubIcon,
+  },
+  {
+    href: "https://linkedin.com/in/yourusername",
+    label: "LinkedIn",
+    icon: LinkedinIcon,
+  },
+  {
+    href: "https://twitter.com/yourusername",
+    label: "Twitter",
+    icon: TwitterIcon,
+  },
+  {
+    href: "https://facebook.com/yourusername",
+    label: "Facebook",
+    icon: FacebookIcon,
+  },
+  { href: "mailto:you@email.com", label: "Email", icon: MailIcon },
 ];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-black/[0.07] dark:border-white/[0.07] bg-black/[0.02] dark:bg-white/[0.02] px-4 sm:px-6 lg:px-8 py-12 mt-32">
+    <footer className="border-t border-white/[0.07] bg-white/[0.02] px-4 sm:px-6 lg:px-8 py-12 mt-32">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -28,55 +118,49 @@ export default function Footer() {
         transition={{ duration: 0.6 }}
         className="max-w-7xl mx-auto"
       >
-        {/* Top row: Logo / Name + Nav + Social */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 mb-10">
+        {/* Top row */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 mb-10 flex-wrap">
           {/* Brand */}
           <div>
-            <Link href="/" className="text-xl font-black tracking-tight text-black dark:text-white" style={{ fontFamily: "'Syne', sans-serif" }}>
-              YourName<span className="text-black/30 dark:text-white/30">.</span>
+            <Link
+              href="/"
+              className="text-xl font-black tracking-tight text-white"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              Aftab<span className="text-white/25">.</span>
             </Link>
-            <p className="text-xs text-black/50 dark:text-white/50 mt-1 max-w-xs leading-relaxed">
-              Crafting thoughtful digital experiences with clean code & design.
+            <p className="text-[11.5px] text-white/45 mt-1.5 max-w-[220px] leading-relaxed font-mono">
+              Crafting high-performance web experiences with clean code &
+              design.
             </p>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex flex-wrap gap-x-6 gap-y-2">
-            {footerLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-xs font-medium text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
           {/* Social icons */}
-          <div className="flex items-center gap-4">
-            {socialLinks.map((social) => (
+          <div className="flex items-center gap-2.5">
+            {socialLinks.map(({ href, label, icon: Icon }) => (
               <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                className="w-8 h-8 rounded-lg bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] flex items-center justify-center text-sm hover:scale-110 transition-transform"
+                key={label}
+                href={href}
+                target={href.startsWith("mailto") ? undefined : "_blank"}
+                rel={
+                  href.startsWith("mailto") ? undefined : "noopener noreferrer"
+                }
+                aria-label={label}
+                className="w-9 h-9 rounded-[10px] bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/55 hover:text-white hover:bg-white/[0.09] hover:border-white/[0.15] hover:-translate-y-0.5 transition-all duration-200"
               >
-                {social.icon}
+                <Icon />
               </a>
             ))}
           </div>
         </div>
 
-        {/* Bottom row: copyright + monospace note */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-black/[0.06] dark:border-white/[0.06]">
-          <p className="text-[11px] text-black/40 dark:text-white/40 font-mono">
-            © {currentYear} YourName. All rights reserved.
+        {/* Bottom row */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-6 border-t border-white/[0.06]">
+          <p className="text-[11px] text-white/35 font-mono">
+            © {currentYear} Aftab Farha Arko. All rights reserved.
           </p>
-          <p className="text-[11px] text-black/25 dark:text-white/25 font-mono">
-            Built with Next.js, Tailwind & Framer Motion
+          <p className="text-[11px] text-white/20 font-mono">
+            Built with Next.js · Tailwind · Framer Motion
           </p>
         </div>
       </motion.div>
