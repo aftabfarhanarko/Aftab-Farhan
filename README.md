@@ -1,10 +1,10 @@
-# Arko Portfolio - Full Stack Developer
+﻿# Arko Portfolio - Full Stack Developer
 
 This is a modern, high-performance portfolio application built with the latest web technology stack.
 
 ## 🚀 Tech Stack
 
-The core frameworks and libraries used in this project are listed below:
+The core frameworks and libraries used in this project are listed below:        
 
 ### Core Framework & Language
 
@@ -25,7 +25,7 @@ The core frameworks and libraries used in this project are listed below:
 
 ### Database & ORM
 
-- **Prisma ORM**: Providing type-safe database queries and schema management.
+- **Prisma ORM**: Providing type-safe database queries and schema management.   
 - **PostgreSQL**: Scalable data storage solutions.
 
 ### State Management & Data Fetching
@@ -39,62 +39,29 @@ The core frameworks and libraries used in this project are listed below:
 ```text
 arko-protflieo/
 ├── prisma/
+│   ├── migrations/
 │   └── schema.prisma
 ├── public/
-│   ├── image.png
-│   └── (static assets)
+│   └── (static assets: images, icons, etc.)
 ├── src/
 │   ├── app/
-│   │   ├── api/
-│   │   │   ├── auth/
-│   │   │   └── register/
-│   │   ├── dashboard/
-│   │   │   ├── about/
-│   │   │   ├── contact/
-│   │   │   ├── education/
-│   │   │   ├── experience/
-│   │   │   ├── hero/
-│   │   │   ├── projects/
-│   │   │   ├── services/
-│   │   │   ├── skills/
-│   │   │   └── soft-skills/
-│   │   ├── login/
+│   │   ├── api/          # Backend API routes (Auth, Hero, About, Skills, etc.)
+│   │   ├── dashboard/    # Admin Dashboard pages
+│   │   ├── login/        # Authentication pages
+│   │   ├── register/
 │   │   ├── layout.tsx
-│   │   └── page.tsx
+│   │   └── page.tsx      # Main portfolio homepage
 │   ├── components/
-│   │   ├── Dashboard/
-│   │   │   ├── ui/
-│   │   │   └── Sidebar.tsx
-│   │   ├── Home/
-│   │   │   ├── About/
-│   │   │   ├── Contact/
-│   │   │   ├── Education/
-│   │   │   ├── Experience/
-│   │   │   ├── Hero/
-│   │   │   ├── Projects/
-│   │   │   ├── Services/
-│   │   │   ├── Skills/
-│   │   │   └── SoftSkills/
-│   │   ├── ui/
+│   │   ├── Dashboard/    # Dashboard specific components
+│   │   ├── Home/         # Homepage sections (Hero, About, Projects, etc.)
+│   │   ├── ui/           # Reusable UI components (shadcn/ui)
 │   │   ├── Navbar.tsx
-│   │   └── Threads.tsx
-│   ├── lib/
-│   │   ├── prisma.ts
-│   │   └── utils.ts
-│   ├── models/
-│   │   ├── About/
-│   │   ├── Users/
-│   │   └── (feature models)
-│   ├── providers/
-│   │   ├── QueryProvider.tsx
-│   │   └── ReduxProvider.tsx
-│   ├── store/
-│   │   ├── slices/
-│   │   └── store.ts
-│   ├── auth.config.ts
-│   ├── auth.ts
-│   └── middleware.ts
-├── .env
+│   │   └── Footer.tsx
+│   ├── lib/              # Utility functions and shared logic
+│   ├── providers/        # Context providers (Auth, Redux, Query)
+│   ├── store/            # Redux state management
+│   ├── auth.ts           # Auth.js configuration
+│   └── middleware.ts     # Next.js middleware
 ├── next.config.ts
 ├── package.json
 └── tsconfig.json
