@@ -119,12 +119,18 @@ const featuredProject = allProjects.find((p) => p.featured) ?? allProjects[0];
 
 // ── category accent colors ───────────────────────────────────────────────────
 const categoryColor: Record<string, string> = {
-  "Full-Stack": "from-blue-500/20 to-cyan-500/10 border-blue-500/20 text-blue-300/80",
-  "AI/ML": "from-violet-500/20 to-purple-500/10 border-violet-500/20 text-violet-300/80",
-  Frontend: "from-pink-500/20 to-rose-500/10 border-pink-500/20 text-pink-300/80",
-  "E-Commerce": "from-amber-500/20 to-orange-500/10 border-amber-500/20 text-amber-300/80",
-  Healthcare: "from-emerald-500/20 to-teal-500/10 border-emerald-500/20 text-emerald-300/80",
-  "Real Estate": "from-sky-500/20 to-blue-500/10 border-sky-500/20 text-sky-300/80",
+  "Full-Stack":
+    "from-blue-500/20 to-cyan-500/10 border-blue-500/20 text-blue-300/80",
+  "AI/ML":
+    "from-violet-500/20 to-purple-500/10 border-violet-500/20 text-violet-300/80",
+  Frontend:
+    "from-pink-500/20 to-rose-500/10 border-pink-500/20 text-pink-300/80",
+  "E-Commerce":
+    "from-amber-500/20 to-orange-500/10 border-amber-500/20 text-amber-300/80",
+  Healthcare:
+    "from-emerald-500/20 to-teal-500/10 border-emerald-500/20 text-emerald-300/80",
+  "Real Estate":
+    "from-sky-500/20 to-blue-500/10 border-sky-500/20 text-sky-300/80",
 };
 
 const categoryBadge: Record<string, string> = {
@@ -165,7 +171,9 @@ function IconLink({
       target="_blank"
       rel="noopener noreferrer"
       className={`inline-flex items-center gap-2 font-semibold transition-all duration-200 active:scale-95 ${
-        small ? "px-3.5 py-2 text-[11px] rounded-xl" : "px-5 py-2.5 text-xs rounded-xl"
+        small
+          ? "px-3.5 py-2 text-[11px] rounded-xl"
+          : "px-5 py-2.5 text-xs rounded-xl"
       } ${
         filled
           ? "bg-white text-black hover:bg-white/90 shadow-lg shadow-white/10"
@@ -180,8 +188,12 @@ function IconLink({
 
 // ── project card ─────────────────────────────────────────────────────────────
 function ProjectCard({ project }: { project: (typeof allProjects)[0] }) {
-  const accent = categoryColor[project.category] ?? "from-white/10 to-white/5 border-white/10 text-white/50";
-  const badge = categoryBadge[project.category] ?? "bg-white/5 border-white/10 text-white/50";
+  const accent =
+    categoryColor[project.category] ??
+    "from-white/10 to-white/5 border-white/10 text-white/50";
+  const badge =
+    categoryBadge[project.category] ??
+    "bg-white/5 border-white/10 text-white/50";
 
   return (
     <div className="group relative flex flex-col rounded-2xl border border-white/[0.07] bg-white/[0.02] hover:border-white/[0.15] transition-all duration-400 overflow-hidden">
@@ -195,7 +207,9 @@ function ProjectCard({ project }: { project: (typeof allProjects)[0] }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         {/* top badges */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-          <span className={`px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest border rounded-lg backdrop-blur-sm ${badge}`}>
+          <span
+            className={`px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest border rounded-lg backdrop-blur-sm ${badge}`}
+          >
             {project.category}
           </span>
           <span className="px-2.5 py-1 text-[9px] font-bold text-white/40 bg-black/40 backdrop-blur-sm border border-white/[0.08] rounded-lg">
@@ -204,13 +218,21 @@ function ProjectCard({ project }: { project: (typeof allProjects)[0] }) {
         </div>
         {/* hover overlay with quick links */}
         <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <a href={project.demoLink} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-4 py-2 bg-white text-black text-xs font-bold rounded-xl shadow-2xl hover:bg-white/90 transition-colors">
+          <a
+            href={project.demoLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-4 py-2 bg-white text-black text-xs font-bold rounded-xl shadow-2xl hover:bg-white/90 transition-colors"
+          >
             <ExternalLink className="w-3 h-3" /> Live
           </a>
           {project.githubLink && (
-            <a href={project.githubLink} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-4 py-2 bg-black/80 text-white text-xs font-bold rounded-xl border border-white/20 backdrop-blur-sm hover:bg-black/60 transition-colors">
+            <a
+              href={project.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-4 py-2 bg-black/80 text-white text-xs font-bold rounded-xl border border-white/20 backdrop-blur-sm hover:bg-black/60 transition-colors"
+            >
               <GitBranch className="w-3 h-3" /> Code
             </a>
           )}
@@ -220,10 +242,14 @@ function ProjectCard({ project }: { project: (typeof allProjects)[0] }) {
       {/* content */}
       <div className="flex flex-col flex-1 p-5">
         {/* gradient accent line */}
-        <div className={`h-px w-full bg-gradient-to-r ${accent.split(" ")[0]} ${accent.split(" ")[1]} mb-4 rounded-full opacity-60`} />
+        <div
+          className={`h-px w-full bg-gradient-to-r ${accent.split(" ")[0]} ${accent.split(" ")[1]} mb-4 rounded-full opacity-60`}
+        />
 
         <div className="flex items-start justify-between gap-2 mb-1.5">
-          <h4 className="text-[15px] font-bold text-white leading-snug">{project.title}</h4>
+          <h4 className="text-[15px] font-bold text-white leading-snug">
+            {project.title}
+          </h4>
           <ArrowUpRight className="w-4 h-4 text-white/20 group-hover:text-white/60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 flex-shrink-0 mt-0.5" />
         </div>
 
@@ -238,15 +264,30 @@ function ProjectCard({ project }: { project: (typeof allProjects)[0] }) {
 
         {/* tech */}
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {project.tech.slice(0, 3).map((t) => <Pill key={t} label={t} />)}
-          {project.tech.length > 3 && <Pill label={`+${project.tech.length - 3}`} />}
+          {project.tech.slice(0, 3).map((t) => (
+            <Pill key={t} label={t} />
+          ))}
+          {project.tech.length > 3 && (
+            <Pill label={`+${project.tech.length - 3}`} />
+          )}
         </div>
 
         {/* links */}
         <div className="flex gap-2">
-          <IconLink href={project.demoLink} icon={ExternalLink} label="Live Demo" filled small />
+          <IconLink
+            href={project.demoLink}
+            icon={ExternalLink}
+            label="Live Demo"
+            filled
+            small
+          />
           {project.githubLink && (
-            <IconLink href={project.githubLink} icon={GitBranch} label="Source" small />
+            <IconLink
+              href={project.githubLink}
+              icon={GitBranch}
+              label="Source"
+              small
+            />
           )}
         </div>
       </div>
@@ -258,17 +299,35 @@ function ProjectCard({ project }: { project: (typeof allProjects)[0] }) {
 export default function Projects() {
   const [activeTab, setActiveTab] = useState<Tab>("all");
 
-  const getActive = () => activeTab === "all" ? allProjects : projects[activeTab];
+  const getActive = () =>
+    activeTab === "all" ? allProjects : projects[activeTab];
 
-  const tabs: { id: Tab; label: string; icon: React.ElementType; count: number }[] = [
-    { id: "all", label: "All Projects", icon: Layers, count: allProjects.length },
+  const tabs: {
+    id: Tab;
+    label: string;
+    icon: React.ElementType;
+    count: number;
+  }[] = [
+    {
+      id: "all",
+      label: "All Projects",
+      icon: Layers,
+      count: allProjects.length,
+    },
     { id: "my", label: "Personal", icon: User, count: projects.my.length },
-    { id: "client", label: "Client Work", icon: Briefcase, count: projects.client.length },
+    {
+      id: "client",
+      label: "Client Work",
+      icon: Briefcase,
+      count: projects.client.length,
+    },
   ];
 
   return (
-    <section id="projects" className="mb-24 sm:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0">
-
+    <section
+      id="projects"
+      className="mb-24 sm:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0"
+    >
       {/* ── Section heading ── */}
       <div className="flex items-end gap-6 mb-14">
         <div>
@@ -293,7 +352,6 @@ export default function Projects() {
 
       {/* ── Featured Hero ── */}
       <div className="relative mb-16 rounded-[2rem] overflow-hidden border border-white/[0.09] group cursor-pointer">
-
         {/* full bg image */}
         <div className="absolute inset-0">
           <img
@@ -305,14 +363,16 @@ export default function Projects() {
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           {/* grid texture */}
-          <div className="absolute inset-0 opacity-[0.035]"
+          <div
+            className="absolute inset-0 opacity-[0.035]"
             style={{
               backgroundImage:
                 "repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,1) 39px,rgba(255,255,255,1) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,1) 39px,rgba(255,255,255,1) 40px)",
             }}
           />
           {/* noise texture */}
-          <div className="absolute inset-0 opacity-[0.03]"
+          <div
+            className="absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
             }}
@@ -321,7 +381,6 @@ export default function Projects() {
 
         {/* content */}
         <div className="relative z-10 p-8 sm:p-12 lg:p-16 min-h-[400px] flex flex-col justify-between">
-
           {/* top row */}
           <div className="flex items-start justify-between">
             <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/[0.12] bg-white/[0.05] backdrop-blur-md">
@@ -331,7 +390,9 @@ export default function Projects() {
               </span>
               <Sparkles className="w-3 h-3 text-white/30" />
             </div>
-            <span className={`px-3.5 py-2 text-[10px] font-bold uppercase tracking-widest border rounded-xl backdrop-blur-sm ${categoryBadge[featuredProject.category]}`}>
+            <span
+              className={`px-3.5 py-2 text-[10px] font-bold uppercase tracking-widest border rounded-xl backdrop-blur-sm ${categoryBadge[featuredProject.category]}`}
+            >
               {featuredProject.category}
             </span>
           </div>
@@ -352,8 +413,10 @@ export default function Projects() {
               {/* tech stack */}
               <div className="flex flex-wrap gap-2 mb-8">
                 {featuredProject.tech.map((t) => (
-                  <span key={t}
-                    className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-white/[0.06] border border-white/[0.1] rounded-xl text-white/50 backdrop-blur-sm">
+                  <span
+                    key={t}
+                    className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-white/[0.06] border border-white/[0.1] rounded-xl text-white/50 backdrop-blur-sm"
+                  >
                     {t}
                   </span>
                 ))}
@@ -361,9 +424,18 @@ export default function Projects() {
 
               {/* cta buttons */}
               <div className="flex flex-wrap gap-3">
-                <IconLink href={featuredProject.demoLink} icon={ExternalLink} label="View Live" filled />
+                <IconLink
+                  href={featuredProject.demoLink}
+                  icon={ExternalLink}
+                  label="View Live"
+                  filled
+                />
                 {featuredProject.githubLink && (
-                  <IconLink href={featuredProject.githubLink} icon={GitBranch} label="Source Code" />
+                  <IconLink
+                    href={featuredProject.githubLink}
+                    icon={GitBranch}
+                    label="Source Code"
+                  />
                 )}
               </div>
             </div>
@@ -372,11 +444,25 @@ export default function Projects() {
             <div className="flex flex-row lg:flex-col gap-3 flex-shrink-0">
               {[
                 { label: "Year", value: featuredProject.year ?? "2024" },
-                { label: "Stack", value: `${featuredProject.tech.length} libs` },
-                { label: "Type", value: "client" in featuredProject && featuredProject.client ? "Client" : "Personal" },
+                {
+                  label: "Stack",
+                  value: `${featuredProject.tech.length} libs`,
+                },
+                {
+                  label: "Type",
+                  value:
+                    "client" in featuredProject && featuredProject.client
+                      ? "Client"
+                      : "Personal",
+                },
               ].map(({ label, value }) => (
-                <div key={label} className="px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl backdrop-blur-sm text-center min-w-[80px]">
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-white/25 mb-0.5">{label}</div>
+                <div
+                  key={label}
+                  className="px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl backdrop-blur-sm text-center min-w-[80px]"
+                >
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-white/25 mb-0.5">
+                    {label}
+                  </div>
                   <div className="text-sm font-bold text-white/70">{value}</div>
                 </div>
               ))}
@@ -400,9 +486,13 @@ export default function Projects() {
             >
               <Icon className="w-3.5 h-3.5" />
               {label}
-              <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-bold ${
-                activeTab === id ? "bg-black/10 text-black/55" : "bg-white/[0.06] text-white/25"
-              }`}>
+              <span
+                className={`px-1.5 py-0.5 rounded-md text-[10px] font-bold ${
+                  activeTab === id
+                    ? "bg-black/10 text-black/55"
+                    : "bg-white/[0.06] text-white/25"
+                }`}
+              >
                 {count}
               </span>
             </button>
@@ -427,15 +517,6 @@ export default function Projects() {
           </p>
         </div>
       )}
-
-      {/* ── View more ── */}
-      <div className="text-center mt-14">
-        <a href="#" className="inline-flex items-center gap-2 px-8 py-3.5 border border-white/15 rounded-full text-[11px] font-bold text-white/45 hover:border-white/35 hover:text-white/80 transition-all duration-200 active:scale-95 uppercase tracking-widest">
-          View All Projects
-          <ArrowUpRight className="w-3.5 h-3.5" />
-        </a>
-      </div>
-
     </section>
   );
 }
