@@ -1,9 +1,8 @@
-import { defineConfig } from "@prisma/config";
+import { defineConfig } from "prisma/config";
 
 export default defineConfig({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL,
-    },
+  schema: "prisma/schema.prisma",
+  datasource: {
+    url: "postgresql://postgres:arpo5432@localhost:5432/my-proftlioe-data",
   },
 });

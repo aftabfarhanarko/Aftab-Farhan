@@ -107,40 +107,11 @@ model Achievement {
   experience   Experience    @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 }
 
-// Projects Showcase
-model Project {
-  id          Int       @id @default(autoincrement())
-  title       String
-  tagline     String
-  description String
-  image       String
-  category    String
-  year        String
-  featured    Boolean   @default(false)
-  projectType String    //@default("My Project")
+// Project 
 
-  // optional (client project এর জন্য)
-  client      String?
 
-  // links
-  demoLink    String
-  githubLink  String?
 
-  // relation
-  techStack   Tech[]
-
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-}
-
-model Tech {
-  id        Int      @id @default(autoincrement())
-  name      String
-
-  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId Int
-}
-
+// Skill
 model SkillCategory {
   id        String   @id @default(uuid())
   title     String   // e.g. "Frontend", "Backend"
@@ -161,4 +132,34 @@ model Skill {
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+
+
+// Education
+
+
+model Education {
+  id           String   @id @default(uuid())
+  degree       String
+  field        String
+  institution  String
+  shortName    String?
+  location     String
+  period       String
+  grade        String?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Certification {
+  id           String   @id @default(uuid())
+  title        String
+  issuer       String
+  year         String
+  credential   String?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
