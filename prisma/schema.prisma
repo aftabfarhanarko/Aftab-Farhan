@@ -7,7 +7,6 @@ datasource db {
   // url      = env("DATABASE_URL")
 }
 
-
 // User Data Saved
 model User {
   id        String   @id @default(cuid())
@@ -51,105 +50,128 @@ model HeroSocial {
   hero   Hero   @relation(fields: [heroId], references: [id])
 }
 
-
 model About {
-  id               Int    @id @default(autoincrement())
-  fullName         String // Aftab Farhan Arko
-  roleTag          String // Full Stack Developer
-  roleDescription  String // Full Stack Developer  Specialist in ...
+  id              Int    @id @default(autoincrement())
+  fullName        String // Aftab Farhan Arko
+  roleTag         String // Full Stack Developer
+  roleDescription String // Full Stack Developer  Specialist in ...
 
-  introParagraphs  Json
+  introParagraphs   Json
   clientFocusedText String
-  stats            Json
-  frontendSkills   Json
-  backendSkills    Json
-  tools            Json
-  projects         Json
-  quoteText        String
-  quoteAuthor      String
+  stats             Json
+  frontendSkills    Json
+  backendSkills     Json
+  tools             Json
+  projects          Json
+  quoteText         String
+  quoteAuthor       String
   mentorTitle       String
   mentorDescription String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
-
 
 // Experience
 model Experience {
-  id              Int           @id @default(autoincrement())
-  company         String
-  url             String
-  location        String
-  period          String
-  type            String        // "current" or "previous"
-  techStack       String[]      // PostgreSQL array of strings
-  roles           Role[]
-  achievements    Achievement[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id           Int           @id @default(autoincrement())
+  company      String
+  url          String
+  location     String
+  period       String
+  type         String // "current" or "previous"
+  techStack    String[] // PostgreSQL array of strings
+  roles        Role[]
+  achievements Achievement[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Role {
-  id              Int           @id @default(autoincrement())
-  title           String        // e.g., "Chief Operating Officer"
-  subtitle        String        // e.g., "COO · Full-time"
-  iconName        String        // e.g., "Shield", "ClipboardList"
-  responsibilities String[]     // list of responsibilities
-  experienceId    Int
-  experience      Experience    @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  id               Int        @id @default(autoincrement())
+  title            String // e.g., "Chief Operating Officer"
+  subtitle         String // e.g., "COO · Full-time"
+  iconName         String // e.g., "Shield", "ClipboardList"
+  responsibilities String[] // list of responsibilities
+  experienceId     Int
+  experience       Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 }
 
 model Achievement {
-  id           Int           @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   metric       String
   label        String
   experienceId Int
-  experience   Experience    @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 }
 
 // Project 
 
-
-
 // Skill
 model SkillCategory {
-  id        String   @id @default(uuid())
-  title     String   // e.g. "Frontend", "Backend"
+  id    String @id @default(uuid())
+  title String // e.g. "Frontend", "Backend"
 
-  skills    Skill[]  // 👈 one category → many skills
+  skills Skill[] // 👈 one category → many skills
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Skill {
-  id          String   @id @default(uuid())
-  name        String   // e.g. "React", "JavaScript"
-  imageUrl    String?
+  id       String  @id @default(uuid())
+  name     String // e.g. "React", "JavaScript"
+  imageUrl String?
 
-  categoryId  String
-  category    SkillCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+  category   SkillCategory @relation(fields: [categoryId], references: [id])
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-
-
 
 // Education
-
-
 model Education {
-  id           String   @id @default(uuid())
-  degree       String
-  field        String
-  institution  String
-  shortName    String?
-  location     String
-  period       String
-  grade        String?
+  id          String  @id @default(uuid())
+  degree      String
+  field       String
+  institution String
+  shortName   String?
+  location    String
+  period      String
+  grade       String?
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
+// ContactMessage
+
+model ContactMessage {
+  id String @id @default(uuid())
+
+  name  String
+  email String
+
+  subject ContactSubject
+  message String
+
+  status MessageStatus @default(UNREAD)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ContactSubject {
+  FREELANCE
+  FULLTIME
+  COLLABORATION
+  CONSULTING
+  OTHER
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}

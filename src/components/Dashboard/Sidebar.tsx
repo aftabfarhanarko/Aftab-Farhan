@@ -78,13 +78,13 @@ const menuItems = [
     icon: GraduationCap,
     color: "#e879f9",
   },
-  // {
-  //   id: "contact",
-  //   label: "Contact",
-  //   href: "/dashboard/contact",
-  //   icon: Phone,
-  //   color: "#2dd4bf",
-  // },
+  {
+    id: "contact",
+    label: "Contact",
+    href: "/dashboard/contact",
+    icon: Phone,
+    color: "#2dd4bf",
+  },
 ];
 
 /* ─────────────────── Sidebar ─────────────────── */
