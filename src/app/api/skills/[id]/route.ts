@@ -3,34 +3,38 @@ import { prisma } from "@/lib/prisma";
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
-    const { title } = body;
+    const { name, imageUrl, categoryId } = body;
 
-    const updated = await prisma.skillCategory.update({
+    const updated = await prisma.skill.update({
       where: { id },
-      data: { title },
+      data: {
+        name,
+        imageUrl,
+        categoryId,
+      },
     });
     return NextResponse.json(updated);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to update category" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to update skill" }, { status: 500 });
   }
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
-    await prisma.skillCategory.delete({
+    const { id } = await params;
+    await prisma.skill.delete({
       where: { id },
     });
-    return NextResponse.json({ message: "Category deleted" });
+    return NextResponse.json({ message: "Skill deleted" });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to delete category" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to delete skill" }, { status: 500 });
   }
 }
