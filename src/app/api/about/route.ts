@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
+  // asWyggdcyt qgf
   try {
     const about = await prisma.about.findFirst();
     return NextResponse.json(about);
