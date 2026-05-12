@@ -71,7 +71,7 @@ export async function PUT(
 
     const formattedProject = {
       ...project,
-      tech: project.tech.map((pt) => pt.tech.name),
+      tech: project.tech.map((pt: { tech: { name: string } }) => pt.tech.name),
     };
 
     return NextResponse.json(formattedProject);
