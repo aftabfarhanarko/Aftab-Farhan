@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import {
   MessageSquare,
@@ -208,7 +208,7 @@ export default function SoftSkills() {
   return (
     <section
       id="soft-skills"
-      className="mb-16 sm:mb-24 lg:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0"
+      className="mb-12 sm:mb-16 lg:mb-20 scroll-mt-24 px-4 sm:px-6 lg:px-0"
     >
       <div className="grid lg:grid-cols-[1fr_300px] gap-10 lg:gap-16 items-start">
 

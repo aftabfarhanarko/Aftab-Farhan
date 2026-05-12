@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -100,7 +100,7 @@ export default function About() {
   const mentorDescription = aboutData?.mentorDescription || "";
 
   return (
-    <section id="about" className=" -mt-40 mb-20">
+    <section id="about" className=" -mt-40 mb-16">
       <motion.div
         ref={ref}
         variants={containerVariants}

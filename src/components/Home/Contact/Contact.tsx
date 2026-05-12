@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
@@ -102,7 +102,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0 overflow-visible"
+      className="relative mb-16 sm:mb-20 lg:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0 overflow-visible"
     >
       <div
         className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-[120px] opacity-20"
@@ -116,7 +116,7 @@ export default function Contact() {
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="flex items-end gap-5 mb-14"
+        className="flex items-end gap-5 mb-10"
       >
         <div>
           <p className="text-xs font-mono text-green-400/60 tracking-[0.25em] uppercase mb-2">
@@ -155,7 +155,7 @@ export default function Contact() {
               Whether it&apos;s a{" "}
               <span className="text-white/80">freelance project</span>, a{" "}
               <span className="text-white/80">full-time role</span>, or just a
-              technical conversation — my inbox is open.
+              technical conversation Ã¢â‚¬â€ my inbox is open.
             </p>
           </div>
 
@@ -208,7 +208,7 @@ export default function Contact() {
                   key="success"
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center py-16 text-center gap-4"
+                  className="flex flex-col items-center justify-center py-12 text-center gap-4"
                 >
                   <div className="w-16 h-16 rounded-full border border-green-500/30 bg-green-500/10 flex items-center justify-center text-green-400">
                     <Check size={28} />

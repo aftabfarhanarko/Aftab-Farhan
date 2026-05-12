@@ -1,4 +1,4 @@
-﻿
+
 "use client";
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -38,7 +38,7 @@ export default function Education() {
   return (
     <section
       id="education"
-      className="mb-16 sm:mb-24 lg:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0"
+      className="mb-12 sm:mb-16 lg:mb-20 scroll-mt-24 px-4 sm:px-6 lg:px-0"
     >
       {/* Two-column layout */}
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">

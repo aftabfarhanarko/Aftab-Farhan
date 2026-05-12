@@ -102,7 +102,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="mb-16 sm:mb-24 lg:mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0"
+      className="mb-12 sm:mb-16 lg:mb-20 scroll-mt-24 px-4 sm:px-6 lg:px-0"
     >
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
         {/* Left panel */}
@@ -187,7 +187,7 @@ export default function Experience() {
                             <span>{exp.location}</span>
                             {exp.url && exp.url !== "#" && (
                               <>
-                                <span>·</span>
+                                <span>Â·</span>
                                 <a
                                   href={exp.url}
                                   target="_blank"

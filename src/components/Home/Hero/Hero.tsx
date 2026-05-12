@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 
-// ─── Animation helpers ───────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Animation helpers Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 const fadeLeft = (delay = 0) => ({
   initial: { opacity: 0, x: -32 },
@@ -24,15 +24,15 @@ const scaleIn = (delay = 0) => ({
   transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay },
 });
 
-// ─── Fetcher ─────────────────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Fetcher Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 async function fetchHero() {
-  const res = await fetch("/api/hero"); // ← আপনার actual API route দিন
+  const res = await fetch("/api/hero"); // Ã¢â€ Â Ã Â¦â€ Ã Â¦ÂªÃ Â¦Â¨Ã Â¦Â¾Ã Â¦Â° actual API route Ã Â¦Â¦Ã Â¦Â¿Ã Â¦Â¨
   if (!res.ok) throw new Error("Failed to fetch hero data");
   return res.json();
 }
 
-// ─── Social icon map (platform নাম দিয়ে icon বেছে নেয়) ──────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Social icon map (platform Ã Â¦Â¨Ã Â¦Â¾Ã Â¦Â® Ã Â¦Â¦Ã Â¦Â¿Ã Â¦Â¯Ã Â¦Â¼Ã Â§â€¡ icon Ã Â¦Â¬Ã Â§â€¡Ã Â¦â€ºÃ Â§â€¡ Ã Â¦Â¨Ã Â§â€¡Ã Â¦Â¯Ã Â¦Â¼) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 function SocialIcon({ platform }) {
   const p = platform?.toLowerCase() ?? "";
@@ -65,11 +65,11 @@ function SocialIcon({ platform }) {
   );
 }
 
-// ─── Skeleton loader ──────────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Skeleton loader Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 function HeroSkeleton() {
   return (
-    <section className="relative mb-32 flex flex-col lg:flex-row items-center justify-between gap-16 -mt-25 min-h-[90vh] animate-pulse">
+    <section className="relative mb-20 sm:mb-24 flex flex-col lg:flex-row items-center justify-between gap-16 -mt-25 min-h-[90vh] animate-pulse">
       <div className="flex-1 flex flex-col gap-6 max-w-2xl">
         <div className="h-4 w-48 bg-foreground/10 rounded" />
         <div className="h-12 w-80 bg-foreground/10 rounded" />
@@ -98,13 +98,13 @@ function HeroSkeleton() {
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Main Component Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
 export default function Hero() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["hero"],
     queryFn: fetchHero,
-    staleTime: 1000 * 60 * 5, // 5 মিনিট cache
+    staleTime: 1000 * 60 * 5, // 5 Ã Â¦Â®Ã Â¦Â¿Ã Â¦Â¨Ã Â¦Â¿Ã Â¦Å¸ cache
   });
 
   if (isLoading) return <HeroSkeleton />;
@@ -118,13 +118,13 @@ export default function Hero() {
       </section>
     );
 
-  // ── API থেকে আসা data destructure ──
+  // Ã¢â€â‚¬Ã¢â€â‚¬ API Ã Â¦Â¥Ã Â§â€¡Ã Â¦â€¢Ã Â§â€¡ Ã Â¦â€ Ã Â¦Â¸Ã Â¦Â¾ data destructure Ã¢â€â‚¬Ã¢â€â‚¬
   const { name, title, description, image, socials = [], stats = [] } = data || "";
 
   return (
     <section
       id="hero"
-      className="relative mb-32 flex flex-col lg:flex-row items-center justify-between gap-16 -mt-25  min-h-[90vh]"
+      className="relative mb-20 sm:mb-24 flex flex-col lg:flex-row items-center justify-between gap-16 -mt-25  min-h-[90vh]"
     >
       {/* Ambient glow blobs */}
       <div className="absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-foreground/5 blur-[140px] -z-10 pointer-events-none" />
@@ -186,11 +186,11 @@ export default function Hero() {
             whileTap={{ scale: 0.96 }}
             className="rounded-xl border border-foreground/40 px-7 py-3.5 text-sm font-black text-foreground/80 hover:bg-foreground/8 hover:border-foreground hover:text-foreground transition-all"
           >
-            View Projects →
+            View Projects Ã¢â€ â€™
           </motion.a>
         </motion.div>
 
-        {/* Stats — dynamic */}
+        {/* Stats Ã¢â‚¬â€ dynamic */}
         <motion.div
           {...fadeUp(0.6)}
           className="flex gap-12 pt-8 mt-3 border-t border-white/10"
@@ -243,7 +243,7 @@ export default function Hero() {
               <p className="text-foreground/40">$ git status</p>
               <p className="text-foreground">On branch main</p>
               <p className="text-foreground/40">$ deploy --prod</p>
-              <p className="text-foreground">✓ Build success</p>
+              <p className="text-foreground">Ã¢Å“â€œ Build success</p>
             </div>
           </div>
         </motion.div>
@@ -264,7 +264,7 @@ export default function Hero() {
               Current Stack
             </div>
             <div className="text-xs font-bold text-foreground mt-0.5">
-              TypeScript · React · Next
+              TypeScript Ã‚Â· React Ã‚Â· Next
             </div>
           </motion.div>
         </motion.div>
@@ -288,7 +288,7 @@ export default function Hero() {
             <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
           </div>
 
-          {/* Social links bottom arc — dynamic */}
+          {/* Social links bottom arc Ã¢â‚¬â€ dynamic */}
           <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-5 py-2 rounded-full bg-background/95 backdrop-blur-xl border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.4)] z-20 whitespace-nowrap">
             {socials.map((social, i) => (
               <div key={social.id} className="flex items-center gap-3">

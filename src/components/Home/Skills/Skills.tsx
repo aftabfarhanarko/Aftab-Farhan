@@ -44,8 +44,8 @@ export default function Skills() {
   });
 
   return (
-    <section id="skills" className="mb-32 scroll-mt-24 px-4 sm:px-6 lg:px-0">
-      <div className="text-left mb-12 sm:mb-16">
+    <section id="skills" className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0">
+      <div className="text-left mb-10 sm:mb-12">
         <span className="text-xs sm:text-sm font-bold text-foreground/40 uppercase tracking-[0.2em]">Technical Arsenal</span>
         <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight">Mastering the Modern Stack</h2>
         <p className="mt-4 max-w-2xl text-foreground/60 text-sm sm:text-base leading-relaxed">Technologies and tools I leverage to build scalable, high-performance applications.</p>
