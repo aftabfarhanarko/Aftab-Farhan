@@ -66,7 +66,7 @@ export default function About() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
     },
   };
 
@@ -244,7 +244,7 @@ export default function About() {
               </blockquote>
               {quoteAuthor && (
                 <p className="text-right text-[11px] text-black/30 dark:text-white/30 mt-2">
-                  — {quoteAuthor}
+                  â€” {quoteAuthor}
                 </p>
               )}
             </motion.div>

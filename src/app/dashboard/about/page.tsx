@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -545,26 +545,63 @@ const Section = ({
   </motion.div>
 );
 
-const InputGroup = ({ label, isTextArea, ...props }: any) => (
-  <div className="space-y-3 flex-1">
-    <label className="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/20 px-1">
-      {label}
-    </label>
-    {isTextArea ? (
-      <textarea
-        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 focus:outline-none focus:border-white/20 transition-all font-medium resize-none min-h-[120px] hover:bg-white/[0.05]"
-        {...props}
-      />
-    ) : (
+type InputGroupProps =
+  | ({
+      label: string;
+      isTextArea: true;
+    } & React.TextareaHTMLAttributes<HTMLTextAreaElement>)
+  | ({
+      label: string;
+      isTextArea?: false;
+    } & React.InputHTMLAttributes<HTMLInputElement>);
+
+const InputGroup = (props: InputGroupProps) => {
+  if (props.isTextArea) {
+    const { label, isTextArea, ...textareaProps } = props;
+
+    return (
+      <div className="space-y-3 flex-1">
+        <label className="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/20 px-1">
+          {label}
+        </label>
+        <textarea
+          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 focus:outline-none focus:border-white/20 transition-all font-medium resize-none min-h-[120px] hover:bg-white/[0.05]"
+          {...textareaProps}
+        />
+      </div>
+    );
+  }
+
+  const { label, isTextArea, ...inputProps } = props;
+
+  return (
+    <div className="space-y-3 flex-1">
+      <label className="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/20 px-1">
+        {label}
+      </label>
       <input
         className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 focus:outline-none focus:border-white/20 transition-all font-medium h-16 hover:bg-white/[0.05]"
-        {...props}
+        {...inputProps}
       />
-    )}
-  </div>
-);
+    </div>
+  );
+};
 
-const SkillArray = ({ label, data, onAdd, onRemove, onChange }: any) => (
+type SkillArrayProps = {
+  label: string;
+  data: string[];
+  onAdd: () => void;
+  onRemove: (index: number) => void;
+  onChange: (index: number, value: string) => void;
+};
+
+const SkillArray = ({
+  label,
+  data,
+  onAdd,
+  onRemove,
+  onChange,
+}: SkillArrayProps) => (
   <div className="space-y-5">
     <label className="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/20 px-1">
       {label}
