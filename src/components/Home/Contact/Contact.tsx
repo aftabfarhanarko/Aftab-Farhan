@@ -49,7 +49,7 @@ const subjectOptions = [
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
 const stagger = {
@@ -155,7 +155,7 @@ export default function Contact() {
               Whether it&apos;s a{" "}
               <span className="text-white/80">freelance project</span>, a{" "}
               <span className="text-white/80">full-time role</span>, or just a
-              technical conversation Ã¢â‚¬â€ my inbox is open.
+              technical conversation ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â my inbox is open.
             </p>
           </div>
 
