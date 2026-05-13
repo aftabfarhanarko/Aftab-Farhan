@@ -16,8 +16,6 @@ import {
   Briefcase,
   Quote,
   GraduationCap,
-  ChevronDown,
-  ChevronUp,
 } from "lucide-react";
 
 interface Stat {
@@ -68,7 +66,6 @@ const AboutManager = () => {
     mentorDescription: "",
   });
 
-  // Fetch data
   const { data, isLoading } = useQuery({
     queryKey: ["about"],
     queryFn: async () => {
@@ -78,7 +75,6 @@ const AboutManager = () => {
     },
   });
 
-  // Update state when data is loaded
   useEffect(() => {
     if (data && !data.error) {
       setFormData({
@@ -100,7 +96,6 @@ const AboutManager = () => {
     }
   }, [data]);
 
-  // Mutation
   const mutation = useMutation({
     mutationFn: async (newData: AboutData) => {
       const res = await fetch("/api/about", {
@@ -127,7 +122,6 @@ const AboutManager = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Generic array handlers
   const handleArrayChange = (
     field: keyof AboutData,
     index: number,
@@ -152,7 +146,6 @@ const AboutManager = () => {
     }));
   };
 
-  // Object array handlers (stats, projects)
   const handleObjectArrayChange = (
     field: keyof AboutData,
     index: number,
@@ -172,27 +165,28 @@ const AboutManager = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-foreground/20" />
+        <Loader2 className="w-7 h-7 animate-spin text-foreground/20" />
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl pb-32">
-      <div className="mb-12">
-        <h1 className="text-5xl font-black tracking-tight mb-4 bg-gradient-to-r from-foreground to-foreground/40 bg-clip-text text-transparent">
+    <div className="w-full max-w-full px-4 sm:px-6 lg:px-8 pb-32">
+      {/* ── Page Header ── */}
+      <div className="mb-8 pt-2">
+        <h1 className="text-3xl sm:text-4xl font-black tracking-tight mb-2 bg-gradient-to-r from-foreground to-foreground/40 bg-clip-text text-transparent">
           About Section
         </h1>
-        <p className="text-foreground/50 font-medium text-lg max-w-2xl">
+        <p className="text-foreground/40 font-medium text-sm max-w-xl">
           Craft your personal narrative, showcase your expertise, and highlight
-          your best work in one place.
+          your best work.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-10">
-        {/* === BASIC INFO === */}
-        <Section title="Basic Information" icon={<User className="w-5 h-5" />}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* BASIC INFO */}
+        <Section title="Basic Information" icon={<User className="w-4 h-4" />}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <InputGroup
               label="Full Name"
               name="fullName"
@@ -206,7 +200,7 @@ const AboutManager = () => {
               onChange={handleChange}
               placeholder="e.g. Full Stack Developer"
             />
-            <div className="md:col-span-2">
+            <div className="sm:col-span-2">
               <InputGroup
                 label="Role Description"
                 name="roleDescription"
@@ -216,7 +210,7 @@ const AboutManager = () => {
                 rows={2}
               />
             </div>
-            <div className="md:col-span-2">
+            <div className="sm:col-span-2">
               <InputGroup
                 label="Client Focused Badge"
                 name="clientFocusedText"
@@ -228,67 +222,56 @@ const AboutManager = () => {
           </div>
         </Section>
 
-        {/* === INTRODUCTION === */}
-        <Section
-          title="Introduction Paragraphs"
-          icon={<FileText className="w-5 h-5" />}
-        >
-          <div className="space-y-6">
+        {/* INTRODUCTION */}
+        <Section title="Introduction" icon={<FileText className="w-4 h-4" />}>
+          <div className="space-y-4">
             <AnimatePresence>
               {formData.introParagraphs.map((para, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  className="flex gap-4 group"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  className="flex gap-3"
                 >
-                  <div className="flex-1 relative">
-                    <textarea
-                      value={para}
-                      onChange={(e) =>
-                        handleArrayChange(
-                          "introParagraphs",
-                          index,
-                          e.target.value,
-                        )
-                      }
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 focus:outline-none focus:border-white/20 transition-all font-medium min-h-[120px] resize-none hover:bg-white/[0.05]"
-                      placeholder={`Enter paragraph ${index + 1}...`}
-                    />
-                    <div className="absolute top-4 left-[-1.5rem] text-[10px] font-black text-foreground/10 group-hover:text-foreground/30 transition-colors uppercase vertical-text">
-                      P-{index + 1}
-                    </div>
-                  </div>
+                  <textarea
+                    value={para}
+                    onChange={(e) =>
+                      handleArrayChange(
+                        "introParagraphs",
+                        index,
+                        e.target.value,
+                      )
+                    }
+                    className="flex-1 bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/25 transition-all font-medium min-h-[96px] resize-none hover:bg-white/[0.05]"
+                    placeholder={`Paragraph ${index + 1}...`}
+                  />
                   <button
                     type="button"
                     onClick={() => removeArrayItem("introParagraphs", index)}
-                    className="h-12 w-12 shrink-0 flex items-center justify-center rounded-2xl bg-red-500/5 text-red-500/40 hover:bg-red-500 hover:text-white transition-all self-start"
+                    className="h-10 w-10 shrink-0 flex items-center justify-center rounded-xl bg-red-500/5 text-red-500/40 hover:bg-red-500 hover:text-white transition-all self-start mt-1"
                   >
-                    <Trash2 className="w-5 h-5" />
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </motion.div>
               ))}
             </AnimatePresence>
-            <button
-              type="button"
+            <AddButton
               onClick={() => addArrayItem("introParagraphs")}
-              className="w-full py-5 rounded-2xl border-2 border-dashed border-white/5 text-foreground/20 hover:text-foreground hover:border-white/20 hover:bg-white/[0.02] transition-all flex items-center justify-center gap-3 font-black text-xs uppercase tracking-widest"
-            >
-              <Plus className="w-5 h-5" /> Add New Paragraph
-            </button>
+              label="Add Paragraph"
+            />
           </div>
         </Section>
 
-        {/* === STATS === */}
-        <Section title="Statistics" icon={<BarChart3 className="w-5 h-5" />}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* STATS */}
+        <Section title="Statistics" icon={<BarChart3 className="w-4 h-4" />}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {formData.stats.map((stat, index) => (
               <div
                 key={index}
-                className="flex gap-4 bg-white/[0.03] border border-white/10 p-6 rounded-3xl relative group hover:bg-white/[0.05] transition-all"
+                className="flex gap-3 bg-white/[0.03] border border-white/10 p-4 rounded-2xl group hover:bg-white/[0.05] transition-all"
               >
-                <div className="flex-1 grid grid-cols-2 gap-4">
+                <div className="flex-1 grid grid-cols-2 gap-3">
                   <InputGroup
                     label="Value"
                     value={stat.num}
@@ -319,25 +302,24 @@ const AboutManager = () => {
                 <button
                   type="button"
                   onClick={() => removeArrayItem("stats", index)}
-                  className="h-12 w-12 shrink-0 flex items-center justify-center rounded-2xl bg-red-500/5 text-red-500/40 hover:bg-red-500 hover:text-white transition-all self-end"
+                  className="h-9 w-9 shrink-0 flex items-center justify-center rounded-xl bg-red-500/5 text-red-500/40 hover:bg-red-500 hover:text-white transition-all self-end"
                 >
-                  <Trash2 className="w-5 h-5" />
+                  <Trash2 className="w-3.5 h-3.5" />
                 </button>
               </div>
             ))}
-            <button
-              type="button"
-              onClick={() => addArrayItem("stats", { num: "", label: "" })}
-              className="md:col-span-2 py-6 rounded-3xl border-2 border-dashed border-white/5 text-foreground/20 hover:text-foreground hover:border-white/20 hover:bg-white/[0.02] transition-all flex items-center justify-center gap-3 font-black text-xs uppercase tracking-widest"
-            >
-              <Plus className="w-5 h-5" /> Add New Statistic
-            </button>
+            <div className="sm:col-span-2 xl:col-span-3">
+              <AddButton
+                onClick={() => addArrayItem("stats", { num: "", label: "" })}
+                label="Add Statistic"
+              />
+            </div>
           </div>
         </Section>
 
-        {/* === SKILLS === */}
-        <Section title="Expertise & Tools" icon={<Code2 className="w-5 h-5" />}>
-          <div className="space-y-12">
+        {/* SKILLS */}
+        <Section title="Expertise & Tools" icon={<Code2 className="w-4 h-4" />}>
+          <div className="space-y-8">
             <SkillArray
               label="Frontend Technologies"
               data={formData.frontendSkills}
@@ -362,35 +344,35 @@ const AboutManager = () => {
           </div>
         </Section>
 
-        {/* === PROJECTS === */}
+        {/* PROJECTS */}
         <Section
-          title="Recent Work Highlights"
-          icon={<Briefcase className="w-5 h-5" />}
+          title="Work Highlights"
+          icon={<Briefcase className="w-4 h-4" />}
         >
-          <div className="space-y-6">
+          <div className="space-y-4">
             {formData.projects.map((project, index) => (
               <div
                 key={index}
-                className="bg-white/[0.03] border border-white/10 p-8 rounded-3xl relative group space-y-6 hover:bg-white/[0.05] transition-all"
+                className="bg-white/[0.03] border border-white/10 p-5 rounded-2xl group space-y-4 hover:bg-white/[0.05] transition-all"
               >
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-full bg-foreground/10 flex items-center justify-center text-[10px] font-black">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-foreground/10 flex items-center justify-center text-[9px] font-black">
                       {index + 1}
                     </span>
-                    <span className="text-xs font-black uppercase tracking-widest text-foreground/40">
-                      Project Case Study
+                    <span className="text-[10px] font-black uppercase tracking-widest text-foreground/30">
+                      Project
                     </span>
                   </div>
                   <button
                     type="button"
                     onClick={() => removeArrayItem("projects", index)}
-                    className="h-10 w-10 flex items-center justify-center rounded-xl bg-red-500/5 text-red-500/40 hover:bg-red-500 hover:text-white transition-all"
+                    className="h-8 w-8 flex items-center justify-center rounded-lg bg-red-500/5 text-red-500/40 hover:bg-red-500 hover:text-white transition-all"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
-                <div className="grid gap-6">
+                <div className="grid sm:grid-cols-2 gap-4">
                   <InputGroup
                     label="Project Title"
                     value={project.title}
@@ -405,7 +387,7 @@ const AboutManager = () => {
                     placeholder="e.g. Artman Agro E-commerce"
                   />
                   <InputGroup
-                    label="Key Contributions / Stack"
+                    label="Stack / Contributions"
                     value={project.description}
                     onChange={(e) =>
                       handleObjectArrayChange(
@@ -421,48 +403,45 @@ const AboutManager = () => {
                 </div>
               </div>
             ))}
-            <button
-              type="button"
+            <AddButton
               onClick={() =>
                 addArrayItem("projects", { title: "", description: "" })
               }
-              className="w-full py-6 rounded-3xl border-2 border-dashed border-white/5 text-foreground/20 hover:text-foreground hover:border-white/20 hover:bg-white/[0.02] transition-all flex items-center justify-center gap-3 font-black text-xs uppercase tracking-widest"
-            >
-              <Plus className="w-5 h-5" /> Add Project Summary
-            </button>
+              label="Add Project"
+            />
           </div>
         </Section>
 
-        {/* === QUOTE === */}
-        <Section title="Philosophy" icon={<Quote className="w-5 h-5" />}>
-          <div className="space-y-8">
-            <InputGroup
-              label="Inspirational Quote"
-              name="quoteText"
-              value={formData.quoteText}
-              onChange={handleChange}
-              isTextArea
-              rows={3}
-              placeholder="Your professional or personal philosophy..."
-            />
-            <div className="max-w-md">
+        {/* QUOTE */}
+        <Section title="Philosophy" icon={<Quote className="w-4 h-4" />}>
+          <div className="grid sm:grid-cols-3 gap-5">
+            <div className="sm:col-span-2">
               <InputGroup
-                label="Quote Attribution"
-                name="quoteAuthor"
-                value={formData.quoteAuthor}
+                label="Inspirational Quote"
+                name="quoteText"
+                value={formData.quoteText}
                 onChange={handleChange}
-                placeholder="e.g. Aftab Farhan Arko"
+                isTextArea
+                rows={3}
+                placeholder="Your professional or personal philosophy..."
               />
             </div>
+            <InputGroup
+              label="Attribution"
+              name="quoteAuthor"
+              value={formData.quoteAuthor}
+              onChange={handleChange}
+              placeholder="e.g. Aftab Farhan Arko"
+            />
           </div>
         </Section>
 
-        {/* === MENTORSHIP === */}
+        {/* MENTORSHIP */}
         <Section
           title="Mentorship & Legacy"
-          icon={<GraduationCap className="w-5 h-5" />}
+          icon={<GraduationCap className="w-4 h-4" />}
         >
-          <div className="space-y-8">
+          <div className="grid sm:grid-cols-2 gap-5">
             <InputGroup
               label="Legacy Title"
               name="mentorTitle"
@@ -476,38 +455,44 @@ const AboutManager = () => {
               value={formData.mentorDescription}
               onChange={handleChange}
               isTextArea
-              rows={4}
-              placeholder="How do you help others grow in the tech industry?"
+              rows={3}
+              placeholder="How do you help others grow?"
             />
           </div>
         </Section>
 
-        {/* === FLOATING SAVE BAR === */}
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4">
+        {/* FLOATING SAVE BAR */}
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm px-0">
           <motion.div
-            initial={{ y: 100 }}
-            animate={{ y: 0 }}
-            className="bg-foreground/90 backdrop-blur-2xl p-2 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20 flex items-center justify-between"
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              delay: 0.3,
+              type: "spring",
+              stiffness: 260,
+              damping: 24,
+            }}
+            className="bg-foreground/90 backdrop-blur-2xl px-3 py-2 rounded-full shadow-[0_16px_40px_rgba(0,0,0,0.5)] border border-white/20 flex items-center justify-between gap-3"
           >
-            <div className="pl-6">
-              <span className="text-background text-[10px] font-black uppercase tracking-[0.2em] opacity-50">
+            <div className="pl-3">
+              <span className="text-background text-[9px] font-black uppercase tracking-[0.2em] opacity-40 block">
                 Dashboard
               </span>
-              <p className="text-background text-xs font-bold -mt-0.5">
-                About Section Editor
+              <p className="text-background text-[11px] font-bold -mt-0.5 leading-tight">
+                About Editor
               </p>
             </div>
             <button
               type="submit"
               disabled={mutation.isPending}
-              className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-black text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100"
+              className="flex items-center gap-2 px-5 py-3 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100 whitespace-nowrap"
             >
               {mutation.isPending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
               ) : (
-                <Save className="w-4 h-4" />
+                <Save className="w-3.5 h-3.5" />
               )}
-              {mutation.isPending ? "Syncing..." : "Update Live"}
+              {mutation.isPending ? "Saving..." : "Save"}
             </button>
           </motion.div>
         </div>
@@ -516,7 +501,7 @@ const AboutManager = () => {
   );
 };
 
-// --- HELPER COMPONENTS ---
+/* ─── Helper Components ─── */
 
 const Section = ({
   title,
@@ -528,21 +513,39 @@ const Section = ({
   children: React.ReactNode;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 30 }}
+    initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    className="bg-white/[0.01] border border-white/5 rounded-[40px] p-8 md:p-12 relative overflow-hidden hover:border-white/10 transition-colors group"
+    viewport={{ once: true, margin: "-40px" }}
+    transition={{ duration: 0.35 }}
+    className="bg-white/[0.02] border border-white/[0.07] rounded-2xl p-5 sm:p-7 relative overflow-hidden hover:border-white/12 transition-colors group"
   >
-    <div className="flex items-center gap-5 mb-10">
-      <div className="w-14 h-14 rounded-2xl bg-foreground/5 flex items-center justify-center text-foreground/40 border border-white/5 group-hover:scale-110 group-hover:text-foreground group-hover:bg-foreground/10 transition-all duration-500">
+    {/* Header */}
+    <div className="flex items-center gap-3 mb-6">
+      <div className="w-9 h-9 rounded-xl bg-foreground/5 flex items-center justify-center text-foreground/40 border border-white/5 group-hover:text-foreground/70 group-hover:bg-foreground/8 transition-all duration-300">
         {icon}
       </div>
-      <h2 className="text-3xl font-black tracking-tighter">{title}</h2>
+      <h2 className="text-base font-black tracking-tight">{title}</h2>
     </div>
     <div className="relative z-10">{children}</div>
-    {/* Subtle Background Glow */}
-    <div className="absolute -top-24 -right-24 w-64 h-64 bg-foreground/[0.02] blur-[100px] rounded-full pointer-events-none" />
+    {/* Ambient glow */}
+    <div className="absolute -top-20 -right-20 w-48 h-48 bg-foreground/[0.015] blur-[80px] rounded-full pointer-events-none" />
   </motion.div>
+);
+
+const AddButton = ({
+  onClick,
+  label,
+}: {
+  onClick: () => void;
+  label: string;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="w-full py-3.5 rounded-xl border border-dashed border-white/8 text-foreground/25 hover:text-foreground/70 hover:border-white/20 hover:bg-white/[0.02] transition-all flex items-center justify-center gap-2 font-bold text-[11px] uppercase tracking-widest"
+  >
+    <Plus className="w-3.5 h-3.5" /> {label}
+  </button>
 );
 
 type InputGroupProps =
@@ -557,31 +560,28 @@ type InputGroupProps =
 
 const InputGroup = (props: InputGroupProps) => {
   if (props.isTextArea) {
-    const { label, isTextArea, ...textareaProps } = props;
-
+    const { label, isTextArea, ...rest } = props;
     return (
-      <div className="space-y-3 flex-1">
-        <label className="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/20 px-1">
+      <div className="space-y-2 flex-1">
+        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/25 px-0.5 block">
           {label}
         </label>
         <textarea
-          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 focus:outline-none focus:border-white/20 transition-all font-medium resize-none min-h-[120px] hover:bg-white/[0.05]"
-          {...textareaProps}
+          className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/25 transition-all font-medium resize-none min-h-[90px] hover:bg-white/[0.05] placeholder:text-foreground/20"
+          {...rest}
         />
       </div>
     );
   }
-
-  const { label, isTextArea, ...inputProps } = props;
-
+  const { label, isTextArea, ...rest } = props;
   return (
-    <div className="space-y-3 flex-1">
-      <label className="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/20 px-1">
+    <div className="space-y-2 flex-1">
+      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/25 px-0.5 block">
         {label}
       </label>
       <input
-        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 focus:outline-none focus:border-white/20 transition-all font-medium h-16 hover:bg-white/[0.05]"
-        {...inputProps}
+        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/25 transition-all font-medium h-11 hover:bg-white/[0.05] placeholder:text-foreground/20"
+        {...rest}
       />
     </div>
   );
@@ -602,32 +602,32 @@ const SkillArray = ({
   onRemove,
   onChange,
 }: SkillArrayProps) => (
-  <div className="space-y-5">
-    <label className="text-[10px] font-black uppercase tracking-[0.25em] text-foreground/20 px-1">
+  <div className="space-y-3">
+    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/25 block">
       {label}
     </label>
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-2">
       <AnimatePresence>
-        {data.map((skill: string, index: number) => (
+        {data.map((skill, index) => (
           <motion.div
             key={index}
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            className="flex items-center gap-3 bg-white/[0.03] border border-white/10 pl-5 pr-2 py-2 rounded-2xl group focus-within:border-white/30 transition-all hover:bg-white/[0.06]"
+            exit={{ scale: 0.85, opacity: 0 }}
+            className="flex items-center gap-2 bg-white/[0.03] border border-white/10 pl-4 pr-1.5 py-1.5 rounded-xl group focus-within:border-white/25 transition-all hover:bg-white/[0.06]"
           >
             <input
               value={skill}
               onChange={(e) => onChange(index, e.target.value)}
-              className="bg-transparent border-none outline-none font-bold text-sm w-28 md:w-36 placeholder:text-foreground/10"
-              placeholder="Add skill..."
+              className="bg-transparent border-none outline-none font-semibold text-sm w-24 sm:w-32 placeholder:text-foreground/15"
+              placeholder="Skill..."
             />
             <button
               type="button"
               onClick={() => onRemove(index)}
-              className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-red-500/10 text-foreground/10 hover:text-red-500 transition-all"
+              className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-red-500/10 text-foreground/15 hover:text-red-500 transition-all"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-3 h-3" />
             </button>
           </motion.div>
         ))}
@@ -635,9 +635,9 @@ const SkillArray = ({
       <button
         type="button"
         onClick={onAdd}
-        className="h-14 px-6 rounded-2xl border-2 border-dashed border-white/5 text-foreground/20 hover:text-foreground hover:border-white/20 hover:bg-white/[0.02] transition-all flex items-center gap-3 font-black text-[10px] uppercase tracking-widest"
+        className="h-11 px-4 rounded-xl border border-dashed border-white/8 text-foreground/20 hover:text-foreground/60 hover:border-white/20 hover:bg-white/[0.02] transition-all flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest"
       >
-        <Plus className="w-4 h-4" /> Add Skill
+        <Plus className="w-3.5 h-3.5" /> Add
       </button>
     </div>
   </div>

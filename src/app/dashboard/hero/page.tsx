@@ -339,6 +339,7 @@ const HeroManager = () => {
 
         {/* Submit */}
         <div className="sticky bottom-0 pt-4 pb-2 bg-gradient-to-t from-black via-black/90 to-transparent border-t border-white/[0.05] mt-4">
+        {/* uiweyhfiowueoif */}
           <button
             type="submit"
             disabled={loading}
