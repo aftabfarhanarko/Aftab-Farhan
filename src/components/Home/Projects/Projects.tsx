@@ -102,7 +102,7 @@ function ActionBtn({
   );
 }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ Skeleton Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+
 function ProjectsSkeleton() {
   return (
     <div className="space-y-10">
@@ -145,7 +145,7 @@ function ProjectsSkeleton() {
   );
 }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ Project card Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+
 function ProjectCard({ project }: { project: Project }) {
   const badge =
     categoryBadge[project.category] ??
@@ -255,14 +255,20 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ Featured hero card Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-function FeaturedCard({ project }: { project: Project }) {
-  const badge =
-    categoryBadge[project.category] ??
-    "bg-white/5 border-white/10 text-white/50";
 
+function FeaturedCard({ project }: { project: Project }) {
   return (
     <div className="relative mb-10 sm:mb-12 rounded-[2rem] overflow-hidden border border-white/[0.09] bg-white/[0.02]">
+      <div className="absolute inset-0">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover scale-[1.06] opacity-35 blur-[2px]"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/65 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+      </div>
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -273,29 +279,39 @@ function FeaturedCard({ project }: { project: Project }) {
 
       <div className="relative z-10 grid lg:grid-cols-[1fr_1.25fr] gap-10 p-6 sm:p-10 lg:p-14 items-center">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/[0.12] bg-white/[0.05] backdrop-blur-md mb-6">
-            <Star className="w-3 h-3 text-amber-400/90 fill-amber-400/90" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/55">
-              Featured Project
-            </span>
-            <Sparkles className="w-3 h-3 text-white/30" />
-          </div>
-
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/30 mb-3">
-            {project.tagline}
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/55 mb-3">
+            {categoryLabel[project.category] || project.tagline || "Project"}
           </p>
+
           <h3 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white tracking-tight leading-[0.95] mb-4">
             {project.title}
           </h3>
-          <p className="text-sm sm:text-[15px] text-white/50 leading-relaxed mb-7">
+
+          <div className="flex flex-wrap items-center gap-2 mb-5">
+            <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/[0.08] border border-white/[0.12] rounded-lg text-white/75 backdrop-blur-sm">
+              {project.projectType === "CLIENT" ? "Client Project" : "Personal"}
+            </span>
+            {project.client && (
+              <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/[0.06] border border-white/[0.1] rounded-lg text-white/65 backdrop-blur-sm">
+                {project.client}
+              </span>
+            )}
+            {project.year && (
+              <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/[0.06] border border-white/[0.1] rounded-lg text-white/65 backdrop-blur-sm">
+                {project.year}
+              </span>
+            )}
+          </div>
+
+          <p className="text-sm sm:text-[15px] text-white/55 leading-relaxed mb-7 max-w-xl">
             {project.description}
           </p>
 
           <div className="flex flex-wrap gap-2 mb-7">
-            {project.tech.map((t) => (
+            {project.tech.slice(0, 6).map((t) => (
               <span
                 key={t}
-                className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-white/[0.06] border border-white/[0.1] rounded-xl text-white/50 backdrop-blur-sm"
+                className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-white/[0.06] border border-white/[0.1] rounded-xl text-white/55 backdrop-blur-sm"
               >
                 {t}
               </span>
@@ -303,59 +319,20 @@ function FeaturedCard({ project }: { project: Project }) {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <ActionBtn
-              href={project.demoLink}
-              icon={ExternalLink}
-              label="View Live"
-              filled
-            />
+            <ActionBtn href={project.demoLink} icon={ExternalLink} label="Visit Website" filled />
             {project.githubLink && (
-              <ActionBtn
-                href={project.githubLink}
-                icon={GitBranch}
-                label="Source Code"
-              />
+              <ActionBtn href={project.githubLink} icon={GitBranch} label="Source Code" />
             )}
           </div>
         </div>
 
-        <div className="relative">
-          <div className="relative aspect-[16/10] rounded-2xl overflow-hidden border border-white/[0.09] bg-black/50 shadow-[0_24px_80px_rgba(0,0,0,0.55)]">
+        <div className="relative lg:justify-self-end w-full">
+          <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden border border-white/[0.12] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
             <img
               src={project.image}
               alt={project.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
-          </div>
-
-          <div className="absolute top-4 right-4">
-            <span
-              className={`px-3.5 py-2 text-[10px] font-bold uppercase tracking-widest border rounded-xl backdrop-blur-sm ${badge}`}
-            >
-              {categoryLabel[project.category] || project.category}
-            </span>
-          </div>
-
-          <div className="absolute bottom-4 right-4 flex flex-col gap-3">
-            {[
-              { label: "Year", value: project.year },
-              { label: "Stack", value: `${project.tech.length} libs` },
-              {
-                label: "Type",
-                value: project.projectType === "CLIENT" ? "Client" : "Personal",
-              },
-            ].map(({ label, value }) => (
-              <div
-                key={label}
-                className="px-4 py-3 bg-black/50 border border-white/[0.14] rounded-xl backdrop-blur-md text-center min-w-[120px]"
-              >
-                <div className="text-[9px] font-bold uppercase tracking-widest text-white/45 mb-0.5">
-                  {label}
-                </div>
-                <div className="text-sm font-bold text-white/85">{value}</div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
@@ -410,7 +387,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="mb-16 sm:mb-20 scroll-mt-24">
-      {/* Ã¢â€â‚¬Ã¢â€â‚¬ Section header Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */}
+     
       <div className="flex items-end gap-4 sm:gap-6 mb-10 sm:mb-12">
         <div>
           <div className="flex items-center gap-2 mb-3">
@@ -467,7 +444,6 @@ export default function Projects() {
               ))}
             </div>
             <span className="text-[11px] text-foreground/35 font-medium hidden sm:block">
-            {/* iuwjerfioj */}
               {filteredProjects.length} project
               {filteredProjects.length !== 1 ? "s" : ""}
             </span>
