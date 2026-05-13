@@ -110,7 +110,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.07] bg-white/[0.02] px-4 sm:px-6 lg:px-8 py-12 mt-32">
+    <footer className="border-t border-white/[0.07] bg-white/[0.02] px-4 sm:px-6 lg:px-8 py-12 mt-2">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -160,7 +160,7 @@ export default function Footer() {
             © {currentYear} Aftab Farha Arko. All rights reserved.
           </p>
           <p className="text-[11px] text-white/20 font-mono">
-            Built with Next.js · Tailwind · Framer Motion
+            Built with Next.js, TypeScript, PostgreSQL, Prisma, Framer Motion
           </p>
         </div>
       </motion.div>
