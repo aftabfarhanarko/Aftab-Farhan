@@ -118,7 +118,7 @@ export default function About() {
   const allSkills = [...frontendSkills, ...backendSkills];
 
   return (
-    <section id="about" className="-mt-40 mb-16">
+    <section id="about" className="mt-10 md:mt-0 lg:-mt-40 mb-16">
       <motion.div
         ref={ref}
         variants={containerVariants}
