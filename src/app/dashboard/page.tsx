@@ -6,10 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import {
   BriefcaseBusiness,
+  ChevronRight,
   Clock,
   Cpu,
   FileText,
   GraduationCap,
+  Inbox,
   Layers,
   Link2,
   Mail,
@@ -58,11 +60,31 @@ type DashboardOverviewResponse = {
 
 type IconType = React.ComponentType<{ className?: string }>;
 
+type ContactMessage = {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  status: "UNREAD" | "READ" | "REPLIED" | "ARCHIVED";
+  createdAt: string;
+};
+
 const DashboardOverview = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["dashboard-overview"],
     queryFn: async () => {
       const res = await axios.get<DashboardOverviewResponse>("/api/overview");
+      return res.data;
+    },
+  });
+
+  const { data: recentMessages, isLoading: isMessagesLoading } = useQuery({
+    queryKey: ["dashboard-recent-messages"],
+    queryFn: async () => {
+      const res = await axios.get<ContactMessage[]>("/api/contact", {
+        params: { limit: 6 },
+      });
       return res.data;
     },
   });
@@ -160,6 +182,32 @@ const DashboardOverview = () => {
     },
   ];
 
+  const getStatusStyles = (status: ContactMessage["status"]) => {
+    if (status === "UNREAD")
+      return "bg-green-500/20 text-green-400 border-green-500/20";
+    if (status === "REPLIED")
+      return "bg-blue-500/20 text-blue-300 border-blue-500/20";
+    if (status === "ARCHIVED")
+      return "bg-white/5 text-white/30 border-white/10";
+    return "bg-white/5 text-white/40 border-white/10";
+  };
+
+  const formatDate = (iso: string) => {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "";
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }).format(d);
+  };
+
+  const messagePreview = (text: string) => {
+    const cleaned = text.replace(/\s+/g, " ").trim();
+    if (cleaned.length <= 120) return cleaned;
+    return `${cleaned.slice(0, 120)}…`;
+  };
+
   return (
     <div className="w-full max-w-none">
       <header className="mb-8 md:mb-10">
@@ -255,8 +303,111 @@ const DashboardOverview = () => {
         </div>
       </div>
 
+      <div className="mt-8 md:mt-10">
+        <div className="flex items-end justify-between mb-4 md:mb-6 px-1">
+          <div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-foreground/35">
+              Recent Messages
+            </div>
+            <div className="text-xs md:text-sm text-foreground/45 font-medium mt-1">
+              Latest contact form submissions saved in database.
+            </div>
+          </div>
+          <Link
+            href="/dashboard/contact"
+            className="text-xs font-bold text-foreground/60 hover:text-foreground/80 transition-colors inline-flex items-center gap-1"
+          >
+            View all <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {isMessagesLoading ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="p-5 md:p-6 rounded-3xl bg-white/[0.03] border border-white/10"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className="h-4 w-40 bg-white/10 rounded" />
+                  <div className="h-5 w-20 bg-white/10 rounded-full" />
+                </div>
+                <div className="h-3 w-56 bg-white/10 rounded mb-2" />
+                <div className="h-3 w-full bg-white/10 rounded mb-2" />
+                <div className="h-3 w-2/3 bg-white/10 rounded" />
+              </div>
+            ))}
+          </div>
+        ) : !recentMessages?.length ? (
+          <div className="p-10 md:p-12 border-2 border-dashed border-white/10 rounded-3xl text-center bg-white/[0.02]">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
+              <Inbox className="w-7 h-7 text-white/30" />
+            </div>
+            <div className="text-xs font-bold uppercase tracking-[0.28em] text-white/30">
+              No messages yet
+            </div>
+            <div className="text-xs md:text-sm text-white/25 font-medium mt-2">
+              When someone sends a message from Contact section, it will appear
+              here.
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+            {recentMessages.map((msg, i) => (
+              <motion.div
+                key={msg.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="p-5 md:p-6 rounded-3xl bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/10 hover:border-white/20 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <div className="text-base md:text-lg font-black truncate">
+                        {msg.name}
+                      </div>
+                      <span
+                        className={`text-[10px] font-black uppercase tracking-[0.2em] px-2 py-1 rounded-full border ${getStatusStyles(
+                          msg.status,
+                        )}`}
+                      >
+                        {msg.status}
+                      </span>
+                    </div>
+                    <div className="text-xs text-foreground/45 font-medium truncate mt-1">
+                      {msg.email}
+                    </div>
+                  </div>
+                  <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/35 whitespace-nowrap flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5" />
+                    {formatDate(msg.createdAt)}
+                  </div>
+                </div>
+
+                <div className="text-xs md:text-sm font-bold text-foreground/80 truncate">
+                  {msg.subject}
+                </div>
+                <div className="text-xs md:text-sm text-foreground/45 font-medium mt-2 leading-relaxed">
+                  {messagePreview(msg.message)}
+                </div>
+
+                <div className="mt-4">
+                  <Link
+                    href="/dashboard/contact"
+                    className="text-xs font-bold text-foreground/60 hover:text-foreground/80 transition-colors inline-flex items-center gap-1"
+                  >
+                    Open inbox <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div
-        className={`p-5 md:p-6 rounded-3xl flex items-center justify-between ${
+        className={`p-5 md:p-6 mt-6 rounded-3xl flex items-center justify-between ${
           isError
             ? "bg-red-500/5 border border-red-500/15"
             : "bg-green-500/5 border border-green-500/15"
