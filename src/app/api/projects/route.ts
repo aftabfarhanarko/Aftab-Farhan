@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+type ProjectWithTech = Record<string, unknown> & {
+  tech: Array<{
+    tech: {
+      name: string;
+    };
+  }>;
+};
+
 export async function GET() {
   try {
-    const projects = await prisma.project.findMany({
+    const projects = (await prisma.project.findMany({
       include: {
         tech: {
           include: {
@@ -14,10 +22,10 @@ export async function GET() {
       orderBy: {
         createdAt: "desc",
       },
-    });
+    })) as unknown as ProjectWithTech[];
 
     // Flatten the tech relation for easier frontend usage
-    const formattedProjects = projects.map((project) => ({
+    const formattedProjects = projects.map((project: ProjectWithTech) => ({
       ...project,
       tech: project.tech.map((pt) => pt.tech.name),
     }));
@@ -50,7 +58,7 @@ export async function POST(req: Request) {
       tech, // array of strings
     } = body;
 
-    const project = await prisma.project.create({
+    const project = (await prisma.project.create({
       data: {
         title,
         tagline,
@@ -87,7 +95,7 @@ export async function POST(req: Request) {
           },
         },
       },
-    });
+    })) as unknown as ProjectWithTech;
 
     const formattedProject = {
       ...project,
