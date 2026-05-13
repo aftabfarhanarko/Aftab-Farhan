@@ -58,7 +58,7 @@ const stagger = {
 };
 
 const inputBase =
-  "w-full px-4 py-3.5 rounded-xl border text-sm font-mono transition-all duration-200 outline-none bg-white/[0.03] text-white placeholder:text-white/20";
+  "w-full px-4 py-3.5 rounded-xl border text-sm font-mono transition-all duration-200 outline-none bg-white/[0.03] text-white placeholder:text-foreground/25";
 
 export default function Contact() {
   const sectionRef = useRef(null);
@@ -122,10 +122,10 @@ export default function Contact() {
           <p className="text-xs font-mono text-green-400/60 tracking-[0.25em] uppercase mb-2">
             24/7 contact
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-none">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground leading-none">
             Let&apos;s Build
             <br />
-            <span className="text-white/20">Something Great.</span>
+            <span className="text-foreground/25">Something Great.</span>
           </h2>
         </div>
         <div className="flex-1 mb-2 h-px bg-gradient-to-r from-white/10 to-transparent" />
@@ -155,7 +155,7 @@ export default function Contact() {
               Whether it&apos;s a{" "}
               <span className="text-white/80">freelance project</span>, a{" "}
               <span className="text-white/80">full-time role</span>, or just a
-              technical conversation ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â my inbox is open.
+              technical conversation ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â my inbox is open.
             </p>
           </div>
 

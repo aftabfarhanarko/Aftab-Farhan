@@ -152,7 +152,7 @@ function AmbientTypingBackground() {
     <div
       className="absolute inset-0 overflow-hidden pointer-events-none select-none"
       style={{
-        fontFamily: "'Geist Mono', 'Fira Code', 'Courier New', monospace",
+        fontFamily: "'Bai Jamjuree', system-ui, sans-serif",
         fontSize: "11px",
       }}
     >

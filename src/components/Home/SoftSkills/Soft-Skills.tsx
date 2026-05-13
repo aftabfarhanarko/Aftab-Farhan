@@ -140,10 +140,10 @@ function SkillCard({
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
-            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white" />
+            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
           </div>
           <div className="text-right">
-            <div className="text-2xl sm:text-3xl font-black text-black dark:text-white leading-none">
+            <div className="text-2xl sm:text-3xl font-black text-foreground leading-none">
               {level}%
             </div>
             <div className="text-[11px] sm:text-xs text-black/40 dark:text-white/40 mt-0.5">
@@ -152,14 +152,14 @@ function SkillCard({
           </div>
         </div>
 
-        <h3 className="text-base sm:text-lg font-bold text-black dark:text-white mb-1.5">
+        <h3 className="text-base sm:text-lg font-bold text-foreground mb-1.5">
           {title}
         </h3>
         <p className="text-xs sm:text-sm text-black/50 dark:text-white/50 leading-relaxed mb-5">
           {description}
         </p>
 
-        {/* 3 Progress Bars — animate when scrolled into view */}
+        {/* 3 Progress Bars â€” animate when scrolled into view */}
         <div className="space-y-3 sm:space-y-4">
           {subSkills.map((sub, i) => (
             <div key={sub.name}>
@@ -251,12 +251,12 @@ export default function SoftSkills() {
             </span>
           </div>
 
-          <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-[1.05] mb-4">
-            <span className="text-black dark:text-white">Soft </span>
-            <span className="text-black/25 dark:text-white/25">Skills</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none mb-4">
+            <span className="text-foreground">Soft </span>
+            <span className="text-foreground/25">Skills</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-black/50 dark:text-white/50 leading-relaxed mb-8 max-w-xs">
+          <p className="text-sm sm:text-base text-foreground/60 leading-relaxed mb-8 max-w-xs">
             Beyond technical expertise, I bring strong interpersonal skills that
             enable effective collaboration, clear communication, and successful
             project outcomes.
@@ -265,9 +265,9 @@ export default function SoftSkills() {
           <div className="p-4 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
             <p className="text-xs sm:text-sm text-black/50 dark:text-white/50 leading-relaxed">
               These qualities have been essential in my roles as{" "}
-              <span className="text-black dark:text-white font-semibold">Developer</span>{" "}
+              <span className="text-foreground font-semibold">Developer</span>{" "}
               and{" "}
-              <span className="text-black dark:text-white font-semibold">Project Lead</span>.
+              <span className="text-foreground font-semibold">Project Lead</span>.
             </p>
           </div>
         </div>

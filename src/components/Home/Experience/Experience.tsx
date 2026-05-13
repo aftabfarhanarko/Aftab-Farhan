@@ -114,12 +114,12 @@ export default function Experience() {
             </span>
           </div>
 
-          <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-[1.05] mb-4">
-            <span className="text-black dark:text-white">Work </span>
-            <span className="text-black/25 dark:text-white/25">Experience</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none mb-4">
+            <span className="text-foreground">Work </span>
+            <span className="text-foreground/25">Experience</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-black/50 dark:text-white/50 leading-relaxed mb-8 max-w-xs">
+          <p className="text-sm sm:text-base text-foreground/60 leading-relaxed mb-8 max-w-xs">
             A chronological timeline of my professional journey, highlighting
             the teams I've worked with and the impact I've made along the way.
           </p>
@@ -136,7 +136,7 @@ export default function Experience() {
                 key={l}
                 className="p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-center"
               >
-                <div className="text-xl font-black text-black dark:text-white">
+                <div className="text-xl font-black text-foreground">
                   {v}
                 </div>
                 <div className="text-[10px] font-medium text-black/40 dark:text-white/40 uppercase tracking-wide mt-0.5">
@@ -179,7 +179,7 @@ export default function Experience() {
                           <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-black/70 dark:text-white/70" />
                         </div>
                         <div>
-                          <h3 className="text-base sm:text-lg font-bold text-black dark:text-white leading-tight">
+                          <h3 className="text-base sm:text-lg font-bold text-foreground leading-tight">
                             {exp.company}
                           </h3>
                           <div className="flex flex-wrap items-center gap-1.5 mt-0.5 text-xs text-black/40 dark:text-white/40">
@@ -187,7 +187,7 @@ export default function Experience() {
                             <span>{exp.location}</span>
                             {exp.url && exp.url !== "#" && (
                               <>
-                                <span>Â·</span>
+                                <span>Ã‚Â·</span>
                                 <a
                                   href={exp.url}
                                   target="_blank"
@@ -210,7 +210,7 @@ export default function Experience() {
                       {/* Period + present badge */}
                       <div className="flex flex-col items-end gap-1.5 shrink-0">
                         {exp.type === "current" && (
-                          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-black/20 dark:border-white/20 text-[10px] font-bold uppercase tracking-wider text-black dark:text-white bg-black/[0.08] dark:bg-white/[0.08]">
+                          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-black/20 dark:border-white/20 text-[10px] font-bold uppercase tracking-wider text-foreground bg-black/[0.08] dark:bg-white/[0.08]">
                             <span className="relative flex h-1.5 w-1.5">
                               <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-black dark:bg-white" />
                               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-black dark:bg-white" />
@@ -238,7 +238,7 @@ export default function Experience() {
                                 <RIcon className="w-4 h-4 text-black/70 dark:text-white/70" />
                               </div>
                               <div>
-                                <h4 className="text-sm sm:text-base font-bold text-black dark:text-white leading-tight">
+                                <h4 className="text-sm sm:text-base font-bold text-foreground leading-tight">
                                   {role.title}
                                 </h4>
                                 <p className="text-[10px] sm:text-xs text-black/40 dark:text-white/40">
@@ -293,7 +293,7 @@ export default function Experience() {
                               key={i}
                               className="text-center p-2 sm:p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10"
                             >
-                              <div className="text-base sm:text-lg font-black text-black dark:text-white">
+                              <div className="text-base sm:text-lg font-black text-foreground">
                                 {a.metric}
                               </div>
                               <div className="text-[9px] sm:text-[10px] text-black/40 dark:text-white/40 leading-tight mt-0.5">

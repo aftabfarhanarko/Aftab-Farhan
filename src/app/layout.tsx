@@ -1,26 +1,19 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bai_Jamjuree } from "next/font/google";
 import type { ReactNode } from "react";
 import "./globals.css";
 import RootLayoutClient from "./RootLayoutClient";
 
 export { metadata, viewport } from "./metadata";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const baiJamjuree = Bai_Jamjuree({
+  variable: "--font-sans",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700"],
 });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
-    >
+    <html lang="en" className={`${baiJamjuree.variable} h-full antialiased dark`}>
       <body
         className="min-h-full flex flex-col relative overflow-x-hidden"
         style={{ backgroundColor: "#000000", color: "#ffffff" }}
