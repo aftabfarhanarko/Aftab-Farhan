@@ -108,7 +108,7 @@ function HeroSkeleton() {
           <div className="h-12 w-40 bg-foreground/10 rounded-xl" />
           <div className="h-12 w-36 bg-foreground/10 rounded-xl" />
         </div>
-        <div className="flex gap-12 pt-8 mt-3 border-t border-white/10">
+        <div className="flex gap-12 pt-8 mt-3 border-t border-border">
           {[1, 2, 3].map((i) => (
             <div key={i} className="space-y-1">
               <div className="h-8 w-12 bg-foreground/10 rounded" />
@@ -224,7 +224,7 @@ export default function Hero() {
 
         <motion.div
           {...fadeUp(0.6)}
-          className="flex gap-12 pt-8 mt-3 border-t border-white/10"
+          className="flex gap-12 pt-8 mt-3 border-t border-border"
         >
           {stats.map(({ id, value, label }, i) => (
             <motion.div
@@ -261,7 +261,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="absolute -top-24 -left-6 hidden xl:block z-20"
         >
-          <div className="rounded-xl border border-white/10 bg-background/85 backdrop-blur-md shadow-2xl overflow-hidden w-52">
+          <div className="rounded-xl border border-border bg-background/85 backdrop-blur-md shadow-2xl overflow-hidden w-52">
             <div className="flex items-center gap-1.5 px-3 py-2 bg-foreground/5 border-b border-foreground/15">
               <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
               <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
@@ -302,7 +302,7 @@ export default function Hero() {
 
         {/* Rings */}
         <div className="absolute w-[460px] h-[460px] rounded-full border border-dashed border-foreground/15 animate-[spin_80s_linear_infinite]" />
-        <div className="absolute w-[420px] h-[420px] rounded-full border border-white/10 animate-[spin_50s_linear_infinite_reverse]" />
+        <div className="absolute w-[420px] h-[420px] rounded-full border border-border animate-[spin_50s_linear_infinite_reverse]" />
         <div className="absolute w-[360px] h-[360px] rounded-full bg-foreground/8 blur-[80px]" />
 
         {/* Profile image circle */}
@@ -316,10 +316,10 @@ export default function Hero() {
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority
             />
-            <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
+            <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-border" />
           </div>
 
-          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-5 py-2 rounded-full bg-background/95 backdrop-blur-xl border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.4)] z-20 whitespace-nowrap">
+          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-5 py-2 rounded-full bg-background/95 backdrop-blur-xl border border-border shadow-[0_8px_32px_rgba(0,0,0,0.4)] z-20 whitespace-nowrap">
             {socials.map((social, i) => (
               <div key={social.id} className="flex items-center gap-3">
                 {i > 0 && <span className="w-px h-3 bg-foreground/20" />}
@@ -341,7 +341,7 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, -7, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-6 right-2 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-white/50 transition-all duration-200 cursor-pointer"
+          className="absolute top-6 right-2 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-border transition-all duration-200 cursor-pointer"
         >
           <svg
             xmlns=""
@@ -362,7 +362,7 @@ export default function Hero() {
         <motion.div
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-20 left-0 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-white/50 transition-all duration-200 cursor-pointer"
+          className="absolute bottom-20 left-0 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-border transition-all duration-200 cursor-pointer"
         >
           <svg
             xmlns=""
@@ -384,7 +384,7 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, 7, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-0 top-1/2 -translate-y-1/2 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-white/50 transition-all duration-200 cursor-pointer"
+          className="absolute right-0 top-1/2 -translate-y-1/2 p-3 rounded-xl bg-background/85 border border-foreground/25 backdrop-blur-md text-foreground/70 shadow-xl z-20 hover:text-foreground hover:scale-110 hover:border-border transition-all duration-200 cursor-pointer"
         >
           <svg
             xmlns=""

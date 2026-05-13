@@ -110,7 +110,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.07] bg-white/[0.02] px-4 sm:px-6 lg:px-8 py-12 mt-2">
+    <footer className="border-t border-border bg-card/40 px-4 sm:px-6 lg:px-8 py-12 mt-2">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -124,12 +124,12 @@ export default function Footer() {
           <div>
             <Link
               href="/"
-              className="text-xl font-black tracking-tight text-white"
+              className="text-xl font-black tracking-tight text-foreground"
               style={{ fontFamily: "'Syne', sans-serif" }}
             >
-              Aftab<span className="text-white/25">.</span>
+              Aftab<span className="text-foreground/25">.</span>
             </Link>
-            <p className="text-[11.5px] text-white/45 mt-1.5 max-w-[220px] leading-relaxed font-mono">
+            <p className="text-[11.5px] text-foreground/45 mt-1.5 max-w-[220px] leading-relaxed font-mono">
               Crafting high-performance web experiences with clean code &
               design.
             </p>
@@ -146,7 +146,7 @@ export default function Footer() {
                   href.startsWith("mailto") ? undefined : "noopener noreferrer"
                 }
                 aria-label={label}
-                className="w-9 h-9 rounded-[10px] bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/55 hover:text-white hover:bg-white/[0.09] hover:border-white/[0.15] hover:-translate-y-0.5 transition-all duration-200"
+                className="w-9 h-9 rounded-[10px] bg-card/50 border border-border flex items-center justify-center text-foreground/55 hover:text-foreground hover:bg-card/70 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Icon />
               </a>
@@ -155,11 +155,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom row */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-6 border-t border-white/[0.06]">
-          <p className="text-[11px] text-white/35 font-mono">
-            © {currentYear} Aftab Farha Arko. All rights reserved.
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-6 border-t border-border">
+          <p className="text-[11px] text-foreground/35 font-mono">
+            Ã‚Â© {currentYear} Aftab Farha Arko. All rights reserved.
           </p>
-          <p className="text-[11px] text-white/20 font-mono">
+          <p className="text-[11px] text-foreground/20 font-mono">
             Built with Next.js, TypeScript, PostgreSQL, Prisma, Framer Motion
           </p>
         </div>

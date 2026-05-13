@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { ThemeProvider, useTheme } from "@/context/Theme";
 import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
 
@@ -84,7 +85,7 @@ function TypingLine({ text, style, delay, duration }: TypingLineProps) {
   );
 }
 
-function AmbientTypingBackground() {
+function AmbientTypingBackground({ isDark }: { isDark: boolean }) {
   const snippets = [
     {
       text: "const portfolio = new Developer();",
@@ -167,8 +168,12 @@ function AmbientTypingBackground() {
             delay={i * 350 + 200}
             duration={s.text.length * 60}
             style={{
-              color: `rgba(134, 239, 172, ${s.opacity})`,
-              textShadow: `0 0 10px rgba(22, 163, 74, 0.5)`,
+              color: isDark
+                ? `rgba(134, 239, 172, ${s.opacity})`
+                : `rgba(22, 163, 74, ${s.opacity * 0.55})`,
+              textShadow: isDark
+                ? "0 0 10px rgba(22, 163, 74, 0.5)"
+                : "0 0 10px rgba(22, 163, 74, 0.18)",
               letterSpacing: "0.03em",
             }}
           />
@@ -178,13 +183,13 @@ function AmbientTypingBackground() {
   );
 }
 
-export default function RootLayoutClient({
-  children,
-}: {
-  children: ReactNode;
-}) {
+function RootLayoutClientInner({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isDashboard = pathname.startsWith("/dashboard") || pathname === "/login";
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const gridLine = isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.06)";
 
   return (
     <>
@@ -193,22 +198,23 @@ export default function RootLayoutClient({
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)
+              linear-gradient(${gridLine} 1px, transparent 1px),
+              linear-gradient(90deg, ${gridLine} 1px, transparent 1px)
             `,
             backgroundSize: "40px 40px",
           }}
         />
 
-        <AmbientTypingBackground />
+        <AmbientTypingBackground isDark={isDark} />
 
         <motion.div
           className="absolute top-[-10%] left-[-10%] rounded-full blur-[120px]"
           style={{
             width: "40%",
             height: "40%",
-            background:
-              "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)",
+            background: isDark
+              ? "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(0,0,0,0.04) 0%, transparent 70%)",
           }}
           animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -219,8 +225,9 @@ export default function RootLayoutClient({
           style={{
             width: "30%",
             height: "30%",
-            background:
-              "radial-gradient(circle, rgba(22,163,74,0.15) 0%, transparent 70%)",
+            background: isDark
+              ? "radial-gradient(circle, rgba(22,163,74,0.15) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(22,163,74,0.10) 0%, transparent 70%)",
           }}
           animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{
@@ -236,8 +243,9 @@ export default function RootLayoutClient({
           style={{
             width: "25%",
             height: "25%",
-            background:
-              "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)",
+            background: isDark
+              ? "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%)",
           }}
           animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
           transition={{
@@ -270,5 +278,13 @@ export default function RootLayoutClient({
 
       {!isDashboard && <Footer />}
     </>
+  );
+}
+
+export default function RootLayoutClient({ children }: { children: ReactNode }) {
+  return (
+    <ThemeProvider>
+      <RootLayoutClientInner>{children}</RootLayoutClientInner>
+    </ThemeProvider>
   );
 }

@@ -58,7 +58,7 @@ const stagger = {
 };
 
 const inputBase =
-  "w-full px-4 py-3.5 rounded-xl border text-sm font-mono transition-all duration-200 outline-none bg-white/[0.03] text-white placeholder:text-foreground/25";
+  "w-full px-4 py-3.5 rounded-xl border border-border text-sm font-mono transition-all duration-200 outline-none bg-card/40 text-foreground placeholder:text-foreground/40 focus:border-foreground/25 focus:bg-card/60";
 
 export default function Contact() {
   const sectionRef = useRef(null);
@@ -128,7 +128,7 @@ export default function Contact() {
             <span className="text-foreground/25">Something Great.</span>
           </h2>
         </div>
-        <div className="flex-1 mb-2 h-px bg-gradient-to-r from-white/10 to-transparent" />
+        <div className="flex-1 mb-2 h-px bg-gradient-to-r from-foreground/10 to-transparent" />
       </motion.div>
 
       <motion.div
@@ -150,12 +150,12 @@ export default function Contact() {
               open_to_opportunities=<span className="text-green-400">true</span>
             </span>
           </div>
-          <div className="p-5 rounded-xl border border-white/[0.07] bg-white/[0.02]">
-            <p className="text-sm text-white/55 leading-relaxed">
+          <div className="p-5 rounded-xl border border-border bg-card/40">
+            <p className="text-sm text-foreground/55 leading-relaxed">
               Whether it&apos;s a{" "}
-              <span className="text-white/80">freelance project</span>, a{" "}
-              <span className="text-white/80">full-time role</span>, or just a
-              technical conversation ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â my inbox is open.
+              <span className="text-foreground/80">freelance project</span>, a{" "}
+              <span className="text-foreground/80">full-time role</span>, or just a
+              technical conversation ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â my inbox is open.
             </p>
           </div>
 
@@ -163,7 +163,7 @@ export default function Contact() {
           <div className="flex gap-2 mb-2">
             {[
               { icon: <LinkedinIcon />, href: "https://linkedin.com/in/arko", color: "hover:text-blue-400" },
-              { icon: <GithubIcon />, href: "https://github.com/aftabfarhanarko", color: "hover:text-white" },
+              { icon: <GithubIcon />, href: "https://github.com/aftabfarhanarko", color: "hover:text-foreground" },
               { icon: <WhatsAppIcon />, href: "https://wa.me/8801234567890", color: "hover:text-green-400" },
             ].map((social, i) => (
               <a
@@ -171,7 +171,7 @@ export default function Contact() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 transition-all ${social.color} hover:bg-white/10 hover:border-white/20`}
+                className={`w-10 h-10 rounded-xl bg-card/50 border border-border flex items-center justify-center text-foreground/45 transition-all ${social.color} hover:bg-card/70 hover:border-border`}
               >
                 {social.icon}
               </a>
@@ -187,21 +187,21 @@ export default function Contact() {
               key={i}
               href={item.href}
               whileHover={{ x: 4 }}
-              className="flex items-center gap-4 px-4 py-3.5 rounded-xl border border-white/[0.07] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition-colors group"
+              className="flex items-center gap-4 px-4 py-3.5 rounded-xl border border-border bg-card/40 hover:border-border hover:bg-card/60 transition-colors group"
             >
-              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/40 group-hover:text-white/70 transition-colors shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-card/50 border border-border flex items-center justify-center text-foreground/45 group-hover:text-foreground/70 transition-colors shrink-0">
                 {item.icon}
               </div>
               <div className="min-w-0">
-                <p className="text-xs text-white/30 font-mono mb-0.5">{item.label}</p>
-                <p className="text-sm text-white/70 group-hover:text-white truncate transition-colors">{item.value}</p>
+                <p className="text-xs text-foreground/40 font-mono mb-0.5">{item.label}</p>
+                <p className="text-sm text-foreground/70 group-hover:text-foreground truncate transition-colors">{item.value}</p>
               </div>
             </motion.a>
           ))}
         </motion.div>
 
         <motion.div variants={fadeUp} className="lg:col-span-3">
-          <div className="relative rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 lg:p-8 overflow-visible">
+          <div className="relative rounded-2xl border border-border bg-card/40 p-6 lg:p-8 overflow-visible">
             <AnimatePresence mode="wait">
               {formState === "success" ? (
                 <motion.div
@@ -213,7 +213,7 @@ export default function Contact() {
                   <div className="w-16 h-16 rounded-full border border-green-500/30 bg-green-500/10 flex items-center justify-center text-green-400">
                     <Check size={28} />
                   </div>
-                  <p className="text-white font-semibold text-lg">Message sent!</p>
+                  <p className="text-foreground font-semibold text-lg">Message sent!</p>
                 </motion.div>
               ) : (
                 <motion.form
@@ -225,32 +225,32 @@ export default function Contact() {
                 >
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-mono text-white/30 uppercase tracking-widest">Full Name</label>
+                      <label className="text-[11px] font-mono text-foreground/40 uppercase tracking-widest">Full Name</label>
                       <input type="text" name="name" value={formData.name} onChange={handleChange} required className={inputBase} placeholder="Aftab Farhan" />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-mono text-white/30 uppercase tracking-widest">Email</label>
+                      <label className="text-[11px] font-mono text-foreground/40 uppercase tracking-widest">Email</label>
                       <input type="email" name="email" value={formData.email} onChange={handleChange} required className={inputBase} placeholder="you@example.com" />
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-mono text-white/30 uppercase tracking-widest">Subject</label>
+                    <label className="text-[11px] font-mono text-foreground/40 uppercase tracking-widest">Subject</label>
                     <div className="relative">
                       <button
                         type="button"
                         onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border text-sm font-mono text-left bg-white/[0.03] transition-all ${dropdownOpen ? "border-white/30 bg-white/[0.06]" : "border-white/[0.08]"}`}
+                        className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border border-border text-sm font-mono text-left bg-card/40 text-foreground transition-all ${dropdownOpen ? "border-foreground/25 bg-card/60" : ""}`}
                       >
                         {selectedOption ? (
                           <div className="flex items-center gap-3 flex-1">
                             <span className="text-green-400">{selectedOption.icon}</span>
-                            <span className="text-white">{selectedOption.label}</span>
+                            <span className="text-foreground">{selectedOption.label}</span>
                           </div>
                         ) : (
-                          <span className="text-white/25 flex-1">Select a topic...</span>
+                          <span className="text-foreground/35 flex-1">Select a topic...</span>
                         )}
                         <motion.div animate={{ rotate: dropdownOpen ? 180 : 0 }}>
-                          <ChevronDown size={16} className="text-white/30" />
+                          <ChevronDown size={16} className="text-foreground/40" />
                         </motion.div>
                       </button>
                       <AnimatePresence>
@@ -259,16 +259,16 @@ export default function Contact() {
                             initial={{ opacity: 0, y: -8, scale: 0.98 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -8, scale: 0.98 }}
-                            className="absolute top-[calc(100%+8px)] left-0 right-0 z-[100] rounded-xl border border-white/[0.1] bg-[#0d0d0d] shadow-2xl overflow-hidden"
+                            className="absolute top-[calc(100%+8px)] left-0 right-0 z-[100] rounded-xl border border-border bg-popover shadow-2xl overflow-hidden"
                           >
                             {subjectOptions.map((opt) => (
                               <button
                                 key={opt.value}
                                 type="button"
                                 onClick={() => { setFormData({ ...formData, subject: opt.value }); setDropdownOpen(false); }}
-                                className="w-full px-4 py-3.5 text-left text-sm font-mono flex items-center gap-3 text-white/50 hover:bg-white/[0.04] hover:text-white transition-colors border-b border-white/[0.05] last:border-0"
+                                className="w-full px-4 py-3.5 text-left text-sm font-mono flex items-center gap-3 text-white/50 hover:bg-card/60 hover:text-white transition-colors border-b border-white/[0.05] last:border-0"
                               >
-                                <span className="text-white/30 group-hover:text-white/60">{opt.icon}</span>
+                                <span className="text-foreground/40 group-hover:text-foreground/60">{opt.icon}</span>
                                 <div className="flex flex-col">
                                   <span className="font-bold">{opt.label}</span>
                                   <span className="text-[10px] opacity-40">{opt.desc}</span>
@@ -281,17 +281,17 @@ export default function Contact() {
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-mono text-white/30 uppercase tracking-widest">Message</label>
+                    <label className="text-[11px] font-mono text-foreground/40 uppercase tracking-widest">Message</label>
                     <textarea name="message" value={formData.message} onChange={handleChange} required rows={5} className={inputBase} placeholder="Your message..." />
                   </div>
                   <button
                     type="submit"
                     disabled={formState === "submitting"}
-                    className="w-full py-4 rounded-xl font-black text-sm tracking-widest uppercase bg-white text-black hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-4 rounded-xl font-black text-sm tracking-widest uppercase bg-foreground text-background hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {formState === "submitting" ? (
                       <div className="flex items-center gap-2">
-                        <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-background/25 border-t-background rounded-full animate-spin" />
                         Sending...
                       </div>
                     ) : (

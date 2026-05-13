@@ -13,11 +13,12 @@ const baiJamjuree = Bai_Jamjuree({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${baiJamjuree.variable} h-full antialiased dark`}>
-      <body
-        className="min-h-full flex flex-col relative overflow-x-hidden"
-        style={{ backgroundColor: "#000000", color: "#ffffff" }}
-      >
+    <html
+      lang="en"
+      className={`${baiJamjuree.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full flex flex-col relative overflow-x-hidden">
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>

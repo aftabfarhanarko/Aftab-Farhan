@@ -128,7 +128,7 @@ export default function Education() {
                       <div className="flex flex-wrap items-center gap-2 mb-4 text-xs text-black/50 dark:text-white/50">
                         <BookOpen className="w-3.5 h-3.5" />
                         <span>{edu.institution}</span>
-                        <span className="text-black/20 dark:text-white/20">Â·</span>
+                        <span className="text-black/20 dark:text-white/20">Ãƒâ€š·</span>
                         <MapPin className="w-3 h-3" />
                         <span>{edu.location}</span>
                       </div>

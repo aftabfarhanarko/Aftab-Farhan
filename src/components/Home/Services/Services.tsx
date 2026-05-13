@@ -39,7 +39,7 @@ const Services = () => {
       ],
       tech: ["Next.js", "Node.js", "MongoDB", "Stripe", "PayPal", "Redis"],
       color: "from-foreground/5 to-transparent",
-      borderColor: "border-white/10",
+      borderColor: "border-border",
       iconColor: "text-foreground",
     },
     {
@@ -82,7 +82,7 @@ const Services = () => {
       ],
       tech: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Next.js"],
       color: "from-foreground/5 to-transparent",
-      borderColor: "border-white/10",
+      borderColor: "border-border",
       iconColor: "text-foreground",
     },
     {
@@ -120,7 +120,7 @@ const Services = () => {
       ],
       tech: ["MERN Stack", "PostgreSQL", "GraphQL", "Docker", "AWS", "Redis"],
       color: "from-foreground/5 to-transparent",
-      borderColor: "border-white/10",
+      borderColor: "border-border",
       iconColor: "text-foreground",
     },
     {
@@ -234,7 +234,7 @@ const Services = () => {
       ],
       tech: ["React", "Tailwind", "Framer Motion", "GSAP", "Storybook"],
       color: "from-foreground/5 to-transparent",
-      borderColor: "border-white/10",
+      borderColor: "border-border",
       iconColor: "text-foreground",
     },
   ];
@@ -304,7 +304,7 @@ const Services = () => {
                   {service.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-1 text-xs bg-white/5 border border-white/10 rounded-md text-foreground/60"
+                      className="px-2 py-1 text-xs bg-card/50 border border-border rounded-md text-foreground/60"
                     >
                       {tech}
                     </span>
@@ -358,7 +358,7 @@ const Services = () => {
       </div>
 
       {/* Additional Services */}
-      <div className="p-8 rounded-2xl bg-foreground/5 border border-white/10">
+      <div className="p-8 rounded-2xl bg-foreground/5 border border-border">
         <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-3">
           <span className="w-2 h-2 bg-foreground rounded-full" />
           Additional Services
@@ -367,7 +367,7 @@ const Services = () => {
           {additionalServices.map((service) => (
             <span
               key={service}
-              className="px-4 py-2 text-sm bg-foreground/5 border border-white/10 rounded-full text-foreground/70 hover:text-foreground hover:border-white/30 transition-colors cursor-default"
+              className="px-4 py-2 text-sm bg-foreground/5 border border-border rounded-full text-foreground/70 hover:text-foreground hover:border-border transition-colors cursor-default"
             >
               {service}
             </span>
@@ -376,7 +376,7 @@ const Services = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="mt-12 p-8 rounded-2xl bg-gradient-to-r from-foreground/10 via-foreground/5 to-transparent border border-white/10">
+      <div className="mt-12 p-8 rounded-2xl bg-gradient-to-r from-foreground/10 via-foreground/5 to-transparent border border-border">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-2xl font-bold text-foreground mb-2">
@@ -386,7 +386,7 @@ const Services = () => {
               Let's discuss your requirements and bring your vision to life.
             </p>
           </div>
-          <button className="px-8 py-3 bg-foreground text-white rounded-full font-medium hover:bg-foreground/90 transition-colors whitespace-nowrap">
+          <button className="px-8 py-3 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-colors whitespace-nowrap">
             Get in Touch
           </button>
         </div>
