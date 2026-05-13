@@ -467,6 +467,7 @@ export default function Projects() {
               ))}
             </div>
             <span className="text-[11px] text-foreground/35 font-medium hidden sm:block">
+            {/* iuwjerfioj */}
               {filteredProjects.length} project
               {filteredProjects.length !== 1 ? "s" : ""}
             </span>
