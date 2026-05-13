@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@prisma/client";
 
 export async function GET() {
   try {
@@ -61,7 +62,14 @@ export async function GET() {
       }),
     ]);
 
-    const categoryIds = skillsByCategory.map((row) => row.categoryId);
+    // ✅ Fixed: Explicit typing for groupBy result
+    const typedSkillsByCategory = skillsByCategory as Array<{
+      categoryId: number | string; // adjust type based on your model (usually number)
+      _count: { _all: number };
+    }>;
+
+    const categoryIds = typedSkillsByCategory.map((row) => row.categoryId);
+
     const categories = categoryIds.length
       ? await prisma.skillCategory.findMany({
           where: { id: { in: categoryIds } },
@@ -116,7 +124,7 @@ export async function GET() {
       skills: {
         total: skillsTotal,
         categories: skillCategoriesTotal,
-        byCategory: skillsByCategory.map((row) => ({
+        byCategory: typedSkillsByCategory.map((row) => ({
           categoryId: row.categoryId,
           title: categoryTitleById.get(row.categoryId) ?? "Unknown",
           count: row._count._all,
