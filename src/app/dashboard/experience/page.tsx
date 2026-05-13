@@ -1,5 +1,5 @@
 ﻿"use client";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/components/Dashboard/ui/ToastContext";
 import {
@@ -13,10 +13,11 @@ import {
   X,
   Loader2,
   ArrowLeft,
+  Briefcase,
 } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-// Types
+// ── Types ──────────────────────────────────────────────────────────────────────
 interface Role {
   id?: number;
   title: string;
@@ -43,7 +44,8 @@ interface Experience {
   achievements: Achievement[];
 }
 
-const initialExp: Experience = {
+// ── Constants ──────────────────────────────────────────────────────────────────
+const INITIAL_EXP: Experience = {
   company: "",
   url: "",
   location: "",
@@ -56,41 +58,86 @@ const initialExp: Experience = {
   achievements: [{ metric: "", label: "" }],
 };
 
+// ── Shared style tokens ────────────────────────────────────────────────────────
+const cls = {
+  input:
+    "w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.12] focus:border-white/20 rounded-xl px-4 py-3 text-sm font-medium placeholder:text-white/20 focus:outline-none transition-all",
+  label:
+    "block text-[10px] font-black uppercase tracking-[0.16em] text-white/30 mb-1.5",
+  sectionHead:
+    "flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.22em] text-white/25 mb-5",
+  card: "bg-white/[0.025] border border-white/[0.07] hover:border-white/[0.12] hover:bg-white/[0.04] rounded-2xl transition-all duration-200",
+};
+
+// ── Sub-components ─────────────────────────────────────────────────────────────
+const SectionDivider = ({ label }: { label: string }) => (
+  <div className={cls.sectionHead}>
+    <span className="w-5 h-px bg-white/10 shrink-0" />
+    {label}
+  </div>
+);
+
+const Field = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  required = false,
+  type = "text",
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+  required?: boolean;
+  type?: string;
+}) => (
+  <div className="space-y-1.5">
+    <label className={cls.label}>{label}</label>
+    <input
+      required={required}
+      type={type}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className={cls.input}
+      placeholder={placeholder}
+    />
+  </div>
+);
+
+// ── Main Component ─────────────────────────────────────────────────────────────
 const ExperienceManager = () => {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
 
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [currentExp, setCurrentExp] = useState<Experience>(initialExp);
+  const [currentExp, setCurrentExp] = useState<Experience>(INITIAL_EXP);
 
-  // Fetch experiences
-  const { data: experiences = [], isLoading } = useQuery({
+  // ── Query ────────────────────────────────────────────────────────────────────
+  const { data: experiences = [], isLoading } = useQuery<Experience[]>({
     queryKey: ["experiences"],
     queryFn: async () => {
       const res = await fetch("/api/experience");
-      if (!res.ok) throw new Error("Failed to fetch experiences");
+      if (!res.ok) throw new Error("Failed to fetch");
       return res.json();
     },
   });
 
-  // Save mutation (POST / PUT)
+  // ── Mutations ────────────────────────────────────────────────────────────────
   const saveMutation = useMutation({
     mutationFn: async (data: Experience) => {
-      const method = editingId ? "PUT" : "POST";
-      const url = editingId
-        ? `/api/experience/${editingId}`
-        : "/api/experience";
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const res = await fetch(
+        editingId ? `/api/experience/${editingId}` : "/api/experience",
+        {
+          method: editingId ? "PUT" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        },
+      );
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(
-          errorData.details || errorData.error || "Failed to save",
-        );
+        const err = await res.json();
+        throw new Error(err.details || err.error || "Failed to save");
       }
       return res.json();
     },
@@ -99,288 +146,242 @@ const ExperienceManager = () => {
       queryClient.invalidateQueries({ queryKey: ["experiences"] });
       handleCancel();
     },
-    onError: (error: any) => {
-      showToast(error.message || "Error saving experience", "error");
-    },
+    onError: (e: any) =>
+      showToast(e.message || "Error saving experience", "error"),
   });
 
-  // Delete mutation
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
       const res = await fetch(`/api/experience/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete");
     },
     onSuccess: () => {
-      showToast("Experience deleted successfully!");
+      showToast("Experience deleted!");
       queryClient.invalidateQueries({ queryKey: ["experiences"] });
     },
-    onError: () => {
-      showToast("Error deleting experience", "error");
-    },
+    onError: () => showToast("Error deleting experience", "error"),
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    saveMutation.mutate(currentExp);
-  };
+  // ── Handlers ─────────────────────────────────────────────────────────────────
+  const handleCancel = useCallback(() => {
+    setIsAdding(false);
+    setEditingId(null);
+    setCurrentExp(INITIAL_EXP);
+  }, []);
 
-  const handleDelete = (id: number) => {
-    if (!confirm("Are you sure you want to delete this experience?")) return;
-    deleteMutation.mutate(id);
-  };
-
-  const handleEdit = (exp: Experience) => {
+  const handleEdit = useCallback((exp: Experience) => {
     setCurrentExp(exp);
     setEditingId(exp.id!);
     setIsAdding(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  const patch = useCallback(
+    <K extends keyof Experience>(key: K, val: Experience[K]) =>
+      setCurrentExp((prev) => ({ ...prev, [key]: val })),
+    [],
+  );
+
+  // Roles
+  const addRole = () =>
+    patch("roles", [
+      ...currentExp.roles,
+      {
+        title: "",
+        subtitle: "",
+        iconName: "Briefcase",
+        responsibilities: [""],
+      },
+    ]);
+
+  const removeRole = (i: number) =>
+    patch(
+      "roles",
+      currentExp.roles.filter((_, idx) => idx !== i),
+    );
+
+  const patchRole = (i: number, key: keyof Role, val: any) => {
+    const next = [...currentExp.roles];
+    next[i] = { ...next[i], [key]: val };
+    patch("roles", next);
   };
 
-  const handleCancel = () => {
-    setIsAdding(false);
-    setEditingId(null);
-    setCurrentExp(initialExp);
+  const addResp = (ri: number) => {
+    const next = [...currentExp.roles];
+    next[ri] = {
+      ...next[ri],
+      responsibilities: [...next[ri].responsibilities, ""],
+    };
+    patch("roles", next);
   };
 
-  // Role handlers
-  const addRole = () => {
-    setCurrentExp({
-      ...currentExp,
-      roles: [
-        ...currentExp.roles,
-        {
-          title: "",
-          subtitle: "",
-          iconName: "Briefcase",
-          responsibilities: [""],
-        },
-      ],
-    });
+  const removeResp = (ri: number, pi: number) => {
+    const next = [...currentExp.roles];
+    next[ri] = {
+      ...next[ri],
+      responsibilities: next[ri].responsibilities.filter((_, i) => i !== pi),
+    };
+    patch("roles", next);
   };
 
-  const removeRole = (index: number) => {
-    const newRoles = [...currentExp.roles];
-    newRoles.splice(index, 1);
-    setCurrentExp({ ...currentExp, roles: newRoles });
+  const patchResp = (ri: number, pi: number, val: string) => {
+    const next = [...currentExp.roles];
+    const resps = [...next[ri].responsibilities];
+    resps[pi] = val;
+    next[ri] = { ...next[ri], responsibilities: resps };
+    patch("roles", next);
   };
 
-  const handleRoleChange = (index: number, field: keyof Role, value: any) => {
-    const newRoles = [...currentExp.roles];
-    newRoles[index] = { ...newRoles[index], [field]: value };
-    setCurrentExp({ ...currentExp, roles: newRoles });
+  // Achievements
+  const addAchv = () =>
+    patch("achievements", [
+      ...currentExp.achievements,
+      { metric: "", label: "" },
+    ]);
+
+  const removeAchv = (i: number) =>
+    patch(
+      "achievements",
+      currentExp.achievements.filter((_, idx) => idx !== i),
+    );
+
+  const patchAchv = (i: number, key: keyof Achievement, val: string) => {
+    const next = [...currentExp.achievements];
+    next[i] = { ...next[i], [key]: val };
+    patch("achievements", next);
   };
 
-  const addResponsibility = (roleIndex: number) => {
-    const newRoles = [...currentExp.roles];
-    newRoles[roleIndex].responsibilities.push("");
-    setCurrentExp({ ...currentExp, roles: newRoles });
-  };
-
-  const removeResponsibility = (roleIndex: number, respIndex: number) => {
-    const newRoles = [...currentExp.roles];
-    newRoles[roleIndex].responsibilities.splice(respIndex, 1);
-    setCurrentExp({ ...currentExp, roles: newRoles });
-  };
-
-  const handleResponsibilityChange = (
-    roleIndex: number,
-    respIndex: number,
-    value: string,
-  ) => {
-    const newRoles = [...currentExp.roles];
-    newRoles[roleIndex].responsibilities[respIndex] = value;
-    setCurrentExp({ ...currentExp, roles: newRoles });
-  };
-
-  // Achievement handlers
-  const addAchievement = () => {
-    setCurrentExp({
-      ...currentExp,
-      achievements: [...currentExp.achievements, { metric: "", label: "" }],
-    });
-  };
-
-  const removeAchievement = (index: number) => {
-    const newAchievements = [...currentExp.achievements];
-    newAchievements.splice(index, 1);
-    setCurrentExp({ ...currentExp, achievements: newAchievements });
-  };
-
-  const handleAchievementChange = (
-    index: number,
-    field: keyof Achievement,
-    value: string,
-  ) => {
-    const newAchievements = [...currentExp.achievements];
-    newAchievements[index] = { ...newAchievements[index], [field]: value };
-    setCurrentExp({ ...currentExp, achievements: newAchievements });
-  };
-
-  // ─── Shared input classes ────────────────────────────────────────────────────
-  const inputCls =
-    "w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-[13px] font-medium text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-white/20 transition-colors";
-  const labelCls =
-    "block text-[10px] font-semibold uppercase tracking-[0.14em] text-foreground/30 mb-1.5";
-  const sectionHeadingCls =
-    "flex items-center gap-3 text-[9px] font-bold uppercase tracking-[0.22em] text-foreground/25 mb-6";
-
+  // ── Render ────────────────────────────────────────────────────────────────────
   return (
-    <div className="max-w-5xl mx-auto px-5 py-10 sm:px-8">
-      {/* ── Page Header ── */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 mb-14">
+    <div className="w-full">
+      {/* Page Header */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-white/5">
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-foreground/25 mb-2">
+          <p className="text-[9px] font-black uppercase tracking-[0.22em] text-white/25 mb-2">
             Portfolio
           </p>
-          <h1 className="text-[26px] font-semibold tracking-tight leading-none mb-1.5">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-none">
             Work Experience
           </h1>
-          <p className="text-[12px] text-foreground/40">
+          <p className="text-xs text-white/35 mt-2">
             Manage your professional journey and achievements.
           </p>
         </div>
-        {!isAdding && (
-          <button
-            onClick={() => {
-              setCurrentExp(initialExp);
-              setEditingId(null);
-              setIsAdding(true);
-            }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-white text-black rounded-xl text-[11px] font-bold uppercase tracking-[0.1em] hover:opacity-90 active:scale-[0.97] transition-all"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            Add Experience
-          </button>
-        )}
+        <div>
+          {!isAdding && (
+            <button
+              onClick={() => {
+                setCurrentExp(INITIAL_EXP);
+                setEditingId(null);
+                setIsAdding(true);
+              }}
+              className="shrink-0 flex items-center w-[200px] gap-2 px-5 py-3 bg-white text-black rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.03] active:scale-[0.97] transition-transform"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              Add Experience
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* ── Form ── */}
+      {/* ── Form ─────────────────────────────────────────────────────────────── */}
       <AnimatePresence mode="wait">
         {isAdding && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-            className="mb-14 bg-white/[0.025] border border-white/[0.08] rounded-2xl p-7 sm:p-10"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.18 }}
+            className={`mb-10 ${cls.card} p-5 sm:p-8`}
           >
-            {/* Form Header */}
-            <div className="flex items-center justify-between mb-10 pb-6 border-b border-white/[0.06]">
-              <div className="flex items-center gap-3">
+            {/* Form header */}
+            <div className="flex items-center justify-between mb-8 pb-5 border-b border-white/[0.06]">
+              <div className="flex items-center gap-2.5">
                 <button
                   onClick={handleCancel}
-                  className="p-2 hover:bg-white/5 rounded-lg transition-colors"
+                  className="p-2 hover:bg-white/5 rounded-lg transition-colors text-white/40 hover:text-white"
                 >
-                  <ArrowLeft className="w-4 h-4 text-foreground/50" />
+                  <ArrowLeft className="w-4 h-4" />
                 </button>
-                <h2 className="text-[15px] font-semibold">
+                <h2 className="text-base font-black">
                   {editingId ? "Edit Experience" : "Add New Experience"}
                 </h2>
               </div>
               <button
                 onClick={handleCancel}
-                className="p-2 hover:bg-white/5 rounded-lg transition-colors"
+                className="p-2 hover:bg-white/5 rounded-lg transition-colors text-white/30 hover:text-white"
               >
-                <X className="w-4 h-4 text-foreground/40" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-10">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                saveMutation.mutate(currentExp);
+              }}
+              className="space-y-10"
+            >
               {/* Company Info */}
               <section>
-                <div className={sectionHeadingCls}>
-                  <span className="w-6 h-px bg-white/10" />
-                  Company Information
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className={labelCls}>Company Name</label>
-                    <input
-                      required
-                      type="text"
-                      value={currentExp.company}
-                      onChange={(e) =>
-                        setCurrentExp({
-                          ...currentExp,
-                          company: e.target.value,
-                        })
-                      }
-                      className={inputCls}
-                      placeholder="e.g. NexoviaSoft"
-                    />
-                  </div>
-                  <div>
-                    <label className={labelCls}>Website URL</label>
-                    <input
-                      required
-                      type="text"
-                      value={currentExp.url}
-                      onChange={(e) =>
-                        setCurrentExp({ ...currentExp, url: e.target.value })
-                      }
-                      className={inputCls}
-                      placeholder="https://..."
-                    />
-                  </div>
-                  <div>
-                    <label className={labelCls}>Location</label>
-                    <input
-                      required
-                      type="text"
-                      value={currentExp.location}
-                      onChange={(e) =>
-                        setCurrentExp({
-                          ...currentExp,
-                          location: e.target.value,
-                        })
-                      }
-                      className={inputCls}
-                      placeholder="e.g. Rangpur, Bangladesh"
-                    />
-                  </div>
-                  <div>
-                    <label className={labelCls}>Period</label>
-                    <input
-                      required
-                      type="text"
-                      value={currentExp.period}
-                      onChange={(e) =>
-                        setCurrentExp({ ...currentExp, period: e.target.value })
-                      }
-                      className={inputCls}
-                      placeholder="e.g. 2026 – Present"
-                    />
-                  </div>
-                  <div>
-                    <label className={labelCls}>Status</label>
+                <SectionDivider label="Company Information" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Field
+                    label="Company Name"
+                    required
+                    value={currentExp.company}
+                    onChange={(v) => patch("company", v)}
+                    placeholder="e.g. NexoviaSoft"
+                  />
+                  <Field
+                    label="Website URL"
+                    required
+                    value={currentExp.url}
+                    onChange={(v) => patch("url", v)}
+                    placeholder="https://..."
+                  />
+                  <Field
+                    label="Location"
+                    required
+                    value={currentExp.location}
+                    onChange={(v) => patch("location", v)}
+                    placeholder="e.g. Rangpur, Bangladesh"
+                  />
+                  <Field
+                    label="Period"
+                    required
+                    value={currentExp.period}
+                    onChange={(v) => patch("period", v)}
+                    placeholder="e.g. 2026 – Present"
+                  />
+                  <div className="space-y-1.5">
+                    <label className={cls.label}>Status</label>
                     <select
                       value={currentExp.type}
-                      onChange={(e) =>
-                        setCurrentExp({ ...currentExp, type: e.target.value })
-                      }
-                      className={inputCls + " appearance-none cursor-pointer"}
+                      onChange={(e) => patch("type", e.target.value)}
+                      className={cls.input + " appearance-none cursor-pointer"}
                     >
                       <option value="current">Current Role</option>
                       <option value="previous">Previous Role</option>
                     </select>
                   </div>
-                  <div>
-                    <label className={labelCls}>
+                  <div className="space-y-1.5">
+                    <label className={cls.label}>
                       Tech Stack (comma separated)
                     </label>
                     <input
                       type="text"
                       value={currentExp.techStack.join(", ")}
                       onChange={(e) =>
-                        setCurrentExp({
-                          ...currentExp,
-                          techStack: e.target.value
+                        patch(
+                          "techStack",
+                          e.target.value
                             .split(",")
                             .map((s) => s.trim())
-                            .filter((s) => s !== ""),
-                        })
+                            .filter(Boolean),
+                        )
                       }
-                      className={inputCls}
+                      className={cls.input}
                       placeholder="React, Next.js, Node.js"
                     />
                   </div>
@@ -389,28 +390,21 @@ const ExperienceManager = () => {
 
               {/* Roles */}
               <section>
-                <div className="flex items-center justify-between mb-6">
-                  <div
-                    className={sectionHeadingCls}
-                    style={{ marginBottom: 0 }}
-                  >
-                    <span className="w-6 h-px bg-white/10" />
-                    Roles & Responsibilities
-                  </div>
+                <div className="flex items-center justify-between mb-5">
+                  <SectionDivider label="Roles & Responsibilities" />
                   <button
                     type="button"
                     onClick={addRole}
-                    className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-foreground/30 hover:text-foreground/70 transition-colors"
+                    className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white/70 transition-colors shrink-0 ml-4"
                   >
                     <PlusCircle className="w-3.5 h-3.5" /> Add Role
                   </button>
                 </div>
-
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {currentExp.roles.map((role, ri) => (
                     <div
                       key={ri}
-                      className="relative p-6 bg-white/[0.02] border border-white/[0.06] rounded-xl"
+                      className="relative p-5 bg-white/[0.02] border border-white/[0.06] rounded-xl"
                     >
                       {currentExp.roles.length > 1 && (
                         <button
@@ -421,78 +415,60 @@ const ExperienceManager = () => {
                           <X className="w-3 h-3" />
                         </button>
                       )}
-                      <div className="flex items-center gap-2 mb-5">
-                        <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/20">
-                          Role {ri + 1}
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-                        <div>
-                          <label className={labelCls}>Job Title</label>
-                          <input
-                            required
-                            type="text"
-                            value={role.title}
-                            onChange={(e) =>
-                              handleRoleChange(ri, "title", e.target.value)
-                            }
-                            className={inputCls}
-                            placeholder="e.g. Chief Operating Officer"
-                          />
-                        </div>
-                        <div>
-                          <label className={labelCls}>Subtitle / Type</label>
-                          <input
-                            required
-                            type="text"
-                            value={role.subtitle}
-                            onChange={(e) =>
-                              handleRoleChange(ri, "subtitle", e.target.value)
-                            }
-                            className={inputCls}
-                            placeholder="e.g. COO · Full-time"
-                          />
-                        </div>
+                      <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-4">
+                        Role {ri + 1}
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <Field
+                          label="Job Title"
+                          required
+                          value={role.title}
+                          onChange={(v) => patchRole(ri, "title", v)}
+                          placeholder="e.g. Chief Operating Officer"
+                        />
+                        <Field
+                          label="Subtitle / Type"
+                          required
+                          value={role.subtitle}
+                          onChange={(v) => patchRole(ri, "subtitle", v)}
+                          placeholder="e.g. COO · Full-time"
+                        />
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-3">
                           <label
-                            className={labelCls}
+                            className={cls.label}
                             style={{ marginBottom: 0 }}
                           >
                             Responsibilities
                           </label>
                           <button
                             type="button"
-                            onClick={() => addResponsibility(ri)}
-                            className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-[0.12em] text-foreground/25 hover:text-foreground/60 transition-colors"
+                            onClick={() => addResp(ri)}
+                            className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-white/25 hover:text-white/60 transition-colors"
                           >
-                            <Plus className="w-3 h-3" /> Add Bullet
+                            <Plus className="w-3 h-3" /> Add
                           </button>
                         </div>
                         <div className="space-y-2">
-                          {role.responsibilities.map((resp, rpi) => (
-                            <div key={rpi} className="flex items-center gap-2">
-                              <span className="w-1 h-1 rounded-full bg-white/20 flex-shrink-0" />
+                          {role.responsibilities.map((resp, pi) => (
+                            <div key={pi} className="flex items-center gap-2.5">
+                              <span className="w-1 h-1 rounded-full bg-white/20 shrink-0" />
                               <input
                                 required
                                 type="text"
                                 value={resp}
                                 onChange={(e) =>
-                                  handleResponsibilityChange(
-                                    ri,
-                                    rpi,
-                                    e.target.value,
-                                  )
+                                  patchResp(ri, pi, e.target.value)
                                 }
-                                className="flex-1 bg-transparent border-b border-white/[0.07] py-2 px-1 text-[12px] font-medium text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-white/20 transition-colors"
-                                placeholder="Describe a responsibility..."
+                                className="flex-1 min-w-0 bg-transparent border-b border-white/[0.07] focus:border-white/20 py-2 px-1 text-xs font-medium placeholder:text-white/20 focus:outline-none transition-colors"
+                                placeholder="Describe a responsibility…"
                               />
                               {role.responsibilities.length > 1 && (
                                 <button
                                   type="button"
-                                  onClick={() => removeResponsibility(ri, rpi)}
-                                  className="text-foreground/15 hover:text-red-400 transition-colors flex-shrink-0"
+                                  onClick={() => removeResp(ri, pi)}
+                                  className="text-white/15 hover:text-red-400 transition-colors shrink-0"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
                                 </button>
@@ -508,60 +484,46 @@ const ExperienceManager = () => {
 
               {/* Achievements */}
               <section>
-                <div className="flex items-center justify-between mb-6">
-                  <div
-                    className={sectionHeadingCls}
-                    style={{ marginBottom: 0 }}
-                  >
-                    <span className="w-6 h-px bg-white/10" />
-                    Key Achievements
-                  </div>
+                <div className="flex items-center justify-between mb-5">
+                  <SectionDivider label="Key Achievements" />
                   <button
                     type="button"
-                    onClick={addAchievement}
-                    className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-foreground/30 hover:text-foreground/70 transition-colors"
+                    onClick={addAchv}
+                    className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white/70 transition-colors shrink-0 ml-4"
                   >
-                    <PlusCircle className="w-3.5 h-3.5" /> Add Achievement
+                    <PlusCircle className="w-3.5 h-3.5" /> Add
                   </button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {currentExp.achievements.map((ach, ai) => (
                     <div
                       key={ai}
-                      className="flex gap-3 items-start p-5 bg-white/[0.02] border border-white/[0.06] rounded-xl"
+                      className="flex gap-3 items-start p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl"
                     >
-                      <div className="flex-1 grid grid-cols-2 gap-3">
+                      <div className="flex-1 grid grid-cols-2 gap-3 min-w-0">
                         <div>
-                          <label className={labelCls}>Metric</label>
+                          <label className={cls.label}>Metric</label>
                           <input
                             required
                             type="text"
                             value={ach.metric}
                             onChange={(e) =>
-                              handleAchievementChange(
-                                ai,
-                                "metric",
-                                e.target.value,
-                              )
+                              patchAchv(ai, "metric", e.target.value)
                             }
-                            className="w-full bg-transparent border-b border-white/[0.07] py-1.5 text-[18px] font-semibold text-foreground placeholder:text-foreground/15 focus:outline-none focus:border-white/20 transition-colors"
+                            className="w-full bg-transparent border-b border-white/[0.07] focus:border-white/20 py-1.5 text-lg font-black placeholder:text-white/15 focus:outline-none transition-colors"
                             placeholder="9+"
                           />
                         </div>
                         <div>
-                          <label className={labelCls}>Label</label>
+                          <label className={cls.label}>Label</label>
                           <input
                             required
                             type="text"
                             value={ach.label}
                             onChange={(e) =>
-                              handleAchievementChange(
-                                ai,
-                                "label",
-                                e.target.value,
-                              )
+                              patchAchv(ai, "label", e.target.value)
                             }
-                            className="w-full bg-transparent border-b border-white/[0.07] py-1.5 text-[12px] font-medium text-foreground placeholder:text-foreground/15 focus:outline-none focus:border-white/20 transition-colors"
+                            className="w-full bg-transparent border-b border-white/[0.07] focus:border-white/20 py-1.5 text-xs font-medium placeholder:text-white/15 focus:outline-none transition-colors"
                             placeholder="Projects Delivered"
                           />
                         </div>
@@ -569,8 +531,8 @@ const ExperienceManager = () => {
                       {currentExp.achievements.length > 1 && (
                         <button
                           type="button"
-                          onClick={() => removeAchievement(ai)}
-                          className="mt-6 text-foreground/15 hover:text-red-400 transition-colors"
+                          onClick={() => removeAchv(ai)}
+                          className="mt-6 shrink-0 text-white/15 hover:text-red-400 transition-colors"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -580,25 +542,29 @@ const ExperienceManager = () => {
                 </div>
               </section>
 
-              {/* Actions */}
-              <div className="flex gap-3 pt-8 border-t border-white/[0.06]">
+              {/* Submit */}
+              <div className="flex flex-col xs:flex-row gap-3 pt-6 border-t border-white/[0.06]">
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="flex-1 py-3 bg-white/5 hover:bg-white/[0.08] border border-white/[0.06] rounded-xl text-[11px] font-bold uppercase tracking-[0.1em] transition-colors"
+                  className="flex-1 py-3.5 bg-white/5 hover:bg-white/8 border border-white/[0.06] rounded-xl text-xs font-black uppercase tracking-widest transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saveMutation.isPending}
-                  className="flex-[2] py-3 bg-white text-black rounded-xl text-[11px] font-bold uppercase tracking-[0.1em] hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="flex-[2] py-3.5 bg-white text-black rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100 flex items-center justify-center gap-2"
                 >
-                  {saveMutation.isPending
-                    ? "Saving..."
-                    : editingId
-                      ? "Save Changes"
-                      : "Create Experience"}
+                  {saveMutation.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" /> Saving…
+                    </>
+                  ) : editingId ? (
+                    "Save Changes"
+                  ) : (
+                    "Create Experience"
+                  )}
                 </button>
               </div>
             </form>
@@ -606,80 +572,86 @@ const ExperienceManager = () => {
         )}
       </AnimatePresence>
 
-      {/* ── List ── */}
+      {/* ── List ─────────────────────────────────────────────────────────────── */}
       <div>
-        <div className={sectionHeadingCls}>
-          <span className="w-6 h-px bg-white/10" />
+        <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.22em] text-white/25 mb-5">
+          <span className="w-5 h-px bg-white/10 shrink-0" />
           Existing Experiences
-          <span className="ml-auto text-[9px] font-bold text-foreground/20">
+          <span className="ml-auto font-black text-white/20">
             {experiences.length}{" "}
             {experiences.length === 1 ? "entry" : "entries"}
           </span>
         </div>
 
         {isLoading ? (
-          <div className="flex items-center justify-center h-48">
-            <Loader2 className="w-6 h-6 animate-spin text-foreground/20" />
+          <div className="flex items-center justify-center h-40">
+            <Loader2 className="w-6 h-6 animate-spin text-white/20" />
           </div>
         ) : (
           <div className="space-y-4">
             <AnimatePresence mode="popLayout">
-              {experiences.map((exp: Experience) => (
+              {experiences.map((exp: Experience, i: number) => (
                 <motion.div
                   key={exp.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.15 }}
-                  className="group bg-white/[0.02] border border-white/[0.06] rounded-2xl hover:border-white/[0.12] hover:bg-white/[0.035] transition-all duration-300 overflow-hidden"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ delay: i * 0.04, duration: 0.15 }}
+                  className={`${cls.card} overflow-hidden`}
                 >
-                  {/* Card Top */}
-                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-5 p-6 sm:p-7">
+                  {/* Card top */}
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-4 p-5 sm:p-6">
+                    {/* Left — company icon */}
+                    <div className="shrink-0 w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center">
+                      <Briefcase className="w-4 h-4 text-white/30" />
+                    </div>
+
+                    {/* Middle — info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 mb-3">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
                         <span
-                          className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-[0.14em] border ${
+                          className={`px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest border ${
                             exp.type === "current"
                               ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-                              : "bg-white/[0.04] border-white/[0.08] text-foreground/30"
+                              : "bg-white/[0.04] border-white/[0.08] text-white/30"
                           }`}
                         >
                           {exp.type}
                         </span>
-                        <span className="flex items-center gap-1.5 text-[11px] font-medium text-foreground/30">
-                          <Calendar className="w-3 h-3" />
-                          {exp.period}
+                        <span className="flex items-center gap-1 text-[11px] text-white/30">
+                          <Calendar className="w-3 h-3" /> {exp.period}
                         </span>
                       </div>
-                      <h3 className="text-[18px] font-semibold tracking-tight mb-2 leading-none">
+                      <h3 className="text-base sm:text-lg font-black tracking-tight leading-none mb-2 truncate">
                         {exp.company}
                       </h3>
-                      <div className="flex flex-wrap items-center gap-4 text-[11px] font-medium text-foreground/35">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/35">
                         <a
                           href={exp.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 hover:text-foreground/70 transition-colors"
+                          className="flex items-center gap-1 hover:text-white/70 transition-colors min-w-0"
                         >
-                          <Globe className="w-3 h-3" />
-                          {exp.url
-                            ? exp.url.startsWith("http")
-                              ? new URL(exp.url).hostname
-                              : exp.url
-                            : "No URL"}
+                          <Globe className="w-3 h-3 shrink-0" />
+                          <span className="truncate">
+                            {exp.url
+                              ? exp.url.startsWith("http")
+                                ? new URL(exp.url).hostname
+                                : exp.url
+                              : "No URL"}
+                          </span>
                         </a>
-                        <span className="flex items-center gap-1.5">
-                          <MapPin className="w-3 h-3" />
-                          {exp.location}
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3 h-3 shrink-0" /> {exp.location}
                         </span>
                       </div>
                       {exp.techStack.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 mt-4">
+                        <div className="flex flex-wrap gap-1.5 mt-3">
                           {exp.techStack.map((tech, i) => (
                             <span
                               key={i}
-                              className="px-2.5 py-1 bg-white/[0.04] border border-white/[0.07] rounded-lg text-[10px] font-medium text-foreground/45"
+                              className="px-2.5 py-0.5 bg-white/[0.04] border border-white/[0.07] rounded-lg text-[10px] font-medium text-white/45"
                             >
                               {tech}
                             </span>
@@ -687,27 +659,37 @@ const ExperienceManager = () => {
                         </div>
                       )}
                     </div>
-                    <div className="flex flex-row lg:flex-col gap-2 flex-shrink-0">
+
+                    {/* Right — actions */}
+                    <div className="flex sm:flex-col gap-2 shrink-0 self-start">
                       <button
                         onClick={() => handleEdit(exp)}
-                        className="p-2.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.07] text-foreground/50 hover:text-foreground rounded-xl transition-all hover:scale-105 active:scale-95"
+                        className="p-2.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.07] text-white/40 hover:text-white rounded-xl transition-all hover:scale-105 active:scale-95"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
                       </button>
                       <button
-                        onClick={() => handleDelete(exp.id!)}
+                        onClick={() =>
+                          confirm("Delete this experience?") &&
+                          deleteMutation.mutate(exp.id!)
+                        }
                         disabled={deleteMutation.isPending}
-                        className="p-2.5 bg-red-500/[0.04] hover:bg-red-500/10 border border-red-500/[0.12] text-red-500/50 hover:text-red-400 rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-30"
+                        className="p-2.5 bg-red-500/[0.04] hover:bg-red-500/10 border border-red-500/[0.12] text-red-400/60 hover:text-red-400 rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-30"
                       >
-                        <Trash2 className="w-3.5 h-3.5" />
+                        {deleteMutation.isPending ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          <Trash2 className="w-3.5 h-3.5" />
+                        )}
                       </button>
                     </div>
                   </div>
 
-                  {/* Card Bottom */}
-                  <div className="grid md:grid-cols-2 gap-0 border-t border-white/[0.05]">
-                    <div className="p-6 sm:p-7 md:border-r border-white/[0.05]">
-                      <h4 className="text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/20 mb-4">
+                  {/* Card bottom — roles + achievements */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 border-t border-white/[0.05]">
+                    {/* Roles */}
+                    <div className="p-5 sm:p-6 md:border-r border-white/[0.05]">
+                      <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-4">
                         Roles & Responsibilities
                       </h4>
                       <div className="space-y-4">
@@ -717,25 +699,23 @@ const ExperienceManager = () => {
                             className="relative pl-4 border-l border-white/[0.08]"
                           >
                             <span className="absolute -left-[3px] top-1.5 w-1.5 h-1.5 rounded-full bg-white/10 border border-white/20" />
-                            <p className="text-[13px] font-semibold mb-0.5">
+                            <p className="text-sm font-bold mb-0.5 leading-snug">
                               {role.title}
                             </p>
-                            <p className="text-[11px] text-foreground/35 font-medium mb-2">
+                            <p className="text-xs text-white/35 mb-2">
                               {role.subtitle}
                             </p>
                             <ul className="space-y-1">
-                              {role.responsibilities
-                                .slice(0, 2)
-                                .map((resp, j) => (
-                                  <li
-                                    key={j}
-                                    className="text-[11px] text-foreground/45 leading-relaxed"
-                                  >
-                                    · {resp}
-                                  </li>
-                                ))}
+                              {role.responsibilities.slice(0, 2).map((r, j) => (
+                                <li
+                                  key={j}
+                                  className="text-xs text-white/40 leading-relaxed"
+                                >
+                                  · {r}
+                                </li>
+                              ))}
                               {role.responsibilities.length > 2 && (
-                                <li className="text-[9px] font-bold uppercase tracking-[0.1em] text-foreground/20">
+                                <li className="text-[9px] font-black uppercase tracking-widest text-white/20">
                                   +{role.responsibilities.length - 2} more
                                 </li>
                               )}
@@ -744,20 +724,22 @@ const ExperienceManager = () => {
                         ))}
                       </div>
                     </div>
-                    <div className="p-6 sm:p-7">
-                      <h4 className="text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/20 mb-4">
+
+                    {/* Achievements */}
+                    <div className="p-5 sm:p-6 border-t md:border-t-0 border-white/[0.05]">
+                      <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-4">
                         Key Achievements
                       </h4>
-                      <div className="grid grid-cols-2 gap-2.5">
+                      <div className="grid grid-cols-2 gap-2">
                         {exp.achievements.map((ach, i) => (
                           <div
                             key={i}
-                            className="p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]"
+                            className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06]"
                           >
-                            <div className="text-[20px] font-semibold leading-none mb-1">
+                            <div className="text-xl font-black leading-none mb-1">
                               {ach.metric}
                             </div>
-                            <div className="text-[9px] font-bold text-foreground/35 uppercase tracking-[0.1em] leading-tight">
+                            <div className="text-[9px] font-bold text-white/35 uppercase tracking-widest leading-tight">
                               {ach.label}
                             </div>
                           </div>
@@ -770,9 +752,10 @@ const ExperienceManager = () => {
             </AnimatePresence>
 
             {experiences.length === 0 && !isAdding && (
-              <div className="text-center py-16 bg-white/[0.015] border border-dashed border-white/[0.08] rounded-2xl">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-foreground/20">
-                  No experiences found — add one to get started.
+              <div className="text-center py-16 border border-dashed border-white/[0.08] rounded-2xl">
+                <Briefcase className="w-8 h-8 text-white/10 mx-auto mb-3" />
+                <p className="text-[10px] font-black uppercase tracking-widest text-white/20">
+                  No experiences yet — add one to get started.
                 </p>
               </div>
             )}

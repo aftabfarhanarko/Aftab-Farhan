@@ -181,7 +181,7 @@ const HeroManager = () => {
             <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
               Profile Image
             </label>
-            <div className="relative group w-full h-28 rounded-xl overflow-hidden border border-dashed border-white/[0.08] hover:border-white/20 transition-all bg-white/[0.02]">
+            <div className="relative group w-full h-[350px] rounded-xl overflow-hidden border border-dashed border-white/[0.08] hover:border-white/20 transition-all bg-white/[0.02]">
               {formData.image ? (
                 <>
                   <img
