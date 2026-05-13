@@ -45,15 +45,10 @@ const TopNavbar = () => {
     <header className="sticky top-0 z-30 w-full h-14 bg-[#0a0a0f]/90 backdrop-blur-md border-b border-white/[0.05] flex items-center justify-between px-4 lg:px-6 gap-4">
       {/* Left — Breadcrumb */}
       <div className="flex flex-col min-w-0">
-        <span className="text-[10px] font-medium text-white/30 uppercase tracking-widest leading-none">
-          Dashboard
-        </span>
         <h1 className="text-sm font-semibold text-white/85 leading-none mt-0.5 truncate">
-          Overview
+          Dashboard
         </h1>
       </div>
-
-     
 
       {/* Right — Actions */}
       <div className="flex items-center gap-1">

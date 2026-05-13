@@ -32,7 +32,9 @@ const HeroManager = () => {
           description: data.description || "",
           image: data.image || "",
           stats: data.stats?.length ? data.stats : [{ label: "", value: "" }],
-          socials: data.socials?.length ? data.socials : [{ platform: "", url: "" }],
+          socials: data.socials?.length
+            ? data.socials
+            : [{ platform: "", url: "" }],
         });
       }
     } catch (error) {
@@ -42,7 +44,9 @@ const HeroManager = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -69,14 +73,12 @@ const HeroManager = () => {
       stats: [...prev.stats, { label: "", value: "" }],
     }));
   };
-
   const handleRemoveStat = (index: number) => {
     setFormData((prev) => ({
       ...prev,
       stats: prev.stats.filter((_, i) => i !== index),
     }));
   };
-
   const handleStatChange = (index: number, field: string, value: string) => {
     const newStats = [...formData.stats];
     newStats[index] = { ...newStats[index], [field]: value };
@@ -89,14 +91,12 @@ const HeroManager = () => {
       socials: [...prev.socials, { platform: "", url: "" }],
     }));
   };
-
   const handleRemoveSocial = (index: number) => {
     setFormData((prev) => ({
       ...prev,
       socials: prev.socials.filter((_, i) => i !== index),
     }));
   };
-
   const handleSocialChange = (index: number, field: string, value: string) => {
     const newSocials = [...formData.socials];
     newSocials[index] = { ...newSocials[index], [field]: value };
@@ -124,153 +124,233 @@ const HeroManager = () => {
     }
   };
 
-  if (fetching) return <div className="flex items-center justify-center h-96"><Loader2 className="animate-spin" /></div>;
+  if (fetching)
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="animate-spin w-5 h-5 text-white/30" />
+      </div>
+    );
 
   return (
-    <div className="max-w-4xl pb-20">
-      <div className="mb-10">
-        <h1 className="text-4xl font-black tracking-tight mb-2">Hero Section</h1>
-        <p className="text-foreground/50 font-medium">Manage your name, title, description and socials.</p>
+    <div className="w-full pb-24">
+      {/* Page Header */}
+      <div className="mb-6">
+        <h1 className="text-lg font-semibold text-white/85 tracking-tight">
+          Hero Section
+        </h1>
+        <p className="text-xs text-white/35 mt-0.5">
+          Manage your name, title, description and socials.
+        </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Full Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-violet-500/50 transition-all font-medium"
-                placeholder="e.g. Aftab Farhan Arko"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Job Title</label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-violet-500/50 transition-all font-medium"
-                placeholder="e.g. Full-Stack Developer"
-              />
-            </div>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Row 1 — Name, Title, Image */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Name */}
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+              Full Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-all"
+              placeholder="e.g. Aftab Farhan Arko"
+            />
           </div>
 
-          <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Profile Image</label>
-            <div className="relative group aspect-square max-w-[200px] rounded-3xl overflow-hidden border-2 border-dashed border-white/10 hover:border-violet-500/50 transition-all">
+          {/* Title */}
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+              Job Title
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-all"
+              placeholder="e.g. Full-Stack Developer"
+            />
+          </div>
+
+          {/* Profile Image */}
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+              Profile Image
+            </label>
+            <div className="relative group w-full h-28 rounded-xl overflow-hidden border border-dashed border-white/[0.08] hover:border-white/20 transition-all bg-white/[0.02]">
               {formData.image ? (
                 <>
-                  <img src={formData.image} alt="Hero" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <label className="cursor-pointer p-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
-                      <Upload size={20} />
-                      <input type="file" className="hidden" onChange={handleImageUpload} accept="image/*" />
+                  <img
+                    src={formData.image}
+                    alt="Hero"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <label className="cursor-pointer p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all">
+                      <Upload size={16} className="text-white" />
+                      <input
+                        type="file"
+                        className="hidden"
+                        onChange={handleImageUpload}
+                        accept="image/*"
+                      />
                     </label>
                   </div>
                 </>
               ) : (
-                <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition-all">
-                  <Upload size={32} className="text-foreground/20 mb-2" />
-                  <span className="text-xs font-bold text-foreground/30 uppercase tracking-tighter">Upload Photo</span>
-                  <input type="file" className="hidden" onChange={handleImageUpload} accept="image/*" />
+                <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer gap-1.5">
+                  <Upload size={20} className="text-white/20" />
+                  <span className="text-[10px] text-white/25 uppercase tracking-wider">
+                    Upload Photo
+                  </span>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={handleImageUpload}
+                    accept="image/*"
+                  />
                 </label>
               )}
-              {loading && <div className="absolute inset-0 bg-black/40 flex items-center justify-center"><Loader2 className="animate-spin" /></div>}
+              {loading && (
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                  <Loader2 className="animate-spin w-5 h-5 text-white/60" />
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-widest text-foreground/40 px-1">Description</label>
+        {/* Description */}
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+            Description
+          </label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-violet-500/50 transition-all font-medium resize-none"
+            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-all resize-none"
             placeholder="Write a brief introduction about yourself..."
           />
         </div>
 
-        {/* Stats Section */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between px-1">
-            <label className="text-xs font-bold uppercase tracking-widest text-foreground/40">Stats (e.g. Experience, Projects)</label>
-            <button type="button" onClick={handleAddStat} className="text-[10px] font-bold uppercase tracking-tighter text-violet-400 hover:text-violet-300 flex items-center gap-1">
-              <Plus size={12} /> Add Stat
+        {/* Stats */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+              Stats
+            </label>
+            <button
+              type="button"
+              onClick={handleAddStat}
+              className="flex items-center gap-1 text-[10px] text-violet-400/70 hover:text-violet-300 transition-colors uppercase tracking-wider"
+            >
+              <Plus size={11} /> Add Stat
             </button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {formData.stats.map((stat, index) => (
-              <div key={index} className="flex gap-3 items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+              <div
+                key={index}
+                className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5"
+              >
                 <input
-                  placeholder="Label (e.g. Exp)"
+                  placeholder="Label"
                   value={stat.label}
-                  onChange={(e) => handleStatChange(index, "label", e.target.value)}
-                  className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-semibold"
+                  onChange={(e) =>
+                    handleStatChange(index, "label", e.target.value)
+                  }
+                  className="flex-1 bg-transparent text-xs text-white/70 placeholder:text-white/20 focus:outline-none min-w-0"
                 />
+                <div className="w-px h-4 bg-white/[0.08]" />
                 <input
-                  placeholder="Value (e.g. 5+)"
+                  placeholder="Value"
                   value={stat.value}
-                  onChange={(e) => handleStatChange(index, "value", e.target.value)}
-                  className="w-20 bg-transparent border-none focus:ring-0 text-sm font-black text-violet-400"
+                  onChange={(e) =>
+                    handleStatChange(index, "value", e.target.value)
+                  }
+                  className="w-14 bg-transparent text-xs font-semibold text-violet-400 placeholder:text-white/20 focus:outline-none text-right"
                 />
-                <button type="button" onClick={() => handleRemoveStat(index)} className="text-red-500/50 hover:text-red-500 p-1">
-                  <Trash2 size={16} />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveStat(index)}
+                  className="text-white/20 hover:text-red-400 transition-colors ml-1 shrink-0"
+                >
+                  <Trash2 size={13} />
                 </button>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Socials Section */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between px-1">
-            <label className="text-xs font-bold uppercase tracking-widest text-foreground/40">Social Links</label>
-            <button type="button" onClick={handleAddSocial} className="text-[10px] font-bold uppercase tracking-tighter text-violet-400 hover:text-violet-300 flex items-center gap-1">
-              <Plus size={12} /> Add Social
+        {/* Socials */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+              Social Links
+            </label>
+            <button
+              type="button"
+              onClick={handleAddSocial}
+              className="flex items-center gap-1 text-[10px] text-violet-400/70 hover:text-violet-300 transition-colors uppercase tracking-wider"
+            >
+              <Plus size={11} /> Add Social
             </button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {formData.socials.map((social, index) => (
-              <div key={index} className="flex gap-3 items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+              <div
+                key={index}
+                className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5"
+              >
                 <input
-                  placeholder="Platform (e.g. GitHub)"
+                  placeholder="Platform"
                   value={social.platform}
-                  onChange={(e) => handleSocialChange(index, "platform", e.target.value)}
-                  className="w-32 bg-transparent border-none focus:ring-0 text-sm font-semibold"
+                  onChange={(e) =>
+                    handleSocialChange(index, "platform", e.target.value)
+                  }
+                  className="w-20 bg-transparent text-xs font-medium text-white/70 placeholder:text-white/20 focus:outline-none shrink-0"
                 />
+                <div className="w-px h-4 bg-white/[0.08]" />
                 <input
-                  placeholder="URL"
+                  placeholder="https://..."
                   value={social.url}
-                  onChange={(e) => handleSocialChange(index, "url", e.target.value)}
-                  className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-medium text-foreground/50"
+                  onChange={(e) =>
+                    handleSocialChange(index, "url", e.target.value)
+                  }
+                  className="flex-1 bg-transparent text-xs text-white/45 placeholder:text-white/20 focus:outline-none min-w-0"
                 />
-                <button type="button" onClick={() => handleRemoveSocial(index)} className="text-red-500/50 hover:text-red-500 p-1">
-                  <Trash2 size={16} />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveSocial(index)}
+                  className="text-white/20 hover:text-red-400 transition-colors ml-1 shrink-0"
+                >
+                  <Trash2 size={13} />
                 </button>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="pt-8 sticky bottom-0 bg-black/80 backdrop-blur-sm py-4 border-t border-white/5">
+        {/* Submit */}
+        <div className="sticky bottom-0 pt-4 pb-2 bg-gradient-to-t from-black via-black/90 to-transparent border-t border-white/[0.05] mt-4">
           <button
             type="submit"
             disabled={loading}
-            className="w-full md:w-auto px-12 py-4 bg-violet-600 hover:bg-violet-500 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+            className="px-8 py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-40 text-white rounded-xl text-xs font-semibold uppercase tracking-widest transition-all flex items-center gap-2 active:scale-[0.98]"
           >
-            {loading ? <Loader2 className="animate-spin" size={18} /> : "Update Hero Section"}
+            {loading ? <Loader2 className="animate-spin w-3.5 h-3.5" /> : null}
+            Update Hero Section
           </button>
         </div>
       </form>
     </div>
   );
 };
-// uywehtfiuhweiur ff es
+
 export default HeroManager;
