@@ -62,15 +62,18 @@ export async function GET() {
       }),
     ]);
 
-    // ✅ Fixed: Explicit typing for groupBy result
+    // âœ… Fixed: Explicit typing for groupBy result
     const typedSkillsByCategory = skillsByCategory as Array<{
-      categoryId: number | string; // adjust type based on your model (usually number)
+      categoryId: string | null;
       _count: { _all: number };
     }>;
 
-    const categoryIds = typedSkillsByCategory.map((row) => row.categoryId);
+    const skillsByCategoryWithIds = typedSkillsByCategory.filter(
+      (row): row is { categoryId: string; _count: { _all: number } } =>
+        typeof row.categoryId === "string",
+    );
 
-    const categories = categoryIds.length
+    const categoryIds = skillsByCategoryWithIds.map((row) => row.categoryId);const categories = categoryIds.length
       ? await prisma.skillCategory.findMany({
           where: { id: { in: categoryIds } },
           select: { id: true, title: true },
@@ -124,7 +127,7 @@ export async function GET() {
       skills: {
         total: skillsTotal,
         categories: skillCategoriesTotal,
-        byCategory: typedSkillsByCategory.map((row) => ({
+        byCategory: skillsByCategoryWithIds.map((row) => ({
           categoryId: row.categoryId,
           title: categoryTitleById.get(row.categoryId) ?? "Unknown",
           count: row._count._all,
