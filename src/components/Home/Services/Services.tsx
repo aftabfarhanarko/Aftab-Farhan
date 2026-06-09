@@ -259,7 +259,7 @@ const Services = () => {
       {/* Header */}
       <div className="flex items-center gap-6 mb-12">
         <div className="relative">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight leading-none">
+          <h2 className="text-2xl md:text-4xl font-black text-foreground tracking-tight leading-none">
             Services
           </h2>
           <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />

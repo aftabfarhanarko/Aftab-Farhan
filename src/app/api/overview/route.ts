@@ -62,7 +62,7 @@ export async function GET() {
       }),
     ]);
 
-    // âœ… Fixed: Explicit typing for groupBy result
+    // Ã¢Å“â€¦ Fixed: Explicit typing for groupBy result
     const typedSkillsByCategory = skillsByCategory as Array<{
       categoryId: string | null;
       _count: { _all: number };
@@ -73,7 +73,9 @@ export async function GET() {
         typeof row.categoryId === "string",
     );
 
-    const categoryIds = skillsByCategoryWithIds.map((row) => row.categoryId);const categories = categoryIds.length
+    const categoryIds = skillsByCategoryWithIds.map((row) => row.categoryId);
+
+    const categories = categoryIds.length
       ? await prisma.skillCategory.findMany({
           where: { id: { in: categoryIds } },
           select: { id: true, title: true },

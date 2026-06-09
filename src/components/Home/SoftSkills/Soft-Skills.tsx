@@ -251,7 +251,7 @@ export default function SoftSkills() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none mb-4">
+          <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-none mb-4">
             <span className="text-foreground">Soft </span>
             <span className="text-foreground/25">Skills</span>
           </h2>

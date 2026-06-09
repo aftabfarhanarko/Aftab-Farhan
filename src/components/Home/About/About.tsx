@@ -129,12 +129,12 @@ export default function About() {
         <div className="lg:col-span-2 flex flex-col gap-6 lg:gap-8 lg:sticky lg:top-24 lg:self-start">
           {/* Role tag + heading */}
           <motion.div variants={itemVariants}>
-            <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-black/40 dark:text-white/40 border border-black/10 dark:border-white/10 rounded-full px-4 py-1.5 mb-5">
+            {/* <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-black/40 dark:text-white/40 border border-black/10 dark:border-white/10 rounded-full px-4 py-1.5 mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-black/40 dark:bg-white/40 inline-block" />
               {roleTag}
-            </span>
+            </span> */}
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none text-foreground mb-4">
+            <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-none text-foreground mb-4">
               About <span className="text-foreground/25">Me.</span>
             </h2>
 

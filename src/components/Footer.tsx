@@ -110,7 +110,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-card/40 px-4 sm:px-6 lg:px-8 py-12 mt-2">
+    <footer className="border-t border-border bg-card/40 px-4 sm:px-6 lg:px-8 py-10 mt-2">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -118,8 +118,8 @@ export default function Footer() {
         transition={{ duration: 0.6 }}
         className="max-w-7xl mx-auto"
       >
-        {/* Top row */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 mb-10 flex-wrap">
+        {/* Top row — stacks vertically & centers on mobile */}
+        <div className="flex flex-col items-center text-center sm:flex-row sm:justify-between sm:items-center sm:text-left gap-6 mb-8 flex-wrap">
           {/* Brand */}
           <div>
             <Link
@@ -127,16 +127,15 @@ export default function Footer() {
               className="text-xl font-black tracking-tight text-foreground"
               style={{ fontFamily: "'Syne', sans-serif" }}
             >
-              Aftab<span className="text-foreground/25">.</span>
+              Aftab Farha Arko
             </Link>
-            <p className="text-[11.5px] text-foreground/45 mt-1.5 max-w-[220px] leading-relaxed font-mono">
-              Crafting high-performance web experiences with clean code &
-              design.
+            <p className="text-[11.5px] text-foreground/45 mt-1.5 max-w-[220px] leading-relaxed font-mono mx-auto sm:mx-0">
+              Junior Full Stack Developer • Building Modern Web Applications
             </p>
           </div>
 
-          {/* Social icons */}
-          <div className="flex items-center gap-2.5">
+          {/* Social icons — centered on mobile */}
+          <div className="flex items-center justify-center gap-2.5 flex-wrap">
             {socialLinks.map(({ href, label, icon: Icon }) => (
               <a
                 key={label}
@@ -154,12 +153,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom row */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-6 border-t border-border">
-          <p className="text-[11px] text-foreground/35 font-mono">
-            Ã‚Â© {currentYear} Aftab Farha Arko. All rights reserved.
+        {/* Bottom row — stacks & centers on mobile */}
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between pt-6 border-t border-border">
+          <p className="text-[11px] text-foreground/35 font-mono text-center sm:text-left">
+            © {currentYear} Aftab Farha Arko. All rights reserved.
           </p>
-          <p className="text-[11px] text-foreground/20 font-mono">
+          <p className="text-[11px] text-foreground/20 font-mono text-center sm:text-right">
             Built with Next.js, TypeScript, PostgreSQL, Prisma, Framer Motion
           </p>
         </div>

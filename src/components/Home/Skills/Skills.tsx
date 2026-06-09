@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import {
@@ -13,7 +14,6 @@ import {
   Globe,
 } from "lucide-react";
 
-
 interface Skill {
   id: string;
   name: string;
@@ -26,8 +26,6 @@ interface SkillCategory {
   skills: Skill[];
 }
 
-
-// Each category gets an icon + a Tailwind color accent class set
 type AccentKey =
   | "blue"
   | "green"
@@ -53,7 +51,6 @@ const categoryConfig: Record<string, CategoryConfig> = {
   API: { icon: Globe, accent: "teal" },
 };
 
-// Tailwind accent classes per key (icon bg / icon color / chip dot)
 const accentClasses: Record<
   AccentKey,
   { iconWrap: string; iconColor: string; dot: string }
@@ -104,7 +101,6 @@ function getCategoryConfig(title: string): CategoryConfig {
     : { icon: Settings, accent: "default" };
 }
 
-
 function SkillsSkeleton() {
   return (
     <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -132,7 +128,43 @@ function SkillsSkeleton() {
   );
 }
 
+// ─── Marquee strip ────────────────────────────────────────────────────────────
+interface MarqueeItem {
+  id: string;
+  name: string;
+  imageUrl: string;
+}
 
+function SkillsMarquee({ items }: { items: MarqueeItem[] }) {
+  const repeated = [...items, ...items, ...items, ...items];
+
+  return (
+    <div className="relative mt-10 sm:mt-12 overflow-hidden py-2">
+      {/* fade edges */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-20 z-10 bg-gradient-to-r from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-20 z-10 bg-gradient-to-l from-background to-transparent" />
+
+      <motion.div
+        className="flex w-max items-center gap-6 sm:gap-8"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+      >
+        {repeated.map((skill, idx) => (
+          <img
+            key={`${skill.id}-${idx}`}
+            src={skill.imageUrl}
+            alt={skill.name}
+            title={skill.name}
+            draggable={false}
+            className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl object-cover border border-border/50 select-none"
+          />
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
 export default function Skills() {
   const { data: categories, isLoading } = useQuery<SkillCategory[]>({
     queryKey: ["skills-categories"],
@@ -142,94 +174,116 @@ export default function Skills() {
     },
   });
 
+  // Collect only skills that have an imageUrl, deduplicated by name
+  const marqueeItems = React.useMemo<MarqueeItem[]>(() => {
+    if (!categories) return [];
+    const seen = new Set<string>();
+    const result: MarqueeItem[] = [];
+    for (const cat of categories) {
+      for (const skill of cat.skills) {
+        if (skill.imageUrl && !seen.has(skill.name)) {
+          seen.add(skill.name);
+          result.push({
+            id: skill.id,
+            name: skill.name,
+            imageUrl: skill.imageUrl,
+          });
+        }
+      }
+    }
+    return result;
+  }, [categories]);
+
   return (
     <section id="skills" className="mb-20 sm:mb-24 scroll-mt-24">
-     
+      {/* Heading */}
       <div className="mb-10 sm:mb-12">
         <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-foreground/35 font-bold mb-3">
           <span className="w-1.5 h-1.5 rounded-full bg-foreground/25 inline-block" />
           Technical Arsenal
         </span>
 
-        <h2 className="text-[clamp(28px,5vw,48px)] font-black text-foreground tracking-tight leading-none mb-4">
+        <h2 className="text-[clamp(28px,5vw,48px)] text-2xl md:text-4xl font-black text-foreground tracking-tight leading-none mb-4">
           Mastering the <span className="text-foreground/25">Modern Stack</span>
         </h2>
 
         <p className="max-w-2xl text-foreground/50 text-sm sm:text-base leading-relaxed">
           Technologies I leverage to build scalable, high-performance
-          applications ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â from pixel-perfect UIs to robust backend systems.
+          applications from pixel-perfect UIs to robust backend systems.
         </p>
       </div>
 
-     
+      {/* Cards */}
       {isLoading ? (
         <SkillsSkeleton />
       ) : (
-        <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {categories?.map((category) => {
-            const { icon: Icon, accent } = getCategoryConfig(category.title);
-            const a = accentClasses[accent];
+        <>
+          <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {categories?.map((category) => {
+              const { icon: Icon, accent } = getCategoryConfig(category.title);
+              const a = accentClasses[accent];
 
-            return (
-              <div
-                key={category.id}
-                className="group flex flex-col p-5 sm:p-6 rounded-2xl border border-border bg-foreground/[0.02] hover:border-border hover:bg-foreground/[0.04] transition-all duration-300"
-              >
-                {/* Card header */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className={`w-8 h-8 rounded-xl border flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 ${a.iconWrap}`}
-                  >
-                    <Icon
-                      className={`w-4 h-4 ${a.iconColor}`}
-                      strokeWidth={1.8}
-                    />
+              return (
+                <div
+                  key={category.id}
+                  className="group flex flex-col p-5 sm:p-6 rounded-2xl border border-border bg-foreground/[0.02] hover:border-border hover:bg-foreground/[0.04] transition-all duration-300 h-full"
+                >
+                  {/* Card header */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div
+                      className={`w-8 h-8 rounded-xl border flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 ${a.iconWrap}`}
+                    >
+                      <Icon
+                        className={`w-4 h-4 ${a.iconColor}`}
+                        strokeWidth={1.8}
+                      />
+                    </div>
+
+                    <h3 className="text-sm font-black text-foreground/75 tracking-tight group-hover:text-foreground transition-colors flex-1">
+                      {category.title}
+                    </h3>
+
+                    <span className="text-[10px] font-bold text-foreground/20 tabular-nums">
+                      {category.skills.length}
+                    </span>
                   </div>
 
-                  <h3 className="text-sm font-black text-foreground/75 tracking-tight group-hover:text-foreground transition-colors flex-1">
-                    {category.title}
-                  </h3>
+                  <div className="h-px bg-border mb-4" />
 
-                  {/* Count */}
-                  <span className="text-[10px] font-bold text-foreground/20 tabular-nums">
-                    {category.skills.length}
-                  </span>
-                </div>
-
-                {/* Divider */}
-                <div className="h-px bg-border mb-4" />
-
-                {/* Skill pills */}
-                <div className="flex flex-wrap gap-1.5">
-                  {category.skills.map((skill) => (
-                    <div
-                      key={skill.id}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-border bg-card/40 hover:border-border hover:bg-card/60 transition-all duration-200 group/chip cursor-default"
-                    >
-                      {/* Logo or accent dot */}
-                      {skill.imageUrl ? (
-                        <div className="w-3.5 h-3.5 rounded overflow-hidden shrink-0 flex items-center justify-center">
-                          <img
-                            src={skill.imageUrl}
-                            alt={skill.name}
-                            className="w-full h-full object-contain group-hover/chip:scale-110 transition-transform duration-200"
+                  {/* Skill pills */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {category.skills.map((skill) => (
+                      <div
+                        key={skill.id}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-border bg-card/40 hover:border-border hover:bg-card/60 transition-all duration-200 group/chip cursor-default"
+                      >
+                        {skill.imageUrl ? (
+                          <div className="w-3.5 h-3.5 rounded overflow-hidden shrink-0 flex items-center justify-center">
+                            <img
+                              src={skill.imageUrl}
+                              alt={skill.name}
+                              className="w-full h-full object-contain group-hover/chip:scale-110 transition-transform duration-200"
+                            />
+                          </div>
+                        ) : (
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full shrink-0 ${a.dot}`}
                           />
-                        </div>
-                      ) : (
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full shrink-0 ${a.dot}`}
-                        />
-                      )}
-                      <span className="text-[11px] sm:text-[11.5px] font-semibold text-foreground/50 group-hover/chip:text-foreground/85 transition-colors whitespace-nowrap">
-                        {skill.name}
-                      </span>
-                    </div>
-                  ))}
+                        )}
+                        <span className="text-[11px] sm:text-[11.5px] font-semibold text-foreground/50 group-hover/chip:text-foreground/85 transition-colors whitespace-nowrap">
+                          {skill.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+
+          {/* Marquee — only renders when there are image skills */}
+          {marqueeItems.length > 0 && <SkillsMarquee items={marqueeItems} />}
+        </>
       )}
     </section>
   );
