@@ -4,10 +4,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  //url      = env("DATABASE_URL")
 }
 
-// User Data Saved
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -17,26 +15,22 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-// Hero Sections
 model Hero {
-  id          String @id @default(cuid())
+  id          String       @id @default(cuid())
   name        String
   title       String
   description String
   image       String
-
-  stats   HeroStat[]
-  socials HeroSocial[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  socials     HeroSocial[]
+  stats       HeroStat[]
 }
 
 model HeroStat {
-  id    String @id @default(cuid())
-  label String
-  value String
-
+  id     String @id @default(cuid())
+  label  String
+  value  String
   heroId String
   hero   Hero   @relation(fields: [heroId], references: [id])
 }
@@ -45,17 +39,15 @@ model HeroSocial {
   id       String @id @default(cuid())
   platform String
   url      String
-
-  heroId String
-  hero   Hero   @relation(fields: [heroId], references: [id])
+  heroId   String
+  hero     Hero   @relation(fields: [heroId], references: [id])
 }
 
 model About {
-  id              Int    @id @default(autoincrement())
-  fullName        String // Aftab Farhan Arko
-  roleTag         String // Full Stack Developer
-  roleDescription String // Full Stack Developer  Specialist in ...
-
+  id                Int      @id @default(autoincrement())
+  fullName          String
+  roleTag           String
+  roleDescription   String
   introParagraphs   Json
   clientFocusedText String
   stats             Json
@@ -71,27 +63,26 @@ model About {
   updatedAt         DateTime @updatedAt
 }
 
-// Experience
 model Experience {
   id           Int           @id @default(autoincrement())
   company      String
   url          String
   location     String
   period       String
-  type         String // "current" or "previous"
-  techStack    String[] // PostgreSQL array of strings
-  roles        Role[]
-  achievements Achievement[]
+  type         String
+  techStack    String[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  achievements Achievement[]
+  roles        Role[]
 }
 
 model Role {
   id               Int        @id @default(autoincrement())
-  title            String // e.g., "Chief Operating Officer"
-  subtitle         String // e.g., "COO · Full-time"
-  iconName         String // e.g., "Shield", "ClipboardList"
-  responsibilities String[] // list of responsibilities
+  title            String
+  subtitle         String
+  iconName         String
+  responsibilities String[]
   experienceId     Int
   experience       Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 }
@@ -104,32 +95,26 @@ model Achievement {
   experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
 }
 
-// Skill
 model SkillCategory {
-  id    String @id @default(uuid())
-  title String // e.g. "Frontend", "Backend"
-
-  skills Skill[] // 👈 one category → many skills
-
+  id        String   @id @default(uuid())
+  title     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  skills    Skill[]
 }
 
 model Skill {
-  id       String  @id @default(uuid())
-  name     String // e.g. "React", "JavaScript"
-  imageUrl String?
-
+  id         String        @id @default(uuid())
+  name       String
+  imageUrl   String?
   categoryId String
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
   category   SkillCategory @relation(fields: [categoryId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
-// Education
 model Education {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   degree      String
   field       String
   institution String
@@ -137,26 +122,53 @@ model Education {
   location    String
   period      String
   grade       String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-// ContactMessage
-
 model ContactMessage {
-  id String @id @default(uuid())
+  id        String         @id @default(uuid())
+  name      String
+  email     String
+  subject   ContactSubject
+  message   String
+  status    MessageStatus  @default(UNREAD)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
 
-  name  String
-  email String
+model Project {
+  id          String          @id @default(uuid())
+  title       String
+  tagline     String
+  description String
+  image       String
+  demoLink    String
+  githubLink  String?
+  category    ProjectCategory
+  year        String
+  featured    Boolean         @default(false)
+  projectType ProjectType
+  client      String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  tech        ProjectTech[]
+}
 
-  subject ContactSubject
-  message String
+model Tech {
+  id       String        @id @default(uuid())
+  name     String        @unique
+  projects ProjectTech[]
+}
 
-  status MessageStatus @default(UNREAD)
+model ProjectTech {
+  id        String  @id @default(uuid())
+  projectId String
+  techId    String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tech      Tech    @relation(fields: [techId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@unique([projectId, techId])
 }
 
 enum ContactSubject {
@@ -172,52 +184,6 @@ enum MessageStatus {
   READ
   REPLIED
   ARCHIVED
-}
-
-model Project {
-  id String @id @default(uuid())
-
-  title       String
-  tagline     String
-  description String
-
-  image String
-
-  demoLink   String
-  githubLink String?
-
-  category ProjectCategory
-  year     String
-
-  featured Boolean @default(false)
-
-  projectType ProjectType
-
-  client String?
-
-  tech ProjectTech[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Tech {
-  id   String @id @default(uuid())
-  name String @unique
-
-  projects ProjectTech[]
-}
-
-model ProjectTech {
-  id String @id @default(uuid())
-
-  projectId String
-  techId    String
-
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  tech    Tech    @relation(fields: [techId], references: [id], onDelete: Cascade)
-
-  @@unique([projectId, techId])
 }
 
 enum ProjectType {

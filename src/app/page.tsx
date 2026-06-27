@@ -7,6 +7,7 @@ import Projects from "@/components/Home/Projects/Projects";
 import Experience from "@/components/Home/Experience/Experience";
 import SoftSkills from "@/components/Home/SoftSkills/Soft-Skills";
 import Education from "@/components/Home/Education/Education";
+import Services from "@/components/Home/Services/Services";
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
       <Skills />
       <Projects />
       <Experience />
-      {/* <Services /> */}
+      <Services />
       <SoftSkills />
       <Education />
       <Contact />
