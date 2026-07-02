@@ -479,14 +479,14 @@ const Services = () => {
           <Rocket size={18} />
           Also Build
         </h3>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
           {additionalServices.map((service) => (
             <span
               key={service.label}
-              className="flex items-center gap-2 px-4 py-2 text-sm bg-foreground/5 border border-border rounded-full text-foreground/70 hover:text-foreground hover:border-foreground/30 transition-colors cursor-default"
+              className="flex items-center gap-2 px-3 py-2 text-[10px] sm:text-sm bg-foreground/5 border border-border rounded-full text-foreground/70 hover:text-foreground hover:border-foreground/30 transition-colors cursor-default justify-center sm:justify-start"
             >
-              <span className="opacity-60">{service.icon}</span>
-              {service.label}
+              <span className="opacity-60 flex-shrink-0">{service.icon}</span>
+              <span className="truncate sm:overflow-visible sm:whitespace-normal">{service.label}</span>
             </span>
           ))}
         </div>
