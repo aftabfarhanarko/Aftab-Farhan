@@ -1,4 +1,6 @@
-﻿# Arko Portfolio - Full Stack Developer
+# Arko Portfolio - Full Stack Developer
+
+Live Website: [aftabfarhan.tech](http://aftabfarhan.tech/)
 
 This is a modern, high-performance portfolio application built with the latest web technology stack.
 
@@ -53,7 +55,17 @@ arko-protflieo/
 │   │   └── page.tsx      # Main portfolio homepage
 │   ├── components/
 │   │   ├── Dashboard/    # Dashboard specific components
-│   │   ├── Home/         # Homepage sections (Hero, About, Projects, etc.)
+│   │   ├── Home/         # Homepage sections (strictly modularized < 150 lines per file)
+│   │   │   ├── About/          # About section (Profile, Bio, Highlights, TechStack)
+│   │   │   ├── AIStack/        # AI Workflow section (ToolCard, StepCard, AIPipeline, AIHighlightCard)
+│   │   │   ├── Contact/        # Contact section (ContactInfo, ContactForm, SubjectDropdown)
+│   │   │   ├── Education/      # Education section
+│   │   │   ├── Experience/     # Experience section (ExperienceCard, ExperienceComponents)
+│   │   │   ├── Hero/           # Hero section (HeroLeft, HeroRight, HeroSkeleton, HeroDecorations)
+│   │   │   ├── Projects/       # Projects showcase (ProjectCard, FeaturedCard, ProjectsFilters)
+│   │   │   ├── Services/       # Services list (ServiceCard, servicesData1/2, techStackData)
+│   │   │   ├── Skills/         # Skills display (SkillsMarquee, SkillCategoryCard, SkillsSkeleton)
+│   │   │   └── SoftSkills/     # Soft Skills display (SkillCard, softSkillsData)
 │   │   ├── ui/           # Reusable UI components (shadcn/ui)
 │   │   ├── Navbar.tsx
 │   │   └── Footer.tsx
