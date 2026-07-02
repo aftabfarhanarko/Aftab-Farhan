@@ -76,7 +76,7 @@ const navItems: NavItemType[] = [
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
-// মোবাইলের জন্য (লগইন সহ)
+// মোবাইলের জন্য
 const mobileNavItems: NavItemType[] = [
   ...navItems.filter((n) =>
     [
@@ -89,7 +89,6 @@ const mobileNavItems: NavItemType[] = [
       "contact",
     ].includes(n.id)
   ),
-  { id: "login", label: "Login", icon: LogInIcon, href: "/login" }, // নতুন যোগ
 ];
 
 const socialLinks = [
@@ -384,43 +383,6 @@ export default function Navbar() {
             const Icon = item.icon;
             const isCenter = item.highlight;
 
-            // লগইন আইকন হলে আলাদা স্টাইল ও লিংক
-            if (item.id === "login") {
-              return (
-                <Link key={item.id} href={item.href || "/login"} passHref legacyBehavior>
-                  <motion.a
-                    className="relative flex flex-col items-center justify-center border-none cursor-pointer bg-transparent"
-                    style={{ minWidth: 42, paddingTop: 6, paddingBottom: 2 }}
-                    whileTap={{ scale: 0.88 }}
-                  >
-                    <motion.span
-                      animate={{ scale: active ? 1.18 : 1 }}
-                      transition={{ type: "spring", stiffness: 420, damping: 26 }}
-                      style={{
-                        color: p.accent, // সবুজ রঙে হাইলাইট
-                        display: "flex",
-                        marginBottom: 3,
-                      }}
-                    >
-                      <Icon size={22} strokeWidth={2} />
-                    </motion.span>
-                    <span
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 700,
-                        color: p.accent,
-                        fontFamily: "'DM Sans', sans-serif",
-                        lineHeight: 1.1,
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {item.label}
-                    </span>
-                  </motion.a>
-                </Link>
-              );
-            }
-
             // সেন্টার প্রজেক্ট বাটন
             if (isCenter) {
               return (
@@ -432,25 +394,27 @@ export default function Navbar() {
                   whileTap={{ scale: 0.91 }}
                 >
                   <motion.div
-                    className="flex items-center justify-center rounded-full"
+                    className="flex items-center justify-center rounded-full transition-all duration-300"
                     style={{
                       width: 56,
                       height: 56,
-                      background: p.accentGrad,
-                      boxShadow: `0 4px 22px ${p.accentGlow}`,
+                      background: active ? p.accentGrad : (isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"),
+                      boxShadow: active ? `0 4px 22px ${p.accentGlow}` : "none",
+                      border: active ? "none" : `1px solid ${p.border}`
                     }}
                     whileHover={{ scale: 1.08 }}
                   >
-                    <Icon size={24} color="#ffffff" strokeWidth={2} />
+                    <Icon size={24} color={active ? "#ffffff" : (isDark ? "rgba(255,255,255,0.6)" : "rgba(30,30,30,0.6)")} strokeWidth={2} />
                   </motion.div>
                   <span
                     style={{
                       fontSize: 10,
                       fontWeight: 700,
-                      color: isDark ? "#ffffff" : p.accent,
+                      color: active ? p.accent : p.btmIcon,
                       fontFamily: "'DM Sans', sans-serif",
                       marginTop: 3,
                       lineHeight: 1.2,
+                      transition: "color 0.3s"
                     }}
                   >
                     {item.label}
@@ -475,7 +439,7 @@ export default function Navbar() {
                     style={{
                       width: 20,
                       height: 2.5,
-                      backgroundColor: isDark ? "#fff" : p.accent,
+                      backgroundColor: p.accent,
                     }}
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
@@ -484,9 +448,10 @@ export default function Navbar() {
                   animate={{ scale: active ? 1.18 : 1 }}
                   transition={{ type: "spring", stiffness: 420, damping: 26 }}
                   style={{
-                    color: active ? p.btmActive : p.btmIcon,
+                    color: active ? p.accent : p.btmIcon,
                     display: "flex",
                     marginBottom: 3,
+                    transition: "color 0.3s"
                   }}
                 >
                   <Icon size={22} strokeWidth={active ? 2.4 : 1.8} />
@@ -495,10 +460,11 @@ export default function Navbar() {
                   style={{
                     fontSize: 10,
                     fontWeight: active ? 700 : 500,
-                    color: active ? p.btmActive : p.btmIcon,
+                    color: active ? p.accent : p.btmIcon,
                     fontFamily: "'DM Sans', sans-serif",
                     lineHeight: 1.1,
                     whiteSpace: "nowrap",
+                    transition: "color 0.3s"
                   }}
                 >
                   {item.label}
