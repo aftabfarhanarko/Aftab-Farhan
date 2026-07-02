@@ -1,170 +1,18 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import {
-  Monitor,
-  Server,
-  Database,
-  Sparkles,
-  Wrench,
-  Settings,
-  Cpu,
-  Globe,
-} from "lucide-react";
+import { SkillCategory } from "./types";
+import SkillsSkeleton from "./SkillsSkeleton";
+import SkillsMarquee from "./SkillsMarquee";
+import SkillCategoryCard from "./SkillCategoryCard";
 
-interface Skill {
-  id: string;
-  name: string;
-  imageUrl?: string;
-}
-
-interface SkillCategory {
-  id: string;
-  title: string;
-  skills: Skill[];
-}
-
-type AccentKey =
-  | "blue"
-  | "green"
-  | "amber"
-  | "pink"
-  | "purple"
-  | "teal"
-  | "default";
-
-interface CategoryConfig {
-  icon: React.ElementType;
-  accent: AccentKey;
-}
-
-const categoryConfig: Record<string, CategoryConfig> = {
-  Frontend: { icon: Monitor, accent: "blue" },
-  Backend: { icon: Server, accent: "green" },
-  Database: { icon: Database, accent: "amber" },
-  Animation: { icon: Sparkles, accent: "pink" },
-  Tools: { icon: Wrench, accent: "purple" },
-  DevOps: { icon: Settings, accent: "teal" },
-  Mobile: { icon: Cpu, accent: "pink" },
-  API: { icon: Globe, accent: "teal" },
-};
-
-const accentClasses: Record<
-  AccentKey,
-  { iconWrap: string; iconColor: string; dot: string }
-> = {
-  blue: {
-    iconWrap: "bg-blue-500/10 border-blue-500/20",
-    iconColor: "text-blue-600 dark:text-blue-400",
-    dot: "bg-blue-500 dark:bg-blue-400",
-  },
-  green: {
-    iconWrap: "bg-emerald-500/10 border-emerald-500/20",
-    iconColor: "text-emerald-600 dark:text-emerald-400",
-    dot: "bg-emerald-500 dark:bg-emerald-400",
-  },
-  amber: {
-    iconWrap: "bg-amber-500/10 border-amber-500/20",
-    iconColor: "text-amber-600 dark:text-amber-400",
-    dot: "bg-amber-500 dark:bg-amber-400",
-  },
-  pink: {
-    iconWrap: "bg-pink-500/10 border-pink-500/20",
-    iconColor: "text-pink-600 dark:text-pink-400",
-    dot: "bg-pink-500 dark:bg-pink-400",
-  },
-  purple: {
-    iconWrap: "bg-violet-500/10 border-violet-500/20",
-    iconColor: "text-violet-600 dark:text-violet-400",
-    dot: "bg-violet-500 dark:bg-violet-400",
-  },
-  teal: {
-    iconWrap: "bg-teal-500/10 border-teal-500/20",
-    iconColor: "text-teal-600 dark:text-teal-400",
-    dot: "bg-teal-500 dark:bg-teal-400",
-  },
-  default: {
-    iconWrap: "bg-foreground/[0.07] border-border",
-    iconColor: "text-foreground/60",
-    dot: "bg-foreground/30",
-  },
-};
-
-function getCategoryConfig(title: string): CategoryConfig {
-  const direct = categoryConfig[title];
-  if (direct) return direct;
-  const matched = Object.keys(categoryConfig).find((k) => title.includes(k));
-  return matched
-    ? categoryConfig[matched]
-    : { icon: Settings, accent: "default" };
-}
-
-function SkillsSkeleton() {
-  return (
-    <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div
-          key={i}
-          className="p-5 rounded-2xl border border-border bg-foreground/[0.02] animate-pulse"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 rounded-xl bg-foreground/10 shrink-0" />
-            <div className="h-3.5 w-24 rounded-full bg-foreground/10" />
-          </div>
-          <div className="h-px bg-border mb-4" />
-          <div className="flex flex-wrap gap-1.5">
-            {Array.from({ length: 6 }).map((_, j) => (
-              <div
-                key={j}
-                className="h-6 w-16 rounded-full bg-foreground/[0.06]"
-              />
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ─── Marquee strip ────────────────────────────────────────────────────────────
 interface MarqueeItem {
   id: string;
   name: string;
   imageUrl: string;
 }
 
-function SkillsMarquee({ items }: { items: MarqueeItem[] }) {
-  const repeated = [...items, ...items, ...items, ...items];
-
-  return (
-    <div className="relative mt-10 sm:mt-12 overflow-hidden py-2">
-      {/* fade edges */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-20 z-10 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-20 z-10 bg-gradient-to-l from-background to-transparent" />
-
-      <motion.div
-        className="flex w-max items-center gap-6 sm:gap-8"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 25, ease: "linear", repeat: Infinity }}
-      >
-        {repeated.map((skill, idx) => (
-          <img
-            key={`${skill.id}-${idx}`}
-            src={skill.imageUrl}
-            alt={skill.name}
-            title={skill.name}
-            draggable={false}
-            className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-xl object-cover border border-border/50 select-none"
-          />
-        ))}
-      </motion.div>
-    </div>
-  );
-}
-
-// ─── Main component ───────────────────────────────────────────────────────────
 export default function Skills() {
   const { data: categories, isLoading } = useQuery<SkillCategory[]>({
     queryKey: ["skills-categories"],
@@ -219,66 +67,9 @@ export default function Skills() {
       ) : (
         <>
           <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {categories?.map((category) => {
-              const { icon: Icon, accent } = getCategoryConfig(category.title);
-              const a = accentClasses[accent];
-
-              return (
-                <div
-                  key={category.id}
-                  className="group flex flex-col p-5 sm:p-6 rounded-2xl border border-border bg-foreground/[0.02] hover:border-border hover:bg-foreground/[0.04] transition-all duration-300 h-full"
-                >
-                  {/* Card header */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className={`w-8 h-8 rounded-xl border flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 ${a.iconWrap}`}
-                    >
-                      <Icon
-                        className={`w-4 h-4 ${a.iconColor}`}
-                        strokeWidth={1.8}
-                      />
-                    </div>
-
-                    <h3 className="text-sm font-black text-foreground/75 tracking-tight group-hover:text-foreground transition-colors flex-1">
-                      {category.title}
-                    </h3>
-
-                    <span className="text-[10px] font-bold text-foreground/20 tabular-nums">
-                      {category.skills.length}
-                    </span>
-                  </div>
-
-                  <div className="h-px bg-border mb-4" />
-
-                  {/* Skill pills */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {category.skills.map((skill) => (
-                      <div
-                        key={skill.id}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-border bg-card/40 hover:border-border hover:bg-card/60 transition-all duration-200 group/chip cursor-default"
-                      >
-                        {skill.imageUrl ? (
-                          <div className="w-3.5 h-3.5 rounded overflow-hidden shrink-0 flex items-center justify-center">
-                            <img
-                              src={skill.imageUrl}
-                              alt={skill.name}
-                              className="w-full h-full object-contain group-hover/chip:scale-110 transition-transform duration-200"
-                            />
-                          </div>
-                        ) : (
-                          <span
-                            className={`w-1.5 h-1.5 rounded-full shrink-0 ${a.dot}`}
-                          />
-                        )}
-                        <span className="text-[11px] sm:text-[11.5px] font-semibold text-foreground/50 group-hover/chip:text-foreground/85 transition-colors whitespace-nowrap">
-                          {skill.name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+            {categories?.map((category) => (
+              <SkillCategoryCard key={category.id} category={category} />
+            ))}
           </div>
 
           {/* Marquee — only renders when there are image skills */}

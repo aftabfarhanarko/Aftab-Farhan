@@ -1,70 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Shield,
-  ClipboardList,
-  Code2,
-  CheckCircle2,
-  MapPin,
-  ExternalLink,
-  Briefcase,
-  Star,
-  Settings,
-  Terminal,
-  Cpu,
-  Globe,
-  Layout,
-  Server,
-  Database,
-  Layers,
-  Zap,
-} from "lucide-react";
-
-const ICON_MAP: Record<string, any> = {
-  Shield,
-  ClipboardList,
-  Code2,
-  Briefcase,
-  Settings,
-  Terminal,
-  Cpu,
-  Globe,
-  Layout,
-  Server,
-  Database,
-  Layers,
-  Zap,
-};
-
-interface Role {
-  title: string;
-  subtitle: string;
-  iconName: string;
-  responsibilities: string[];
-}
-
-interface Achievement {
-  metric: string;
-  label: string;
-}
-
-interface Experience {
-  id: number;
-  company: string;
-  url: string;
-  location: string;
-  period: string;
-  type: string;
-  techStack: string[];
-  roles: Role[];
-  achievements: Achievement[];
-}
+import { Star } from "lucide-react";
+import { Experience as ExperienceType } from "./types";
+import ExperienceCard from "./ExperienceCard";
 
 export default function Experience() {
-  const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [activeTab, setActiveTab] = useState<"all" | "current" | "previous">(
-    "all",
-  );
+  const [experiences, setExperiences] = useState<ExperienceType[]>([]);
+  const [activeTab, setActiveTab] = useState<"all" | "current" | "previous">("all");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -84,10 +26,9 @@ export default function Experience() {
     fetchExperiences();
   }, []);
 
-  const filtered =
-    activeTab === "all"
-      ? experiences
-      : experiences.filter((e) => e.type === activeTab);
+  const filtered = activeTab === "all"
+    ? experiences
+    : experiences.filter((e) => e.type === activeTab);
 
   if (isLoading) {
     return (
@@ -100,10 +41,7 @@ export default function Experience() {
   if (experiences.length === 0) return null;
 
   return (
-    <section
-      id="experience"
-      className="mb-12 sm:mb-16 lg:mb-20 scroll-mt-24 px-4 sm:px-6 lg:px-0"
-    >
+    <section id="experience" className="mb-12 sm:mb-16 lg:mb-20 scroll-mt-24 px-4 sm:px-6 lg:px-0">
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
         {/* Left panel */}
         <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -132,16 +70,9 @@ export default function Experience() {
               { v: "7+", l: "Clients" },
               { v: "12+", l: "Tech Stack" },
             ].map(({ v, l }) => (
-              <div
-                key={l}
-                className="p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-center"
-              >
-                <div className="text-xl font-black text-foreground">
-                  {v}
-                </div>
-                <div className="text-[10px] font-medium text-black/40 dark:text-white/40 uppercase tracking-wide mt-0.5">
-                  {l}
-                </div>
+              <div key={l} className="p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-center">
+                <div className="text-xl font-black text-foreground">{v}</div>
+                <div className="text-[10px] font-medium text-black/40 dark:text-white/40 uppercase tracking-wide mt-0.5">{l}</div>
               </div>
             ))}
           </div>
@@ -154,159 +85,7 @@ export default function Experience() {
 
           <div className="space-y-6">
             {filtered.map((exp) => (
-              <div key={exp.id} className="relative sm:pl-14">
-                {/* Timeline dot (monochrome) */}
-                <div
-                  className="absolute left-5 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-black dark:border-white hidden sm:block bg-black dark:bg-white"
-                  style={{ top: "1.75rem" }}
-                />
-
-                <div
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                    exp.type === "current"
-                      ? "border-black/20 dark:border-white/20 bg-black/[0.04] dark:bg-white/[0.05]"
-                      : "border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]"
-                  }`}
-                >
-                  {/* Top accent line */}
-                  <div className="h-[2px] w-full bg-black dark:bg-white opacity-20" />
-
-                  <div className="p-5 sm:p-6">
-                    {/* Company header */}
-                    <div className="flex items-start justify-between gap-3 mb-5">
-                      <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-black/[0.08] dark:bg-white/[0.08] border border-black/10 dark:border-white/10 shrink-0">
-                          <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-black/70 dark:text-white/70" />
-                        </div>
-                        <div>
-                          <h3 className="text-base sm:text-lg font-bold text-foreground leading-tight">
-                            {exp.company}
-                          </h3>
-                          <div className="flex flex-wrap items-center gap-1.5 mt-0.5 text-xs text-black/40 dark:text-white/40">
-                            <MapPin className="w-3 h-3" />
-                            <span>{exp.location}</span>
-                            {exp.url && exp.url !== "#" && (
-                              <>
-                                <span>Ã‚Â·</span>
-                                <a
-                                  href={exp.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 hover:text-black dark:hover:text-white transition-colors"
-                                >
-                                  {
-                                    exp.url
-                                      .replace(/^https?:\/\/(www\.)?/, "")
-                                      .split("/")[0]
-                                  }
-                                  <ExternalLink className="w-2.5 h-2.5" />
-                                </a>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Period + present badge */}
-                      <div className="flex flex-col items-end gap-1.5 shrink-0">
-                        {exp.type === "current" && (
-                          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-black/20 dark:border-white/20 text-[10px] font-bold uppercase tracking-wider text-foreground bg-black/[0.08] dark:bg-white/[0.08]">
-                            <span className="relative flex h-1.5 w-1.5">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-black dark:bg-white" />
-                              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-black dark:bg-white" />
-                            </span>
-                            Present
-                          </span>
-                        )}
-                        <span className="text-xs font-semibold text-black/50 dark:text-white/50 bg-black/[0.05] dark:bg-white/[0.06] px-3 py-1 rounded-full border border-black/10 dark:border-white/10 whitespace-nowrap">
-                          {exp.period}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Roles */}
-                    <div className="space-y-5">
-                      {exp.roles.map((role, ri) => {
-                        const RIcon = ICON_MAP[role.iconName] || Briefcase;
-                        return (
-                          <div key={ri}>
-                            {ri > 0 && (
-                              <div className="h-px bg-black/10 dark:bg-white/10 mb-5" />
-                            )}
-                            <div className="flex items-center gap-2.5 mb-3">
-                              <div className="p-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.06] dark:bg-white/[0.06]">
-                                <RIcon className="w-4 h-4 text-black/70 dark:text-white/70" />
-                              </div>
-                              <div>
-                                <h4 className="text-sm sm:text-base font-bold text-foreground leading-tight">
-                                  {role.title}
-                                </h4>
-                                <p className="text-[10px] sm:text-xs text-black/40 dark:text-white/40">
-                                  {role.subtitle}
-                                </p>
-                              </div>
-                            </div>
-
-                            <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-1.5 ml-0 sm:ml-9">
-                              {role.responsibilities.map((item, i) => (
-                                <li key={i} className="flex items-start gap-2">
-                                  <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-black/50 dark:text-white/50" />
-                                  <span className="text-xs sm:text-sm text-black/65 dark:text-white/65 leading-relaxed">
-                                    {item}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {/* Tech Stack */}
-                    {exp.techStack && exp.techStack.length > 0 && (
-                      <div className="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
-                        <p className="text-[10px] font-bold text-black/30 dark:text-white/30 uppercase tracking-widest mb-2">
-                          Tech Stack
-                        </p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {exp.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="px-2.5 py-1 text-[11px] sm:text-xs font-medium bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-lg text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:border-black/25 dark:hover:border-white/25 transition-all"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Achievements */}
-                    {exp.achievements && exp.achievements.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-black/10 dark:border-white/10">
-                        <p className="text-[10px] font-bold text-black/30 dark:text-white/30 uppercase tracking-widest mb-3">
-                          Key Achievements
-                        </p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          {exp.achievements.map((a, i) => (
-                            <div
-                              key={i}
-                              className="text-center p-2 sm:p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10"
-                            >
-                              <div className="text-base sm:text-lg font-black text-foreground">
-                                {a.metric}
-                              </div>
-                              <div className="text-[9px] sm:text-[10px] text-black/40 dark:text-white/40 leading-tight mt-0.5">
-                                {a.label}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <ExperienceCard key={exp.id} exp={exp} />
             ))}
           </div>
         </div>
