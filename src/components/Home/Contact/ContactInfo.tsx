@@ -52,7 +52,7 @@ export default function ContactInfo() {
         {[
           { icon: <LinkedinIcon />, href: "https://linkedin.com/in/arko", color: "hover:text-blue-400" },
           { icon: <GithubIcon />, href: "https://github.com/aftabfarhanarko", color: "hover:text-foreground" },
-          { icon: <WhatsAppIcon />, href: "https://wa.me/8801234567890", color: "hover:text-green-400" },
+          { icon: <WhatsAppIcon />, href: "https://wa.me/880613410880", color: "hover:text-green-400" },
         ].map((social, i) => (
           <a
             key={i}
@@ -67,9 +67,9 @@ export default function ContactInfo() {
       </div>
 
       {[
-        { icon: <Mail size={16} />, label: "Email", value: "arko@nexoviasoft.com", href: "mailto:arko@nexoviasoft.com" },
-        { icon: <MapPin size={16} />, label: "Location", value: "Dhaka, Bangladesh", href: "#" },
-        { icon: <Phone size={16} />, label: "Phone", value: "+880 1234 567890", href: "tel:+8801234567890" },
+        { icon: <Mail size={16} />, label: "Email", value: "aftabfarhan324@gmail.com", href: "mailto:aftabfarhan324@gmail.com" },
+        { icon: <MapPin size={16} />, label: "Location", value: "Rangpur, Bangladesh", href: "#" },
+        { icon: <Phone size={16} />, label: "Phone", value: "+8801613410880", href: "tel:+8801613410880" },
       ].map((item, i) => (
         <motion.a
           key={i}
