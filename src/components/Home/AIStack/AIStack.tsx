@@ -198,25 +198,24 @@ export default function AIStack() {
                 }}
                 className={`relative p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 overflow-hidden flex flex-col justify-between h-48 group ${
                   isActive 
-                    ? "border-black dark:border-white bg-black/[0.02] dark:bg-white/[0.02]" 
+                    ? "border-transparent bg-transparent" 
                     : "border-black/10 dark:border-white/10 bg-transparent hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.01] dark:hover:bg-white/[0.01]"
                 }`}
                 style={{
-                  boxShadow: isActive ? `0 10px 30px -15px ${tool.color}` : "none"
+                  borderColor: isActive ? tool.color : undefined,
+                  boxShadow: isActive ? `0 0 25px -5px ${tool.color}25, inset 0 0 0 1px ${tool.color}35` : "none"
                 }}
                 whileHover={{ y: -4 }}
               >
-                {/* Glowing brand highlight in card */}
-                {isActive && (
-                  <div 
-                    className="absolute -right-10 -top-10 w-28 h-28 rounded-full blur-2xl transition-all duration-500 opacity-70"
-                    style={{ backgroundColor: tool.color }}
-                  />
-                )}
-
                 {/* Top Section */}
                 <div className="flex items-start justify-between relative z-10">
-                  <div className="p-2 rounded-xl bg-black/[0.05] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 flex items-center justify-center w-14 h-14">
+                  <div 
+                    className="p-2 rounded-xl bg-black/[0.05] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 flex items-center justify-center w-14 h-14 transition-all duration-300"
+                    style={{
+                      backgroundColor: isActive ? `${tool.color}15` : undefined,
+                      borderColor: isActive ? `${tool.color}35` : undefined
+                    }}
+                  >
                     <img 
                       src={tool.logoUrl} 
                       alt={tool.name} 
@@ -227,7 +226,10 @@ export default function AIStack() {
                     <span className="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase block">
                       Comfort
                     </span>
-                    <span className="text-lg font-black text-foreground">
+                    <span 
+                      className="text-lg font-black transition-colors duration-300"
+                      style={{ color: isActive ? tool.color : "inherit" }}
+                    >
                       {tool.usage}%
                     </span>
                   </div>
@@ -238,9 +240,14 @@ export default function AIStack() {
                   <span className="text-[10px] font-bold tracking-wider uppercase opacity-40 block mb-0.5">
                     {tool.type}
                   </span>
-                  <h3 className="text-base font-bold text-foreground group-hover:text-black dark:group-hover:text-white transition-colors">
-                    {tool.name}
-                  </h3>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="text-base font-bold text-foreground group-hover:text-black dark:group-hover:text-white transition-colors">
+                      {tool.name}
+                    </h3>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full shrink-0 animate-pulse" style={{ backgroundColor: tool.color }} />
+                    )}
+                  </div>
                   <div className="mt-2 h-1 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden w-full">
                     <motion.div 
                       className={`h-full bg-gradient-to-r ${tool.accentColor}`}
@@ -374,17 +381,24 @@ export default function AIStack() {
                   onClick={() => handleStepClick(stage.step)}
                   className={`flex flex-col items-center p-4 rounded-xl border transition-all text-center h-full relative cursor-pointer group ${
                     isCurrent 
-                      ? "border-black dark:border-white bg-black/[0.03] dark:bg-white/[0.04] scale-105" 
+                      ? "border-transparent bg-transparent scale-105" 
                       : "border-black/5 dark:border-white/5 bg-transparent hover:border-black/10 dark:hover:border-white/10"
                   }`}
+                  style={{
+                    borderColor: isCurrent ? associatedTool?.color : undefined,
+                    boxShadow: isCurrent && associatedTool ? `0 0 15px -3px ${associatedTool.color}25` : undefined
+                  }}
                 >
                   {/* Step Badge */}
                   <span 
                     className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black mb-3 border transition-colors ${
                       isCurrent
-                        ? "bg-black text-white dark:bg-white dark:text-black border-transparent"
+                        ? "text-white border-transparent"
                         : "bg-black/5 text-black/50 dark:bg-white/5 dark:text-white/50 border-black/5 dark:border-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10"
                     }`}
+                    style={{
+                      backgroundColor: isCurrent ? associatedTool?.color : undefined
+                    }}
                   >
                     {stage.step}
                   </span>
@@ -411,7 +425,8 @@ export default function AIStack() {
                   {/* Active Indicator bar */}
                   {isCurrent && (
                     <motion.div 
-                      className="absolute bottom-0 left-0 right-0 h-1 bg-foreground rounded-b-xl"
+                      className="absolute bottom-0 left-0 right-0 h-1 rounded-b-xl"
+                      style={{ backgroundColor: associatedTool?.color }}
                       layoutId="activeBar"
                     />
                   )}
