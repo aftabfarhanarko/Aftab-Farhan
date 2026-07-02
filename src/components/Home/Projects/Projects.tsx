@@ -341,6 +341,7 @@ function FeaturedCard({ project }: { project: Project }) {
 }
 export default function Projects() {
   const [activeTab, setActiveTab] = useState<"all" | "my" | "client">("all");
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
   const { data: allProjects = [], isLoading } = useQuery<Project[]>({
     queryKey: ["projects-public"],
@@ -353,11 +354,19 @@ export default function Projects() {
   const featuredProject = allProjects.find((p) => p.featured) ?? allProjects[0];
 
   const filteredProjects = allProjects.filter((p) => {
-    if (activeTab === "all") return true;
-    if (activeTab === "my") return p.projectType === "MY";
-    if (activeTab === "client") return p.projectType === "CLIENT";
+    // Project Type filter
+    if (activeTab === "my" && p.projectType !== "MY") return false;
+    if (activeTab === "client" && p.projectType !== "CLIENT") return false;
+    
+    // Category filter
+    if (activeCategory !== "all" && p.category !== activeCategory) return false;
+    
     return true;
   });
+
+  const availableCategories = Object.keys(categoryLabel).filter(catKey => 
+    allProjects.some(p => p.category === catKey)
+  );
 
   const tabs: {
     id: "all" | "my" | "client";
@@ -387,8 +396,9 @@ export default function Projects() {
 
   return (
     <section id="projects" className="mb-16 sm:mb-20 scroll-mt-24">
-      <div className="flex items-end gap-4 sm:gap-6 mb-10 sm:mb-12">
-        <div>
+      {/* Centered on mobile title block */}
+      <div className="flex flex-col items-center justify-center text-center sm:flex-row sm:items-end sm:justify-start sm:text-left gap-4 sm:gap-6 mb-8">
+        <div className="flex flex-col items-center sm:items-start">
           <div className="flex items-center gap-2 mb-3">
             <Code2 className="w-3.5 h-3.5 text-foreground/40" />
             <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-foreground/40">
@@ -409,6 +419,10 @@ export default function Projects() {
         </span>
       </div>
 
+      <p className="text-xs sm:text-sm text-foreground/50 leading-relaxed mb-10 max-w-2xl text-center sm:text-left mx-auto sm:mx-0">
+        A curated showcase of production-ready full-stack applications, advanced SaaS platforms, AI/ML integrations, and custom business portals built with modern architectures.
+      </p>
+
       {isLoading ? (
         <ProjectsSkeleton />
       ) : (
@@ -422,7 +436,10 @@ export default function Projects() {
               {tabs.map(({ id, label, icon: Icon, count }) => (
                 <button
                   key={id}
-                  onClick={() => setActiveTab(id)}
+                  onClick={() => {
+                    setActiveTab(id);
+                    setActiveCategory("all"); // Reset category filter on main tab change
+                  }}
                   className={`flex items-center gap-2 px-3 sm:px-4 py-2.5 rounded-xl text-[11px] font-bold transition-all duration-200 whitespace-nowrap
                     ${
                       activeTab === id
@@ -450,6 +467,38 @@ export default function Projects() {
             </span>
           </div>
 
+          {/* Dynamic Category Chips Row */}
+          {availableCategories.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2 mb-8 p-1.5 bg-foreground/[0.02] dark:bg-white/[0.02] border border-border/50 rounded-2xl max-w-full overflow-x-auto">
+              <button
+                onClick={() => setActiveCategory("all")}
+                className={`px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all border ${
+                  activeCategory === "all"
+                    ? "bg-foreground text-background border-transparent"
+                    : "bg-transparent text-foreground/50 border-border hover:text-foreground/75"
+                }`}
+              >
+                All Categories ({allProjects.length})
+              </button>
+              {availableCategories.map((key) => {
+                const count = allProjects.filter(p => p.category === key).length;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setActiveCategory(key)}
+                    className={`px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all border ${
+                      activeCategory === key
+                        ? "bg-foreground text-background border-transparent"
+                        : "bg-transparent text-foreground/50 border-border hover:text-foreground/75"
+                    }`}
+                  >
+                    {categoryLabel[key] || key} ({count})
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           {/* Grid */}
           {filteredProjects.length > 0 ? (
             <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -458,9 +507,9 @@ export default function Projects() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 rounded-2xl border border-dashed border-black/10 dark:border-white/10">
+            <div className="text-center py-20 rounded-2xl border border-dashed border-black/10 dark:border-white/10 w-full">
               <p className="text-xs text-foreground/40 uppercase tracking-[0.2em] font-semibold">
-                No projects to display
+                No projects to display in this category
               </p>
             </div>
           )}

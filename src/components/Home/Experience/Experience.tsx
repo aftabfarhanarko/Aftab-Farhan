@@ -106,7 +106,7 @@ export default function Experience() {
     >
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
         {/* Left panel */}
-        <div className="lg:sticky lg:top-28">
+        <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/5 mb-5">
             <Star className="w-3.5 h-3.5 text-black/40 dark:text-white/50" />
             <span className="text-xs font-semibold text-black/50 dark:text-white/50 uppercase tracking-widest">
@@ -119,7 +119,7 @@ export default function Experience() {
             <span className="text-foreground/25">Experience</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-foreground/60 leading-relaxed mb-8 max-w-xs">
+          <p className="text-sm sm:text-base text-foreground/60 leading-relaxed mb-8 max-w-xs mx-auto lg:mx-0">
             A chronological timeline of my professional journey, highlighting
             the teams I've worked with and the impact I've made along the way.
           </p>

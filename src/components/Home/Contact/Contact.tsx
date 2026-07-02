@@ -116,19 +116,19 @@ export default function Contact() {
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="flex items-end gap-5 mb-10"
+        className="flex flex-col items-center justify-center text-center sm:flex-row sm:items-end sm:justify-start sm:text-left gap-5 mb-10"
       >
-        <div>
+        <div className="flex flex-col items-center sm:items-start">
           <p className="text-xs font-mono text-green-400/60 tracking-[0.25em] uppercase mb-2">
             24/7 contact
           </p>
           <h2 className="text-2xl md:text-4xl font-black tracking-tight text-foreground leading-none">
             Let&apos;s Build
-            <br />
-            <span className="text-foreground/25">Something Great.</span>
+            <br className="hidden sm:block" />
+            <span className="text-foreground/25"> Something Great.</span>
           </h2>
         </div>
-        <div className="flex-1 mb-2 h-px bg-gradient-to-r from-foreground/10 to-transparent" />
+        <div className="flex-1 mb-2 h-px bg-gradient-to-r from-foreground/10 to-transparent hidden sm:block" />
       </motion.div>
 
       <motion.div

@@ -243,7 +243,7 @@ export default function SoftSkills() {
         </div>
 
         {/* Right: sticky panel */}
-        <div className="lg:sticky lg:top-28">
+        <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/5 mb-5">
             <Star className="w-3.5 h-3.5 text-black/40 dark:text-white/50" />
             <span className="text-xs font-semibold text-black/50 dark:text-white/50 uppercase tracking-widest">
@@ -256,7 +256,7 @@ export default function SoftSkills() {
             <span className="text-foreground/25">Skills</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-foreground/60 leading-relaxed mb-8 max-w-xs">
+          <p className="text-sm sm:text-base text-foreground/60 leading-relaxed mb-8 max-w-xs mx-auto lg:mx-0">
             Beyond technical expertise, I bring strong interpersonal skills that
             enable effective collaboration, clear communication, and successful
             project outcomes.

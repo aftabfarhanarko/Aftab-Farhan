@@ -126,9 +126,9 @@ export default function About() {
         animate="visible"
         className="grid grid-cols-1 lg:grid-cols-5 gap-y-10 lg:gap-x-16 items-start"
       >
-        <div className="lg:col-span-2 flex flex-col gap-6 lg:gap-8 lg:sticky lg:top-24 lg:self-start">
+        <div className="lg:col-span-2 flex flex-col gap-6 lg:gap-8 lg:sticky lg:top-24 lg:self-start flex flex-col items-center text-center lg:items-start lg:text-left">
           {/* Role tag + heading */}
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="flex flex-col items-center lg:items-start">
             {/* <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-black/40 dark:text-white/40 border border-black/10 dark:border-white/10 rounded-full px-4 py-1.5 mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-black/40 dark:bg-white/40 inline-block" />
               {roleTag}

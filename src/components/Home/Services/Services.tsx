@@ -370,14 +370,14 @@ const Services = () => {
   return (
     <section id="services" className="mb-32 scroll-mt-24">
       {/* Header */}
-      <div className="flex items-center gap-6 mb-12">
-        <div className="relative">
+      <div className="flex flex-col items-center justify-center text-center sm:flex-row sm:items-center sm:justify-start sm:text-left gap-6 mb-12">
+        <div className="relative flex flex-col items-center sm:items-start">
           <h2 className="text-2xl md:text-4xl font-black text-foreground tracking-tight leading-none">
             All-in-One Digital Services Expert
           </h2>
-          <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
+          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 w-20 h-1 bg-foreground rounded-full" />
         </div>
-        <div className="h-px flex-1 bg-foreground/10" />
+        <div className="h-px flex-1 bg-foreground/10 hidden sm:block" />
         <span className="text-sm font-mono text-foreground/40 hidden sm:block">
           &lt;what-i-do /&gt;
         </span>

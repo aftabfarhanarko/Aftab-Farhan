@@ -197,7 +197,7 @@ export default function Skills() {
   return (
     <section id="skills" className="mb-20 sm:mb-24 scroll-mt-24">
       {/* Heading */}
-      <div className="mb-10 sm:mb-12">
+      <div className="mb-10 sm:mb-12 flex flex-col items-center text-center sm:items-start sm:text-left">
         <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-foreground/35 font-bold mb-3">
           <span className="w-1.5 h-1.5 rounded-full bg-foreground/25 inline-block" />
           Technical Arsenal
@@ -207,7 +207,7 @@ export default function Skills() {
           Mastering the <span className="text-foreground/25">Modern Stack</span>
         </h2>
 
-        <p className="max-w-2xl text-foreground/50 text-sm sm:text-base leading-relaxed">
+        <p className="max-w-2xl text-foreground/50 text-sm sm:text-base leading-relaxed mx-auto sm:mx-0">
           Technologies I leverage to build scalable, high-performance
           applications from pixel-perfect UIs to robust backend systems.
         </p>
