@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 
     // Calculate simple stats
     const totalSessions = sessions.length;
-    const totalMessages = sessions.reduce((sum, s) => sum + s.messages.length, 0);
+    const totalMessages = sessions.reduce((sum: number, s) => sum + s.messages.length, 0);
     const avgMessagesPerSession = totalSessions > 0 ? (totalMessages / totalSessions).toFixed(1) : "0";
 
     return NextResponse.json({

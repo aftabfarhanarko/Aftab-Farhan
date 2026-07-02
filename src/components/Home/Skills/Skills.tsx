@@ -57,33 +57,33 @@ const accentClasses: Record<
 > = {
   blue: {
     iconWrap: "bg-blue-500/10 border-blue-500/20",
-    iconColor: "text-blue-400",
-    dot: "bg-blue-400",
+    iconColor: "text-blue-600 dark:text-blue-400",
+    dot: "bg-blue-500 dark:bg-blue-400",
   },
   green: {
     iconWrap: "bg-emerald-500/10 border-emerald-500/20",
-    iconColor: "text-emerald-400",
-    dot: "bg-emerald-400",
+    iconColor: "text-emerald-600 dark:text-emerald-400",
+    dot: "bg-emerald-500 dark:bg-emerald-400",
   },
   amber: {
     iconWrap: "bg-amber-500/10 border-amber-500/20",
-    iconColor: "text-amber-400",
-    dot: "bg-amber-400",
+    iconColor: "text-amber-600 dark:text-amber-400",
+    dot: "bg-amber-500 dark:bg-amber-400",
   },
   pink: {
     iconWrap: "bg-pink-500/10 border-pink-500/20",
-    iconColor: "text-pink-400",
-    dot: "bg-pink-400",
+    iconColor: "text-pink-600 dark:text-pink-400",
+    dot: "bg-pink-500 dark:bg-pink-400",
   },
   purple: {
     iconWrap: "bg-violet-500/10 border-violet-500/20",
-    iconColor: "text-violet-400",
-    dot: "bg-violet-400",
+    iconColor: "text-violet-600 dark:text-violet-400",
+    dot: "bg-violet-500 dark:bg-violet-400",
   },
   teal: {
     iconWrap: "bg-teal-500/10 border-teal-500/20",
-    iconColor: "text-teal-400",
-    dot: "bg-teal-400",
+    iconColor: "text-teal-600 dark:text-teal-400",
+    dot: "bg-teal-500 dark:bg-teal-400",
   },
   default: {
     iconWrap: "bg-foreground/[0.07] border-border",

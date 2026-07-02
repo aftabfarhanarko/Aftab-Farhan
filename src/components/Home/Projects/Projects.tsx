@@ -141,12 +141,12 @@ function ProjectsSkeleton() {
 function ProjectCard({ project }: { project: Project }) {
   const badge =
     categoryBadge[project.category] ??
-    "bg-white/5 border-white/10 text-foreground/50";
+    "bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 text-foreground/50";
   const accentBar =
-    categoryAccentBar[project.category] ?? "from-white/20 to-transparent";
+    categoryAccentBar[project.category] ?? "from-foreground/20 to-transparent";
 
   return (
-    <div className="group relative flex flex-col rounded-2xl border border-border bg-card/40 hover:border-white/[0.16] hover:bg-white/[0.035] transition-all duration-300 overflow-hidden">
+    <div className="group relative flex flex-col rounded-2xl border border-border bg-card/40 hover:border-foreground/[0.16] hover:bg-foreground/[0.035] transition-all duration-300 overflow-hidden">
       {/* Thumbnail */}
       <div className="relative aspect-[16/9] overflow-hidden">
         <img
@@ -283,12 +283,12 @@ function FeaturedCard({ project }: { project: Project }) {
               {project.projectType === "CLIENT" ? "Client Project" : "Personal"}
             </span>
             {project.client && (
-              <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-card/60 border border-white/[0.1] rounded-lg text-foreground/65 backdrop-blur-sm">
+              <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-card/60 border border-border rounded-lg text-foreground/65 backdrop-blur-sm">
                 {project.client}
               </span>
             )}
             {project.year && (
-              <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-card/60 border border-white/[0.1] rounded-lg text-foreground/65 backdrop-blur-sm">
+              <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-card/60 border border-border rounded-lg text-foreground/65 backdrop-blur-sm">
                 {project.year}
               </span>
             )}
@@ -302,7 +302,7 @@ function FeaturedCard({ project }: { project: Project }) {
             {project.tech.slice(0, 6).map((t) => (
               <span
                 key={t}
-                className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-card/60 border border-white/[0.1] rounded-xl text-foreground/55 backdrop-blur-sm"
+                className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-card/60 border border-border rounded-xl text-foreground/55 backdrop-blur-sm"
               >
                 {t}
               </span>
@@ -402,7 +402,7 @@ export default function Projects() {
           </h2>
         </div>
         <div className="flex-1 mb-2 hidden sm:block">
-          <div className="h-px bg-gradient-to-r from-white/10 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-border to-transparent" />
         </div>
         <span className="text-xs font-mono text-foreground/20 mb-2 hidden sm:block">
           &lt;portfolio /&gt;
@@ -458,7 +458,7 @@ export default function Projects() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 rounded-2xl border border-dashed border-white/[0.07]">
+            <div className="text-center py-20 rounded-2xl border border-dashed border-black/10 dark:border-white/10">
               <p className="text-xs text-foreground/40 uppercase tracking-[0.2em] font-semibold">
                 No projects to display
               </p>

@@ -231,7 +231,7 @@ export default function About() {
           {(roleDescription || introParagraphs.length > 0) && (
             <motion.div variants={itemVariants} className="flex flex-col gap-4">
               {roleDescription && (
-                <p className="text-[15px] text-white/95  leading-[1.85] font-light">
+                <p className="text-[15px] text-foreground/95 dark:text-white/95 leading-[1.85] font-light">
                   {roleDescription}
                 </p>
               )}
@@ -251,7 +251,7 @@ export default function About() {
             <motion.div variants={itemVariants} className="space-y-4">
               {frontendSkills.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-xs font-bold uppercase tracking-wider text-foreground/50 text-white/90">
+                  <p className="text-xs font-bold uppercase tracking-wider text-foreground/50">
                     Frontend
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -269,7 +269,7 @@ export default function About() {
 
               {backendSkills.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-xs font-bold uppercase tracking-wider text-foreground/50 text-white/90">
+                  <p className="text-xs font-bold uppercase tracking-wider text-foreground/50">
                     Backend
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -290,7 +290,7 @@ export default function About() {
           {/* Tools chips */}
           {tools.length > 0 && (
             <motion.div variants={itemVariants} className="space-y-3">
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40 text-white/90">
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/45">
                 Tools & Workflow
               </p>
               <div className="flex flex-wrap gap-1.5">

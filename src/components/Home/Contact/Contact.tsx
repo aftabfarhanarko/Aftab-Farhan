@@ -266,7 +266,7 @@ export default function Contact() {
                                 key={opt.value}
                                 type="button"
                                 onClick={() => { setFormData({ ...formData, subject: opt.value }); setDropdownOpen(false); }}
-                                className="w-full px-4 py-3.5 text-left text-sm font-mono flex items-center gap-3 text-white/50 hover:bg-card/60 hover:text-white transition-colors border-b border-white/[0.05] last:border-0"
+                                className="w-full px-4 py-3.5 text-left text-sm font-mono flex items-center gap-3 text-foreground/60 hover:bg-card/60 hover:text-foreground transition-colors border-b border-border/40 last:border-0"
                               >
                                 <span className="text-foreground/40 group-hover:text-foreground/60">{opt.icon}</span>
                                 <div className="flex flex-col">
