@@ -204,8 +204,8 @@ ${hero ? JSON.stringify({
   name: hero.name,
   title: hero.title,
   description: hero.description,
-  stats: hero.stats.map(s => `${s.value} ${s.label}`),
-  socials: hero.socials.map(s => `${s.platform}: ${s.url}`)
+  stats: hero.stats.map((s: any) => `${s.value} ${s.label}`),
+  socials: hero.socials.map((s: any) => `${s.platform}: ${s.url}`)
 }, null, 2) : JSON.stringify(fallbackHero, null, 2)}
 
 2. ABOUT / BIO:
@@ -220,22 +220,22 @@ ${about ? JSON.stringify({
 }, null, 2) : JSON.stringify(fallbackAbout, null, 2)}
 
 3. PROFESSIONAL EXPERIENCE:
-${experiences.length > 0 ? JSON.stringify(experiences.map(exp => ({
+${experiences.length > 0 ? JSON.stringify(experiences.map((exp: any) => ({
   company: exp.company,
   location: exp.location,
   period: exp.period,
   type: exp.type,
   techStack: exp.techStack,
-  roles: exp.roles.map(r => ({
+  roles: exp.roles.map((r: any) => ({
     title: r.title,
     subtitle: r.subtitle,
     responsibilities: r.responsibilities
   })),
-  achievements: exp.achievements.map(a => `${a.metric}: ${a.label}`)
+  achievements: exp.achievements.map((a: any) => `${a.metric}: ${a.label}`)
 })), null, 2) : JSON.stringify(fallbackExperiences, null, 2)}
 
 4. PROJECTS BUILT:
-${projects.length > 0 ? JSON.stringify(projects.map(proj => ({
+${projects.length > 0 ? JSON.stringify(projects.map((proj: any) => ({
   title: proj.title,
   tagline: proj.tagline,
   description: proj.description,
@@ -248,13 +248,13 @@ ${projects.length > 0 ? JSON.stringify(projects.map(proj => ({
 })), null, 2) : JSON.stringify(fallbackProjects, null, 2)}
 
 5. TECHNICAL SKILLS:
-${skills.length > 0 ? JSON.stringify(skills.map(cat => ({
+${skills.length > 0 ? JSON.stringify(skills.map((cat: any) => ({
   categoryName: cat.title,
-  skills: cat.skills.map(s => s.name)
+  skills: cat.skills.map((s: any) => s.name)
 })), null, 2) : JSON.stringify(fallbackSkills, null, 2)}
 
 6. EDUCATION:
-${education.length > 0 ? JSON.stringify(education.map(edu => ({
+${education.length > 0 ? JSON.stringify(education.map((edu: any) => ({
   degree: edu.degree,
   field: edu.field,
   institution: edu.institution,
