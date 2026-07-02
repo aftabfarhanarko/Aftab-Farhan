@@ -1,9 +1,18 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { auth } from "@/auth";
 
 export async function POST(req: Request) {
   try {
+    const userCount = await prisma.user.count();
+    if (userCount > 0) {
+      const session = await auth();
+      if (!session) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+    }
+
     const { name, email, password } = await req.json();
 
     if (!name || !email || !password) {

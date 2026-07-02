@@ -373,7 +373,7 @@ const Services = () => {
       <div className="flex items-center gap-6 mb-12">
         <div className="relative">
           <h2 className="text-2xl md:text-4xl font-black text-foreground tracking-tight leading-none">
-            Services
+            All-in-One Digital Services Expert
           </h2>
           <div className="absolute -bottom-3 left-0 w-20 h-1 bg-foreground rounded-full" />
         </div>

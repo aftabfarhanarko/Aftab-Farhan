@@ -1,5 +1,5 @@
 export const uploadImageToImgBB = async (file: File) => {
-  const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+  const apiKey = "b2857d07647b41f6a0bdba5ea922b124"
   if (!apiKey) {
     throw new Error("ImgBB API key is missing");
   }

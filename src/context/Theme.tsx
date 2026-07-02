@@ -19,10 +19,8 @@ function getInitialTheme(): Theme {
   const stored = window.localStorage.getItem("theme");
   if (stored === "dark" || stored === "light") return stored;
 
-  const prefersDark = window.matchMedia?.(
-    "(prefers-color-scheme: dark)",
-  )?.matches;
-  return prefersDark ? "dark" : "light";
+  // Default to dark mode on first visit
+  return "dark";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

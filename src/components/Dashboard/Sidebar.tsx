@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,6 +16,7 @@ import {
   Sparkles,
   Menu,
   X,
+  MessageSquare,
 } from "lucide-react";
 
 // ── Menu config ────────────────────────────────────────────────────────────────
@@ -76,7 +77,15 @@ const NAV_ITEMS = [
     icon: Phone,
     color: "#2dd4bf",
   },
+  {
+    id: "chat",
+    label: "AI Chatbot",
+    href: "/dashboard/chat",
+    icon: MessageSquare,
+    color: "#f43f5e",
+  },
 ] as const;
+
 
 // ── Nav item ───────────────────────────────────────────────────────────────────
 const NavItem = ({

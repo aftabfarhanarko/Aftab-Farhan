@@ -9,6 +9,8 @@ import Navbar from "@/components/Navbar";
 import { ThemeProvider, useTheme } from "@/context/Theme";
 import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
+import ChatbotWidget from "@/components/Chatbot/ChatbotWidget";
+
 
 type TypingLineProps = {
   text: string;
@@ -277,6 +279,7 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
       </QueryProvider>
 
       {!isDashboard && <Footer />}
+      {!isDashboard && <ChatbotWidget />}
     </>
   );
 }

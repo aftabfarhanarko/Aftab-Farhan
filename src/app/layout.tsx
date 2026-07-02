@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${baiJamjuree.variable} h-full antialiased`}
+      className={`${baiJamjuree.variable} h-full antialiased dark`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col relative overflow-x-hidden">

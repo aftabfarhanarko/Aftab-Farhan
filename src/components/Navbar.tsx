@@ -20,11 +20,11 @@ import {
 import { useTheme } from "@/context/Theme";
 
 // Custom GitHub icon
-const GithubIcon = (props: React.ComponentProps<"svg">) => (
+const GithubIcon = ({ size = 18, ...props }: React.ComponentProps<"svg"> & { size?: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
+    width={size}
+    height={size}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -38,11 +38,11 @@ const GithubIcon = (props: React.ComponentProps<"svg">) => (
 );
 
 // Custom LinkedIn icon
-const LinkedinIcon = (props: React.ComponentProps<"svg">) => (
+const LinkedinIcon = ({ size = 18, ...props }: React.ComponentProps<"svg"> & { size?: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
+    width={size}
+    height={size}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -57,7 +57,15 @@ const LinkedinIcon = (props: React.ComponentProps<"svg">) => (
   </svg>
 );
 
-const navItems = [
+interface NavItemType {
+  id: string;
+  label: string;
+  icon: any;
+  highlight?: boolean;
+  href?: string;
+}
+
+const navItems: NavItemType[] = [
   { id: "hero", label: "Home", icon: Home },
   { id: "about", label: "About", icon: User },
   { id: "skills", label: "Skills", icon: Layers },
@@ -69,7 +77,7 @@ const navItems = [
 ];
 
 // মোবাইলের জন্য (লগইন সহ)
-const mobileNavItems = [
+const mobileNavItems: NavItemType[] = [
   ...navItems.filter((n) =>
     [
       "hero",
