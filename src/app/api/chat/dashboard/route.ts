@@ -28,8 +28,8 @@ export async function GET(req: NextRequest) {
 
     const totalSessions = sessions.length;
 
-    const totalMessages = sessions.reduce<number>(
-      (sum, session) => sum + session.messages.length,
+    const totalMessages = sessions.reduce(
+      (sum: number, session: any) => sum + (session.messages?.length || 0),
       0
     );
 
