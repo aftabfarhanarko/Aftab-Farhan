@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 
 export async function GET(req: NextRequest) {
   const session = await auth();
-  if (!session) {
+  if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -22,10 +22,12 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    // Calculate simple stats
+    // Calculate stats
     const totalSessions = sessions.length;
-    const totalMessages = sessions.reduce((sum: number, s) => sum + s.messages.length, 0);
-    const avgMessagesPerSession = totalSessions > 0 ? (totalMessages / totalSessions).toFixed(1) : "0";
+    const totalMessages = sessions.reduce((sum: number, s) => sum + (s.messages?.length || 0), 0);
+    const avgMessagesPerSession = totalSessions > 0
+      ? (totalMessages / totalSessions).toFixed(1)
+      : "0";
 
     return NextResponse.json({
       sessions,
@@ -46,7 +48,7 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   const session = await auth();
-  if (!session) {
+  if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -55,13 +57,23 @@ export async function DELETE(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (id) {
-      await prisma.chatSession.delete({
+      // Delete single session
+      const deleted = await prisma.chatSession.delete({
         where: { id },
       });
-      return NextResponse.json({ success: true, message: `Session ${id} deleted.` });
+
+      return NextResponse.json({
+        success: true,
+        message: `Session ${id} deleted successfully.`
+      });
     } else {
-      await prisma.chatSession.deleteMany({});
-      return NextResponse.json({ success: true, message: "All chat sessions deleted." });
+      // Delete all sessions (be careful with this!)
+      const { count } = await prisma.chatSession.deleteMany({});
+
+      return NextResponse.json({
+        success: true,
+        message: `All ${count} chat sessions deleted.`
+      });
     }
   } catch (error: any) {
     console.error("Failed to delete chat session(s):", error);
