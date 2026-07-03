@@ -110,7 +110,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-card/40 px-4 sm:px-6 lg:px-8 py-10 mt-2">
+    <footer className="border-t border-border bg-card/40 px-4 sm:px-6 lg:px-8 pt-10 pb-28 lg:pb-10 mt-2">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -127,7 +127,7 @@ export default function Footer() {
               className="text-xl font-black tracking-tight text-foreground"
               style={{ fontFamily: "'Syne', sans-serif" }}
             >
-              Aftab Farha Arko
+              Aftab Farhan Arko
             </Link>
             <p className="text-[11.5px] text-foreground/45 mt-1.5 max-w-[220px] leading-relaxed font-mono mx-auto sm:mx-0">
               Junior Full Stack Developer • Building Modern Web Applications
@@ -156,7 +156,7 @@ export default function Footer() {
         {/* Bottom row — stacks & centers on mobile */}
         <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between pt-6 border-t border-border">
           <p className="text-[11px] text-foreground/35 font-mono text-center sm:text-left">
-            © {currentYear} Aftab Farha Arko. All rights reserved.
+            © {currentYear} Aftab Farhan Arko. All rights reserved.
           </p>
           <p className="text-[11px] text-foreground/20 font-mono text-center sm:text-right">
             Built with Next.js, TypeScript, PostgreSQL, Prisma, Framer Motion

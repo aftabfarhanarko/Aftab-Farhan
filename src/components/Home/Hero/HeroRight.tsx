@@ -26,18 +26,18 @@ export default function HeroRight({ image, name, title, socials }: HeroRightProp
       <CurrentStackBadge />
 
       {/* Rings */}
-      <div className="absolute w-[460px] h-[460px] rounded-full border border-dashed border-foreground/15 animate-[spin_80s_linear_infinite]" />
-      <div className="absolute w-[420px] h-[420px] rounded-full border border-border animate-[spin_50s_linear_infinite_reverse]" />
-      <div className="absolute w-[360px] h-[360px] rounded-full bg-foreground/8 blur-[80px]" />
+      <div className="absolute w-[300px] h-[300px] min-[375px]:w-[360px] min-[375px]:h-[360px] sm:w-[420px] sm:h-[420px] md:w-[460px] md:h-[460px] rounded-full border border-dashed border-foreground/15 animate-[spin_80s_linear_infinite]" />
+      <div className="absolute w-[260px] h-[260px] min-[375px]:w-[320px] min-[375px]:h-[320px] sm:w-[380px] sm:h-[380px] md:w-[420px] md:h-[420px] rounded-full border border-border animate-[spin_50s_linear_infinite_reverse]" />
+      <div className="absolute w-[220px] h-[220px] min-[375px]:w-[280px] min-[375px]:h-[280px] sm:w-[320px] sm:h-[320px] md:w-[360px] md:h-[360px] rounded-full bg-foreground/8 blur-[80px]" />
 
       {/* Profile image circle */}
-      <div className="relative w-[340px] h-[340px] sm:w-[380px] sm:h-[380px] rounded-full border-[3px] border-foreground/60 p-2.5 shadow-[0_0_60px_rgba(57,255,20,0.2),inset_0_0_40px_rgba(57,255,20,0.05)] bg-background z-10 group">
+      <div className="relative w-[250px] h-[250px] min-[375px]:w-[300px] min-[375px]:h-[300px] sm:w-[380px] sm:h-[380px] rounded-full border-[3px] border-foreground/60 p-2.5 shadow-[0_0_60px_rgba(57,255,20,0.2),inset_0_0_40px_rgba(57,255,20,0.05)] bg-background z-10 group">
         <div className="w-full h-full rounded-full overflow-hidden bg-foreground/5 relative">
           <Image
             src={image}
             alt={`${name} - ${title}`}
             fill
-            sizes="(max-width: 768px) 340px, 380px"
+            sizes="(max-width: 375px) 250px, (max-width: 640px) 300px, 380px"
             className="object-cover transition-transform duration-700 group-hover:scale-105"
             priority
           />

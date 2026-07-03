@@ -40,7 +40,7 @@ export default function Hero() {
     <div className="mt-7 md:mt-0">
       <section
         id="hero"
-        className="relative mb-20 sm:mb-24 flex flex-col lg:flex-row items-center justify-between gap-16 -mt-25 min-h-[90vh]"
+        className="relative mb-20 sm:mb-24 flex flex-col lg:flex-row items-center justify-between gap-16 lg:-mt-24 min-h-[90vh]"
       >
         {/* Ambient glow blobs */}
         <div className="absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-foreground/5 blur-[140px] -z-10 pointer-events-none" />

@@ -158,9 +158,8 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ---------- ডেস্কটপ হেডার ---------- */}
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50 max-w-7xl mx-auto rounded-2xl mt-5"
+        className="fixed top-4 left-4 right-4 md:top-5 md:left-6 md:right-6 lg:left-8 lg:right-8 xl:left-1/2 xl:-translate-x-1/2 xl:w-full z-50 max-w-7xl rounded-2xl"
         style={{
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",

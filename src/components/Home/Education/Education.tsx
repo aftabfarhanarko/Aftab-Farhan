@@ -95,7 +95,7 @@ export default function Education() {
 
                     <div className="p-5 sm:p-6">
                       {/* Institution header */}
-                      <div className="flex items-start justify-between gap-3 mb-5">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5">
                         <div className="flex items-center gap-3 sm:gap-4">
                           {/* Logo placeholder */}
                           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center shrink-0 bg-black/[0.08] dark:bg-white/[0.08] border border-black/10 dark:border-white/10">
@@ -111,7 +111,7 @@ export default function Education() {
                           </div>
                         </div>
 
-                        <div className="flex flex-col items-end gap-1.5 shrink-0">
+                        <div className="flex flex-wrap sm:flex-col items-start sm:items-end gap-1.5 shrink-0 sm:w-auto w-full">
                           {edu.grade && (
                             <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold border border-black/10 dark:border-white/20 text-foreground bg-black/[0.06] dark:bg-white/[0.08]">
                               {edu.grade}

@@ -71,10 +71,10 @@ export default function ProjectsFilters({
 
       {/* Dynamic Category Chips Row */}
       {availableCategories.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 mb-8 p-1.5 bg-foreground/[0.02] dark:bg-white/[0.02] border border-border/50 rounded-2xl max-w-full overflow-x-auto">
+        <div className="flex md:flex-wrap items-center gap-2 mb-8 p-1.5 bg-foreground/[0.02] dark:bg-white/[0.02] border border-border/50 rounded-2xl max-w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] whitespace-nowrap">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all border cursor-pointer ${
+            className={`px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all border cursor-pointer shrink-0 ${
               activeCategory === "all"
                 ? "bg-foreground text-background border-transparent"
                 : "bg-transparent text-foreground/50 border-border hover:text-foreground/75"
@@ -88,7 +88,7 @@ export default function ProjectsFilters({
               <button
                 key={key}
                 onClick={() => setActiveCategory(key)}
-                className={`px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all border cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all border cursor-pointer shrink-0 ${
                   activeCategory === key
                     ? "bg-foreground text-background border-transparent"
                     : "bg-transparent text-foreground/50 border-border hover:text-foreground/75"

@@ -74,7 +74,7 @@ export default function HeroLeft({ name, title, description, stats }: HeroLeftPr
 
       <motion.div
         {...fadeUp(0.6)}
-        className="flex gap-12 pt-8 mt-3 border-t border-border w-full justify-center md:justify-start"
+        className="flex flex-wrap gap-6 sm:gap-12 pt-8 mt-3 border-t border-border w-full justify-center md:justify-start"
       >
         {stats.map(({ id, value, label }, i) => (
           <motion.div
