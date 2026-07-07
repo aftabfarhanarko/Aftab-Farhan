@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link"; // Next.js এর জন্য, না থাকলে <a> দিয়ে রিপ্লেস করুন
 import {
@@ -110,11 +110,16 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
+  const ticking = useRef(false);
 
-  useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-      const pos = window.scrollY + 120;
+  // ✅ Passive + RAF throttled scroll — no jank on mobile
+  const handleScroll = useCallback(() => {
+    if (ticking.current) return;
+    ticking.current = true;
+    requestAnimationFrame(() => {
+      const sy = window.scrollY;
+      setIsScrolled(sy > 20);
+      const pos = sy + 120;
       for (const item of navItems) {
         const el = document.getElementById(item.id);
         if (el) {
@@ -125,15 +130,27 @@ export default function Navbar() {
           }
         }
       }
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+      ticking.current = false;
+    });
   }, []);
 
-  const scrollTo = (id: string) => {
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  // ✅ iOS Safari compat — scrollIntoView works where window.scrollTo fails
+  const scrollTo = useCallback((id: string) => {
     const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: "smooth" });
-  };
+    if (!el) return;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    if (isSafari) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      const top = el.getBoundingClientRect().top + window.scrollY - 68;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  }, []);
 
   const p = {
     bg: isDark ? "rgba(10,10,14,0.88)" : "rgba(250,250,252,0.88)",
@@ -159,22 +176,24 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        className="fixed top-4 left-4 right-4 md:top-5 md:left-6 md:right-6 lg:left-8 lg:right-8 xl:left-1/2 xl:-translate-x-1/2 xl:w-full z-50 max-w-7xl rounded-2xl"
+        className="fixed top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 md:top-5 md:left-6 md:right-6 lg:left-8 lg:right-8 z-50 rounded-2xl"
         style={{
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
+          backdropFilter: "blur(12px)",        // ✅ 12px mobile-friendly (20px was heavy)
+          WebkitBackdropFilter: "blur(12px)",
           backgroundColor: p.bg,
           borderBottom: `1px solid ${p.border}`,
           boxShadow: isScrolled ? p.shadow : "none",
           transition: "background-color 0.3s, box-shadow 0.3s",
+          willChange: "transform",              // ✅ GPU layer hint
+          transform: "translateZ(0)",           // ✅ force compositor layer
         }}
         initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between px-5 lg:px-8"
-          style={{ height: 64 }}
+          className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-5 lg:px-8"
+          style={{ height: 60 }}
         >
           {/* লোগো */}
           <motion.button
@@ -183,19 +202,36 @@ export default function Navbar() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
           >
+            {/* Desktop: full text | Mobile: short version */}
             <span
+              className="hidden sm:inline"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: 20,
+                fontSize: 19,
                 fontWeight: 900,
                 letterSpacing: "-0.02em",
-                color: "#ffffff",
                 background: "linear-gradient(135deg, #22c55e, #16a34a)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
               }}
             >
               {"<aftab farhan arko />"}
+            </span>
+            <span
+              className="inline sm:hidden"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 16,
+                fontWeight: 900,
+                letterSpacing: "-0.02em",
+                background: "linear-gradient(135deg, #22c55e, #16a34a)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {"<arko />"}
             </span>
           </motion.button>
 
@@ -272,18 +308,18 @@ export default function Navbar() {
           </div>
 
           {/* ডান পাশের আইকন (সোশ্যাল + লগইন + থিম) */}
-          <div className="flex items-center gap-2">
-            {/* GitHub, LinkedIn */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* GitHub, LinkedIn — hidden on xs, shown on sm+ */}
             {socialLinks.map((link) => (
               <motion.a
                 key={link.label}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center rounded-full border-none cursor-pointer"
+                className="hidden sm:flex items-center justify-center rounded-full border-none cursor-pointer"
                 style={{
-                  width: 38,
-                  height: 38,
+                  width: 36,
+                  height: 36,
                   backgroundColor: p.activeBg,
                   color: p.muted,
                   border: `1px solid ${p.border}`,
@@ -296,7 +332,7 @@ export default function Navbar() {
                 whileTap={{ scale: 0.9 }}
                 aria-label={link.label}
               >
-                <link.icon size={18} />
+                <link.icon size={17} />
               </motion.a>
             ))}
 
@@ -365,17 +401,26 @@ export default function Navbar() {
         style={{
           backgroundColor: p.btmBg,
           borderTop: `1px solid ${p.btmBorder}`,
-          backdropFilter: "blur(22px)",
-          WebkitBackdropFilter: "blur(22px)",
-          paddingBottom: "env(safe-area-inset-bottom, 6px)",
+          backdropFilter: "blur(14px)",           // ✅ reduced from 22px
+          WebkitBackdropFilter: "blur(14px)",
+          paddingBottom: "env(safe-area-inset-bottom, 0px)",
+          willChange: "transform",                // ✅ GPU compositor hint
+          transform: "translateZ(0)",             // ✅ own compositing layer
         }}
         initial={{ y: 90, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
         <div
-          className="flex items-end justify-around"
-          style={{ height: 66, paddingBottom: 6 }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${mobileNavItems.length}, 1fr)`,
+            height: 62,
+            alignItems: "end",
+            paddingBottom: 6,
+            paddingLeft: 4,
+            paddingRight: 4,
+          }}
         >
           {mobileNavItems.map((item) => {
             const active = activeSection === item.id;
@@ -389,29 +434,29 @@ export default function Navbar() {
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
                   className="relative flex flex-col items-center justify-center border-none cursor-pointer bg-transparent"
-                  style={{ marginTop: -22, minWidth: 58 }}
+                  style={{ marginTop: -18 }}
                   whileTap={{ scale: 0.91 }}
                 >
                   <motion.div
                     className="flex items-center justify-center rounded-full transition-all duration-300"
                     style={{
-                      width: 56,
-                      height: 56,
+                      width: 50,
+                      height: 50,
                       background: active ? p.accentGrad : (isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"),
                       boxShadow: active ? `0 4px 22px ${p.accentGlow}` : "none",
                       border: active ? "none" : `1px solid ${p.border}`
                     }}
                     whileHover={{ scale: 1.08 }}
                   >
-                    <Icon size={24} color={active ? "#ffffff" : (isDark ? "rgba(255,255,255,0.6)" : "rgba(30,30,30,0.6)")} strokeWidth={2} />
+                    <Icon size={22} color={active ? "#ffffff" : (isDark ? "rgba(255,255,255,0.6)" : "rgba(30,30,30,0.6)")} strokeWidth={2} />
                   </motion.div>
                   <span
                     style={{
-                      fontSize: 10,
+                      fontSize: 9,
                       fontWeight: 700,
                       color: active ? p.accent : p.btmIcon,
                       fontFamily: "'DM Sans', sans-serif",
-                      marginTop: 3,
+                      marginTop: 2,
                       lineHeight: 1.2,
                       transition: "color 0.3s"
                     }}
@@ -427,8 +472,8 @@ export default function Navbar() {
               <motion.button
                 key={item.id}
                 onClick={() => scrollTo(item.id)}
-                className="relative flex flex-col items-center justify-center border-none cursor-pointer bg-transparent"
-                style={{ minWidth: 42, paddingTop: 6, paddingBottom: 2 }}
+                className="relative flex flex-col items-center justify-center border-none cursor-pointer bg-transparent w-full"
+                style={{ paddingTop: 6, paddingBottom: 2 }}
                 whileTap={{ scale: 0.88 }}
               >
                 {active && (
@@ -436,7 +481,7 @@ export default function Navbar() {
                     layoutId="mobileTopLine"
                     className="absolute top-0 left-1/2 -translate-x-1/2 rounded-full"
                     style={{
-                      width: 20,
+                      width: 18,
                       height: 2.5,
                       backgroundColor: p.accent,
                     }}
@@ -444,25 +489,28 @@ export default function Navbar() {
                   />
                 )}
                 <motion.span
-                  animate={{ scale: active ? 1.18 : 1 }}
+                  animate={{ scale: active ? 1.1 : 1 }}
                   transition={{ type: "spring", stiffness: 420, damping: 26 }}
                   style={{
                     color: active ? p.accent : p.btmIcon,
                     display: "flex",
-                    marginBottom: 3,
+                    marginBottom: 2,
                     transition: "color 0.3s"
                   }}
                 >
-                  <Icon size={22} strokeWidth={active ? 2.4 : 1.8} />
+                  <Icon size={20} strokeWidth={active ? 2.4 : 1.8} />
                 </motion.span>
                 <span
                   style={{
-                    fontSize: 10,
+                    fontSize: 9,
                     fontWeight: active ? 700 : 500,
                     color: active ? p.accent : p.btmIcon,
                     fontFamily: "'DM Sans', sans-serif",
                     lineHeight: 1.1,
                     whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    maxWidth: "100%",
+                    textOverflow: "ellipsis",
                     transition: "color 0.3s"
                   }}
                 >
@@ -474,8 +522,8 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* স্পেসার */}
-      <div className="h-16" />
+      {/* স্পেসার — top navbar height */}
+      <div className="h-[60px]" />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@900&display=swap');

@@ -110,7 +110,12 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-card/40 px-4 sm:px-6 lg:px-8 pt-10 pb-28 lg:pb-10 mt-2">
+    <footer
+      className="footer-responsive border-t border-border bg-card/40 px-4 sm:px-6 lg:px-8 pt-10 mt-2"
+      style={{
+        paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 80px)",
+      }}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -163,6 +168,13 @@ export default function Footer() {
           </p>
         </div>
       </motion.div>
+      <style>{`
+        @media (min-width: 1024px) {
+          footer.footer-responsive {
+            padding-bottom: 40px !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 }
