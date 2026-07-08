@@ -1,43 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Cpu } from "lucide-react";
-import { AI_TOOLS, WORKFLOW_STAGES } from "./aiData";
+import { AI_TOOLS } from "./aiData";
 import ToolCard from "./ToolCard";
 import AIHighlightCard from "./AIHighlightCard";
-import AIPipeline from "./AIPipeline";
 
 export default function AIStack() {
   const [activeAI, setActiveAI] = useState<string>("antigravity");
-  const [activeStep, setActiveStep] = useState<number>(1);
-  const [isPlayingWorkflow, setIsPlayingWorkflow] = useState<boolean>(true);
-
-  // Auto-play workflow timeline simulation
-  useEffect(() => {
-    if (!isPlayingWorkflow) return;
-    const interval = setInterval(() => {
-      setActiveStep((prev) => {
-        const next = prev === 6 ? 1 : prev + 1;
-        const currentStage = WORKFLOW_STAGES.find(s => s.step === next);
-        if (currentStage) {
-          setActiveAI(currentStage.toolId);
-        }
-        return next;
-      });
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [isPlayingWorkflow]);
-
-  const handleStepClick = (stepNum: number) => {
-    setIsPlayingWorkflow(false);
-    setActiveStep(stepNum);
-    const stage = WORKFLOW_STAGES.find(s => s.step === stepNum);
-    if (stage) {
-      setActiveAI(stage.toolId);
-    }
-  };
 
   const selectedAIInfo = AI_TOOLS.find((tool) => tool.id === activeAI) || AI_TOOLS[0];
-  const selectedStepInfo = WORKFLOW_STAGES.find((s) => s.step === activeStep) || WORKFLOW_STAGES[0];
 
   return (
     <section id="ai-stack" className="mb-16 sm:mb-20 lg:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0">
@@ -69,11 +40,6 @@ export default function AIStack() {
               isActive={activeAI === tool.id}
               onClick={() => {
                 setActiveAI(tool.id);
-                const matchingStep = WORKFLOW_STAGES.find(s => s.toolId === tool.id);
-                if (matchingStep) {
-                  setActiveStep(matchingStep.step);
-                }
-                setIsPlayingWorkflow(false);
               }}
             />
           ))}
@@ -82,17 +48,6 @@ export default function AIStack() {
         {/* Right: Selected AI Highlight Card (4 Cols) */}
         <AIHighlightCard selectedAIInfo={selectedAIInfo} />
       </div>
-
-      {/* ────────────────── SECTION 2: ANIMATED WORKFLOW TIMELINE ────────────────── */}
-      <AIPipeline
-        isPlayingWorkflow={isPlayingWorkflow}
-        setIsPlayingWorkflow={setIsPlayingWorkflow}
-        activeStep={activeStep}
-        handleStepClick={handleStepClick}
-        selectedStepInfo={selectedStepInfo}
-        WORKFLOW_STAGES={WORKFLOW_STAGES}
-        AI_TOOLS={AI_TOOLS}
-      />
     </section>
   );
 }

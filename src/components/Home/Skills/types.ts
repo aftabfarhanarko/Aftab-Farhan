@@ -8,6 +8,11 @@ import {
   Settings,
   Cpu,
   Globe,
+  Cloud,
+  GitBranch,
+  Zap,
+  Layers,
+  Terminal,
 } from "lucide-react";
 
 export interface Skill {
@@ -37,14 +42,22 @@ export interface CategoryConfig {
 }
 
 export const categoryConfig: Record<string, CategoryConfig> = {
-  Frontend: { icon: Monitor, accent: "blue" },
-  Backend: { icon: Server, accent: "green" },
-  Database: { icon: Database, accent: "amber" },
-  Animation: { icon: Sparkles, accent: "pink" },
-  Tools: { icon: Wrench, accent: "purple" },
-  DevOps: { icon: Settings, accent: "teal" },
-  Mobile: { icon: Cpu, accent: "pink" },
-  API: { icon: Globe, accent: "teal" },
+  Frontend:    { icon: Monitor,    accent: "blue"    },
+  Backend:     { icon: Server,     accent: "green"   },
+  Database:    { icon: Database,   accent: "amber"   },
+  Animation:   { icon: Sparkles,   accent: "pink"    },
+  Tools:       { icon: Wrench,     accent: "purple"  },
+  DevOps:      { icon: Cloud,      accent: "teal"    },
+  Mobile:      { icon: Cpu,        accent: "pink"    },
+  API:         { icon: Globe,      accent: "teal"    },
+  Deployment:  { icon: Cloud,      accent: "teal"    },
+  Hosting:     { icon: Cloud,      accent: "teal"    },
+  Version:     { icon: GitBranch,  accent: "purple"  },
+  Control:     { icon: GitBranch,  accent: "purple"  },
+  Testing:     { icon: Zap,        accent: "amber"   },
+  Design:      { icon: Layers,     accent: "pink"    },
+  Terminal:    { icon: Terminal,   accent: "default" },
+  Settings:    { icon: Settings,   accent: "default" },
 };
 
 export const accentClasses: Record<

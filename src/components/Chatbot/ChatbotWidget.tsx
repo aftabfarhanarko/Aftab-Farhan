@@ -14,8 +14,7 @@ import {
   GraduationCap, 
   Brain, 
   Sparkles, 
-  Wrench,
-  Headphones 
+  Wrench 
 } from "lucide-react";
 import { useTheme } from "@/context/Theme";
 
@@ -424,7 +423,7 @@ export default function ChatbotWidget() {
               transition={{ duration: 0.15 }}
               className="relative"
             >
-              <Headphones size={22} className="text-emerald-400 group-hover:text-emerald-300" />
+              <MessageSquare size={22} className="text-emerald-400 group-hover:text-emerald-300" />
               {/* Pulsing Dot */}
               <span className="absolute -top-1.5 -right-1.5 flex h-3.5 w-3.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
