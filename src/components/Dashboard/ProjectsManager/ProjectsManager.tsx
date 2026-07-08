@@ -25,6 +25,9 @@ const newProjectState = (): ProjectFormState => ({
   featured: false,
   projectType: projectTypes[0],
   client: "",
+  startDate: "",
+  endDate: "",
+  duration: "",
   techInput: "",
 });
 
@@ -97,6 +100,9 @@ export default function ProjectsManager() {
         featured: project.featured,
         projectType: project.projectType,
         client: project.client || "",
+        startDate: project.startDate || "",
+        endDate: project.endDate || "",
+        duration: project.duration || "",
         techInput: project.tech.join(", "),
       });
       setImagePreview(project.image);

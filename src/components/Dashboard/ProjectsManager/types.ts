@@ -26,6 +26,9 @@ export type Project = {
   featured: boolean;
   projectType: ProjectType;
   client?: string;
+  startDate?: string;
+  endDate?: string;
+  duration?: string;
   tech: string[];
 };
 
@@ -41,6 +44,9 @@ export type ProjectFormState = {
   featured: boolean;
   projectType: ProjectType;
   client: string;
+  startDate: string;
+  endDate: string;
+  duration: string;
   techInput: string;
 };
 

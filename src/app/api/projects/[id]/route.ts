@@ -62,6 +62,9 @@ export async function PUT(
       featured,
       projectType,
       client,
+      startDate,
+      endDate,
+      duration,
       tech, // array of strings
     } = body;
 
@@ -85,6 +88,9 @@ export async function PUT(
         featured,
         projectType,
         client,
+        startDate,
+        endDate,
+        duration,
         tech: {
           create: await Promise.all(
             (tech || []).map(async (techName: string) => {
@@ -138,8 +144,7 @@ export async function DELETE(
   try {
     const { id } = await params;
 
-    // Delete project (cascading will handle ProjectTech if configured,
-    // but we have onDelete: Cascade in schema for ProjectTech)
+    // Delete project
     await prisma.project.delete({
       where: { id },
     });

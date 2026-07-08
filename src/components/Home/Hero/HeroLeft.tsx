@@ -12,17 +12,17 @@ interface HeroLeftProps {
 
 export default function HeroLeft({ name, title, description, stats }: HeroLeftProps) {
   return (
-    <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl order-2 md:order-1 max-md:items-center">
+    <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl order-2 md:order-1 items-center md:items-start">
       {/* Greeting */}
       <motion.p
         {...fadeLeft(0.1)}
-        className="text-lg font-medium text-foreground/50 tracking-wide"
+        className="text-center md:text-left text-lg font-medium text-foreground/50 tracking-wide"
       >
         Hi, I&apos;m{" "}
         <span className="text-foreground font-bold">{name}</span>
       </motion.p>
 
-      <motion.div {...fadeLeft(0.18)}>
+      <motion.div {...fadeLeft(0.18)} className="text-center md:text-left">
         <h1 className="text-2xl md:text-4xl">
           <span className="block text-foreground">{title}</span>
         </h1>
@@ -31,18 +31,18 @@ export default function HeroLeft({ name, title, description, stats }: HeroLeftPr
       {/* Description */}
       <motion.p
         {...fadeLeft(0.34)}
-        className="text-sm text-foreground/90 text-wrap max-w-lg leading-[1.85] text-left"
+        className="text-sm text-foreground/90 text-wrap max-w-lg leading-[1.85] text-center md:text-left"
       >
         {description}
       </motion.p>
 
       {/* CTA buttons */}
-      <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-4 mt-1">
+      <motion.div {...fadeUp(0.5)} className="flex flex-wrap justify-center md:justify-start gap-4 mt-1 w-full md:w-auto">
         <motion.a
           href="#contact"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          className="group flex items-center gap-2.5 rounded-xl bg-foreground px-7 py-3.5 text-sm font-black text-background hover:bg-foreground/90 transition-colors"
+          className="group flex items-center justify-center gap-2.5 rounded-xl bg-foreground px-7 py-3.5 text-sm font-black text-background hover:bg-foreground/90 transition-colors w-full sm:w-auto"
         >
           <svg
             xmlns=""
@@ -66,7 +66,7 @@ export default function HeroLeft({ name, title, description, stats }: HeroLeftPr
           href="#project"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          className="rounded-xl border border-foreground/40 px-7 py-3.5 text-sm font-black text-foreground/80 hover:bg-foreground/8 hover:border-foreground hover:text-foreground transition-all"
+          className="flex items-center justify-center rounded-xl border border-foreground/40 px-7 py-3.5 text-sm font-black text-foreground/80 hover:bg-foreground/8 hover:border-foreground hover:text-foreground transition-all w-full sm:w-auto text-center"
         >
           View Projects
         </motion.a>
@@ -86,7 +86,7 @@ export default function HeroLeft({ name, title, description, stats }: HeroLeftPr
               delay: 0.65 + i * 0.08,
               ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
             }}
-            className="group cursor-default text-left"
+            className="group cursor-default text-center md:text-left"
           >
             <div className="text-3xl font-black text-foreground tracking-tighter group-hover:text-foreground transition-colors duration-300">
               {value}

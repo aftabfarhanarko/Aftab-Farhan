@@ -61,6 +61,9 @@ export async function POST(req: Request) {
       featured,
       projectType,
       client,
+      startDate,
+      endDate,
+      duration,
       tech, // array of strings
     } = body;
 
@@ -77,6 +80,9 @@ export async function POST(req: Request) {
         featured,
         projectType,
         client,
+        startDate,
+        endDate,
+        duration,
         tech: {
           create: await Promise.all(
             (tech || []).map(async (techName: string) => {

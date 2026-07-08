@@ -194,6 +194,48 @@ export default function ProjectModal({
                   />
                 </div>
               </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 px-1">
+                    Start Date
+                  </label>
+                  <input
+                    value={formData.startDate}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, startDate: e.target.value }))
+                    }
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-white/20 transition-all"
+                    placeholder="e.g. July 1"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 px-1">
+                    End Date
+                  </label>
+                  <input
+                    value={formData.endDate}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, endDate: e.target.value }))
+                    }
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-white/20 transition-all"
+                    placeholder="e.g. July 8"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 px-1">
+                    Duration
+                  </label>
+                  <input
+                    value={formData.duration}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, duration: e.target.value }))
+                    }
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-white/20 transition-all"
+                    placeholder="e.g. 7 Days"
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="space-y-6">

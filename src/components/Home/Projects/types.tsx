@@ -13,6 +13,9 @@ export interface Project {
   featured: boolean;
   projectType: string;
   client?: string;
+  startDate?: string;
+  endDate?: string;
+  duration?: string;
   tech: string[];
 }
 
