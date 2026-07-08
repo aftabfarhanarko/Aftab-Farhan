@@ -24,8 +24,8 @@ export default function Projects() {
   // Find the project currently marked as active / currently working
   const currentlyWorkingProject = allProjects.find((p) => p.currentlyWorking);
   
-  // Use currently working project on top, fallback to featured project, then first project
-  const topProject = currentlyWorkingProject ?? allProjects.find((p) => p.featured) ?? allProjects[0];
+  // Use currently working project on top if active
+  const topProject = currentlyWorkingProject;
 
   const filteredProjects = allProjects.filter((p) => {
     // Hide the currently working project from the main grid if it is displayed on top
