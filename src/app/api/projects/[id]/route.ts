@@ -2,6 +2,42 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  try {
+    const { id } = await params;
+    const project = await prisma.project.findUnique({
+      where: { id },
+      include: {
+        tech: {
+          include: {
+            tech: true,
+          },
+        },
+      },
+    });
+
+    if (!project) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    }
+
+    const formattedProject = {
+      ...project,
+      tech: project.tech.map((pt: any) => pt.tech.name),
+    };
+
+    return NextResponse.json(formattedProject);
+  } catch (error) {
+    console.error("Project details GET Error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch project details" },
+      { status: 500 },
+    );
+  }
+}
+
 export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
