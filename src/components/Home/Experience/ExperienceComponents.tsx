@@ -58,6 +58,39 @@ export function ExperienceHeader({ exp }: ExperienceHeaderProps) {
   );
 }
 
+/**
+ * Normalise responsibilities: if the array contains a single long string
+ * (i.e. all bullets were saved as one blob), split it into individual items.
+ * Sentences are split on ". " boundaries followed by a capital letter,
+ * or on explicit newline characters.
+ */
+function normalizeResponsibilities(raw: string[]): string[] {
+  if (!raw || raw.length === 0) return [];
+
+  // If there are already multiple items, trust them as-is.
+  if (raw.length > 1) {
+    return raw.map((r) => r.trim()).filter(Boolean);
+  }
+
+  const single = raw[0]?.trim() ?? "";
+  if (!single) return [];
+
+  // If the single item is short, it's genuinely one responsibility.
+  if (single.length < 120) return [single];
+
+  // Try splitting on newlines first.
+  const byNewline = single.split(/\n+/).map((s) => s.trim()).filter(Boolean);
+  if (byNewline.length > 1) return byNewline;
+
+  // Split on ". " followed by an uppercase letter (sentence boundary).
+  const bySentence = single
+    .split(/\.\s+(?=[A-Z])/)
+    .map((s) => s.trim().replace(/\.$/, "").trim())
+    .filter((s) => s.length > 4);
+
+  return bySentence.length > 1 ? bySentence : [single];
+}
+
 interface ExperienceRolesProps {
   roles: Role[];
 }
@@ -67,6 +100,7 @@ export function ExperienceRoles({ roles }: ExperienceRolesProps) {
     <div className="space-y-5">
       {roles.map((role, ri) => {
         const RIcon = ICON_MAP[role.iconName] || Briefcase;
+        const items = normalizeResponsibilities(role.responsibilities);
         return (
           <div key={ri}>
             {ri > 0 && <div className="h-px bg-black/10 dark:bg-white/10 mb-5" />}
@@ -84,11 +118,11 @@ export function ExperienceRoles({ roles }: ExperienceRolesProps) {
               </div>
             </div>
 
-            <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-1.5 ml-0 sm:ml-9">
-              {role.responsibilities.map((item, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-black/50 dark:text-white/50" />
-                  <span className="text-xs sm:text-sm text-black/65 dark:text-white/65 leading-relaxed">
+            <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-2 ml-0 sm:ml-9">
+              {items.map((item, i) => (
+                <li key={i} className="flex items-start gap-2 group/item">
+                  <CheckCircle2 className="w-3.5 h-3.5 mt-[3px] flex-shrink-0 text-black/40 dark:text-white/40 group-hover/item:text-black/70 dark:group-hover/item:text-white/70 transition-colors" />
+                  <span className="text-[12px] sm:text-[13px] text-black/60 dark:text-white/60 leading-relaxed group-hover/item:text-black/80 dark:group-hover/item:text-white/80 transition-colors">
                     {item}
                   </span>
                 </li>
