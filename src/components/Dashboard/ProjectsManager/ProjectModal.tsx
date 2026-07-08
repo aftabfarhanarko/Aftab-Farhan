@@ -347,22 +347,42 @@ export default function ProjectModal({
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                <input
-                  type="checkbox"
-                  id="featured"
-                  checked={formData.featured}
-                  onChange={(e) =>
-                    setFormData((p) => ({ ...p, featured: e.target.checked }))
-                  }
-                  className="w-5 h-5 rounded-lg bg-white/5 border-white/10 text-violet-500 focus:ring-violet-500 focus:ring-offset-0 transition-all cursor-pointer"
-                />
-                <label
-                  htmlFor="featured"
-                  className="text-sm font-bold text-white/70 cursor-pointer select-none"
-                >
-                  Mark as Featured Project
-                </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    checked={formData.featured}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, featured: e.target.checked }))
+                    }
+                    className="w-5 h-5 rounded-lg bg-white/5 border-white/10 text-violet-500 focus:ring-violet-500 focus:ring-offset-0 transition-all cursor-pointer"
+                  />
+                  <label
+                    htmlFor="featured"
+                    className="text-sm font-bold text-white/70 cursor-pointer select-none"
+                  >
+                    Mark as Featured Project
+                  </label>
+                </div>
+
+                <div className="flex items-center gap-3 p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                  <input
+                    type="checkbox"
+                    id="currentlyWorking"
+                    checked={formData.currentlyWorking}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, currentlyWorking: e.target.checked }))
+                    }
+                    className="w-5 h-5 rounded-lg bg-white/5 border-white/10 text-violet-500 focus:ring-violet-500 focus:ring-offset-0 transition-all cursor-pointer"
+                  />
+                  <label
+                    htmlFor="currentlyWorking"
+                    className="text-sm font-bold text-white/70 cursor-pointer select-none"
+                  >
+                    Mark as Currently Working
+                  </label>
+                </div>
               </div>
             </div>
           </form>

@@ -1,7 +1,22 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { ExternalLink, GitBranch, Sparkles } from "lucide-react";
+import { ExternalLink, Sparkles } from "lucide-react";
 import { Project, categoryLabel, categoryGlow, ActionBtn } from "./types";
+
+const Github = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+);
 
 export default function FeaturedCard({ project }: { project: Project }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -23,7 +38,11 @@ export default function FeaturedCard({ project }: { project: Project }) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setPos((p) => ({ ...p, show: false }))}
-      className="group relative mb-10 sm:mb-12 rounded-[2rem] overflow-hidden border border-border bg-card/40 hover:border-foreground/[0.15] transition-all duration-500 shadow-lg hover:shadow-2xl"
+      className={`group relative mb-10 sm:mb-12 rounded-[2rem] overflow-hidden border bg-card/40 transition-all duration-500 shadow-lg hover:shadow-2xl ${
+        project.currentlyWorking
+          ? "border-emerald-500/30 hover:border-emerald-500/50"
+          : "border-border hover:border-foreground/[0.15]"
+      }`}
     >
       {/* Bg image blurred */}
       <div className="absolute inset-0">
@@ -51,7 +70,9 @@ export default function FeaturedCard({ project }: { project: Project }) {
         className="pointer-events-none absolute inset-0 z-10 rounded-[2rem] transition-opacity duration-300"
         style={{
           opacity: pos.show ? 1 : 0,
-          background: `radial-gradient(500px circle at ${pos.x}% ${pos.y}%, ${glow}, transparent 70%)`,
+          background: `radial-gradient(500px circle at ${pos.x}% ${pos.y}%, ${
+            project.currentlyWorking ? "rgba(16,185,129,0.12)" : glow
+          }, transparent 70%)`,
         }}
       />
 
@@ -59,16 +80,32 @@ export default function FeaturedCard({ project }: { project: Project }) {
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
-          background: `linear-gradient(90deg, transparent 0%, ${glow} 50%, transparent 100%)`,
+          background: `linear-gradient(90deg, transparent 0%, ${
+            project.currentlyWorking ? "rgba(16,185,129,0.4)" : glow
+          } 50%, transparent 100%)`,
         }}
       />
 
-      {/* Featured badge */}
-      <div className="absolute top-5 right-5 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 backdrop-blur-sm">
-        <Sparkles className="w-3 h-3 text-amber-400" />
-        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400">
-          Featured
-        </span>
+      {/* Top right status badge */}
+      <div className="absolute top-5 right-5 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-xl border backdrop-blur-sm">
+        {project.currentlyWorking ? (
+          <>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+            </span>
+            <span className="text-[9px] font-black uppercase tracking-widest text-emerald-400">
+              Active / Currently Working
+            </span>
+          </>
+        ) : (
+          <>
+            <Sparkles className="w-3 h-3 text-amber-400" />
+            <span className="text-[9px] font-bold uppercase tracking-widest text-amber-400">
+              Featured
+            </span>
+          </>
+        )}
       </div>
 
       <div className="relative z-10 grid lg:grid-cols-[1fr_1.3fr] gap-8 sm:gap-10 p-6 sm:p-10 lg:p-14 items-center">
@@ -126,7 +163,7 @@ export default function FeaturedCard({ project }: { project: Project }) {
             {project.githubLink && (
               <ActionBtn
                 href={project.githubLink}
-                icon={GitBranch}
+                icon={Github}
                 label="Source Code"
               />
             )}
@@ -138,9 +175,11 @@ export default function FeaturedCard({ project }: { project: Project }) {
           {/* Glow behind image */}
           <div
             className="absolute -inset-4 rounded-3xl blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-700"
-            style={{ background: glow }}
+            style={{ background: project.currentlyWorking ? "rgba(16,185,129,0.1)" : glow }}
           />
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden border border-border/60 bg-card shadow-[0_24px_80px_rgba(0,0,0,0.35)] group-hover:shadow-[0_32px_100px_rgba(0,0,0,0.45)] group-hover:border-foreground/[0.12] transition-all duration-500">
+          <div className={`relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden border bg-card shadow-[0_24px_80px_rgba(0,0,0,0.35)] group-hover:shadow-[0_32px_100px_rgba(0,0,0,0.45)] group-hover:border-foreground/[0.12] transition-all duration-500 ${
+            project.currentlyWorking ? "border-emerald-500/20" : "border-border/60"
+          }`}>
             <img
               src={project.image}
               alt={project.title}

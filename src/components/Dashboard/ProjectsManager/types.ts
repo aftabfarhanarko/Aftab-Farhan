@@ -24,6 +24,7 @@ export type Project = {
   category: ProjectCategory;
   year: string;
   featured: boolean;
+  currentlyWorking: boolean;
   projectType: ProjectType;
   client?: string;
   startDate?: string;
@@ -42,6 +43,7 @@ export type ProjectFormState = {
   category: ProjectCategory;
   year: string;
   featured: boolean;
+  currentlyWorking: boolean;
   projectType: ProjectType;
   client: string;
   startDate: string;

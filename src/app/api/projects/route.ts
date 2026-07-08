@@ -59,6 +59,7 @@ export async function POST(req: Request) {
       category,
       year,
       featured,
+      currentlyWorking,
       projectType,
       client,
       startDate,
@@ -66,6 +67,13 @@ export async function POST(req: Request) {
       duration,
       tech, // array of strings
     } = body;
+
+    if (currentlyWorking) {
+      await prisma.project.updateMany({
+        where: { currentlyWorking: true },
+        data: { currentlyWorking: false },
+      });
+    }
 
     const project = (await prisma.project.create({
       data: {
@@ -78,6 +86,7 @@ export async function POST(req: Request) {
         category,
         year,
         featured,
+        currentlyWorking,
         projectType,
         client,
         startDate,

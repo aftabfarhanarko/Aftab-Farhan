@@ -60,6 +60,7 @@ export async function PUT(
       category,
       year,
       featured,
+      currentlyWorking,
       projectType,
       client,
       startDate,
@@ -67,6 +68,16 @@ export async function PUT(
       duration,
       tech, // array of strings
     } = body;
+
+    if (currentlyWorking) {
+      await prisma.project.updateMany({
+        where: {
+          currentlyWorking: true,
+          NOT: { id },
+        },
+        data: { currentlyWorking: false },
+      });
+    }
 
     // 1. Delete existing tech relations for this project
     await prisma.projectTech.deleteMany({
@@ -86,6 +97,7 @@ export async function PUT(
         category,
         year,
         featured,
+        currentlyWorking,
         projectType,
         client,
         startDate,

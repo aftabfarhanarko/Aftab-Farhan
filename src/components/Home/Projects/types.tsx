@@ -11,6 +11,7 @@ export interface Project {
   category: string;
   year: string;
   featured: boolean;
+  currentlyWorking: boolean;
   projectType: string;
   client?: string;
   startDate?: string;

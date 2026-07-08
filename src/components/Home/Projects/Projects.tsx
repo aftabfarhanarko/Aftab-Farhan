@@ -21,9 +21,16 @@ export default function Projects() {
     },
   });
 
-  const featuredProject = allProjects.find((p) => p.featured) ?? allProjects[0];
+  // Find the project currently marked as active / currently working
+  const currentlyWorkingProject = allProjects.find((p) => p.currentlyWorking);
+  
+  // Use currently working project on top, fallback to featured project, then first project
+  const topProject = currentlyWorkingProject ?? allProjects.find((p) => p.featured) ?? allProjects[0];
 
   const filteredProjects = allProjects.filter((p) => {
+    // Hide the currently working project from the main grid if it is displayed on top
+    if (currentlyWorkingProject && p.id === currentlyWorkingProject.id) return false;
+
     if (activeTab === "my" && p.projectType !== "MY") return false;
     if (activeTab === "client" && p.projectType !== "CLIENT") return false;
     if (activeCategory !== "all" && p.category !== activeCategory) return false;
@@ -93,8 +100,8 @@ export default function Projects() {
         <ProjectsSkeleton />
       ) : (
         <>
-          {/* Featured hero */}
-          {featuredProject && <FeaturedCard project={featuredProject} />}
+          {/* Top Hero Project (Currently Working / Featured) */}
+          {topProject && <FeaturedCard project={topProject} />}
 
           <ProjectsFilters
             activeTab={activeTab}

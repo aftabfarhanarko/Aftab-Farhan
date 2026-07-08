@@ -148,6 +148,7 @@ model Project {
   category    ProjectCategory
   year        String
   featured    Boolean         @default(false)
+  currentlyWorking Boolean    @default(false)
   projectType ProjectType
   client      String?
   startDate   String?
