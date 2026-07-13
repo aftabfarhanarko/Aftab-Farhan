@@ -3,6 +3,7 @@ import React from "react";
 import { Layers, Rocket } from "lucide-react";
 import { techStack, services, additionalServices } from "./servicesData";
 import ServiceCard from "./ServiceCard";
+import DevOpsWorkflow from "./ServiceCard";
 
 const Services = () => {
   return (
@@ -41,12 +42,10 @@ const Services = () => {
         </div>
       </div>
 
-      {/* Services Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {services.map((service) => (
-          <ServiceCard key={service.id} service={service} />
-        ))}
-      </div>
+      {/* ── DevOps / Deployment Workflow ────────────────────────────────── */}
+      <DevOpsWorkflow />
+
+
 
       {/* Also Build */}
       <div className="p-8 rounded-2xl bg-foreground/5 border border-border mb-8">

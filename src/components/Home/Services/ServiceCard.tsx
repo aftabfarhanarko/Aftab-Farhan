@@ -1,139 +1,190 @@
 "use client";
-import React, { useState } from "react";
-import { CheckCircle2 } from "lucide-react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { GitBranch, Workflow } from "lucide-react";
 
-interface Service {
-  id: number;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  features: string[];
-  tech: string[];
+interface Stage {
+  id: string;
+  label: string;
+  sub: string;
+  logoUrl: string;
   color: string;
-  borderColor: string;
-  iconColor: string;
 }
 
-export default function ServiceCard({ service }: { service: Service }) {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [spotlight, setSpotlight] = useState({ x: 0, y: 0, show: false });
+const STAGES: Stage[] = [
+  {
+    id: "code",
+    label: "Version Control",
+    sub: "Git",
+    logoUrl: "https://cdn.simpleicons.org/git/F05032",
+    color: "#F05032",
+  },
+  {
+    id: "docker",
+    label: "Containerize",
+    sub: "Docker",
+    logoUrl: "https://cdn.simpleicons.org/docker/2496ED",
+    color: "#2496ED",
+  },
+  {
+    id: "cicd",
+    label: "CI / CD Pipeline",
+    sub: "GitLab",
+    logoUrl: "https://cdn.simpleicons.org/gitlab/FC6D26",
+    color: "#FC6D26",
+  },
+  {
+    id: "cloud",
+    label: "Cloud Deploy",
+    sub: "AWS",
+    logoUrl: "https://cdn.simpleicons.org/amazonaws/FF9900",
+    color: "#FF9900",
+  },
+];
 
-  const glowColor = service.iconColor.includes("blue") ? "rgba(59,130,246,0.15)" :
-                    service.iconColor.includes("green") ? "rgba(16,185,129,0.15)" :
-                    service.iconColor.includes("amber") ? "rgba(245,158,11,0.15)" :
-                    service.iconColor.includes("pink") ? "rgba(236,72,153,0.15)" :
-                    service.iconColor.includes("purple") ? "rgba(139,92,246,0.15)" :
-                    service.iconColor.includes("teal") ? "rgba(20,184,166,0.15)" :
-                    "rgba(255,255,255,0.08)";
+export default function DevOpsWorkflow() {
+  const [activeStep, setActiveStep] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const tiltX = ((y - rect.height / 2) / (rect.height / 2)) * -6;
-    const tiltY = ((x - rect.width / 2) / (rect.width / 2)) * 6;
-
-    setTilt({ x: tiltX, y: tiltY });
-    setSpotlight({ x, y, show: true });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setSpotlight({ x: 0, y: 0, show: false });
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % STAGES.length);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transformStyle: "preserve-3d",
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
-      whileHover={{
-        borderColor: "rgba(255, 255, 255, 0.12)",
-        boxShadow: `0 25px 50px -12px ${glowColor}`,
-      }}
-      className={`group relative rounded-[2rem] bg-gradient-to-br ${service.color} border border-white/[0.06] backdrop-blur-xl transition-all duration-300 overflow-hidden text-left`}
-    >
-      {/* Spotlight */}
-      {spotlight.show && (
-        <div
-          className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(180px circle at ${spotlight.x}px ${spotlight.y}px, ${glowColor.replace("0.15", "0.08")}, transparent 80%)`,
-          }}
-        />
-      )}
+    <div className="relative mb-12 p-6 sm:p-8 rounded-[2rem] bg-[#0E0E10]/95 border border-white/[0.06] overflow-hidden">
+      {/* Ambient background glow that shifts with the active stage */}
+      <motion.div
+        className="absolute -top-24 left-1/2 -translate-x-1/2 w-[420px] h-[420px] rounded-full blur-3xl pointer-events-none"
+        animate={{ backgroundColor: STAGES[activeStep].color, opacity: [0.1, 0.16, 0.1] }}
+        transition={{ backgroundColor: { duration: 0.6 }, opacity: { duration: 2.4, repeat: Infinity, ease: "easeInOut" } }}
+      />
 
-      {/* Sweep Glare Shine */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1200ms] ease-out pointer-events-none" />
-
-      <div className="p-7 relative z-10">
-        
-        {/* Spring icon container */}
-        <motion.div 
-          whileHover={{ rotate: 360, scale: 1.1 }}
-          transition={{ type: "spring", stiffness: 200, damping: 12 }}
-          className={`w-12 h-12 rounded-2xl bg-white/[0.04] border border-white/[0.08] shadow-inner flex items-center justify-center mb-6 shrink-0 transition-all duration-300 ${service.iconColor}`}
-          style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}
-        >
-          {service.icon}
-        </motion.div>
-
-        {/* Title & Description */}
-        <div style={{ transform: "translateZ(25px)", transformStyle: "preserve-3d" }} className="mb-6">
-          <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mb-2.5 group-hover:text-white transition-colors">
-            {service.title}
-          </h3>
-          <p className="text-xs sm:text-[13px] text-white/50 leading-relaxed font-medium">
-            {service.description}
-          </p>
+      {/* Header */}
+      <div className="relative z-10 flex items-center gap-3 mb-8 sm:mb-10">
+        <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0">
+          <Workflow size={16} className="text-white/60" />
         </div>
-
-        {/* Tech Stack */}
-        <div style={{ transform: "translateZ(20px)", transformStyle: "preserve-3d" }} className="mb-6">
-          <p className="text-[10px] font-black text-white/30 uppercase tracking-widest mb-3">
-            Tech Stack
+        <div>
+          <p className="text-sm font-bold text-white uppercase tracking-wider">
+            Deployment Workflow
           </p>
-          <div className="flex flex-wrap gap-2">
-            {service.tech.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1.5 text-xs font-semibold bg-white/[0.02] border border-white/[0.06] rounded-xl text-white/70 hover:text-white hover:bg-white/[0.06] hover:border-white/15 transition-all duration-150"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Features List */}
-        <div
-          style={{ transform: "translateZ(15px)", transformStyle: "preserve-3d" }}
-          className="space-y-3"
-        >
-          <p className="text-[10px] font-black text-white/30 uppercase tracking-widest">
-            Key Features
+          <p className="text-[11px] text-white/40 font-medium">
+            How I ship code to production, end to end
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {service.features.slice(0, 6).map((feature) => (
-              <div key={feature} className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-white/60 flex-shrink-0" />
-                <span className="text-xs font-medium text-white/75">{feature}</span>
-              </div>
-            ))}
-          </div>
-          {service.features.length > 6 && (
-            <p className="text-[11px] font-medium text-white/30 mt-2">
-              +{service.features.length - 6} more features
-            </p>
-          )}
         </div>
       </div>
-    </motion.div>
+
+      {/* Pipeline */}
+      <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-0">
+        {STAGES.map((stage, i) => {
+          const isActive = i === activeStep;
+          const isPast = i < activeStep;
+
+          return (
+            <React.Fragment key={stage.id}>
+              {/* Node */}
+              <motion.div
+                className="flex sm:flex-col items-center sm:items-center gap-4 sm:gap-3 sm:w-32 sm:text-center"
+                animate={{ opacity: isActive || isPast ? 1 : 0.45 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="relative shrink-0">
+                  {/* Pulsing ring when active */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.span
+                        className="absolute inset-0 rounded-2xl"
+                        style={{ boxShadow: `0 0 0 2px ${stage.color}` }}
+                        initial={{ opacity: 0.7, scale: 1 }}
+                        animate={{ opacity: 0, scale: 1.6 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+                      />
+                    )}
+                  </AnimatePresence>
+
+                  <motion.div
+                    className="relative w-14 h-14 rounded-2xl bg-white border flex items-center justify-center shadow-md"
+                    animate={{
+                      borderColor: isActive || isPast ? `${stage.color}55` : "rgba(255,255,255,0.08)",
+                      boxShadow: isActive
+                        ? `0 0 0 2px ${stage.color}45, 0 10px 24px -8px ${stage.color}55`
+                        : "0 0 0 0px transparent",
+                      scale: isActive ? 1.06 : 1,
+                    }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <img src={stage.logoUrl} alt={stage.sub} className="w-8 h-8 object-contain" />
+                  </motion.div>
+                </div>
+
+                <div className="text-left sm:text-center">
+                  <p
+                    className="text-xs font-bold transition-colors duration-300"
+                    style={{ color: isActive ? stage.color : isPast ? "#ffffff" : "rgba(255,255,255,0.5)" }}
+                  >
+                    {stage.sub}
+                  </p>
+                  <p className="text-[10px] text-white/35 font-medium uppercase tracking-wide">
+                    {stage.label}
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Connector */}
+              {i < STAGES.length - 1 && (
+                <div className="relative flex-1 min-w-[24px] sm:min-w-0 h-8 sm:h-[2px] sm:mt-[-24px] mx-0 sm:mx-2 self-stretch sm:self-auto">
+                  {/* vertical line for mobile, horizontal for desktop */}
+                  <div className="absolute left-[27px] sm:left-0 top-0 sm:top-1/2 w-[2px] sm:w-full h-full sm:h-[2px] bg-white/[0.06] sm:-translate-y-1/2" />
+                  {/* progress fill */}
+                  <motion.div
+                    className="absolute left-[27px] sm:left-0 top-0 sm:top-1/2 w-[2px] sm:w-full sm:-translate-y-1/2 rounded-full"
+                    style={{ backgroundColor: STAGES[i].color }}
+                    animate={{
+                      height: i < activeStep ? "100%" : "0%",
+                      width: undefined,
+                    }}
+                    transition={{ duration: 0.5 }}
+                  />
+                  <motion.div
+                    className="hidden sm:block absolute top-1/2 left-0 h-[2px] rounded-full -translate-y-1/2"
+                    style={{ backgroundColor: STAGES[i].color }}
+                    animate={{ width: i < activeStep ? "100%" : i === activeStep ? "50%" : "0%" }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                  />
+
+                  {/* traveling pulse dot along the active connector — mobile: moves vertically */}
+                  {i === activeStep && (
+                    <motion.div
+                      className="sm:hidden absolute w-1.5 h-1.5 rounded-full left-[27px] -translate-x-1/2"
+                      style={{ backgroundColor: STAGES[i].color, boxShadow: `0 0 8px 2px ${STAGES[i].color}` }}
+                      animate={{ top: ["0%", "100%"] }}
+                      transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+                    />
+                  )}
+                  {/* traveling pulse dot along the active connector — desktop: moves horizontally */}
+                  {i === activeStep && (
+                    <motion.div
+                      className="hidden sm:block absolute w-1.5 h-1.5 rounded-full top-1/2 -translate-y-1/2"
+                      style={{ backgroundColor: STAGES[i].color, boxShadow: `0 0 8px 2px ${STAGES[i].color}` }}
+                      animate={{ left: ["0%", "100%"] }}
+                      transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+                    />
+                  )}
+                </div>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </div>
+
+      {/* Footer note */}
+      <div className="relative z-10 mt-8 sm:mt-10 pt-5 border-t border-white/[0.06] flex items-center gap-2 text-[11px] text-white/35 font-medium">
+        <GitBranch size={12} className="text-white/30" />
+        Every push is containerized, tested, and deployed through an automated pipeline — no manual server touching.
+      </div>
+    </div>
   );
 }
