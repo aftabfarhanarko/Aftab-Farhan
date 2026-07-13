@@ -122,9 +122,9 @@ export default function ContactInfo() {
       {/* Social Links with Spring-Twists */}
       <div className="flex gap-3 mb-2">
         {[
-          { icon: <LinkedinIcon />, href: "https://linkedin.com/in/arko", color: "hover:text-blue-400 hover:border-blue-400/30 hover:bg-blue-400/5" },
-          { icon: <GithubIcon />, href: "https://github.com/aftabfarhanarko", color: "hover:text-white hover:border-white/30 hover:bg-white/5" },
-          { icon: <WhatsAppIcon />, href: "https://wa.me/880613410880", color: "hover:text-green-400 hover:border-green-400/30 hover:bg-green-400/5" },
+          { icon: <LinkedinIcon />, href: "https://linkedin.com/in/aftabfarhanarko", color: "hover:text-white hover:border-[#0A66C2] hover:bg-[#0A66C2]" },
+          { icon: <GithubIcon />, href: "https://github.com/aftabfarhanarko", color: "hover:text-white hover:border-[#181717] hover:bg-[#181717]" },
+          { icon: <WhatsAppIcon />, href: "https://wa.me/8801613410880", color: "hover:text-white hover:border-[#25D366] hover:bg-[#25D366]" },
         ].map((social, i) => (
           <motion.a
             key={i}

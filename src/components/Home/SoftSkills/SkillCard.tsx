@@ -149,7 +149,7 @@ export default function SkillCard({
               </div>
               <div className="h-2 bg-white/[0.03] border border-white/[0.06] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"
+                  className="h-full bg-gradient-to-r from-white/95 to-white/70 rounded-full"
                   style={{
                     width: inView ? `${sub.level}%` : "0%",
                     transition: `width 900ms cubic-bezier(0.4, 0, 0.2, 1) ${delay + i * 120}ms`,
