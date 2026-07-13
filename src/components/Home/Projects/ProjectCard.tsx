@@ -80,7 +80,8 @@ export default function ProjectCard({ project }: { project: Project }) {
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="group relative flex flex-col rounded-2xl border border-border bg-card/30 hover:border-foreground/[0.18] transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl backdrop-blur-md"
+        onClick={handleOpenDetails}
+        className="group relative flex flex-col rounded-2xl border border-border bg-card/30 hover:border-foreground/[0.18] transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl backdrop-blur-md cursor-pointer"
       >
         {/* Spotlight overlay */}
         <div
@@ -100,15 +101,12 @@ export default function ProjectCard({ project }: { project: Project }) {
         />
 
         {/* Thumbnail */}
-        <div className="relative aspect-[3/2] overflow-hidden bg-black/10">
+        <div className="relative aspect-[4/3] overflow-hidden bg-black/10">
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover opacity-50 group-hover:opacity-85 group-hover:scale-[1.06] transition-all duration-700 ease-out contrast-[1.02] brightness-[0.95] group-hover:brightness-100 group-hover:contrast-100"
+            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-700 ease-out contrast-[1.01]"
           />
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent" />
 
           {/* Top badges */}
           <div className="absolute top-3 left-3 right-3 flex flex-wrap items-center gap-1.5 z-10">
@@ -144,7 +142,10 @@ export default function ProjectCard({ project }: { project: Project }) {
           </div>
 
           {/* Hover quick-actions */}
-          <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
+          >
             <a
               href={project.demoLink}
               target="_blank"
@@ -202,7 +203,10 @@ export default function ProjectCard({ project }: { project: Project }) {
           </div>
 
           {/* Actions */}
-          <div className="flex gap-2 flex-wrap items-center mt-auto">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="flex gap-2 flex-wrap items-center mt-auto"
+          >
             <ActionBtn
               href={project.demoLink}
               icon={ExternalLink}
