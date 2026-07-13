@@ -3,6 +3,7 @@ import Hero from "@/components/Home/Hero/Hero";
 import About from "@/components/Home/About/About";
 import Skills from "@/components/Home/Skills/Skills";
 import AIStack from "@/components/Home/AIStack/AIStack";
+import Achievements from "@/components/Home/Achievements/Achievements";
 import Contact from "@/components/Home/Contact/Contact";
 import Projects from "@/components/Home/Projects/Projects";
 import Experience from "@/components/Home/Experience/Experience";
@@ -17,6 +18,7 @@ export default function Home() {
       <About />
       <Skills />
       <AIStack />
+      <Achievements />
       <Projects />
       <Experience />
       <Services />

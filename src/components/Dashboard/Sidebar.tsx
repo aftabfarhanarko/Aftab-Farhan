@@ -25,6 +25,7 @@ import {
   Sparkles,
   X,
   Menu,
+  Trophy,
 } from "lucide-react";
 
 // ── Collapsible Menu Groups Config ──────────────────────────────────────────────
@@ -39,6 +40,7 @@ const GROUPS = [
       { id: "about", label: "About Me", href: "/dashboard/about", icon: UserCircle2 },
       { id: "skills", label: "Skills Inventory", href: "/dashboard/skills", icon: Zap },
       { id: "projects", label: "Projects Portfolio", href: "/dashboard/projects", icon: FolderKanban },
+      { id: "achievements", label: "Achievements", href: "/dashboard/achievements", icon: Trophy },
     ],
   },
   {
@@ -98,7 +100,8 @@ const SidebarContent = ({
       pathname.includes("/hero") ||
       pathname.includes("/about") ||
       pathname.includes("/skills") ||
-      pathname.includes("/projects")
+      pathname.includes("/projects") ||
+      pathname.includes("/achievements")
     ) {
       setOpenGroups((prev) => ({ ...prev, sections: true }));
     }
