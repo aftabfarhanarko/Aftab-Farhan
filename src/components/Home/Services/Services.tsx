@@ -66,22 +66,7 @@ const Services = () => {
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div className="mt-8 p-8 rounded-2xl bg-gradient-to-r from-foreground/10 via-foreground/5 to-transparent border border-border">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 className="text-2xl font-bold text-foreground mb-2">
-              Ready to start your project?
-            </h3>
-            <p className="text-foreground/60">
-              Let's discuss your idea and turn it into a real product together.
-            </p>
-          </div>
-          <button className="px-8 py-3 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-colors whitespace-nowrap">
-            Get in Touch
-          </button>
-        </div>
-      </div>
+
     </section>
   );
 };

@@ -52,7 +52,7 @@ export default function AboutBio({
       {(roleDescription || introParagraphs.length > 0) && (
         <motion.div variants={itemVariants} className="flex flex-col gap-4 text-left">
           {roleDescription && (
-            <p className="text-[17px] text-foreground/95 dark:text-white/10 leading-[1.85] font-light">
+            <p className="text-[15px] text-foreground/90 dark:text-white/90 leading-[1.85] font-light">
               {roleDescription}
             </p>
           )}
