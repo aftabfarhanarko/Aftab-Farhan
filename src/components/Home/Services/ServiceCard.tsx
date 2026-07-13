@@ -34,11 +34,11 @@ const STAGES: Stage[] = [
     color: "#FC6D26",
   },
   {
-    id: "cloud",
-    label: "Cloud Deploy",
-    sub: "AWS",
-    logoUrl: "https://cdn.simpleicons.org/amazonaws/FF9900",
-    color: "#FF9900",
+    id: "k8s",
+    label: "Orchestrate & Deploy",
+    sub: "Kubernetes",
+    logoUrl: "https://cdn.simpleicons.org/kubernetes/326CE5",
+    color: "#326CE5",
   },
 ];
 
