@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { ExternalLink, ArrowUpRight, Info, X, Calendar, Layers, User, Loader2, Clock } from "lucide-react";
+import { ExternalLink, ArrowUpRight, Info, X, Calendar, Layers, User, Loader2, Clock, Briefcase, Users } from "lucide-react";
 import {
   Project,
   categoryLabel,
@@ -100,7 +100,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         />
 
         {/* Thumbnail */}
-        <div className="relative aspect-[16/9] overflow-hidden bg-black/10">
+        <div className="relative aspect-[3/2] overflow-hidden bg-black/10">
           <img
             src={project.image}
             alt={project.title}
@@ -111,26 +111,36 @@ export default function ProjectCard({ project }: { project: Project }) {
           <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent" />
 
           {/* Top badges */}
-          <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-            <div className="flex items-center gap-1.5">
-              <span
-                className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest border rounded-lg backdrop-blur-sm shadow-sm ${badge}`}
-              >
-                {categoryLabel[project.category] || project.category}
-              </span>
-              {project.projectType === "CLIENT" && (
-                <span className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 rounded-lg backdrop-blur-sm shadow-[0_0_15px_rgba(16,185,129,0.3)] flex items-center gap-1.5">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                  </span>
-                  Client Project
-                </span>
-              )}
-            </div>
-            <span className="px-3 py-1.5 text-[10px] font-black text-foreground/60 bg-black/50 backdrop-blur-sm border border-white/10 rounded-lg">
-              {project.year}
+          <div className="absolute top-3 left-3 right-3 flex flex-wrap items-center gap-1.5 z-10">
+            {/* Category Pill */}
+            <span className="px-2.5 py-1 text-[9px] font-bold text-white/85 bg-black/65 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-1 shadow-sm">
+              <Layers className="w-3 h-3 text-white/40 shrink-0" />
+              {categoryLabel[project.category] || project.category}
             </span>
+
+            {/* Client Pill */}
+            {project.client && (
+              <span className="px-2.5 py-1 text-[9px] font-bold text-white/85 bg-black/65 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-1 shadow-sm">
+                <Briefcase className="w-3 h-3 text-white/40 shrink-0" />
+                {project.client}
+              </span>
+            )}
+
+            {/* Client Project Type Pill */}
+            {project.projectType === "CLIENT" && (
+              <span className="px-2.5 py-1 text-[9px] font-bold text-white/85 bg-black/65 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-1 shadow-sm">
+                <Users className="w-3 h-3 text-white/40 shrink-0" />
+                Client Project
+              </span>
+            )}
+
+            {/* Year Pill */}
+            {project.year && (
+              <span className="px-2.5 py-1 text-[9px] font-bold text-white/85 bg-black/65 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-1 shadow-sm ml-auto">
+                <Calendar className="w-3 h-3 text-white/40 shrink-0" />
+                {project.year}
+              </span>
+            )}
           </div>
 
           {/* Hover quick-actions */}
