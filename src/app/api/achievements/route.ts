@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { image, title, name, issuer, description } = body;
+    const { image, title, name, issuer, startDate, endDate, description } = body;
 
     if (!image || !title || !name || !issuer || !description) {
       return NextResponse.json(
@@ -42,6 +42,8 @@ export async function POST(request: Request) {
         title,
         name,
         issuer,
+        startDate: startDate || "",
+        endDate: endDate || "",
         description,
       },
     });

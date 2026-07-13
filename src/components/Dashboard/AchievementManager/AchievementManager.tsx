@@ -23,6 +23,8 @@ export interface Achievement {
   title: string;
   name: string;
   issuer: string;
+  startDate: string;
+  endDate: string;
   description: string;
 }
 
@@ -31,6 +33,8 @@ const EMPTY_FORM = {
   title: "",
   name: "",
   issuer: "",
+  startDate: "",
+  endDate: "",
   description: "",
 };
 
@@ -99,6 +103,8 @@ export default function AchievementManager() {
       title: item.title,
       name: item.name,
       issuer: item.issuer,
+      startDate: item.startDate || "",
+      endDate: item.endDate || "",
       description: item.description,
     });
     setImagePreview(item.image || null);
@@ -252,6 +258,11 @@ export default function AchievementManager() {
                     <p className="text-[9px] font-black uppercase tracking-widest text-white/30 font-mono">
                       {item.title} • {item.issuer}
                     </p>
+                    {item.startDate && (
+                      <p className="text-[9px] text-white/40 font-mono mt-0.5">
+                        {item.startDate} {item.endDate ? `– ${item.endDate}` : ""}
+                      </p>
+                    )}
                     <h3 className="text-base font-bold text-white group-hover:text-white transition-colors truncate">
                       {item.name}
                     </h3>
@@ -446,6 +457,41 @@ export default function AchievementManager() {
                       }
                       className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/8 hover:border-white/12 focus:border-white/20 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none transition-all placeholder:text-white/15"
                       placeholder="e.g. Google Cloud"
+                    />
+                  </div>
+                </div>
+
+                {/* Date Inputs */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Start Date */}
+                  <div className="space-y-1.5 text-left">
+                    <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-white/30 px-0.5">
+                      Start Date
+                    </label>
+                    <input
+                      type="text"
+                      value={form.startDate}
+                      onChange={(e) =>
+                        setForm((prev) => ({ ...prev, startDate: e.target.value }))
+                      }
+                      className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/8 hover:border-white/12 focus:border-white/20 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none transition-all placeholder:text-white/15"
+                      placeholder="e.g. April 2026"
+                    />
+                  </div>
+
+                  {/* End Date */}
+                  <div className="space-y-1.5 text-left">
+                    <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-white/30 px-0.5">
+                      End Date
+                    </label>
+                    <input
+                      type="text"
+                      value={form.endDate}
+                      onChange={(e) =>
+                        setForm((prev) => ({ ...prev, endDate: e.target.value }))
+                      }
+                      className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/8 hover:border-white/12 focus:border-white/20 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none transition-all placeholder:text-white/15"
+                      placeholder="e.g. June 2026 (or Ongoing)"
                     />
                   </div>
                 </div>

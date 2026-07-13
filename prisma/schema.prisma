@@ -228,6 +228,8 @@ model PortfolioAchievement {
   title       String
   name        String
   issuer      String
+  startDate   String   @default("")
+  endDate     String   @default("")
   description String
   image       String
   createdAt   DateTime @default(now())
