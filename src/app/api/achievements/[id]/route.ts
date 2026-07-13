@@ -14,7 +14,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { image, title, name, description } = body;
+    const { image, title, name, issuer, description } = body;
 
     const updatedAchievement = await prisma.portfolioAchievement.update({
       where: { id },
@@ -22,6 +22,7 @@ export async function PUT(
         image,
         title,
         name,
+        issuer,
         description,
       },
     });

@@ -10,6 +10,7 @@ interface AchievementData {
   image: string;
   title: string;
   name: string;
+  issuer: string;
   description: string;
 }
 
@@ -82,14 +83,17 @@ function AchievementCard({ item }: { item: AchievementData }) {
 
       {/* Details */}
       <div className="p-6 flex-1 flex flex-col justify-between" style={{ transform: "translateZ(20px)", transformStyle: "preserve-3d" }}>
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           <span className="text-[10px] font-black text-white/30 uppercase tracking-widest font-mono block">
             {item.title}
           </span>
-          <h3 className="text-base sm:text-lg font-bold text-white leading-snug group-hover:text-white transition-colors">
-            {item.name}
+          <h3 className="text-lg sm:text-xl font-black text-white tracking-tight leading-tight pt-0.5">
+            {item.issuer}
           </h3>
-          <p className="text-xs text-white/50 leading-relaxed font-medium line-clamp-3">
+          <h4 className="text-xs sm:text-sm font-bold text-white/60 leading-snug group-hover:text-white/80 transition-colors">
+            {item.name}
+          </h4>
+          <p className="text-xs text-white/40 leading-relaxed font-medium line-clamp-3">
             {item.description}
           </p>
         </div>

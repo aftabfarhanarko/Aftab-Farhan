@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useToast } from "@/components/Dashboard/ui/ToastContext";
 import { AnimatePresence, motion } from "framer-motion";
+import { uploadImageToImgBB } from "@/lib/upload";
 import {
   Trophy,
   Plus,
@@ -21,6 +22,7 @@ export interface Achievement {
   image: string;
   title: string;
   name: string;
+  issuer: string;
   description: string;
 }
 
@@ -28,6 +30,7 @@ const EMPTY_FORM = {
   image: "",
   title: "",
   name: "",
+  issuer: "",
   description: "",
 };
 
@@ -39,6 +42,11 @@ export default function AchievementManager() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<Omit<Achievement, "id">>(EMPTY_FORM);
   const [search, setSearch] = useState("");
+
+  // Upload States
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const { data: achievements, isLoading } = useQuery<Achievement[]>({
     queryKey: ["achievements"],
@@ -79,6 +87,8 @@ export default function AchievementManager() {
   const openAdd = () => {
     setEditingId(null);
     setForm(EMPTY_FORM);
+    setImagePreview(null);
+    setImageFile(null);
     setIsModalOpen(true);
   };
 
@@ -88,8 +98,11 @@ export default function AchievementManager() {
       image: item.image,
       title: item.title,
       name: item.name,
+      issuer: item.issuer,
       description: item.description,
     });
+    setImagePreview(item.image || null);
+    setImageFile(null);
     setIsModalOpen(true);
   };
 
@@ -97,16 +110,54 @@ export default function AchievementManager() {
     setIsModalOpen(false);
     setEditingId(null);
     setForm(EMPTY_FORM);
+    setImagePreview(null);
+    setImageFile(null);
   };
 
-  const isSaving = addMutation.isPending || updateMutation.isPending;
+  const isSaving = isUploading || addMutation.isPending || updateMutation.isPending;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const clearImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setImageFile(null);
+    setImagePreview(null);
+    setForm((prev) => ({ ...prev, image: "" }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (editingId) {
-      updateMutation.mutate({ ...form, id: editingId });
-    } else {
-      addMutation.mutate(form);
+    setIsUploading(true);
+    try {
+      let finalImageUrl = form.image;
+      if (imageFile) {
+        finalImageUrl = await uploadImageToImgBB(imageFile);
+      }
+
+      if (!finalImageUrl) {
+        showToast("Please upload an image or provide a valid Image URL");
+        setIsUploading(false);
+        return;
+      }
+
+      const payload = { ...form, image: finalImageUrl };
+
+      if (editingId) {
+        updateMutation.mutate({ ...payload, id: editingId });
+      } else {
+        addMutation.mutate(payload);
+      }
+    } catch (err) {
+      showToast("Failed to upload image. Please try again.");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -199,7 +250,7 @@ export default function AchievementManager() {
                 <div className="p-6 flex-1 flex flex-col justify-between text-left">
                   <div className="space-y-2 mb-6">
                     <p className="text-[9px] font-black uppercase tracking-widest text-white/30 font-mono">
-                      {item.title}
+                      {item.title} • {item.issuer}
                     </p>
                     <h3 className="text-base font-bold text-white group-hover:text-white transition-colors truncate">
                       {item.name}
@@ -260,7 +311,7 @@ export default function AchievementManager() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 24, scale: 0.97 }}
               transition={{ type: "spring", stiffness: 320, damping: 30 }}
-              className="relative w-full max-w-2xl bg-[#0c0c0c] border border-white/10 rounded-3xl shadow-2xl overflow-hidden"
+              className="relative w-full max-w-2xl bg-[#0c0c0c] border border-white/10 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200"
             >
               <div className="flex items-center justify-between px-7 pt-7 pb-6 border-b border-white/5">
                 <div>
@@ -281,25 +332,72 @@ export default function AchievementManager() {
               </div>
 
               <form onSubmit={handleSubmit} className="p-7 space-y-5">
-                {/* Image URL Input */}
+                {/* Image Picker */}
                 <div className="space-y-1.5 text-left">
                   <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-white/30 px-0.5">
-                    Image URL
+                    Certificate Image
                   </label>
-                  <input
-                    required
-                    type="url"
-                    value={form.image}
-                    onChange={(e) =>
-                      setForm((prev) => ({ ...prev, image: e.target.value }))
-                    }
-                    className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/8 hover:border-white/12 focus:border-white/20 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none transition-all placeholder:text-white/15"
-                    placeholder="https://example.com/certificate-image.jpg"
-                  />
+                  <div className="flex flex-col sm:flex-row gap-4 items-center">
+                    {/* Preview box */}
+                    <div className="relative w-full sm:w-40 aspect-video rounded-xl border border-white/10 bg-white/5 overflow-hidden flex items-center justify-center shrink-0">
+                      {imagePreview ? (
+                        <>
+                          <img
+                            src={imagePreview}
+                            alt="Preview"
+                            className="w-full h-full object-cover"
+                          />
+                          <button
+                            type="button"
+                            onClick={clearImage}
+                            className="absolute top-2 right-2 p-1 bg-black/60 hover:bg-black/80 rounded-md border border-white/10 text-white/70 hover:text-white transition-colors"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </>
+                      ) : (
+                        <ImageIcon className="w-6 h-6 text-white/25" />
+                      )}
+                    </div>
+                    {/* Inputs */}
+                    <div className="flex-1 w-full space-y-2">
+                      <div className="relative">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          className="hidden"
+                          id="achievement-image-file"
+                        />
+                        <label
+                          htmlFor="achievement-image-file"
+                          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer hover:text-white transition-all text-center"
+                        >
+                          Upload Image
+                        </label>
+                      </div>
+                      <div className="relative flex items-center justify-center">
+                        <span className="text-[9px] font-bold text-white/25 uppercase tracking-widest bg-[#0C0C0C] px-2 relative z-10">
+                          Or enter URL
+                        </span>
+                        <div className="absolute inset-x-0 h-px bg-white/5" />
+                      </div>
+                      <input
+                        type="url"
+                        value={form.image}
+                        onChange={(e) => {
+                          setForm((prev) => ({ ...prev, image: e.target.value }));
+                          setImagePreview(e.target.value);
+                        }}
+                        placeholder="https://example.com/image.jpg"
+                        className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/8 hover:border-white/12 focus:border-white/20 rounded-xl px-4 py-2.5 text-xs font-medium focus:outline-none transition-all placeholder:text-white/15"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 {/* Grid Inputs */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {/* Category/Title */}
                   <div className="space-y-1.5 text-left">
                     <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-white/30 px-0.5">
@@ -313,14 +411,14 @@ export default function AchievementManager() {
                         setForm((prev) => ({ ...prev, title: e.target.value }))
                       }
                       className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/8 hover:border-white/12 focus:border-white/20 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none transition-all placeholder:text-white/15"
-                      placeholder="e.g. Google Cloud Certification"
+                      placeholder="e.g. Certification"
                     />
                   </div>
 
                   {/* Name */}
                   <div className="space-y-1.5 text-left">
                     <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-white/30 px-0.5">
-                      Name (Credential Name)
+                      Name
                     </label>
                     <input
                       required
@@ -331,6 +429,23 @@ export default function AchievementManager() {
                       }
                       className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/8 hover:border-white/12 focus:border-white/20 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none transition-all placeholder:text-white/15"
                       placeholder="e.g. Professional Cloud Architect"
+                    />
+                  </div>
+
+                  {/* Issuer */}
+                  <div className="space-y-1.5 text-left">
+                    <label className="block text-[10px] font-black uppercase tracking-[0.15em] text-white/30 px-0.5">
+                      Issuer / Institution
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      value={form.issuer}
+                      onChange={(e) =>
+                        setForm((prev) => ({ ...prev, issuer: e.target.value }))
+                      }
+                      className="w-full bg-white/[0.04] hover:bg-white/[0.06] border border-white/8 hover:border-white/12 focus:border-white/20 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none transition-all placeholder:text-white/15"
+                      placeholder="e.g. Google Cloud"
                     />
                   </div>
                 </div>

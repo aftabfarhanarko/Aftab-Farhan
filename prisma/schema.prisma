@@ -227,6 +227,7 @@ model PortfolioAchievement {
   id          String   @id @default(uuid())
   title       String
   name        String
+  issuer      String
   description String
   image       String
   createdAt   DateTime @default(now())
