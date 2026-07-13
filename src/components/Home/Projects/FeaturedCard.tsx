@@ -125,7 +125,7 @@ export default function FeaturedCard({ project }: { project: Project }) {
           )}
         </div>
 
-        <p className="text-[12.5px] sm:text-[13px] text-white/60 leading-relaxed mb-6 font-medium">
+        <p className="text-[12.5px] sm:text-[13px] text-white/60 leading-relaxed mb-6 font-medium whitespace-pre-line">
           {project.description}
         </p>
 

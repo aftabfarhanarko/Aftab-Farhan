@@ -317,7 +317,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                   <p className="text-xs sm:text-sm font-bold text-foreground/85 leading-relaxed">
                     {displayProject.tagline}
                   </p>
-                  <p className="text-xs sm:text-sm text-foreground/60 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-foreground/60 leading-relaxed whitespace-pre-line">
                     {displayProject.description}
                   </p>
                 </div>
