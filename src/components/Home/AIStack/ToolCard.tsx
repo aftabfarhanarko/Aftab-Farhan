@@ -28,7 +28,7 @@ export default function ToolCard({ tool, isActive, onClick, index = 0 }: ToolCar
 
   const glowColor = tool.color || "rgba(255,255,255,0.08)";
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     const el = e.currentTarget;
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left;
