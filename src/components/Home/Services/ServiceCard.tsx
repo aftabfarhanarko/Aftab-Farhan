@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface Service {
   id: number;
@@ -15,38 +16,94 @@ interface Service {
 }
 
 export default function ServiceCard({ service }: { service: Service }) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 0, y: 0, show: false });
+
+  const glowColor = service.iconColor.includes("blue") ? "rgba(59,130,246,0.15)" :
+                    service.iconColor.includes("green") ? "rgba(16,185,129,0.15)" :
+                    service.iconColor.includes("amber") ? "rgba(245,158,11,0.15)" :
+                    service.iconColor.includes("pink") ? "rgba(236,72,153,0.15)" :
+                    service.iconColor.includes("purple") ? "rgba(139,92,246,0.15)" :
+                    service.iconColor.includes("teal") ? "rgba(20,184,166,0.15)" :
+                    "rgba(255,255,255,0.08)";
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const tiltX = ((y - rect.height / 2) / (rect.height / 2)) * -6;
+    const tiltY = ((x - rect.width / 2) / (rect.width / 2)) * 6;
+
+    setTilt({ x: tiltX, y: tiltY });
+    setSpotlight({ x, y, show: true });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+    setSpotlight({ x: 0, y: 0, show: false });
+  };
 
   return (
-    <div
-      className={`group relative rounded-2xl bg-gradient-to-br ${service.color} border ${service.borderColor} backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: "preserve-3d",
+        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+      }}
+      whileHover={{
+        borderColor: "rgba(255, 255, 255, 0.12)",
+        boxShadow: `0 25px 50px -12px ${glowColor}`,
+      }}
+      className={`group relative rounded-[2rem] bg-gradient-to-br ${service.color} border border-white/[0.06] backdrop-blur-xl transition-all duration-300 overflow-hidden text-left`}
     >
-      <div className="p-6">
-        {/* Icon */}
-        <div className={`mb-4 ${service.iconColor} transition-transform duration-300 group-hover:scale-110`}>
+      {/* Spotlight */}
+      {spotlight.show && (
+        <div
+          className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(180px circle at ${spotlight.x}px ${spotlight.y}px, ${glowColor.replace("0.15", "0.08")}, transparent 80%)`,
+          }}
+        />
+      )}
+
+      {/* Sweep Glare Shine */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1200ms] ease-out pointer-events-none" />
+
+      <div className="p-7 relative z-10">
+        
+        {/* Spring icon container */}
+        <motion.div 
+          whileHover={{ rotate: 360, scale: 1.1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 12 }}
+          className={`w-12 h-12 rounded-2xl bg-white/[0.04] border border-white/[0.08] shadow-inner flex items-center justify-center mb-6 shrink-0 transition-all duration-300 ${service.iconColor}`}
+          style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}
+        >
           {service.icon}
-        </div>
+        </motion.div>
 
         {/* Title & Description */}
-        <h3 className="text-xl font-bold text-foreground mb-2">
-          {service.title}
-        </h3>
-        <p className="text-foreground/60 text-sm leading-relaxed mb-4">
-          {service.description}
-        </p>
+        <div style={{ transform: "translateZ(25px)", transformStyle: "preserve-3d" }} className="mb-6">
+          <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mb-2.5 group-hover:text-white transition-colors">
+            {service.title}
+          </h3>
+          <p className="text-xs sm:text-[13px] text-white/50 leading-relaxed font-medium">
+            {service.description}
+          </p>
+        </div>
 
         {/* Tech Stack */}
-        <div className="mb-4">
-          <p className="text-xs font-semibold text-foreground/40 uppercase tracking-wider mb-2">
+        <div style={{ transform: "translateZ(20px)", transformStyle: "preserve-3d" }} className="mb-6">
+          <p className="text-[10px] font-black text-white/30 uppercase tracking-widest mb-3">
             Tech Stack
           </p>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {service.tech.map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-1 text-xs bg-card/50 border border-border rounded-md text-foreground/60"
+                className="px-3 py-1.5 text-xs font-semibold bg-white/[0.02] border border-white/[0.06] rounded-xl text-white/70 hover:text-white hover:bg-white/[0.06] hover:border-white/15 transition-all duration-150"
               >
                 {tech}
               </span>
@@ -56,31 +113,27 @@ export default function ServiceCard({ service }: { service: Service }) {
 
         {/* Features List */}
         <div
-          className={`space-y-2 transition-all duration-300 ${
-            isHovered ? "opacity-100" : "opacity-80"
-          }`}
+          style={{ transform: "translateZ(15px)", transformStyle: "preserve-3d" }}
+          className="space-y-3"
         >
-          <p className="text-xs font-semibold text-foreground/40 uppercase tracking-wider">
+          <p className="text-[10px] font-black text-white/30 uppercase tracking-widest">
             Key Features
           </p>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {service.features.slice(0, 6).map((feature) => (
-              <div key={feature} className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3 h-3 text-foreground flex-shrink-0" />
-                <span className="text-xs text-foreground/70">{feature}</span>
+              <div key={feature} className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-white/60 flex-shrink-0" />
+                <span className="text-xs font-medium text-white/75">{feature}</span>
               </div>
             ))}
           </div>
           {service.features.length > 6 && (
-            <p className="text-xs text-foreground/40 mt-1">
+            <p className="text-[11px] font-medium text-white/30 mt-2">
               +{service.features.length - 6} more features
             </p>
           )}
         </div>
       </div>
-
-      {/* Hover Effect Overlay */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-    </div>
+    </motion.div>
   );
 }
