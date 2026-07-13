@@ -31,7 +31,7 @@ export default function HeroLeft({ name, title, description, stats }: HeroLeftPr
       {/* Description */}
       <motion.p
         {...fadeLeft(0.34)}
-        className="text-sm text-foreground/90 text-wrap max-w-lg leading-[1.85] text-center md:text-left"
+        className="text-lg text-foreground/95 text-wrap max-w-lg leading-[1.85] text-center md:text-left"
       >
         {description}
       </motion.p>
