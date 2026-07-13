@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { ExternalLink, Sparkles } from "lucide-react";
-import { Project, categoryLabel, categoryGlow, ActionBtn } from "./types";
+import { ExternalLink, Sparkles, Briefcase, Users, Calendar } from "lucide-react";
+import { Project, categoryLabel, categoryGlow } from "./types";
 
 const Github = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg
@@ -38,22 +38,22 @@ export default function FeaturedCard({ project }: { project: Project }) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setPos((p) => ({ ...p, show: false }))}
-      className={`group relative mb-10 sm:mb-12 rounded-[2rem] overflow-hidden border transition-all duration-500 shadow-xl hover:shadow-2xl flex items-center min-h-[500px] sm:min-h-[560px] p-4 sm:p-8 lg:p-12 ${
+      className={`group relative mb-10 sm:mb-12 rounded-[2rem] overflow-hidden border transition-all duration-500 shadow-xl hover:shadow-2xl flex items-center min-h-[500px] sm:min-h-[560px] p-6 sm:p-10 lg:p-14 ${
         project.currentlyWorking
           ? "border-emerald-500/30 hover:border-emerald-500/50"
           : "border-border hover:border-foreground/[0.15]"
       }`}
     >
-      {/* Full Background Image */}
+      {/* Full Background Image (Blurred and Darkened for Ambient Glow) */}
       <div className="absolute inset-0 z-0">
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover object-center scale-[1.01] group-hover:scale-[1.04] transition-all duration-[1200ms] ease-out brightness-[0.4] group-hover:brightness-[0.45] contrast-[1.05]"
+          className="w-full h-full object-cover object-center scale-[1.05] transition-all duration-[1200ms] ease-out brightness-[0.18] blur-[12px] opacity-80 group-hover:brightness-[0.22] group-hover:scale-[1.08]"
         />
         {/* Deep rich gradient overlays for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-transparent z-10" />
       </div>
 
       {/* Grid texture overlay */}
@@ -70,8 +70,8 @@ export default function FeaturedCard({ project }: { project: Project }) {
         className="pointer-events-none absolute inset-0 z-10 rounded-[2rem] transition-opacity duration-300"
         style={{
           opacity: pos.show ? 1 : 0,
-          background: `radial-gradient(500px circle at ${pos.x}% ${pos.y}%, ${
-            project.currentlyWorking ? "rgba(16,185,129,0.12)" : glow
+          background: `radial-gradient(600px circle at ${pos.x}% ${pos.y}%, ${
+            project.currentlyWorking ? "rgba(16,185,129,0.08)" : glow
           }, transparent 70%)`,
         }}
       />
@@ -98,65 +98,106 @@ export default function FeaturedCard({ project }: { project: Project }) {
         )}
       </div>
 
-      {/* Floating Glassmorphic Content Card */}
-      <div className="relative z-20 max-w-xl w-full p-6 sm:p-8 rounded-[1.75rem] border border-white/[0.08] bg-black/65 backdrop-blur-xl shadow-[0_24px_50px_rgba(0,0,0,0.5)] group-hover:border-white/[0.15] transition-all duration-500">
-        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-foreground/45 mb-2.5">
-          {categoryLabel[project.category] || project.tagline || "Project"}
-        </p>
-
-        <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight leading-[1.05] mb-3.5">
-          {project.title}
-        </h3>
-
-        {/* Meta badges */}
-        <div className="flex flex-wrap items-center gap-2 mb-4.5">
-          <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 rounded-lg text-white/80">
-            {project.projectType === "CLIENT" ? "Client Project" : "Personal"}
-          </span>
-          {project.client && (
-            <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 rounded-lg text-white/70">
-              {project.client}
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full z-20 relative">
+        
+        {/* Left Column (Content) */}
+        <div className="lg:col-span-7 flex flex-col text-left">
+          {/* Tagline/Category with Line below */}
+          <div className="mb-4">
+            <span className="text-[11px] font-black uppercase tracking-[0.22em] text-white/50">
+              {categoryLabel[project.category] || project.category || "PROJECT"}
             </span>
-          )}
-          {project.year && (
-            <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider bg-white/5 border border-white/10 rounded-lg text-white/70">
-              {project.year}
+            <div className="h-[2px] w-12 bg-white/20 mt-2 rounded-full" />
+          </div>
+
+          {/* Title and Tagline combined */}
+          <h3 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-white tracking-tight leading-[1.1] mb-6">
+            {project.title}
+            {project.tagline && (
+              <span className="text-white/80 font-medium text-lg sm:text-xl lg:text-[24px] block mt-2">
+                {project.tagline}
+              </span>
+            )}
+          </h3>
+
+          {/* Meta Badges */}
+          <div className="flex flex-wrap items-center gap-2.5 mb-6">
+            {project.client && (
+              <span className="px-3.5 py-1.5 text-[11px] font-semibold bg-white/[0.05] border border-white/[0.08] rounded-full text-white/80 flex items-center gap-1.5 backdrop-blur-sm shadow-sm">
+                <Briefcase className="w-3.5 h-3.5 text-white/40" />
+                {project.client}
+              </span>
+            )}
+            <span className="px-3.5 py-1.5 text-[11px] font-semibold bg-white/[0.05] border border-white/[0.08] rounded-full text-white/80 flex items-center gap-1.5 backdrop-blur-sm shadow-sm">
+              <Users className="w-3.5 h-3.5 text-white/40" />
+              {project.projectType === "CLIENT" ? "Client Project" : "Personal Project"}
             </span>
-          )}
-        </div>
+            {project.year && (
+              <span className="px-3.5 py-1.5 text-[11px] font-semibold bg-white/[0.05] border border-white/[0.08] rounded-full text-white/80 flex items-center gap-1.5 backdrop-blur-sm shadow-sm">
+                <Calendar className="w-3.5 h-3.5 text-white/40" />
+                {project.year}
+              </span>
+            )}
+          </div>
 
-        <p className="text-[12.5px] sm:text-[13px] text-white/60 leading-relaxed mb-6 font-medium whitespace-pre-line">
-          {project.description}
-        </p>
+          {/* Project Description */}
+          <p className="text-[13px] sm:text-[14px] text-white/60 leading-relaxed mb-6 font-medium whitespace-pre-line max-w-xl">
+            {project.description}
+          </p>
 
-        {/* Tech tags */}
-        <div className="flex flex-wrap gap-1.5 mb-7">
-          {project.tech.slice(0, 7).map((t) => (
-            <span
-              key={t}
-              className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/[0.04] border border-white/[0.08] rounded-lg text-white/50 hover:border-white/20 hover:text-white/85 transition-all duration-200"
+          {/* Tech pills */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {project.tech.slice(0, 7).map((t) => (
+              <span
+                key={t}
+                className="px-3.5 py-1 text-[11px] font-medium bg-white/[0.04] border border-white/[0.08] rounded-full text-white/50 hover:border-white/20 hover:text-white/80 transition-all duration-200"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {/* Call to Actions */}
+          <div className="flex flex-wrap gap-3">
+            <a
+              href={project.demoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-transparent hover:bg-white/10 text-white border border-white/20 hover:border-white/40 rounded-full font-bold uppercase tracking-wider text-[11px] transition-all duration-300 active:scale-95 flex items-center gap-2"
             >
-              {t}
-            </span>
-          ))}
+              <ExternalLink className="w-3.5 h-3.5" />
+              Visit Website
+            </a>
+            {project.githubLink && (
+              <a
+                href={project.githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-transparent hover:bg-white/10 text-white border border-white/20 hover:border-white/40 rounded-full font-bold uppercase tracking-wider text-[11px] transition-all duration-300 active:scale-95 flex items-center gap-2"
+              >
+                <Github className="w-3.5 h-3.5" />
+                Source Code
+              </a>
+            )}
+          </div>
         </div>
 
-        {/* Actions */}
-        <div className="flex flex-wrap gap-2.5">
-          <ActionBtn
-            href={project.demoLink}
-            icon={ExternalLink}
-            label="Visit Website"
-            filled
-          />
-          {project.githubLink && (
-            <ActionBtn
-              href={project.githubLink}
-              icon={Github}
-              label="Source Code"
+        {/* Right Column (Mockup Container) */}
+        <div className="lg:col-span-5 w-full flex justify-center">
+          <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto lg:h-[350px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 bg-black/40 group/mockup flex items-center justify-center transition-transform duration-500 hover:scale-[1.01] hover:-rotate-1">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover object-center group-hover/mockup:scale-[1.03] transition-all duration-700 ease-out"
             />
-          )}
+            {/* Ambient inner glow ring */}
+            <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
+            {/* Subtle backlight glow behind mockup */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/25 to-indigo-600/25 rounded-2xl blur opacity-30 group-hover/mockup:opacity-40 transition duration-1000 -z-10" />
+          </div>
         </div>
+
       </div>
     </div>
   );
