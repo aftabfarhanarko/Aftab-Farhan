@@ -18,6 +18,7 @@ interface Tool {
   color: string;
   role: string;
   type: string;
+  shortName?: string;
 }
 
 interface AIPipelineProps {
@@ -182,7 +183,7 @@ export default function AIPipeline({
                         backgroundColor: `${toolColor}08`,
                       }}
                     >
-                      {associatedTool.name.split(" ").pop()}
+                      {associatedTool.shortName || associatedTool.name}
                     </span>
                   )}
                 </div>

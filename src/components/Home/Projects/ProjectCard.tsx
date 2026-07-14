@@ -116,19 +116,21 @@ export default function ProjectCard({ project }: { project: Project }) {
               {categoryLabel[project.category] || project.category}
             </span>
 
-            {/* Client Pill */}
-            {project.client && (
+            {/* Project Type / Client Pill */}
+            {project.projectType === "CLIENT" ? (
               <span className="px-2.5 py-1 text-[9px] font-bold text-white/85 bg-black/65 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-1 shadow-sm">
                 <Briefcase className="w-3 h-3 text-white/40 shrink-0" />
-                {project.client}
+                {project.client || "Client Project"}
               </span>
-            )}
-
-            {/* Client Project Type Pill */}
-            {project.projectType === "CLIENT" && (
+            ) : project.projectType === "TEAM" ? (
               <span className="px-2.5 py-1 text-[9px] font-bold text-white/85 bg-black/65 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-1 shadow-sm">
                 <Users className="w-3 h-3 text-white/40 shrink-0" />
-                Client Project
+                Team Project
+              </span>
+            ) : (
+              <span className="px-2.5 py-1 text-[9px] font-bold text-white/85 bg-black/65 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-1 shadow-sm">
+                <User className="w-3 h-3 text-white/40 shrink-0" />
+                Personal Project
               </span>
             )}
 
@@ -188,7 +190,11 @@ export default function ProjectCard({ project }: { project: Project }) {
 
           <p className="text-[10px] font-bold text-foreground/30 mb-2.5 uppercase tracking-wider">
             {project.tagline}
-            {project.client && ` · ${project.client}`}
+            {project.projectType === "CLIENT" 
+              ? ` · ${project.client || "Client Project"}` 
+              : project.projectType === "TEAM" 
+              ? " · Team Project" 
+              : ""}
           </p>
 
           <p className="text-[12px] text-foreground/45 leading-relaxed mb-4 line-clamp-2 flex-1">
@@ -262,10 +268,20 @@ export default function ProjectCard({ project }: { project: Project }) {
                   <span className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest border rounded-lg backdrop-blur-sm ${badge}`}>
                     {categoryLabel[displayProject.category] || displayProject.category}
                   </span>
-                  {displayProject.projectType === "CLIENT" && (
+                  {displayProject.projectType === "CLIENT" ? (
                     <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 rounded-lg backdrop-blur-sm flex items-center gap-1.5 shadow-sm">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Client Project
+                      {displayProject.client || "Client Project"}
+                    </span>
+                  ) : displayProject.projectType === "TEAM" ? (
+                    <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest bg-sky-500/15 border border-sky-500/40 text-sky-400 rounded-lg backdrop-blur-sm flex items-center gap-1.5 shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                      Team Project
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest bg-amber-500/15 border border-amber-500/40 text-amber-400 rounded-lg backdrop-blur-sm flex items-center gap-1.5 shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                      Personal Project
                     </span>
                   )}
                 </div>
@@ -309,8 +325,8 @@ export default function ProjectCard({ project }: { project: Project }) {
                     <span className="text-[9px] font-bold text-foreground/40 uppercase tracking-wider flex items-center gap-1.5">
                       <User className="w-3.5 h-3.5 text-foreground/50" /> Client
                     </span>
-                    <span className="text-xs font-semibold text-foreground/80 truncate" title={displayProject.client || "Personal Project"}>
-                      {displayProject.client || "Personal Project"}
+                    <span className="text-xs font-semibold text-foreground/80 truncate" title={displayProject.projectType === "CLIENT" ? (displayProject.client || "Client Project") : displayProject.projectType === "TEAM" ? "Team Project" : "Personal"}>
+                      {displayProject.projectType === "CLIENT" ? (displayProject.client || "Client Project") : displayProject.projectType === "TEAM" ? "Team Project" : "Personal"}
                     </span>
                   </div>
                   <div className="flex flex-col gap-1.5 p-3 rounded-2xl bg-white/[0.02] border border-white/[0.04] backdrop-blur-sm">
@@ -318,7 +334,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                       <Layers className="w-3.5 h-3.5 text-foreground/50" /> Project Type
                     </span>
                     <span className="text-xs font-semibold text-foreground/80">
-                      {displayProject.projectType === "CLIENT" ? "Client Work" : "Personal Work"}
+                      {displayProject.projectType === "CLIENT" ? "Client Work" : displayProject.projectType === "TEAM" ? "Team Work" : "Personal Work"}
                     </span>
                   </div>
                 </div>

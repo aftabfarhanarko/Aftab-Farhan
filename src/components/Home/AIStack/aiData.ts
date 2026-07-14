@@ -2,6 +2,7 @@ export const AI_TOOLS = [
   {
     id: "antigravity",
     name: "Google Antigravity",
+    shortName: "Antigravity",
     type: "Agentic Coding Assistant",
     description: "DeepMind's advanced agentic programmer. My primary partner for codebase-wide editing, automated refactoring, API integration, and production-grade validation. Its multi-file reasoning is incredibly reliable for complex modifications.",
     color: "#4285F4", // Google Blue
@@ -13,6 +14,7 @@ export const AI_TOOLS = [
   {
     id: "cursor",
     name: "Cursor AI",
+    shortName: "Cursor",
     type: "AI-First Code Editor",
     description: "My go-to editor for daily development. Inline autocomplete (Copilot++), codebase semantic indexing, and chat-assisted edits allow me to write code at maximum velocity.",
     color: "#00E5FF", // Neon Cyan
@@ -24,6 +26,7 @@ export const AI_TOOLS = [
   {
     id: "deepseek",
     name: "DeepSeek AI",
+    shortName: "DeepSeek",
     type: "Reasoning & Mathematical LLM",
     description: "A highly intelligent mathematical and coding model. Chosen for writing deep backend algorithms, microservice query planning, and complex database structures.",
     color: "#0066FF", // Blue
@@ -35,6 +38,7 @@ export const AI_TOOLS = [
   {
     id: "grok",
     name: "Grok AI",
+    shortName: "Grok",
     type: "Real-time Logic Assistant",
     description: "xAI's fast reasoning model. Outstanding at tracing complex errors, analyzing system logs, and brainstorming developer architectural paths.",
     color: "#EFEFEF", // White/Slate
@@ -46,6 +50,7 @@ export const AI_TOOLS = [
   {
     id: "trae",
     name: "ByteDance Trae",
+    shortName: "Trae",
     type: "Adaptive Development IDE",
     description: "Highly fluid IDE for navigating large, nested Next.js and React workspaces. Its compiler-level code suggestions are extremely responsive and comfortable to work with.",
     color: "#FF3366", // Neon Rose/Red
@@ -57,6 +62,7 @@ export const AI_TOOLS = [
   {
     id: "windsurf",
     name: "Windsurf IDE",
+    shortName: "Windsurf",
     type: "Agentic Flow Workspace",
     description: "Codeium's agentic workspace. Extremely convenient for setting up initial boilerplates, installing package systems, and running dev-server checks completely autonomously.",
     color: "#8B5CF6", // Purple / Violet

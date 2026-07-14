@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { ExternalLink, Sparkles, Briefcase, Users, Calendar } from "lucide-react";
+import { ExternalLink, Sparkles, Briefcase, Users, Calendar, User } from "lucide-react";
 import { Project, categoryLabel, categoryGlow } from "./types";
 
 const Github = ({ className = "w-4 h-4" }: { className?: string }) => (
@@ -123,16 +123,22 @@ export default function FeaturedCard({ project }: { project: Project }) {
 
           {/* Meta Badges */}
           <div className="flex flex-wrap items-center gap-2.5 mb-6">
-            {project.client && (
+            {project.projectType === "CLIENT" ? (
               <span className="px-3.5 py-1.5 text-[11px] font-semibold bg-white/[0.05] border border-white/[0.08] rounded-full text-white/80 flex items-center gap-1.5 backdrop-blur-sm shadow-sm">
                 <Briefcase className="w-3.5 h-3.5 text-white/40" />
-                {project.client}
+                {project.client || "Client Project"}
+              </span>
+            ) : project.projectType === "TEAM" ? (
+              <span className="px-3.5 py-1.5 text-[11px] font-semibold bg-white/[0.05] border border-white/[0.08] rounded-full text-white/80 flex items-center gap-1.5 backdrop-blur-sm shadow-sm">
+                <Users className="w-3.5 h-3.5 text-white/40" />
+                Team Project
+              </span>
+            ) : (
+              <span className="px-3.5 py-1.5 text-[11px] font-semibold bg-white/[0.05] border border-white/[0.08] rounded-full text-white/80 flex items-center gap-1.5 backdrop-blur-sm shadow-sm">
+                <User className="w-3.5 h-3.5 text-white/40" />
+                Personal Project
               </span>
             )}
-            <span className="px-3.5 py-1.5 text-[11px] font-semibold bg-white/[0.05] border border-white/[0.08] rounded-full text-white/80 flex items-center gap-1.5 backdrop-blur-sm shadow-sm">
-              <Users className="w-3.5 h-3.5 text-white/40" />
-              {project.projectType === "CLIENT" ? "Client Project" : "Personal Project"}
-            </span>
             {project.year && (
               <span className="px-3.5 py-1.5 text-[11px] font-semibold bg-white/[0.05] border border-white/[0.08] rounded-full text-white/80 flex items-center gap-1.5 backdrop-blur-sm shadow-sm">
                 <Calendar className="w-3.5 h-3.5 text-white/40" />

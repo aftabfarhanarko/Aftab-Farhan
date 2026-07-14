@@ -13,6 +13,7 @@ interface Tool {
   usage: number;
   role: string;
   logoUrl: string;
+  shortName?: string;
 }
 
 interface ToolCardProps {

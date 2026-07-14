@@ -78,24 +78,22 @@ const socialLinks = [
     href: "https://github.com/aftabfarhanarko",
     label: "GitHub",
     icon: GithubIcon,
+    imageSrc: "/github.png",
     colorClass: "hover:text-[#ffffff] dark:hover:text-[#ffffff] hover:bg-[#181717] dark:hover:bg-[#181717] hover:border-[#181717]",
   },
   {
-    href: "https://linkedin.com/in/aftabfarhanarko",
+    href: "https://www.linkedin.com/in/aftabfarhan/",
     label: "LinkedIn",
     icon: LinkedinIcon,
+    imageSrc: "/likdin.png",
     colorClass: "hover:text-[#ffffff] hover:bg-[#0A66C2] hover:border-[#0A66C2]",
   },
+
   {
-    href: "https://twitter.com/aftabfarhanarko",
-    label: "Twitter",
-    icon: TwitterIcon,
-    colorClass: "hover:text-[#ffffff] hover:bg-[#1DA1F2] hover:border-[#1DA1F2]",
-  },
-  {
-    href: "https://facebook.com/aftabfarhanarko",
+    href: "https://www.facebook.com/aftabfarhanarko.official",
     label: "Facebook",
     icon: FacebookIcon,
+    imageSrc: "/facebook.png",
     colorClass: "hover:text-[#ffffff] hover:bg-[#1877F2] hover:border-[#1877F2]",
   },
   { href: "mailto:aftabfarhan324@gmail.com", label: "Email", icon: MailIcon, colorClass: "hover:text-[#ffffff] hover:bg-[#EA4335] hover:border-[#EA4335]" },
@@ -134,7 +132,7 @@ export default function Footer() {
 
           {/* Social icons — centered on mobile */}
           <div className="flex items-center justify-center gap-2.5 flex-wrap">
-            {socialLinks.map(({ href, label, icon: Icon, colorClass }) => (
+            {socialLinks.map(({ href, label, icon: Icon, imageSrc, colorClass }) => (
               <a
                 key={label}
                 href={href}
@@ -145,7 +143,15 @@ export default function Footer() {
                 aria-label={label}
                 className={`w-9 h-9 rounded-[10px] bg-card/50 border border-border flex items-center justify-center text-foreground/55 hover:-translate-y-0.5 transition-all duration-200 ${colorClass}`}
               >
-                <Icon />
+                {imageSrc ? (
+                  <img
+                    src={imageSrc}
+                    alt={label}
+                    className={`w-[18px] h-[18px] object-contain ${label === "GitHub" ? "dark:invert" : ""}`}
+                  />
+                ) : (
+                  <Icon />
+                )}
               </a>
             ))}
           </div>
