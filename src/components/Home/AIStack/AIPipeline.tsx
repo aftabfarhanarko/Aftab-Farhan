@@ -59,23 +59,23 @@ export default function AIPipeline({
   }, [isPlayingWorkflow, activeStep, handleStepClick]);
 
   return (
-    <div className="mt-12 sm:mt-16 border border-slate-800/90 rounded-[2.5rem] bg-slate-900/80 backdrop-blur-xl p-6 sm:p-8 relative overflow-hidden shadow-2xl card-3d">
+    <div className="mt-12 sm:mt-16 border border-slate-200 rounded-[2.5rem] bg-white p-6 sm:p-8 relative overflow-hidden shadow-xl">
       {/* Background soft ambient lights */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-violet-600/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-orange-600/5 blur-[120px] rounded-full pointer-events-none" />
 
       {/* Title bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 relative z-10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-violet-400">
+          <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-600">
             <Workflow className="w-5 h-5" />
           </div>
           <div className="text-left">
-            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <h3 className="text-base sm:text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
               6-Stage Collaborative AI Pipeline
             </h3>
-            <p className="text-xs text-white/40 font-medium">
-              Simulation of tools working in series to deliver quality code at 10x speed.
+            <p className="text-xs sm:text-sm text-slate-500 font-medium">
+              Simulation of tools working in series to deliver quality code at high speed.
             </p>
           </div>
         </div>
@@ -85,8 +85,8 @@ export default function AIPipeline({
           onClick={() => setIsPlayingWorkflow(!isPlayingWorkflow)}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all border cursor-pointer ${
             isPlayingWorkflow
-              ? "bg-white text-black border-transparent shadow-lg shadow-white/5"
-              : "bg-white/5 text-white/70 border-white/10 hover:bg-white/10 hover:text-white"
+              ? "bg-orange-600 text-white border-transparent shadow-md hover:bg-orange-700"
+              : "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200 hover:text-slate-900"
           }`}
         >
           {isPlayingWorkflow ? (
@@ -106,7 +106,7 @@ export default function AIPipeline({
       {/* Timeline Flow System */}
       <div className="relative mb-10">
         {/* Horizontal Connecting Tube (Desktop Only) */}
-        <div className="absolute top-7 left-[8%] right-[8%] h-1 bg-white/[0.04] rounded-full hidden lg:block z-0 overflow-hidden">
+        <div className="absolute top-7 left-[8%] right-[8%] h-1 bg-slate-100 rounded-full hidden lg:block z-0 overflow-hidden">
           {/* Laser Pulse Traveling along the line */}
           <motion.div
             animate={{
@@ -117,7 +117,7 @@ export default function AIPipeline({
               repeat: Infinity,
               ease: "linear",
             }}
-            className="absolute top-0 w-20 h-full bg-gradient-to-r from-transparent via-violet-500/50 to-transparent absolute-left-0"
+            className="absolute top-0 w-20 h-full bg-gradient-to-r from-transparent via-orange-500/60 to-transparent"
           />
         </div>
 
@@ -126,7 +126,7 @@ export default function AIPipeline({
           {WORKFLOW_STAGES.map((stage) => {
             const isCurrent = activeStep === stage.step;
             const associatedTool = AI_TOOLS.find((t) => t.id === stage.toolId);
-            const toolColor = associatedTool?.color || "#ffffff";
+            const toolColor = associatedTool?.color || "#EA580C";
 
             return (
               <div
@@ -137,14 +137,14 @@ export default function AIPipeline({
                   onClick={() => handleStepClick(stage.step)}
                   className={`w-14 h-14 rounded-2xl flex items-center justify-center text-sm font-black transition-all relative border outline-none ${
                     isCurrent
-                      ? "border-transparent text-white"
-                      : "bg-white/[0.02] border-white/[0.06] text-white/30 hover:border-white/15 hover:text-white/60"
+                      ? "border-transparent text-slate-900 shadow-md"
+                      : "bg-slate-50 border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-700"
                   }`}
                   style={{
-                    backgroundColor: isCurrent ? `${toolColor}20` : undefined,
+                    backgroundColor: isCurrent ? `${toolColor}15` : undefined,
                     borderColor: isCurrent ? toolColor : undefined,
                     boxShadow: isCurrent
-                      ? `0 0 25px -5px ${toolColor}40, inset 0 0 10px 0 ${toolColor}30`
+                      ? `0 0 20px -3px ${toolColor}35`
                       : undefined,
                   }}
                 >
@@ -152,7 +152,7 @@ export default function AIPipeline({
                   {isCurrent && (
                     <motion.div
                       layoutId="activeGlow"
-                      className="absolute -inset-0.5 rounded-2xl filter blur-sm pointer-events-none"
+                      className="absolute -inset-0.5 rounded-2xl pointer-events-none"
                       style={{ border: `2px solid ${toolColor}` }}
                       animate={{
                         opacity: [0.5, 1, 0.5],
@@ -166,12 +166,12 @@ export default function AIPipeline({
                   )}
 
                   {/* Stage number */}
-                  <span className="relative z-10">{stage.step}</span>
+                  <span className="relative z-10 font-bold">{stage.step}</span>
                 </button>
 
                 {/* Info Text */}
                 <div className="mt-3 text-center flex flex-col items-center">
-                  <h5 className="text-[11px] sm:text-xs font-black text-white/80 group-hover/btn:text-white transition-colors tracking-tight line-clamp-1 max-w-[120px]">
+                  <h5 className="text-[11px] sm:text-xs font-black text-slate-800 group-hover/btn:text-orange-600 transition-colors tracking-tight line-clamp-1 max-w-[120px]">
                     {stage.title}
                   </h5>
                   {associatedTool && (
@@ -179,8 +179,8 @@ export default function AIPipeline({
                       className="text-[9px] font-black uppercase tracking-wider mt-1 px-1.5 py-0.5 rounded font-mono border"
                       style={{
                         color: toolColor,
-                        borderColor: `${toolColor}22`,
-                        backgroundColor: `${toolColor}08`,
+                        borderColor: `${toolColor}30`,
+                        backgroundColor: `${toolColor}10`,
                       }}
                     >
                       {associatedTool.shortName || associatedTool.name}
@@ -194,10 +194,10 @@ export default function AIPipeline({
       </div>
 
       {/* Detailed Current Step Details */}
-      <div className="relative pt-8 border-t border-white/[0.06] z-10">
+      <div className="relative pt-8 border-t border-slate-100 z-10">
         {/* Sim Progress Indicator */}
         {isPlayingWorkflow && (
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-white/[0.02] overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-slate-100 overflow-hidden">
             <motion.div
               key={activeStep}
               initial={{ width: "0%" }}
@@ -207,7 +207,7 @@ export default function AIPipeline({
               style={{
                 backgroundColor:
                   AI_TOOLS.find((t) => t.id === selectedStepInfo.toolId)?.color ||
-                  "#8b5cf6",
+                  "#EA580C",
               }}
             />
           </div>

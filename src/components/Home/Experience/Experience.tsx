@@ -41,47 +41,30 @@ export default function Experience() {
   if (experiences.length === 0) return null;
 
   return (
-    <section id="experience" className="mb-12 sm:mb-16 lg:mb-20 scroll-mt-24 px-4 sm:px-6 lg:px-0">
+    <section id="experience" className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0">
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
         {/* Left panel */}
         <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/5 mb-5">
-            <Star className="w-3.5 h-3.5 text-black/40 dark:text-white/50" />
-            <span className="text-xs font-semibold text-black/50 dark:text-white/50 uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 bg-orange-50 mb-4">
+            <Star className="w-4 h-4 text-[#FF6014]" />
+            <span className="text-xs font-bold text-[#FF6014] uppercase tracking-wider">
               Career Path
             </span>
           </div>
 
-          <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-none mb-4">
-            <span className="text-foreground">Work </span>
-            <span className="text-foreground/25">Experience</span>
+          <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black tracking-tight leading-tight mb-4 text-slate-900">
+            Work <span className="text-[#FF6014]">Experience</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-foreground/60 leading-relaxed mb-8 max-w-xs mx-auto lg:mx-0">
-            A chronological timeline of my professional journey, highlighting
-            the teams I've worked with and the impact I've made along the way.
+          <p className="text-base sm:text-lg text-slate-600 leading-[1.7] max-w-xs mx-auto lg:mx-0 font-normal">
+            A chronological timeline of my professional engineering journey, highlighting key technical positions and measurable achievements.
           </p>
-
-          {/* Mini stats */}
-          <div className="grid grid-cols-2 gap-3 mb-8">
-            {[
-              { v: "2+", l: "Years Exp." },
-              { v: "10+", l: "Projects" },
-              { v: "7+", l: "Clients" },
-              { v: "12+", l: "Tech Stack" },
-            ].map(({ v, l }) => (
-              <div key={l} className="p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-center">
-                <div className="text-xl font-black text-foreground">{v}</div>
-                <div className="text-[10px] font-medium text-black/40 dark:text-white/40 uppercase tracking-wide mt-0.5">{l}</div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Right timeline */}
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-black/20 dark:from-white/20 via-black/10 dark:via-white/10 to-transparent hidden sm:block" />
+          <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-slate-200 hidden sm:block" />
 
           <div className="space-y-6">
             {filtered.map((exp) => (

@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Stat, Proficiency, itemVariants } from "./types";
-import { Sparkles, Code2, CheckCircle2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 interface AboutProfileProps {
   stats: Stat[];
@@ -15,19 +15,19 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
     <div className="lg:col-span-2 flex flex-col gap-6 lg:gap-8 lg:sticky lg:top-24 lg:self-start items-center text-center lg:items-start lg:text-left">
       {/* Role tag + heading */}
       <motion.div variants={itemVariants} className="flex flex-col items-center lg:items-start space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold shadow-sm">
-          <Sparkles className="w-3.5 h-3.5 text-white" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200 text-[#FF6014] text-xs font-bold shadow-sm">
+          <Sparkles className="w-3.5 h-3.5 text-[#FF6014]" />
           <span>Full Stack Developer</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none text-white pt-1">
-          About <span className="text-slate-400">Me.</span>
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-slate-900 pt-1">
+          About <span className="text-[#FF6014]">Me.</span>
         </h2>
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
+        <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
           Building with purpose. Shipping with precision.
         </p>
       </motion.div>
 
-      {/* 3D Stat Cards */}
+      {/* Stat Cards */}
       {stats.length > 0 && (
         <motion.div
           variants={itemVariants}
@@ -36,12 +36,12 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="group p-4 rounded-2xl bg-slate-900/80 border border-slate-800/90 hover:border-white/30 backdrop-blur-md shadow-lg transition-all duration-300 flex flex-col justify-between"
+              className="group p-5 rounded-2xl bg-white border border-slate-200 hover:border-orange-300 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
             >
-              <p className="text-2xl sm:text-3xl font-black text-white group-hover:text-white transition-colors text-left tracking-tight">
+              <p className="text-3xl sm:text-4xl font-black text-slate-900 group-hover:text-[#FF6014] transition-colors text-left tracking-tight">
                 {stat.num || "20+"}
               </p>
-              <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold text-left mt-1.5">
+              <p className="text-xs uppercase tracking-wider text-slate-500 font-bold text-left mt-2">
                 {stat.label}
               </p>
             </div>
@@ -49,47 +49,33 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
         </motion.div>
       )}
 
-      {/* Proficiency bars */}
+      {/* Core Technical Highlights */}
       {proficiencies.length > 0 && (
         <motion.div variants={itemVariants} className="flex flex-col gap-3 w-full">
-          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-left">
-            Technical Proficiency
+          <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 text-left">
+            Core Competencies
           </p>
-          {proficiencies.map((p, i) => (
-            <div key={i}>
-              <div className="flex justify-between items-center mb-1.5 text-left">
-                <span className="text-xs font-semibold text-slate-200">
-                  {p.name}
-                </span>
-                <span className="text-xs font-bold text-white">
-                  {p.pct}%
-                </span>
-              </div>
-              <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-slate-200 to-white"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${p.pct}%` }}
-                  transition={{
-                    duration: 1,
-                    delay: i * 0.08,
-                    ease: "easeOut",
-                  }}
-                />
-              </div>
-            </div>
-          ))}
+          <div className="flex flex-wrap gap-2">
+            {proficiencies.map((p, i) => (
+              <span
+                key={i}
+                className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold text-slate-800 shadow-xs"
+              >
+                {p.name}
+              </span>
+            ))}
+          </div>
         </motion.div>
       )}
 
-      <div className="h-px bg-slate-800/80 w-full" />
+      <div className="h-px bg-slate-200 w-full" />
 
       {/* Availability badge */}
       <motion.div
         variants={itemVariants}
-        className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-200 backdrop-blur-md shadow-md"
+        className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold text-slate-700 shadow-sm"
       >
-        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+        <span className="w-2.5 h-2.5 rounded-full bg-[#FF6014] animate-pulse shrink-0" />
         <span>{availabilityText}</span>
       </motion.div>
     </div>

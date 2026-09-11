@@ -17,8 +17,8 @@ export default function Hero() {
 
   if (isError) {
     return (
-      <section className="min-h-[90vh] flex items-center justify-center">
-        <p className="text-foreground/40 text-sm">
+      <section className="min-h-[70vh] flex items-center justify-center">
+        <p className="text-slate-500 text-sm font-medium">
           Failed to load hero data. Please try again.
         </p>
       </section>
@@ -37,15 +37,11 @@ export default function Hero() {
   const { name, title, description, image, socials = [], stats = [] } = hero;
 
   return (
-    <div className="mt-7 md:mt-0">
+    <div className="pt-6 sm:pt-10">
       <section
         id="hero"
-        className="relative mb-20 sm:mb-24 flex flex-col lg:flex-row items-center justify-between gap-16 lg:-mt-24 min-h-[90vh]"
+        className="relative mb-20 sm:mb-28 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 min-h-[75vh]"
       >
-        {/* Ambient glow blobs */}
-        <div className="absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-foreground/5 blur-[140px] -z-10 pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-foreground/4 blur-[120px] -z-10 pointer-events-none" />
-
         <HeroLeft
           name={name}
           title={title}

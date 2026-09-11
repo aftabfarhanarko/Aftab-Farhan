@@ -44,11 +44,12 @@ export default function About() {
   const introParagraphs = aboutData?.introParagraphs || [];
 
   return (
-    <section id="about" className="mt-10 md:mt-0 lg:-mt-40 mb-16">
+    <section id="about" className="mt-10 md:mt-0 lg:mt-0 mb-20 sm:mb-24 scroll-mt-24">
       <motion.div
         variants={containerVariants}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
         className="grid grid-cols-1 lg:grid-cols-5 gap-y-10 lg:gap-x-16 items-start"
       >
         <AboutProfile

@@ -17,16 +17,8 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative mb-16 sm:mb-20 lg:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0 overflow-visible"
+      className="relative mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0 overflow-visible"
     >
-      <div
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-[120px] opacity-20"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(22,163,74,0.6) 0%, transparent 70%)",
-        }}
-      />
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -34,16 +26,14 @@ export default function Contact() {
         className="flex flex-col items-center justify-center text-center sm:flex-row sm:items-end sm:justify-start sm:text-left gap-5 mb-10"
       >
         <div className="flex flex-col items-center sm:items-start">
-          <p className="text-xs font-mono text-green-400/60 tracking-[0.25em] uppercase mb-2">
-            24/7 contact
+          <p className="text-xs font-bold text-[#FF6014] tracking-[0.2em] uppercase mb-2">
+            Get In Touch
           </p>
-          <h2 className="text-2xl md:text-4xl font-black tracking-tight text-foreground leading-none">
-            Let&apos;s Build
-            <br className="hidden sm:block" />
-            <span className="text-foreground/25"> Something Great.</span>
+          <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black tracking-tight text-slate-900 leading-none">
+            Let&apos;s Build <span className="text-[#FF6014]">Something Great.</span>
           </h2>
         </div>
-        <div className="flex-1 mb-2 h-px bg-gradient-to-r from-foreground/10 to-transparent hidden sm:block" />
+        <div className="flex-1 mb-2 h-px bg-slate-200 hidden sm:block" />
       </motion.div>
 
       <motion.div

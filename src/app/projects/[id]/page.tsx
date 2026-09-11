@@ -89,24 +89,24 @@ export default function ProjectDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-[70vh] bg-transparent text-slate-100 flex flex-col items-center justify-center p-6">
+      <div className="min-h-[70vh] bg-transparent text-slate-900 flex flex-col items-center justify-center p-6">
         <Loader2 className="w-10 h-10 text-[#FF6014] animate-spin mb-4" />
-        <p className="text-slate-400 font-medium">Loading project showcase...</p>
+        <p className="text-slate-600 font-medium">Loading project showcase...</p>
       </div>
     );
   }
 
   if (error || !project) {
     return (
-      <div className="min-h-[70vh] bg-transparent text-slate-100 flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-16 h-16 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mb-4 shadow-lg">
+      <div className="min-h-[70vh] bg-transparent text-slate-900 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-16 h-16 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 flex items-center justify-center mb-4 shadow-lg">
           <Code2 className="w-8 h-8" />
         </div>
-        <h1 className="text-2xl font-bold text-slate-100 mb-2">Project Not Found</h1>
-        <p className="text-slate-400 max-w-md mb-6">{error || "The requested project case study could not be found."}</p>
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">Project Not Found</h1>
+        <p className="text-slate-600 max-w-md mb-6">{error || "The requested project case study could not be found."}</p>
         <button
           onClick={() => router.back()}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition-all shadow-md"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition-all shadow-md cursor-pointer"
         >
           <ArrowLeft size={16} />
           Go Back
@@ -116,24 +116,24 @@ export default function ProjectDetailPage() {
   }
 
   return (
-    <div className="bg-transparent text-slate-100 py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
+    <div className="bg-transparent text-slate-900 py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Navigation & Header Trail */}
         <div className="flex items-center justify-between gap-4">
           <button
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-slate-900/60 border border-slate-800 text-slate-300 hover:text-white hover:border-[#FF6014]/50 hover:bg-slate-800/80 transition-all text-xs sm:text-sm font-semibold backdrop-blur-md shadow-md group cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:border-[#FF6014]/50 hover:bg-slate-50 transition-all text-xs sm:text-sm font-semibold shadow-sm group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#FF6014] group-hover:-translate-x-1 transition-transform" />
             Back to Portfolio
           </button>
 
-          <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
-            <Link href="/" className="hover:text-slate-200 transition-colors">Home</Link>
-            <ChevronRight size={12} className="text-slate-600" />
-            <span className="text-slate-400">Projects</span>
-            <ChevronRight size={12} className="text-slate-600" />
+          <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+            <Link href="/" className="hover:text-slate-900 transition-colors">Home</Link>
+            <ChevronRight size={12} className="text-slate-400" />
+            <span className="text-slate-500">Projects</span>
+            <ChevronRight size={12} className="text-slate-400" />
             <span className="text-[#FF6014] font-semibold truncate max-w-[160px]">{project.title}</span>
           </div>
         </div>
@@ -146,33 +146,33 @@ export default function ProjectDetailPage() {
           className="space-y-6"
         >
           {/* Professional Developer Branding Banner */}
-          <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-slate-900/90 via-slate-900/60 to-[#FF6014]/15 border border-slate-800/90 backdrop-blur-md shadow-xl space-y-2 relative overflow-hidden">
+          <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-orange-500/10 via-orange-500/5 to-transparent border border-orange-500/20 shadow-md space-y-2 relative overflow-hidden">
             <div className="flex flex-wrap items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#FF6014]">
               <Sparkles size={14} className="text-[#FF6014]" />
               <span>Full-Stack Engineering Case Study</span>
-              <span className="hidden sm:inline text-slate-600">|</span>
-              <span className="text-slate-200 font-bold">Architected by Aftab Farhan Arko</span>
+              <span className="hidden sm:inline text-slate-300">|</span>
+              <span className="text-slate-900 font-bold">Architected by Aftab Farhan Arko</span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed max-w-4xl">
-              Engineered with modern full-stack web standards, scalable database architecture, and pixel-perfect 3D interactive user experience.
+            <p className="text-sm sm:text-base text-slate-700 font-medium leading-relaxed max-w-4xl">
+              Engineered with modern full-stack web standards, scalable database architecture, and pixel-perfect interactive user experience.
             </p>
           </div>
 
           {/* Category & Status Tags */}
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-[#FF6014]/15 border border-[#FF6014]/30 text-[#FF6014] shadow-sm">
+            <span className="px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-[#FF6014]/15 border border-[#FF6014]/30 text-[#FF6014] shadow-xs">
               {project.category}
             </span>
 
             {project.currentlyWorking && (
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-700 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 Active Development
               </span>
             )}
 
             {project.featured && (
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500/15 border border-amber-500/30 text-amber-400 shadow-sm">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-50 border border-amber-200 text-amber-700 shadow-xs">
                 <Sparkles size={13} />
                 Featured Project
               </span>
@@ -181,11 +181,11 @@ export default function ProjectDetailPage() {
 
           {/* Title & Tagline */}
           <div className="space-y-3">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-100 tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
               {project.title}
             </h1>
             {project.tagline && (
-              <p className="text-lg sm:text-xl text-slate-300 font-medium max-w-3xl leading-relaxed">
+              <p className="text-lg sm:text-xl text-slate-600 font-medium max-w-3xl leading-relaxed">
                 {project.tagline}
               </p>
             )}
@@ -210,32 +210,32 @@ export default function ProjectDetailPage() {
                 href={project.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 text-sm font-bold shadow-md hover:-translate-y-0.5 transition-all cursor-pointer backdrop-blur-md"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 text-sm font-bold shadow-md hover:-translate-y-0.5 transition-all cursor-pointer"
               >
-                <GithubIcon className="w-4 h-4 text-slate-200" />
+                <GithubIcon className="w-4 h-4 text-slate-800" />
                 Source Code
               </a>
             )}
           </div>
         </motion.div>
 
-        {/* 3D MacOS Interactive Preview Frame */}
+        {/* MacOS Interactive Preview Frame */}
         {project.image && (
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="rounded-3xl border border-slate-800 bg-slate-950/90 shadow-2xl overflow-hidden card-3d group/frame"
+            className="rounded-3xl border border-slate-200 bg-white shadow-xl overflow-hidden group/frame"
           >
             {/* MacOS Window Top Bar */}
-            <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-slate-800/80 backdrop-blur-md">
+            <div className="flex items-center justify-between px-4 py-3 bg-slate-100/90 border-b border-slate-200">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-full bg-rose-500/80 border border-rose-600/40" />
                 <span className="w-3 h-3 rounded-full bg-amber-500/80 border border-amber-600/40" />
                 <span className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-600/40" />
               </div>
 
-              <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-slate-950/70 border border-slate-800 text-[11px] text-slate-400 font-mono max-w-sm truncate">
+              <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-white border border-slate-200 text-[11px] text-slate-600 font-mono max-w-sm truncate shadow-xs">
                 <Globe size={11} className="text-[#FF6014]" />
                 <span className="truncate">{project.demoLink || `https://project-showcase/${project.id}`}</span>
               </div>
@@ -244,7 +244,7 @@ export default function ProjectDetailPage() {
             </div>
 
             {/* Showcase Image */}
-            <div className="relative overflow-hidden bg-slate-950">
+            <div className="relative overflow-hidden bg-slate-50">
               <img
                 src={project.image}
                 alt={project.title}
@@ -256,38 +256,38 @@ export default function ProjectDetailPage() {
 
         {/* Quick Highlights / Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md shadow-md space-y-1">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
               <User size={13} className="text-[#FF6014]" /> Client / Org
             </span>
-            <p className="text-sm font-bold text-slate-100 truncate">
+            <p className="text-base font-bold text-slate-900 truncate">
               {project.client || (project.projectType === "CLIENT" ? "Client Work" : "Personal")}
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md shadow-md space-y-1">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
               <Layers size={13} className="text-[#FF6014]" /> Project Type
             </span>
-            <p className="text-sm font-bold text-slate-100">
+            <p className="text-base font-bold text-slate-900">
               {project.projectType || "Full-Stack Development"}
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md shadow-md space-y-1">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
               <Calendar size={13} className="text-[#FF6014]" /> Timeline / Year
             </span>
-            <p className="text-sm font-bold text-slate-100">
+            <p className="text-base font-bold text-slate-900">
               {project.year || project.startDate || "2026"}
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md shadow-md space-y-1">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
               <Clock size={13} className="text-[#FF6014]" /> Duration
             </span>
-            <p className="text-sm font-bold text-slate-100">
+            <p className="text-base font-bold text-slate-900">
               {project.duration || "Production Ready"}
             </p>
           </div>
@@ -298,13 +298,13 @@ export default function ProjectDetailPage() {
           
           {/* Main Content Area */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md shadow-xl space-y-4">
-              <h2 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+            <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                 <Sparkles size={18} className="text-[#FF6014]" />
                 Project Case Study & Overview
               </h2>
 
-              <div className="text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line space-y-3">
+              <div className="text-slate-700 text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-3 font-medium">
                 {project.description}
               </div>
             </div>
@@ -312,8 +312,8 @@ export default function ProjectDetailPage() {
 
           {/* Technologies & Tech Stack Sidebar */}
           <div className="space-y-6">
-            <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md shadow-xl space-y-4">
-              <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <Code2 size={16} className="text-[#FF6014]" />
                 Technologies & Tools
               </h3>
@@ -323,28 +323,28 @@ export default function ProjectDetailPage() {
                   project.tech.map((techItem, idx) => (
                     <span
                       key={idx}
-                      className="px-3.5 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700/80 text-xs font-bold text-slate-200 hover:border-[#FF6014]/60 transition-all shadow-sm"
+                      className="px-3.5 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800 hover:border-[#FF6014]/60 transition-all shadow-xs"
                     >
                       {techItem}
                     </span>
                   ))
                 ) : (
-                  <span className="text-xs text-slate-400">Next.js, TypeScript, Tailwind CSS, Node.js</span>
+                  <span className="text-xs text-slate-500">Next.js, TypeScript, Tailwind CSS, Node.js</span>
                 )}
               </div>
             </div>
 
             {/* Quick Contact Card */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-[#FF6014]/20 via-slate-900/80 to-slate-900/90 border border-[#FF6014]/30 backdrop-blur-md shadow-xl space-y-3">
-              <h3 className="text-base font-bold text-slate-100">
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-orange-500/10 via-white to-slate-50 border border-orange-500/20 shadow-xl space-y-3">
+              <h3 className="text-base font-bold text-slate-900">
                 Interested in similar engineering solutions?
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
                 I can help build high-performance scalable web applications tailored to your business needs.
               </p>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#FF6014] hover:text-[#ff7c42] transition-colors pt-1"
+                className="inline-flex items-center gap-2 text-sm font-bold text-[#FF6014] hover:text-[#ff7c42] transition-colors pt-1"
               >
                 Let&apos;s build something together →
               </Link>

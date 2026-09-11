@@ -137,24 +137,22 @@ export default function Navbar() {
   }, []);
 
   const p = {
-    bg: isDark ? "rgba(10,10,14,0.88)" : "rgba(250,250,252,0.88)",
-    pillBg: isDark ? "rgba(22,22,28,0.96)" : "rgba(238,238,242,0.96)",
-    border: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)",
-    text: isDark ? "#EFEFEF" : "#111111",
-    muted: isDark ? "rgba(239,239,239,0.42)" : "rgba(17,17,17,0.40)",
-    activeBg: isDark ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.08)",
-    hoverBg: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
-    accent: "#22c55e",
-    accentGlow: "rgba(34,197,94,0.40)",
-    accentGrad: "linear-gradient(135deg,#22c55e,#16a34a)",
-    shadow: isDark
-      ? "0 2px 40px rgba(0,0,0,0.60)"
-      : "0 2px 40px rgba(0,0,0,0.10)",
-    btmBg: isDark ? "rgba(12,12,16,0.97)" : "rgba(255,255,255,0.97)",
-    btmBorder: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)",
-    btmIcon: isDark ? "rgba(255,255,255,0.45)" : "rgba(30,30,30,0.40)",
-    btmActive: isDark ? "#FFFFFF" : "#111111",
-    socialHoverBg: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)",
+    bg: "rgba(255, 255, 255, 0.92)",
+    pillBg: "rgba(248, 250, 252, 0.96)",
+    border: "rgba(229, 231, 235, 0.8)",
+    text: "#111827",
+    muted: "#4B5563",
+    activeBg: "#FFF4EE",
+    hoverBg: "#F8FAFC",
+    accent: "#FF6014",
+    accentGlow: "rgba(255, 96, 20, 0.25)",
+    accentGrad: "linear-gradient(135deg, #FF6014, #EA580C)",
+    shadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)",
+    btmBg: "rgba(255, 255, 255, 0.95)",
+    btmBorder: "#E5E7EB",
+    btmIcon: "#64748B",
+    btmActive: "#FF6014",
+    socialHoverBg: "#FFF4EE",
   };
 
   return (
@@ -162,42 +160,38 @@ export default function Navbar() {
       <motion.header
         className="fixed top-3 sm:top-4 md:top-5 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] sm:w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-7xl z-50 rounded-2xl"
         style={{
-          backdropFilter: "blur(12px)",        // ✅ 12px mobile-friendly (20px was heavy)
-          WebkitBackdropFilter: "blur(12px)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
           backgroundColor: p.bg,
-          borderBottom: `1px solid ${p.border}`,
-          boxShadow: isScrolled ? p.shadow : "none",
+          border: `1px solid ${p.border}`,
+          boxShadow: p.shadow,
           transition: "background-color 0.3s, box-shadow 0.3s",
-          willChange: "transform",              // ✅ GPU layer hint
-          transform: "translateZ(0)",           // ✅ force compositor layer
+          willChange: "transform",
+          transform: "translateZ(0)",
         }}
         initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-5 lg:px-8"
-          style={{ height: 60 }}
+          className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
+          style={{ height: 64 }}
         >
-          {/* লোগো */}
+          {/* Logo */}
           <motion.button
             onClick={() => scrollTo("hero")}
             className="flex items-center gap-0.5 bg-transparent border-none cursor-pointer"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            {/* Desktop: full text | Mobile: short version */}
             <span
               className="hidden sm:inline"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: 19,
+                fontSize: 18,
                 fontWeight: 900,
                 letterSpacing: "-0.02em",
-                background: "linear-gradient(135deg, #22c55e, #16a34a)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
+                color: "#111827",
               }}
             >
               {"<aftab farhan arko />"}
@@ -209,65 +203,38 @@ export default function Navbar() {
                 fontSize: 16,
                 fontWeight: 900,
                 letterSpacing: "-0.02em",
-                background: "linear-gradient(135deg, #22c55e, #16a34a)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
+                color: "#111827",
               }}
             >
               {"<arko />"}
             </span>
           </motion.button>
 
-          {/* ডেস্কটপ ন্যাভিগেশন */}
-          <div className="hidden lg:flex items-center gap-0.5 px-2 py-1.5 rounded-full">
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full bg-slate-50 border border-slate-200/80">
             {navItems.map((item, i) => {
               const active = activeSection === item.id;
               return (
                 <motion.button
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
-                  className="relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold border-none cursor-pointer whitespace-nowrap"
+                  className="relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium border-none cursor-pointer whitespace-nowrap"
                   style={{
-                    color: active ? (isDark ? "#fff" : "#000") : p.muted,
-                    backgroundColor: active
-                      ? isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.08)"
-                      : "transparent",
+                    color: active ? "#FF6014" : "#4B5563",
+                    backgroundColor: active ? "#FFF4EE" : "transparent",
                     fontFamily: "'DM Sans', sans-serif",
                     transition: "background-color 0.2s, color 0.2s",
-                    fontSize: 13,
+                    fontSize: 14,
+                    fontWeight: active ? 700 : 500,
                   }}
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 + i * 0.03 }}
                   whileHover={{
-                    backgroundColor: active
-                      ? isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.08)"
-                      : p.hoverBg,
-                    color: active ? (isDark ? "#fff" : "#000") : p.text,
+                    backgroundColor: active ? "#FFF4EE" : "#F1F5F9",
+                    color: active ? "#FF6014" : "#111827",
                   }}
                 >
-                  {active && (
-                    <motion.span
-                      layoutId="activePill"
-                      className="absolute inset-0 rounded-full"
-                      style={{
-                        background: isDark
-                          ? "rgba(255,255,255,0.09)"
-                          : "rgba(0,0,0,0.07)",
-                        zIndex: -1,
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 380,
-                        damping: 32,
-                      }}
-                    />
-                  )}
                   {item.label}
                   {active && (
                     <motion.span
@@ -276,7 +243,7 @@ export default function Navbar() {
                       style={{
                         width: 5,
                         height: 5,
-                        background: p.accent,
+                        background: "#FF6014",
                         flexShrink: 0,
                       }}
                       transition={{
@@ -291,103 +258,87 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* ডান পাশের আইকন (সোশ্যাল + লগইন + থিম) */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* GitHub, LinkedIn — hidden on xs, shown on sm+ */}
-            {socialLinks.map((link) => {
-              const isLinkedIn = link.label === "LinkedIn";
-              const defaultColor = isLinkedIn 
-                ? "#0A66C2" 
-                : (isDark ? "#FFFFFF" : "#181717");
-              const hoverColor = isLinkedIn 
-                ? "#FFFFFF" 
-                : (isDark ? "#181717" : "#FFFFFF");
-              const hoverBg = isLinkedIn 
-                ? "#0A66C2" 
-                : (isDark ? "#FFFFFF" : "#181717");
-
-              return (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hidden sm:flex items-center justify-center rounded-full border-none cursor-pointer"
-                  style={{
-                    width: 36,
-                    height: 36,
-                    backgroundColor: p.activeBg,
-                    color: defaultColor,
-                    border: `1px solid ${p.border}`,
-                  }}
-                  whileHover={{
-                    scale: 1.1,
-                    backgroundColor: hoverBg,
-                    color: hoverColor,
-                    borderColor: hoverBg,
-                  }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label={link.label}
-                >
-                  <link.icon size={17} />
-                </motion.a>
-              );
-            })}
-
-            {/* 🟢 ছোট লগইন আইকন */}
-            <Link
-              href="/login"
-              className="flex items-center justify-center rounded-full border-none cursor-pointer transition-transform hover:scale-110 active:scale-95 hover:bg-[#16a34a]"
+          {/* Action & Social Items */}
+          <div className="flex items-center gap-2">
+            <motion.a
+              href="https://github.com/aftabfarhanarko"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:flex items-center justify-center rounded-full border border-slate-200 cursor-pointer"
               style={{
-                width: 30,          // ছোট
-                height: 30,
-                backgroundColor: p.accent,   // সবুজ ব্যাকগ্রাউন্ড
-                color: "#ffffff",
-                border: `1px solid ${p.border}`,
+                width: 38,
+                height: 38,
+                backgroundColor: "#F8FAFC",
+                color: "#0F172A",
               }}
-              aria-label="Login"
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: "#FF6014",
+                color: "#FFFFFF",
+                borderColor: "#FF6014",
+              }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="GitHub"
             >
-              <LogInIcon size={16} />
-            </Link>
+              <GithubIcon size={18} />
+            </motion.a>
 
-            {/* 🔵 লিঙ্কডইন আইকন */}
             <motion.a
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center rounded-full border-none cursor-pointer"
+              className="hidden sm:flex items-center justify-center rounded-full border border-slate-200 cursor-pointer"
               style={{
-                width: 30,
-                height: 30,
-                backgroundColor: "#0A66C2",
-                color: "#ffffff",
-                border: `1px solid ${p.border}`,
+                width: 38,
+                height: 38,
+                backgroundColor: "#F8FAFC",
+                color: "#0A66C2",
               }}
               whileHover={{
-                scale: 1.1,
-                backgroundColor: "#004182",
-                color: "#ffffff",
+                scale: 1.05,
+                backgroundColor: "#0A66C2",
+                color: "#FFFFFF",
+                borderColor: "#0A66C2",
               }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.95 }}
               aria-label="LinkedIn"
             >
-              <LinkedinIcon size={15} />
+              <LinkedinIcon size={17} />
             </motion.a>
+
+            {/* Login button */}
+            <Link
+              href="/login"
+              className="flex items-center justify-center rounded-full border border-orange-500/20 cursor-pointer transition-transform hover:scale-105 active:scale-95 text-white"
+              style={{
+                height: 38,
+                paddingLeft: 16,
+                paddingRight: 16,
+                backgroundColor: "#FF6014",
+                fontSize: 14,
+                fontWeight: 700,
+                gap: 6,
+              }}
+              aria-label="Login"
+            >
+              <LogInIcon size={16} />
+              <span className="hidden sm:inline">Admin Login</span>
+            </Link>
           </div>
         </nav>
       </motion.header>
 
-      {/* ---------- মোবাইল বটম নেভ ---------- */}
+      {/* Mobile Navigation Bar */}
       <motion.nav
         className="lg:hidden fixed bottom-0 left-0 right-0 z-50"
         style={{
           backgroundColor: p.btmBg,
           borderTop: `1px solid ${p.btmBorder}`,
-          backdropFilter: "blur(14px)",           // ✅ reduced from 22px
+          backdropFilter: "blur(14px)",
           WebkitBackdropFilter: "blur(14px)",
           paddingBottom: "env(safe-area-inset-bottom, 0px)",
-          willChange: "transform",                // ✅ GPU compositor hint
-          transform: "translateZ(0)",             // ✅ own compositing layer
+          willChange: "transform",
+          transform: "translateZ(0)",
         }}
         initial={{ y: 90, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -398,8 +349,7 @@ export default function Navbar() {
             display: "grid",
             gridTemplateColumns: `repeat(${mobileNavItems.length}, 1fr)`,
             height: 62,
-            alignItems: "end",
-            paddingBottom: 6,
+            alignItems: "center",
             paddingLeft: 4,
             paddingRight: 4,
           }}
@@ -407,55 +357,13 @@ export default function Navbar() {
           {mobileNavItems.map((item) => {
             const active = activeSection === item.id;
             const Icon = item.icon;
-            const isCenter = item.highlight;
 
-            // সেন্টার প্রজেক্ট বাটন
-            if (isCenter) {
-              return (
-                <motion.button
-                  key={item.id}
-                  onClick={() => scrollTo(item.id)}
-                  className="relative flex flex-col items-center justify-center border-none cursor-pointer bg-transparent"
-                  style={{ marginTop: -18 }}
-                  whileTap={{ scale: 0.91 }}
-                >
-                  <motion.div
-                    className="flex items-center justify-center rounded-full transition-all duration-300"
-                    style={{
-                      width: 50,
-                      height: 50,
-                      background: active ? p.accentGrad : (isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"),
-                      boxShadow: active ? `0 4px 22px ${p.accentGlow}` : "none",
-                      border: active ? "none" : `1px solid ${p.border}`
-                    }}
-                    whileHover={{ scale: 1.08 }}
-                  >
-                    <Icon size={22} color={active ? "#ffffff" : (isDark ? "rgba(255,255,255,0.6)" : "rgba(30,30,30,0.6)")} strokeWidth={2} />
-                  </motion.div>
-                  <span
-                    style={{
-                      fontSize: 9,
-                      fontWeight: 700,
-                      color: active ? p.accent : p.btmIcon,
-                      fontFamily: "'DM Sans', sans-serif",
-                      marginTop: 2,
-                      lineHeight: 1.2,
-                      transition: "color 0.3s"
-                    }}
-                  >
-                    {item.label}
-                  </span>
-                </motion.button>
-              );
-            }
-
-            // সাধারণ মোবাইল আইটেম
             return (
               <motion.button
                 key={item.id}
                 onClick={() => scrollTo(item.id)}
                 className="relative flex flex-col items-center justify-center border-none cursor-pointer bg-transparent w-full"
-                style={{ paddingTop: 6, paddingBottom: 2 }}
+                style={{ paddingTop: 4, paddingBottom: 2 }}
                 whileTap={{ scale: 0.88 }}
               >
                 {active && (
@@ -463,9 +371,9 @@ export default function Navbar() {
                     layoutId="mobileTopLine"
                     className="absolute top-0 left-1/2 -translate-x-1/2 rounded-full"
                     style={{
-                      width: 18,
-                      height: 2.5,
-                      backgroundColor: p.accent,
+                      width: 20,
+                      height: 3,
+                      backgroundColor: "#FF6014",
                     }}
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
@@ -474,26 +382,24 @@ export default function Navbar() {
                   animate={{ scale: active ? 1.1 : 1 }}
                   transition={{ type: "spring", stiffness: 420, damping: 26 }}
                   style={{
-                    color: active ? p.accent : p.btmIcon,
+                    color: active ? "#FF6014" : "#64748B",
                     display: "flex",
                     marginBottom: 2,
-                    transition: "color 0.3s"
                   }}
                 >
                   <Icon size={20} strokeWidth={active ? 2.4 : 1.8} />
                 </motion.span>
                 <span
                   style={{
-                    fontSize: 9,
+                    fontSize: 10,
                     fontWeight: active ? 700 : 500,
-                    color: active ? p.accent : p.btmIcon,
+                    color: active ? "#FF6014" : "#64748B",
                     fontFamily: "'DM Sans', sans-serif",
                     lineHeight: 1.1,
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     maxWidth: "100%",
                     textOverflow: "ellipsis",
-                    transition: "color 0.3s"
                   }}
                 >
                   {item.label}
@@ -504,11 +410,11 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* স্পেসার — top navbar height */}
-      <div className="h-[60px]" />
+      {/* Spacer */}
+      <div className="h-[64px]" />
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap');
       `}</style>
     </>
   );

@@ -8,6 +8,7 @@ import ProjectCard from "./ProjectCard";
 import FeaturedCard from "./FeaturedCard";
 import ProjectsSkeleton from "./ProjectsSkeleton";
 import ProjectsFilters from "./ProjectsFilters";
+import ProjectsShowcaseGSAP from "./ProjectsShowcaseGSAP";
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState<"all" | "my" | "client">("all");
@@ -68,31 +69,27 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="mb-16 sm:mb-20 scroll-mt-24">
-      {/* Centered on mobile title block */}
-      <div className="flex flex-col items-center justify-center text-center sm:flex-row sm:items-end sm:justify-start sm:text-left gap-4 sm:gap-6 mb-8">
+    <section id="projects" className="mb-20 sm:mb-24 scroll-mt-24">
+      {/* Title block */}
+      <div className="flex flex-col items-center justify-center text-center sm:flex-row sm:items-end sm:justify-start sm:text-left gap-4 sm:gap-6 mb-6">
         <div className="flex flex-col items-center sm:items-start">
-          <div className="flex items-center gap-2 mb-3">
-            <Code2 className="w-3.5 h-3.5 text-foreground/40" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-foreground/40">
+          <div className="flex items-center gap-2 mb-2">
+            <Code2 className="w-4 h-4 text-[#FF6014]" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014]">
               Selected Work
             </span>
           </div>
 
-          <h2 className="text-[clamp(28px,5vw,48px)] text-2xl md:text-4xl font-black text-foreground tracking-tight leading-none">
-            <span className="text-foreground">Proje</span>
-            <span className="text-foreground/25">cts</span>
+          <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black text-slate-900 tracking-tight leading-tight">
+            Featured <span className="text-[#FF6014]">Projects</span>
           </h2>
         </div>
-        <div className="flex-1 mb-2 hidden sm:block">
-          <div className="h-px bg-gradient-to-r from-border to-transparent" />
+        <div className="flex-1 mb-3 hidden sm:block">
+          <div className="h-px bg-slate-200" />
         </div>
-        <span className="text-xs font-mono text-foreground/20 mb-2 hidden sm:block">
-          &lt;portfolio /&gt;
-        </span>
       </div>
 
-      <p className="text-xs sm:text-sm text-foreground/50 leading-relaxed mb-10 max-w-2xl text-center sm:text-left mx-auto sm:mx-0">
+      <p className="text-base sm:text-lg text-slate-600 leading-[1.7] mb-10 max-w-2xl text-center sm:text-left mx-auto sm:mx-0 font-normal">
         A curated showcase of production-ready full-stack applications, advanced SaaS platforms, AI/ML integrations, and custom business portals built with modern architectures.
       </p>
 
@@ -102,6 +99,9 @@ export default function Projects() {
         <>
           {/* Top Hero Project (Currently Working / Featured) */}
           {topProject && <FeaturedCard project={topProject} />}
+
+          {/* GSAP Scroll Showcase for Featured Work */}
+          <ProjectsShowcaseGSAP projects={allProjects} />
 
           <ProjectsFilters
             activeTab={activeTab}
@@ -116,15 +116,15 @@ export default function Projects() {
 
           {/* Grid */}
           {filteredProjects.length > 0 ? (
-            <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {filteredProjects.map((project) => (
                 <ProjectCard key={project.id} project={project} />
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 rounded-2xl border border-dashed border-black/10 dark:border-white/10 w-full">
-              <p className="text-xs text-foreground/40 uppercase tracking-[0.2em] font-semibold">
-                No projects to display in this category
+            <div className="text-center py-20 rounded-2xl border border-dashed border-slate-200 bg-slate-50 w-full">
+              <p className="text-sm text-slate-500 uppercase tracking-wider font-bold">
+                No projects available in this category at the moment.
               </p>
             </div>
           )}

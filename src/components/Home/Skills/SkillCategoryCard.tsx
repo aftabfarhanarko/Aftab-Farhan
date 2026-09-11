@@ -10,16 +10,16 @@ interface SkillCategoryCardProps {
 const categoryDescriptions: Record<string, string> = {
   "Frontend Development": "Crafting responsive, high-performance, and pixel-perfect user interfaces.",
   "Frontend": "Crafting responsive, high-performance, and pixel-perfect user interfaces.",
-  "Backend Development": "Engineering secure, scalable server-side systems and robust REST/gRPC APIs.",
-  "Backend": "Engineering secure, scalable server-side systems and robust REST/gRPC APIs.",
-  "Database": "Designing optimized relational schemas, indexes, and high-throughput query structures.",
-  "Animation": "Creating smooth, physics-based micro-interactions and cinematic web experiences.",
-  "Tools": "Managing development configurations, linters, bundlers, and compilation workflows.",
+  "Backend Development": "Engineering secure, scalable server-side systems and robust REST APIs.",
+  "Backend": "Engineering secure, scalable server-side systems and robust REST APIs.",
+  "Database": "Designing optimized relational schemas, indexes, and query structures.",
+  "Animation": "Creating smooth micro-interactions and dynamic web experiences.",
+  "Tools": "Managing development configurations, linters, bundlers, and workflows.",
   "DevOps": "Automating containerized workloads, CI/CD pipelines, and cloud deployments.",
-  "Mobile Development": "Building high-performance native and cross-platform mobile applications.",
-  "Mobile": "Building high-performance native and cross-platform mobile applications.",
-  "API Integration": "Connecting third-party services, webhooks, and secure authentication flows.",
-  "API": "Connecting third-party services, webhooks, and secure authentication flows.",
+  "Mobile Development": "Building high-performance native and cross-platform mobile apps.",
+  "Mobile": "Building high-performance native and cross-platform mobile apps.",
+  "API Integration": "Connecting third-party services, webhooks, and authentication flows.",
+  "API": "Connecting third-party services, webhooks, and authentication flows.",
   "AI Coding Stack": "Leveraging agentic AI tools and LLMs to accelerate development cycles.",
   "AI / ML": "Developing intelligent machine learning integrations and LLM pipelines.",
 };
@@ -32,150 +32,54 @@ function getCategoryDescription(title: string): string {
 }
 
 export default function SkillCategoryCard({ category }: SkillCategoryCardProps) {
-  const { icon: Icon, accent } = getCategoryConfig(category.title);
-
-  // States for 3D Tilt and Spotlight
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [spotlight, setSpotlight] = useState({ x: 0, y: 0, show: false });
-
-  const glowColor = {
-    blue: "rgba(59,130,246,0.15)",
-    green: "rgba(16,185,129,0.15)",
-    amber: "rgba(245,158,11,0.15)",
-    pink: "rgba(236,72,153,0.15)",
-    purple: "rgba(139,92,246,0.15)",
-    teal: "rgba(20,184,166,0.15)",
-    default: "rgba(255,255,255,0.08)"
-  }[accent] || "rgba(255,255,255,0.08)";
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    // Calculate tilt angles (max 8 degrees)
-    const tiltX = ((y - rect.height / 2) / (rect.height / 2)) * -8;
-    const tiltY = ((x - rect.width / 2) / (rect.width / 2)) * 8;
-
-    setTilt({ x: tiltX, y: tiltY });
-    setSpotlight({ x, y, show: true });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setSpotlight({ x: 0, y: 0, show: false });
-  };
+  const { icon: Icon } = getCategoryConfig(category.title);
 
   return (
     <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transformStyle: "preserve-3d",
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
-      whileHover={{
-        borderColor: "rgba(255, 255, 255, 0.15)",
-        boxShadow: `0 25px 50px -12px ${glowColor}`,
-      }}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="group relative flex flex-col p-6 sm:p-7 rounded-[2.25rem] border border-slate-800/90 bg-slate-900/80 backdrop-blur-xl transition-all duration-300 min-h-[380px] overflow-hidden justify-between cursor-pointer shadow-xl hover:border-white/30 card-3d"
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="group relative flex flex-col p-6 sm:p-7 rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-300 min-h-[340px] justify-between"
     >
-      {/* Moving Spotlight Gradient */}
-      {spotlight.show && (
-        <div
-          className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(220px circle at ${spotlight.x}px ${spotlight.y}px, ${glowColor.replace("0.15", "0.12")}, transparent 80%)`,
-          }}
-        />
-      )}
-
-      {/* Sweep Shine Effect */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1200ms] ease-out pointer-events-none" />
-
-      {/* Giant Rotating Watermark Icon in background */}
-      <div
-        className="absolute bottom-[-20px] right-[-20px] pointer-events-none select-none z-0 opacity-40 group-hover:opacity-75 transition-opacity duration-500"
-        style={{
-          transform: "translateZ(10px)",
-          transformStyle: "preserve-3d"
-        }}
-      >
-        <div style={{ animation: "spin 45s linear infinite" }}>
-          <Icon 
-            className="w-36 h-36 text-white/[0.02] group-hover:text-white/[0.04] transition-colors duration-500" 
-            strokeWidth={0.8}
-          />
-        </div>
-      </div>
-
       {/* Top Header Section */}
-      <div className="relative z-10" style={{ transform: "translateZ(25px)", transformStyle: "preserve-3d" }}>
-        
-        {/* Category Icon Square Box with Spring Rotation */}
-        <motion.div 
-          whileHover={{ rotate: 360, scale: 1.1 }}
-          transition={{ type: "spring", stiffness: 220, damping: 12 }}
-          className="w-12 h-12 bg-white/10 border border-white/20 shadow-inner rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 relative overflow-hidden mb-6"
-        >
-          <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <Icon className="w-5 h-5 text-white relative z-10" strokeWidth={1.8} />
-        </motion.div>
+      <div>
+        <div className="w-12 h-12 bg-orange-50 border border-orange-200 rounded-xl flex items-center justify-center shrink-0 mb-5">
+          <Icon className="w-6 h-6 text-[#FF6014]" strokeWidth={2} />
+        </div>
 
         {/* Title and Description */}
         <div className="mb-6">
-          <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mb-2 group-hover:text-white transition-colors">
+          <h3 className="text-xl font-bold text-slate-900 tracking-tight mb-2 group-hover:text-[#FF6014] transition-colors">
             {category.title}
           </h3>
-          <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed font-medium">
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
             {getCategoryDescription(category.title)}
           </p>
         </div>
       </div>
 
-      {/* Skills pills — ENLARGED and highly legible */}
-      <div 
-        className="flex flex-wrap gap-2.5 mt-auto relative z-10" 
-        style={{ transform: "translateZ(20px)", transformStyle: "preserve-3d" }}
-      >
-        {category.skills.map((skill, index) => (
-          <motion.div
+      {/* Skills list badges */}
+      <div className="flex flex-wrap gap-2.5 mt-auto">
+        {category.skills.map((skill) => (
+          <div
             key={skill.id}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 15,
-              delay: index * 0.05
-            }}
-            whileHover={{ 
-              scale: 1.05,
-              y: -2,
-              borderColor: "rgba(255, 255, 255, 0.4)",
-              backgroundColor: "rgba(255, 255, 255, 0.08)",
-            }}
-            className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-2xl border border-slate-800 bg-slate-900/90 hover:bg-slate-800 transition-all duration-200 group/chip cursor-default shadow-sm"
+            className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-all duration-200 cursor-default"
           >
             {skill.imageUrl ? (
-              <div className="w-6 h-6 rounded-lg overflow-hidden shrink-0 flex items-center justify-center bg-slate-950/80 border border-slate-800 p-0.5">
+              <div className="w-5 h-5 rounded overflow-hidden shrink-0 flex items-center justify-center bg-white border border-slate-200 p-0.5">
                 <img
                   src={skill.imageUrl}
                   alt={skill.name}
-                  className="w-full h-full object-contain group-hover/chip:scale-110 transition-transform duration-200"
+                  className="w-full h-full object-contain"
                 />
               </div>
             ) : (
-              <span className="w-2 h-2 rounded-full shrink-0 bg-white/60" />
+              <span className="w-2 h-2 rounded-full shrink-0 bg-[#FF6014]" />
             )}
-            <span className="text-xs sm:text-sm font-bold text-slate-200 group-hover/chip:text-white transition-colors">
+            <span className="text-sm font-semibold text-slate-800">
               {skill.name}
             </span>
-          </motion.div>
+          </div>
         ))}
       </div>
     </motion.div>

@@ -102,7 +102,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer
-      className="footer-responsive border-t border-slate-800/90 bg-slate-900/80 backdrop-blur-xl px-4 sm:px-6 lg:px-8 pt-10 mt-6"
+      className="footer-responsive border-t border-slate-200 bg-white px-4 sm:px-6 lg:px-8 pt-10 mt-12"
       style={{
         paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 80px)",
       }}
@@ -114,23 +114,22 @@ export default function Footer() {
         transition={{ duration: 0.6 }}
         className="max-w-7xl mx-auto"
       >
-        {/* Top row — stacks vertically & centers on mobile */}
+        {/* Top row */}
         <div className="flex flex-col items-center text-center sm:flex-row sm:justify-between sm:items-center sm:text-left gap-6 mb-8 flex-wrap">
           {/* Brand */}
           <div>
             <Link
               href="/"
-              className="text-xl font-black tracking-tight text-white"
-              style={{ fontFamily: "'Syne', sans-serif" }}
+              className="text-2xl font-black tracking-tight text-slate-900"
             >
               Aftab Farhan Arko
             </Link>
-            <p className="text-xs text-slate-300 mt-1.5 max-w-[240px] leading-relaxed font-sans mx-auto sm:mx-0">
-              Full Stack Software Developer • Building Modern Web Applications
+            <p className="text-sm text-slate-600 mt-1.5 max-w-[280px] leading-relaxed font-sans mx-auto sm:mx-0 font-normal">
+              Full Stack Developer | Technical Lead • Building Modern Scalable Applications
             </p>
           </div>
 
-          {/* Social icons — centered on mobile */}
+          {/* Social icons */}
           <div className="flex items-center justify-center gap-2.5 flex-wrap">
             {socialLinks.map(({ href, label, icon: Icon, imageSrc, colorClass }) => (
               <a
@@ -141,13 +140,13 @@ export default function Footer() {
                   href.startsWith("mailto") ? undefined : "noopener noreferrer"
                 }
                 aria-label={label}
-                className={`w-9 h-9 rounded-[10px] bg-slate-950/80 border border-slate-800 flex items-center justify-center text-slate-300 hover:-translate-y-0.5 transition-all duration-200 ${colorClass}`}
+                className={`w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 hover:-translate-y-0.5 transition-all duration-200 ${colorClass}`}
               >
                 {imageSrc ? (
                   <img
                     src={imageSrc}
                     alt={label}
-                    className={`w-[18px] h-[18px] object-contain ${label === "GitHub" ? "dark:invert" : ""}`}
+                    className="w-5 h-5 object-contain"
                   />
                 ) : (
                   <Icon />
@@ -157,13 +156,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom row — stacks & centers on mobile */}
-        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between pt-6 border-t border-slate-800/80">
-          <p className="text-xs text-slate-400 font-sans text-center sm:text-left font-medium">
+        {/* Bottom row */}
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between pt-6 border-t border-slate-200">
+          <p className="text-sm text-slate-500 font-sans text-center sm:text-left font-medium">
             © {currentYear} Aftab Farhan Arko. All rights reserved.
           </p>
-          <p className="text-xs text-slate-400 font-sans text-center sm:text-right font-medium">
-            Built with Next.js 16, TypeScript, PostgreSQL, Prisma, Framer Motion
+          <p className="text-sm text-slate-500 font-sans text-center sm:text-right font-medium">
+            Built with Next.js 16, TypeScript, PostgreSQL, Prisma & Tailwind CSS
           </p>
         </div>
       </motion.div>

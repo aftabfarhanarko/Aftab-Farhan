@@ -34,22 +34,22 @@ export default function ToolCard({ tool, isActive, onClick, index = 0 }: ToolCar
       transition={{ duration: 0.4, delay: index * 0.05 }}
       whileHover={{ y: -4, scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
-      className={`relative w-full p-4 sm:p-5 rounded-2xl border text-left cursor-pointer flex flex-col justify-between h-40 sm:h-44 focus-visible:outline-none transition-all duration-300 backdrop-blur-xl card-3d ${
+      className={`relative w-full p-4 sm:p-5 rounded-2xl border text-left cursor-pointer flex flex-col justify-between h-40 sm:h-44 focus-visible:outline-none transition-all duration-300 backdrop-blur-xl ${
         isActive
-          ? "bg-slate-900/90 shadow-2xl"
-          : "bg-slate-900/60 border-slate-800/80 hover:border-white/20 hover:bg-slate-900/80"
+          ? "bg-white shadow-xl ring-2 ring-orange-500/50"
+          : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-md"
       }`}
       style={{
-        borderColor: isActive ? tool.color : "rgba(255, 255, 255, 0.08)",
+        borderColor: isActive ? tool.color : "#E2E8F0",
         boxShadow: isActive
-          ? `0 16px 32px -12px ${tool.color}40, 0 0 0 1px ${tool.color}40`
+          ? `0 12px 28px -8px ${tool.color}30, 0 0 0 1px ${tool.color}40`
           : undefined,
       }}
     >
       {/* Top row: logo + comfort */}
       <div className="flex items-start justify-between w-full">
         <div
-          className="relative p-1.5 rounded-xl bg-white flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 shrink-0 transition-transform"
+          className="relative p-1.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 shrink-0 transition-transform shadow-xs"
           style={
             isActive
               ? { boxShadow: `0 4px 12px -3px ${tool.color}44` }
@@ -60,12 +60,12 @@ export default function ToolCard({ tool, isActive, onClick, index = 0 }: ToolCar
         </div>
 
         <div className="text-right">
-          <span className="text-[9px] sm:text-[10px] font-black text-white/35 uppercase tracking-widest block mb-0.5">
+          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-0.5">
             Comfort
           </span>
           <span
             className="text-base sm:text-lg font-black tabular-nums transition-colors duration-300"
-            style={{ color: isActive ? tool.color : "#F5F5F7" }}
+            style={{ color: isActive ? tool.color : "#0F172A" }}
           >
             {tool.usage}%
           </span>
@@ -74,21 +74,21 @@ export default function ToolCard({ tool, isActive, onClick, index = 0 }: ToolCar
 
       {/* Bottom: name + meta */}
       <div className="w-full mt-4">
-        <span className="text-[9px] sm:text-[10px] font-black tracking-widest uppercase text-white/35 block mb-1">
+        <span className="text-[10px] font-black tracking-widest uppercase text-slate-400 block mb-1">
           {tool.type}
         </span>
         <div className="flex items-center gap-2">
-          <h3 className="text-[15px] sm:text-base font-bold text-white/90 group-hover:text-white transition-colors">
+          <h3 className="text-[15px] sm:text-base font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
             {tool.name}
           </h3>
           {isActive && (
             <span
-              className="w-1.5 h-1.5 rounded-full shrink-0"
+              className="w-2 h-2 rounded-full shrink-0"
               style={{ backgroundColor: tool.color }}
             />
           )}
         </div>
-        <div className="mt-3.5 h-1.5 bg-white/[0.04] border border-white/[0.06] rounded-full overflow-hidden w-full">
+        <div className="mt-3 h-2 bg-slate-100 border border-slate-200/80 rounded-full overflow-hidden w-full">
           <motion.div
             className={`h-full bg-gradient-to-r ${tool.accentColor}`}
             initial={{ width: 0 }}

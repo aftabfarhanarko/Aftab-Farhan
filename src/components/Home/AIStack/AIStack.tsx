@@ -52,17 +52,17 @@ export default function AIStack() {
         className="flex flex-col items-center text-center md:flex-row md:items-end md:justify-between md:text-left mb-10 gap-4"
       >
         <div className="flex flex-col items-center md:items-start text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-3">
-            <Cpu className="w-3.5 h-3.5 text-white/50" />
-            <span className="text-[10px] font-bold text-white/45 uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 mb-3">
+            <Cpu className="w-4 h-4 text-orange-600" />
+            <span className="text-xs font-bold text-orange-600 uppercase tracking-widest">
               Advanced Tooling
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-none">
-            AI-Native <span className="text-white/35">Workflow</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+            AI-Native <span className="text-orange-600">Workflow</span>
           </h2>
         </div>
-        <p className="text-xs sm:text-sm text-white/50 max-w-md text-center md:text-right leading-relaxed font-medium">
+        <p className="text-base sm:text-lg text-slate-600 max-w-md text-center md:text-right leading-relaxed font-medium">
           Leveraging agentic coding systems and reasoning models to accelerate
           software lifecycle development, write secure APIs, and build premium layouts at speed.
         </p>

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { SkillCategory } from "./types";
@@ -45,32 +46,43 @@ export default function Skills() {
   return (
     <section id="skills" className="mb-20 sm:mb-24 scroll-mt-24">
       {/* Heading */}
-      <div className="mb-10 sm:mb-12 flex flex-col items-center text-center sm:items-start sm:text-left">
-        <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-foreground/35 font-bold mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-foreground/25 inline-block" />
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="mb-10 sm:mb-12 flex flex-col items-center text-center sm:items-start sm:text-left"
+      >
+        <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#FF6014] font-bold mb-3">
+          <span className="w-2 h-2 rounded-full bg-[#FF6014] inline-block" />
           Technical Arsenal
         </span>
 
-        <h2 className="text-[clamp(28px,5vw,48px)] text-2xl md:text-4xl font-black text-foreground tracking-tight leading-none mb-4">
-          Mastering the <span className="text-foreground/25">Modern Stack</span>
+        <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black text-slate-900 tracking-tight leading-tight mb-4">
+          Mastering the <span className="text-[#FF6014]">Modern Stack</span>
         </h2>
 
-        <p className="max-w-2xl text-foreground/50 text-sm sm:text-base leading-relaxed mx-auto sm:mx-0">
-          Technologies I leverage to build scalable, high-performance
-          applications from pixel-perfect UIs to robust backend systems.
+        <p className="max-w-2xl text-slate-600 text-base sm:text-lg leading-[1.7] mx-auto sm:mx-0 font-normal">
+          Technologies I leverage to build scalable, high-performance applications from pixel-perfect UIs to robust backend systems.
         </p>
-      </div>
+      </motion.div>
 
       {/* Cards */}
       {isLoading ? (
         <SkillsSkeleton />
       ) : (
         <>
-          <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {categories?.map((category) => (
               <SkillCategoryCard key={category.id} category={category} />
             ))}
-          </div>
+          </motion.div>
 
           {/* Marquee — only renders when there are image skills */}
           {marqueeItems.length > 0 && <SkillsMarquee items={marqueeItems} />}

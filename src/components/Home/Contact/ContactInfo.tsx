@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
 
@@ -27,71 +27,20 @@ const LinkedinIcon = () => (
 );
 
 function ContactCardItem({ item }: { item: { icon: React.ReactNode; label: string; value: string; href: string } }) {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [spotlight, setSpotlight] = useState({ x: 0, y: 0, show: false });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const el = e.currentTarget;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const tiltX = ((y - rect.height / 2) / (rect.height / 2)) * -5;
-    const tiltY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
-
-    setTilt({ x: tiltX, y: tiltY });
-    setSpotlight({ x, y, show: true });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setSpotlight({ x: 0, y: 0, show: false });
-  };
-
   return (
-    <motion.a
+    <a
       href={item.href}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transformStyle: "preserve-3d",
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
-      whileHover={{
-        borderColor: "rgba(255, 255, 255, 0.3)",
-        boxShadow: "0 15px 30px -10px rgba(255, 255, 255, 0.08)",
-        x: 4,
-      }}
-      className="flex items-center gap-4 px-4 py-4 rounded-[1.5rem] border border-slate-800/90 bg-slate-900/80 backdrop-blur-xl transition-all duration-300 relative group overflow-hidden shadow-xl card-3d"
+      className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 bg-white hover:border-orange-300 transition-all duration-200 shadow-sm group"
     >
-      {/* Spotlight */}
-      {spotlight.show && (
-        <div
-          className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(150px circle at ${spotlight.x}px ${spotlight.y}px, rgba(255,255,255,0.08), transparent 80%)`,
-          }}
-        />
-      )}
-
-      {/* Sweep Glare Shine */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1200ms] ease-out pointer-events-none" />
-
-      {/* Spring rotation/scale on icon wrapper */}
-      <motion.div 
-        whileHover={{ rotate: 360, scale: 1.1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 12 }}
-        className="w-11 h-11 rounded-2xl bg-slate-950 border border-slate-800 shadow-inner flex items-center justify-center text-slate-300 group-hover:text-white transition-colors shrink-0"
-        style={{ transform: "translateZ(20px)" }}
-      >
+      <div className="w-11 h-11 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF6014] shrink-0">
         {item.icon}
-      </motion.div>
-
-      <div className="min-w-0" style={{ transform: "translateZ(15px)" }}>
-        <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5 font-mono">{item.label}</p>
-        <p className="text-sm font-bold text-white group-hover:text-white truncate transition-colors">{item.value}</p>
       </div>
-    </motion.a>
+
+      <div className="min-w-0">
+        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5">{item.label}</p>
+        <p className="text-base font-bold text-slate-900 group-hover:text-[#FF6014] truncate transition-colors">{item.value}</p>
+      </div>
+    </a>
   );
 }
 
@@ -99,44 +48,39 @@ export default function ContactInfo() {
   return (
     <motion.div variants={fadeUp} className="lg:col-span-2 flex flex-col gap-4">
       {/* Opportunities Badge */}
-      <div className="flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 select-none shadow-sm">
+      <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-orange-200 bg-orange-50 text-[#FF6014] shadow-sm">
         <span className="relative flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6014] opacity-60" />
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF6014]" />
         </span>
-        <span className="text-xs font-mono font-bold">
-          open_to_opportunities=<span className="text-white">true</span>
+        <span className="text-sm font-semibold">
+          Open for Full Stack & Tech Lead Opportunities
         </span>
       </div>
 
-      {/* Paragraph Card with custom border/background */}
-      <div className="p-6 rounded-[1.5rem] border border-slate-800/90 bg-slate-900/80 backdrop-blur-xl shadow-xl card-3d">
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
-          Whether it&apos;s a{" "}
-          <span className="text-white font-bold">freelance project</span>, a{" "}
-          <span className="text-white font-bold">full-time role</span>, or just a
-          technical conversation, my inbox is open.
+      {/* Description */}
+      <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-sm">
+        <p className="text-base sm:text-lg text-slate-600 leading-[1.7] font-normal">
+          I&apos;m open to Full Stack Developer, Backend Developer, Software Engineer, and Technical Lead opportunities. Feel free to reach out directly.
         </p>
       </div>
 
-      {/* Social Links with Spring-Twists */}
+      {/* Social Links */}
       <div className="flex gap-3 mb-1">
         {[
-          { icon: <LinkedinIcon />, href: "https://linkedin.com/in/aftabfarhanarko", color: "hover:text-white hover:border-[#0A66C2] hover:bg-[#0A66C2]" },
-          { icon: <GithubIcon />, href: "https://github.com/aftabfarhanarko", color: "hover:text-white hover:border-[#181717] hover:bg-[#181717]" },
-          { icon: <WhatsAppIcon />, href: "https://wa.me/8801613410880", color: "hover:text-white hover:border-[#25D366] hover:bg-[#25D366]" },
+          { icon: <LinkedinIcon />, href: "https://linkedin.com/in/aftabfarhanarko", color: "hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]" },
+          { icon: <GithubIcon />, href: "https://github.com/aftabfarhanarko", color: "hover:bg-slate-900 hover:text-white hover:border-slate-900" },
+          { icon: <WhatsAppIcon />, href: "https://wa.me/8801613410880", color: "hover:bg-[#25D366] hover:text-white hover:border-[#25D366]" },
         ].map((social, i) => (
-          <motion.a
+          <a
             key={i}
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.1, y: -2 }}
-            transition={{ type: "spring", stiffness: 300, damping: 12 }}
-            className={`w-11 h-11 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center text-slate-300 shadow-inner transition-all ${social.color}`}
+            className={`w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 transition-all ${social.color}`}
           >
             {social.icon}
-          </motion.a>
+          </a>
         ))}
       </div>
 

@@ -53,24 +53,24 @@ export default function DevOpsWorkflow() {
   }, []);
 
   return (
-    <div className="relative mb-12 p-6 sm:p-8 rounded-[2rem] bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl overflow-hidden shadow-xl card-3d">
-      {/* Ambient background glow that shifts with the active stage */}
+    <div className="relative mb-10 p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+      {/* Ambient background glow */}
       <motion.div
         className="absolute -top-24 left-1/2 -translate-x-1/2 w-[420px] h-[420px] rounded-full blur-3xl pointer-events-none"
-        animate={{ backgroundColor: STAGES[activeStep].color, opacity: [0.1, 0.16, 0.1] }}
+        animate={{ backgroundColor: STAGES[activeStep].color, opacity: [0.05, 0.1, 0.05] }}
         transition={{ backgroundColor: { duration: 0.6 }, opacity: { duration: 2.4, repeat: Infinity, ease: "easeInOut" } }}
       />
 
       {/* Header */}
       <div className="relative z-10 flex items-center gap-3 mb-8 sm:mb-10">
-        <div className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0 shadow-inner">
-          <Workflow size={18} className="text-white" />
+        <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center shrink-0 shadow-sm">
+          <Workflow size={20} className="text-[#FF6014]" />
         </div>
         <div>
-          <p className="text-base font-bold text-white uppercase tracking-wider">
+          <h3 className="text-lg font-bold text-slate-900 uppercase tracking-wider">
             Deployment Workflow
-          </p>
-          <p className="text-xs text-slate-300 font-medium">
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-600 font-medium">
             How I ship code to production, end to end
           </p>
         </div>
@@ -87,32 +87,15 @@ export default function DevOpsWorkflow() {
               {/* Node */}
               <motion.div
                 className="flex sm:flex-col items-center sm:items-center gap-4 sm:gap-3 sm:w-32 sm:text-center"
-                animate={{ opacity: isActive || isPast ? 1 : 0.45 }}
+                animate={{ opacity: isActive || isPast ? 1 : 0.6 }}
                 transition={{ duration: 0.5 }}
               >
                 <div className="relative shrink-0">
-                  {/* Pulsing ring when active */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.span
-                        className="absolute inset-0 rounded-2xl"
-                        style={{ boxShadow: `0 0 0 2px ${stage.color}` }}
-                        initial={{ opacity: 0.7, scale: 1 }}
-                        animate={{ opacity: 0, scale: 1.6 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
-                      />
-                    )}
-                  </AnimatePresence>
-
                   <motion.div
-                    className="relative w-14 h-14 rounded-2xl bg-white border flex items-center justify-center shadow-md"
+                    className="relative w-14 h-14 rounded-xl bg-slate-50 border flex items-center justify-center shadow-sm"
                     animate={{
-                      borderColor: isActive || isPast ? `${stage.color}55` : "rgba(255,255,255,0.08)",
-                      boxShadow: isActive
-                        ? `0 0 0 2px ${stage.color}45, 0 10px 24px -8px ${stage.color}55`
-                        : "0 0 0 0px transparent",
-                      scale: isActive ? 1.06 : 1,
+                      borderColor: isActive || isPast ? stage.color : "#E5E7EB",
+                      scale: isActive ? 1.05 : 1,
                     }}
                     transition={{ duration: 0.4 }}
                   >
@@ -122,12 +105,12 @@ export default function DevOpsWorkflow() {
 
                 <div className="text-left sm:text-center">
                   <p
-                    className="text-xs font-bold transition-colors duration-300"
-                    style={{ color: isActive ? stage.color : isPast ? "#ffffff" : "rgba(255,255,255,0.5)" }}
+                    className="text-sm font-bold transition-colors duration-300"
+                    style={{ color: isActive ? stage.color : "#0F172A" }}
                   >
                     {stage.sub}
                   </p>
-                  <p className="text-[10px] text-white/35 font-medium uppercase tracking-wide">
+                  <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">
                     {stage.label}
                   </p>
                 </div>
@@ -136,43 +119,13 @@ export default function DevOpsWorkflow() {
               {/* Connector */}
               {i < STAGES.length - 1 && (
                 <div className="relative flex-1 min-w-[24px] sm:min-w-0 h-8 sm:h-[2px] sm:mt-[-24px] mx-0 sm:mx-2 self-stretch sm:self-auto">
-                  {/* vertical line for mobile, horizontal for desktop */}
-                  <div className="absolute left-[27px] sm:left-0 top-0 sm:top-1/2 w-[2px] sm:w-full h-full sm:h-[2px] bg-white/[0.06] sm:-translate-y-1/2" />
-                  {/* progress fill */}
-                  <motion.div
-                    className="absolute left-[27px] sm:left-0 top-0 sm:top-1/2 w-[2px] sm:w-full sm:-translate-y-1/2 rounded-full"
-                    style={{ backgroundColor: STAGES[i].color }}
-                    animate={{
-                      height: i < activeStep ? "100%" : "0%",
-                      width: undefined,
-                    }}
-                    transition={{ duration: 0.5 }}
-                  />
+                  <div className="absolute left-[27px] sm:left-0 top-0 sm:top-1/2 w-[2px] sm:w-full h-full sm:h-[2px] bg-slate-200 sm:-translate-y-1/2" />
                   <motion.div
                     className="hidden sm:block absolute top-1/2 left-0 h-[2px] rounded-full -translate-y-1/2"
                     style={{ backgroundColor: STAGES[i].color }}
                     animate={{ width: i < activeStep ? "100%" : i === activeStep ? "50%" : "0%" }}
                     transition={{ duration: 0.6, ease: "easeInOut" }}
                   />
-
-                  {/* traveling pulse dot along the active connector — mobile: moves vertically */}
-                  {i === activeStep && (
-                    <motion.div
-                      className="sm:hidden absolute w-1.5 h-1.5 rounded-full left-[27px] -translate-x-1/2"
-                      style={{ backgroundColor: STAGES[i].color, boxShadow: `0 0 8px 2px ${STAGES[i].color}` }}
-                      animate={{ top: ["0%", "100%"] }}
-                      transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
-                    />
-                  )}
-                  {/* traveling pulse dot along the active connector — desktop: moves horizontally */}
-                  {i === activeStep && (
-                    <motion.div
-                      className="hidden sm:block absolute w-1.5 h-1.5 rounded-full top-1/2 -translate-y-1/2"
-                      style={{ backgroundColor: STAGES[i].color, boxShadow: `0 0 8px 2px ${STAGES[i].color}` }}
-                      animate={{ left: ["0%", "100%"] }}
-                      transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
-                    />
-                  )}
                 </div>
               )}
             </React.Fragment>
@@ -181,8 +134,8 @@ export default function DevOpsWorkflow() {
       </div>
 
       {/* Footer note */}
-      <div className="relative z-10 mt-8 sm:mt-10 pt-5 border-t border-white/[0.06] flex items-center gap-2 text-[11px] text-white/35 font-medium">
-        <GitBranch size={12} className="text-white/30" />
+      <div className="relative z-10 mt-8 sm:mt-10 pt-4 border-t border-slate-200 flex items-center gap-2 text-xs text-slate-500 font-medium">
+        <GitBranch size={14} className="text-[#FF6014]" />
         Every push is containerized, tested, and deployed through an automated pipeline — no manual server touching.
       </div>
     </div>
