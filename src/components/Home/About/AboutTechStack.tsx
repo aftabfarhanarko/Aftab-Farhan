@@ -16,37 +16,49 @@ export default function AboutTechStack({ frontendSkills, backendSkills, tools }:
       {(frontendSkills.length > 0 || backendSkills.length > 0) && (
         <motion.div variants={itemVariants} className="space-y-4 text-left">
           {frontendSkills.length > 0 && (
-            <div className="space-y-2.5">
-              <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-500">
-                Frontend
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2.5">
+              <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FF6014]">
+                Frontend Stack
               </p>
               <div className="flex flex-wrap gap-2">
-                {frontendSkills.map((skill, i) => (
-                  <span
-                    key={`frontend-${i}`}
-                    className="text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl border border-slate-200 text-slate-800 bg-white hover:bg-orange-50 hover:border-orange-200 shadow-xs transition-all duration-200 cursor-default"
-                  >
-                    {skill}
-                  </span>
-                ))}
+                {frontendSkills.map((skill, i) =>
+                  skill.length > 40 ? (
+                    <p key={`frontend-${i}`} className="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+                      {skill}
+                    </p>
+                  ) : (
+                    <span
+                      key={`frontend-${i}`}
+                      className="text-sm font-semibold px-4 py-2 rounded-xl border border-slate-200 text-slate-800 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-all duration-200 cursor-default"
+                    >
+                      {skill}
+                    </span>
+                  )
+                )}
               </div>
             </div>
           )}
 
           {backendSkills.length > 0 && (
-            <div className="space-y-2.5">
-              <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-500">
-                Backend
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2.5">
+              <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FF6014]">
+                Backend Stack
               </p>
               <div className="flex flex-wrap gap-2">
-                {backendSkills.map((skill, i) => (
-                  <span
-                    key={`backend-${i}`}
-                    className="text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl border border-slate-200 text-slate-800 bg-white hover:bg-orange-50 hover:border-orange-200 shadow-xs transition-all duration-200 cursor-default"
-                  >
-                    {skill}
-                  </span>
-                ))}
+                {backendSkills.map((skill, i) =>
+                  skill.length > 40 ? (
+                    <p key={`backend-${i}`} className="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+                      {skill}
+                    </p>
+                  ) : (
+                    <span
+                      key={`backend-${i}`}
+                      className="text-sm font-semibold px-4 py-2 rounded-xl border border-slate-200 text-slate-800 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-all duration-200 cursor-default"
+                    >
+                      {skill}
+                    </span>
+                  )
+                )}
               </div>
             </div>
           )}
@@ -55,19 +67,27 @@ export default function AboutTechStack({ frontendSkills, backendSkills, tools }:
 
       {/* Tools chips */}
       {tools.length > 0 && (
-        <motion.div variants={itemVariants} className="space-y-2.5 text-left">
-          <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-500">
-            Tools & Workflow
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {tools.map((tool, i) => (
-              <span
-                key={`tool-${i}`}
-                className="text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl border border-slate-200 text-slate-800 bg-white hover:bg-orange-50 hover:border-orange-200 shadow-xs transition-all duration-200 cursor-default tracking-wide"
-              >
-                {tool}
-              </span>
-            ))}
+        <motion.div variants={itemVariants} className="text-left">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2.5">
+            <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FF6014]">
+              Tools & Workflow
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {tools.map((tool, i) =>
+                tool.length > 40 ? (
+                  <p key={`tool-${i}`} className="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+                    {tool}
+                  </p>
+                ) : (
+                  <span
+                    key={`tool-${i}`}
+                    className="text-sm font-semibold px-4 py-2 rounded-xl border border-slate-200 text-slate-800 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 transition-all duration-200 cursor-default tracking-wide"
+                  >
+                    {tool}
+                  </span>
+                )
+              )}
+            </div>
           </div>
         </motion.div>
       )}
