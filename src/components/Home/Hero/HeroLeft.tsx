@@ -24,19 +24,19 @@ export default function HeroLeft({ name, title, description, stats }: HeroLeftPr
       </motion.div>
 
       {/* Greeting & Name */}
-      <motion.div {...fadeLeft(0.14)} className="text-center md:text-left space-y-2">
-        <p className="text-base sm:text-lg font-bold text-slate-600 tracking-wide uppercase">
-          Hello, I&apos;m <span className="text-[#FF6014] font-black">{name || "Aftab Farhan Arko"}</span>
-        </p>
-        <h1 className="text-[38px] min-[400px]:text-[44px] sm:text-[56px] lg:text-[68px] font-black text-slate-900 tracking-tight leading-[1.08]">
-          Full Stack Developer | Technical Lead
+      <motion.div {...fadeLeft(0.14)} className="text-center md:text-left space-y-1.5">
+        <h1 className="text-[36px] sm:text-[48px] lg:text-[58px] font-black text-slate-900 tracking-tight leading-[1.1]">
+          {name || "Aftab Farhan Arko"}
         </h1>
+        <p className="text-xl sm:text-2xl lg:text-[28px] font-bold text-[#FF6014] tracking-tight">
+          Full Stack Developer | Technical Lead
+        </p>
       </motion.div>
 
       {/* Bio / Description */}
       <motion.p
         {...fadeLeft(0.24)}
-        className="text-base sm:text-lg lg:text-[19px] text-slate-600 leading-[1.7] text-center md:text-left max-w-xl font-normal"
+        className="text-base sm:text-lg text-slate-600 leading-[1.7] text-center md:text-left max-w-xl font-normal"
       >
         Building scalable web applications, SaaS platforms, APIs and business solutions using modern JavaScript and TypeScript technologies.
       </motion.p>

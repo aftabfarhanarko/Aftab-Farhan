@@ -156,7 +156,7 @@ export default function Achievements() {
             <span>Credentials</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-slate-900">
+          <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black tracking-tight leading-tight text-slate-900">
             Certifications &amp; <span className="text-orange-600">Achievements</span>
           </h2>
 

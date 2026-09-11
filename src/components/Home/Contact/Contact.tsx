@@ -29,7 +29,7 @@ export default function Contact() {
           <p className="text-xs font-bold text-[#FF6014] tracking-[0.2em] uppercase mb-2">
             Get In Touch
           </p>
-          <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black tracking-tight text-slate-900 leading-none">
+          <h2 className="text-[28px] sm:text-[34px] md:text-[38px] font-black tracking-tight text-slate-900 leading-none">
             Let&apos;s Build <span className="text-[#FF6014]">Something Great.</span>
           </h2>
         </div>

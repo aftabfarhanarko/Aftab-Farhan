@@ -80,7 +80,7 @@ export default function Projects() {
             </span>
           </div>
 
-          <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
             Featured <span className="text-[#FF6014]">Projects</span>
           </h2>
         </div>

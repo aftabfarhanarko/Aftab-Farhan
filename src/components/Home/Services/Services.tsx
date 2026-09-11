@@ -68,7 +68,7 @@ export default function Services() {
         <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014] mb-2">
           Product Solutions
         </span>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+        <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
           What I <span className="text-[#FF6014]">Build</span>
         </h2>
         <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal mt-2">

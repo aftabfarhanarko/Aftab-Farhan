@@ -93,11 +93,11 @@ export function ExperienceRoles({ roles }: ExperienceRolesProps) {
                 <RIcon className="w-4 h-4 text-[#FF6014]" />
               </div>
               <div>
-                <h4 className="text-lg font-bold text-slate-900 leading-tight">
+                <h4 className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight">
                   {role.title}
                 </h4>
                 {role.subtitle && (
-                  <p className="text-sm font-medium text-slate-500 mt-0.5">
+                  <p className="text-sm sm:text-base font-medium text-slate-500 mt-0.5">
                     {role.subtitle}
                   </p>
                 )}

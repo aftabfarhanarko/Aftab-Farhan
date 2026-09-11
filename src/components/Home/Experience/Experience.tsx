@@ -45,15 +45,15 @@ export default function Experience() {
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
         {/* Left panel */}
         <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 bg-orange-50 mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 bg-orange-50 mb-3">
             <Star className="w-4 h-4 text-[#FF6014]" />
             <span className="text-xs font-bold text-[#FF6014] uppercase tracking-wider">
               Career Path
             </span>
           </div>
 
-          <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black tracking-tight leading-tight mb-4 text-slate-900">
-            Work <span className="text-[#FF6014]">Experience</span>
+          <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black tracking-tight leading-tight mb-3 text-slate-900">
+            Professional <span className="text-[#FF6014]">Experience</span>
           </h2>
 
           <p className="text-base sm:text-lg text-slate-600 leading-[1.7] max-w-xs mx-auto lg:mx-0 font-normal">

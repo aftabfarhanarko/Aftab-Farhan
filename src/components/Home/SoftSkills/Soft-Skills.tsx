@@ -49,8 +49,8 @@ export default function SoftSkills() {
         <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014] mb-2">
           Collaboration & Governance
         </span>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-          Leadership & <span className="text-[#FF6014]">Collaboration</span>
+        <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
+          Leadership &amp; <span className="text-[#FF6014]">Collaboration</span>
         </h2>
         <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal mt-2">
           Key non-technical competencies and engineering management principles that ensure smooth project execution and team alignment.

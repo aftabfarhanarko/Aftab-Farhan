@@ -58,7 +58,7 @@ export default function Skills() {
           Core Stack
         </span>
 
-        <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black text-slate-900 tracking-tight leading-tight mb-4">
+        <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight mb-3">
           Technical <span className="text-[#FF6014]">Skills</span>
         </h2>
 
