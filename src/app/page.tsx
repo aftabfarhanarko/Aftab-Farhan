@@ -13,17 +13,17 @@ import Services from "@/components/Home/Services/Services";
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
       <Hero />
       <About />
-      <Skills />
-      <AIStack />
-      <Achievements />
-      <Projects />
       <Experience />
+      <Skills />
+      <Projects />
       <Services />
       <SoftSkills />
+      <Achievements />
       <Education />
+      <AIStack />
       <Contact />
     </div>
   );

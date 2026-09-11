@@ -55,15 +55,15 @@ export default function Skills() {
       >
         <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#FF6014] font-bold mb-3">
           <span className="w-2 h-2 rounded-full bg-[#FF6014] inline-block" />
-          Technical Arsenal
+          Core Stack
         </span>
 
         <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black text-slate-900 tracking-tight leading-tight mb-4">
-          Mastering the <span className="text-[#FF6014]">Modern Stack</span>
+          Technical <span className="text-[#FF6014]">Skills</span>
         </h2>
 
         <p className="max-w-2xl text-slate-600 text-base sm:text-lg leading-[1.7] mx-auto sm:mx-0 font-normal">
-          Technologies I leverage to build scalable, high-performance applications from pixel-perfect UIs to robust backend systems.
+          Technologies and tools I leverage to build scalable, high-performance web applications from pixel-perfect frontend UIs to robust backend systems.
         </p>
       </motion.div>
 

@@ -153,28 +153,16 @@ export default function Achievements() {
         <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 text-orange-600 text-xs font-bold shadow-xs">
             <Star className="w-3.5 h-3.5 text-orange-600" />
-            <span>Milestones & Credentials</span>
+            <span>Credentials</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-slate-900">
-            Key <span className="text-orange-600">Achievements</span>
+            Certifications &amp; <span className="text-orange-600">Achievements</span>
           </h2>
 
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium max-w-xs mx-auto lg:mx-0">
-            Certifications, awards, and credentials that validate my technical proficiency and career milestones.
+            Official certifications and technical course credentials validating my web development expertise.
           </p>
-
-          <div className="mt-4 p-5 rounded-3xl border border-slate-200 bg-white text-left shadow-lg space-y-2">
-            <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-orange-600" />
-              <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                Verifiable Credentials
-              </span>
-            </div>
-            <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              Every certification is backed by official digital badges and verified course completions.
-            </p>
-          </div>
         </div>
 
         {/* Right Grid */}

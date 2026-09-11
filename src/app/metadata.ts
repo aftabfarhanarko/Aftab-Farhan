@@ -1,35 +1,34 @@
 import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aftabfarhanarko.dev"),
+  metadataBase: new URL("https://www.aftabfarhan.tech"),
 
   title: {
-    default: "Aftab Farhan Arko — Full Stack Developer",
+    default: "Aftab Farhan Arko | Full Stack Developer & Technical Lead",
     template: "%s | Aftab Farhan Arko",
   },
 
   description:
-    "Portfolio of Aftab Farhan Arko — a passionate Full Stack Developer specializing in React, Next.js, Node.js, TypeScript, and modern web technologies. Building production-grade applications with clean code and great UX.",
+    "Full Stack Developer and Technical Lead specializing in Next.js, React, TypeScript, Node.js, NestJS, PostgreSQL and scalable web applications.",
 
   keywords: [
     "Aftab Farhan Arko",
     "Full Stack Developer",
+    "Technical Lead",
     "React Developer",
     "Next.js Developer",
     "Node.js Developer",
     "TypeScript Developer",
-    "JavaScript",
-    "Web Developer Bangladesh",
     "Software Engineer",
+    "PostgreSQL",
+    "NestJS",
     "Portfolio",
-    "Frontend Developer",
-    "Backend Developer",
   ],
 
   authors: [
     {
       name: "Aftab Farhan Arko",
-      url: "https://aftabfarhanarko.dev",
+      url: "https://www.aftabfarhan.tech",
     },
   ],
   creator: "Aftab Farhan Arko",
@@ -50,17 +49,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://aftabfarhanarko.dev",
+    url: "https://www.aftabfarhan.tech",
     siteName: "Aftab Farhan Arko",
-    title: "Aftab Farhan Arko — Full Stack Developer",
+    title: "Aftab Farhan Arko | Full Stack Developer & Technical Lead",
     description:
-      "Full Stack Developer building production-grade web apps with React, Next.js, Node.js & more. Explore my projects, skills, and experience.",
+      "Full Stack Developer and Technical Lead specializing in Next.js, React, TypeScript, Node.js, NestJS, PostgreSQL and scalable web applications.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Aftab Farhan Arko — Full Stack Developer Portfolio",
+        alt: "Aftab Farhan Arko — Full Stack Developer & Technical Lead Portfolio",
         type: "image/png",
       },
     ],
@@ -68,9 +67,9 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Aftab Farhan Arko — Full Stack Developer",
+    title: "Aftab Farhan Arko | Full Stack Developer & Technical Lead",
     description:
-      "Full Stack Developer building production-grade web apps with React, Next.js, Node.js & more.",
+      "Full Stack Developer and Technical Lead specializing in Next.js, React, TypeScript, Node.js, NestJS, PostgreSQL and scalable web applications.",
     images: ["/og-image.png"],
     creator: "@aftabfarhanarko",
     site: "@aftabfarhanarko",
@@ -91,17 +90,13 @@ export const metadata: Metadata = {
   category: "technology",
 
   alternates: {
-    canonical: "https://aftabfarhanarko.dev",
-  },
-
-  verification: {
-    google: "your-google-site-verification-token", // 🔁 Google Search Console থেকে নাও
+    canonical: "https://www.aftabfarhan.tech",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
-  colorScheme: "dark",
+  themeColor: "#FFFFFF",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,

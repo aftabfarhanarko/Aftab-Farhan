@@ -58,27 +58,16 @@ interface NavItemType {
 const navItems: NavItemType[] = [
   { id: "hero", label: "Home", icon: Home },
   { id: "about", label: "About", icon: User },
+  { id: "experience", label: "Experience", icon: Briefcase },
   { id: "skills", label: "Skills", icon: Layers },
   { id: "projects", label: "Projects", icon: FolderKanban, highlight: true },
-  { id: "experience", label: "Experience", icon: Briefcase },
-  { id: "soft-skills", label: "Soft Skills", icon: Smile },
   { id: "education", label: "Education", icon: GraduationCap },
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
-// মোবাইলের জন্য
+// Mobile navigation
 const mobileNavItems: NavItemType[] = [
-  ...navItems.filter((n) =>
-    [
-      "hero",
-      "about",
-      "skills",
-      "projects",
-      "experience",
-      "education",
-      "contact",
-    ].includes(n.id)
-  ),
+  ...navItems,
 ];
 
 const socialLinks = [
