@@ -19,7 +19,7 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
           <Sparkles className="w-3.5 h-3.5 text-[#FF6014]" />
           <span>Full Stack Developer</span>
         </div>
-        <h2 className="text-[24px] sm:text-[28px] lg:text-[32px] font-black tracking-tight leading-tight text-slate-900 pt-1">
+        <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black tracking-tight leading-tight text-slate-900 pt-1">
           About <span className="text-[#FF6014]">Me.</span>
         </h2>
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
@@ -36,13 +36,13 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="group p-5 rounded-2xl bg-white border border-slate-200 hover:border-orange-300 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              className="group p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-orange-300 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[100px]"
             >
-              <p className="text-3xl sm:text-4xl font-black text-slate-900 group-hover:text-[#FF6014] transition-colors text-left tracking-tight">
-                {stat.num || "20+"}
-              </p>
-              <p className="text-xs uppercase tracking-wider text-slate-500 font-bold text-left mt-2">
+              <p className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-[#FF6014] transition-colors text-left leading-snug tracking-tight">
                 {stat.label}
+              </p>
+              <p className="text-xl sm:text-2xl font-black text-[#FF6014] text-left mt-2 tracking-tight">
+                {stat.num || "20+"}
               </p>
             </div>
           ))}
