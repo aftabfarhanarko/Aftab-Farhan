@@ -53,17 +53,17 @@ export default function Skills() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="mb-10 sm:mb-12 flex flex-col items-center text-center sm:items-start sm:text-left"
       >
-        <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#FF6014] font-bold mb-3">
+        <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#FF6014] font-bold mb-2">
           <span className="w-2 h-2 rounded-full bg-[#FF6014] inline-block" />
-          Core Stack
+          SKILLS & CAPABILITIES
         </span>
 
-        <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight mb-3">
+        <h2 className="text-[28px] sm:text-[34px] md:text-[38px] font-black text-slate-900 tracking-tight leading-tight mb-3">
           Technical <span className="text-[#FF6014]">Skills</span>
         </h2>
 
-        <p className="max-w-2xl text-slate-600 text-base sm:text-lg leading-[1.7] mx-auto sm:mx-0 font-normal">
-          Technologies and tools I leverage to build scalable, high-performance web applications from pixel-perfect frontend UIs to robust backend systems.
+        <p className="max-w-2xl text-slate-600 text-base sm:text-[17px] leading-[1.7] mx-auto sm:mx-0 font-normal">
+          Technologies and engineering tools I use to build scalable, maintainable, and production-ready web applications.
         </p>
       </motion.div>
 
