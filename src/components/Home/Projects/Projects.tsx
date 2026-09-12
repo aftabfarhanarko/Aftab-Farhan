@@ -8,7 +8,6 @@ import ProjectCard from "./ProjectCard";
 import FeaturedCard from "./FeaturedCard";
 import ProjectsSkeleton from "./ProjectsSkeleton";
 import ProjectsFilters from "./ProjectsFilters";
-import ProjectsShowcaseGSAP from "./ProjectsShowcaseGSAP";
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState<"all" | "my" | "client">("all");
@@ -22,16 +21,12 @@ export default function Projects() {
     },
   });
 
-  // Find the project currently marked as active / currently working
-  const currentlyWorkingProject = allProjects.find((p) => p.currentlyWorking);
-  
-  // Use currently working project on top if active
-  const topProject = currentlyWorkingProject;
+  // Filter featured projects (currently working + featured)
+  const featuredList = allProjects.filter((p) => p.currentlyWorking || p.featured);
+  const displayFeaturedList = featuredList.length > 0 ? featuredList : allProjects.slice(0, 3);
+  const featuredIds = new Set(displayFeaturedList.map((p) => p.id));
 
   const filteredProjects = allProjects.filter((p) => {
-    // Hide the currently working project from the main grid if it is displayed on top
-    if (currentlyWorkingProject && p.id === currentlyWorkingProject.id) return false;
-
     if (activeTab === "my" && p.projectType !== "MY") return false;
     if (activeTab === "client" && p.projectType !== "CLIENT") return false;
     if (activeCategory !== "all" && p.category !== activeCategory) return false;
@@ -50,7 +45,7 @@ export default function Projects() {
   }[] = [
     {
       id: "all",
-      label: "All Project",
+      label: "All Projects",
       icon: Layers,
       count: allProjects.length,
     },
@@ -62,7 +57,7 @@ export default function Projects() {
     },
     {
       id: "client",
-      label: "Client Project",
+      label: "Client Projects",
       icon: Briefcase,
       count: allProjects.filter((p) => p.projectType === "CLIENT").length,
     },
@@ -97,11 +92,14 @@ export default function Projects() {
         <ProjectsSkeleton />
       ) : (
         <>
-          {/* Top Hero Project (Currently Working / Featured) */}
-          {topProject && <FeaturedCard project={topProject} />}
-
-          {/* GSAP Scroll Showcase for Featured Work */}
-          <ProjectsShowcaseGSAP projects={allProjects} />
+          {/* Alternating Editorial Showcase for Featured Projects */}
+          {displayFeaturedList.length > 0 && (
+            <div className="mb-14 sm:mb-20 space-y-12 sm:space-y-16">
+              {displayFeaturedList.map((project, idx) => (
+                <FeaturedCard key={project.id} project={project} index={idx} />
+              ))}
+            </div>
+          )}
 
           <ProjectsFilters
             activeTab={activeTab}

@@ -10,6 +10,13 @@ import { ThemeProvider, useTheme } from "@/context/Theme";
 import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
 import ChatbotWidget from "@/components/Chatbot/ChatbotWidget";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+}
 
 
 type TypingLineProps = {
@@ -193,6 +200,24 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
 
   const gridLine = isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.06)";
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    const smoother = ScrollSmoother.create({
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+      smooth: 1,
+      effects: true,
+      smoothTouch: 0.1,
+    });
+
+    return () => {
+      smoother.kill();
+    };
+  }, [pathname]);
+
   return (
     <>
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -261,24 +286,29 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
 
       {!isDashboard && <Navbar />}
 
-      <QueryProvider>
-        <ReduxProvider>
-          <AnimatePresence mode="wait">
-            <motion.main
-              key={isDashboard ? "dashboard" : pathname}
-              className={`flex-1 relative z-10 ${!isDashboard ? "pt-20" : ""}`}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.45, ease: "easeInOut" }}
-            >
-              {children}
-            </motion.main>
-          </AnimatePresence>
-        </ReduxProvider>
-      </QueryProvider>
+      <div id="smooth-wrapper" className="w-full">
+        <div id="smooth-content" className="w-full flex flex-col min-h-screen">
+          <QueryProvider>
+            <ReduxProvider>
+              <AnimatePresence mode="wait">
+                <motion.main
+                  key={isDashboard ? "dashboard" : pathname}
+                  className={`flex-1 relative z-10 ${!isDashboard ? "pt-20" : ""}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.45, ease: "easeInOut" }}
+                >
+                  {children}
+                </motion.main>
+              </AnimatePresence>
+            </ReduxProvider>
+          </QueryProvider>
 
-      {!isDashboard && <Footer />}
+          {!isDashboard && <Footer />}
+        </div>
+      </div>
+
       {!isDashboard && <ChatbotWidget />}
     </>
   );
