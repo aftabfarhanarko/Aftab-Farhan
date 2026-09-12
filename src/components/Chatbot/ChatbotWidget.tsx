@@ -311,11 +311,11 @@ export default function ChatbotWidget() {
             </div>
 
             {/* Message Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-slate-50/40">
+            <div className="flex-1 overflow-y-auto p-3.5 space-y-3.5 custom-scrollbar bg-slate-50/40">
               {messages.map((msg, index) => {
                 const isBot = msg.role === "assistant";
                 return (
-                  <div key={index} className={`flex gap-3 max-w-[88%] ${isBot ? "mr-auto" : "ml-auto flex-row-reverse"}`}>
+                  <div key={index} className={`flex gap-2.5 max-w-[92%] ${isBot ? "mr-auto" : "ml-auto flex-row-reverse"}`}>
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 border ${
                         isBot 
@@ -326,13 +326,14 @@ export default function ChatbotWidget() {
                       {isBot ? <Bot size={14} /> : <User size={14} />}
                     </div>
                     <div
-                      className={`p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed font-medium ${
+                      className={`p-3 rounded-2xl text-xs sm:text-sm leading-relaxed font-medium break-words overflow-hidden min-w-0 ${
                         isBot
-                          ? "bg-white text-slate-800 border border-slate-200/90 rounded-tl-none shadow-xs text-justify"
+                          ? "bg-white text-slate-900 border border-slate-200/90 rounded-tl-none shadow-xs text-left"
                           : "bg-[#FF6014] text-white rounded-tr-none shadow-xs"
                       }`}
+                      style={{ wordBreak: "break-word", overflowWrap: "anywhere" }}
                     >
-                      <p className="whitespace-pre-wrap">{msg.content}</p>
+                      <p className="whitespace-pre-wrap break-words">{msg.content}</p>
                     </div>
                   </div>
                 );

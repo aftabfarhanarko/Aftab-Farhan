@@ -162,19 +162,21 @@ export default function AIStack() {
           </div>
         </div>
 
-        {/* Right Column: Toolkit & Ownership Guarantee */}
-        <div className="lg:col-span-4 space-y-6">
+        {/* Right Column: Sticky Toolkit & Ownership Guarantee */}
+        <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
           {/* AI Engineering Toolkit Card */}
           <motion.div
             whileHover={{ y: -3 }}
-            className="p-6 rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:shadow-md transition-all duration-300 text-left space-y-4"
+            className="p-6 rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:shadow-md hover:border-orange-300 transition-all duration-300 text-left space-y-4 relative overflow-hidden group"
           >
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
                 <Cpu className="w-4 h-4 text-[#FF6014]" />
                 AI Engineering Toolkit
               </h3>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#FF6014] animate-pulse" />
             </div>
 
             <div className="space-y-2.5">
@@ -182,15 +184,15 @@ export default function AIStack() {
                 <motion.div
                   key={tool.name}
                   whileHover={{ x: 4 }}
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-orange-200 hover:bg-orange-50/40 transition-all cursor-default group"
+                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-orange-300 hover:bg-orange-50/40 transition-all cursor-default group/item"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-110 transition-transform">
+                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-2xs group-hover/item:scale-110 group-hover/item:border-orange-300 transition-all">
                       <img src={tool.icon} alt={tool.name} className="w-full h-full object-contain rounded" />
                     </div>
-                    <span className="text-sm font-bold text-slate-900 truncate">{tool.name}</span>
+                    <span className="text-sm font-bold text-slate-900 group-hover/item:text-[#FF6014] transition-colors truncate">{tool.name}</span>
                   </div>
-                  <span className="text-[10px] font-extrabold text-slate-700 bg-white px-2 py-1 rounded-md border border-slate-200/80 shrink-0 ml-2">
+                  <span className="text-[10px] font-extrabold text-slate-800 bg-white px-2 py-1 rounded-md border border-slate-200/80 shrink-0 ml-2 shadow-2xs">
                     {tool.role}
                   </span>
                 </motion.div>
@@ -201,7 +203,7 @@ export default function AIStack() {
           {/* Ownership & Authenticity Statement Card */}
           <motion.div
             whileHover={{ y: -3 }}
-            className="p-6 rounded-2xl border border-orange-200/90 bg-orange-50/40 text-left space-y-3 relative overflow-hidden"
+            className="p-6 rounded-2xl border border-orange-200/90 bg-orange-50/40 text-left space-y-3 relative overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
           >
             <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FF6014]" />
             <div className="flex items-center gap-2 text-[#FF6014]">
@@ -223,8 +225,10 @@ export default function AIStack() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mt-10 p-6 sm:p-8 rounded-2xl border border-slate-200/90 bg-white shadow-sm text-left space-y-4"
+        className="mt-10 p-6 sm:p-8 rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:shadow-md transition-all text-left space-y-4 relative overflow-hidden group"
       >
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
           <div>
             <h3 className="text-lg font-black text-slate-900 tracking-tight flex items-center gap-2">
@@ -235,7 +239,7 @@ export default function AIStack() {
               Practical software engineering impact areas in modern production workflows.
             </p>
           </div>
-          <span className="text-xs font-bold text-[#FF6014] bg-orange-50 px-3 py-1.5 rounded-xl border border-orange-200 shrink-0">
+          <span className="text-xs font-bold text-[#FF6014] bg-orange-50 px-3.5 py-1.5 rounded-xl border border-orange-200/90 shrink-0 shadow-2xs">
             High Efficiency &amp; Quality
           </span>
         </div>
@@ -245,9 +249,9 @@ export default function AIStack() {
             <motion.div
               key={item.label}
               whileHover={{ y: -2, scale: 1.01 }}
-              className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/80 hover:border-orange-300 hover:bg-white transition-all shadow-2xs"
+              className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/80 hover:border-orange-300 hover:bg-orange-50/30 transition-all shadow-2xs group/val"
             >
-              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm mb-1">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm mb-1 group-hover/val:text-[#FF6014] transition-colors">
                 <CheckCircle2 className="w-4 h-4 text-[#FF6014] shrink-0" />
                 <span>{item.label}</span>
               </div>
