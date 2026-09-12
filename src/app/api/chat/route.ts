@@ -301,16 +301,17 @@ ${timePrompt}
       return NextResponse.json({ reply: defaultReply, sessionId });
     }
 
-    // 4. Format message history for OpenRouter (OpenAI chat/completions format)
+    // 4. Format message history for OpenRouter (keep last 6 messages max for ultra-fast processing)
+    const recentMessages = messages.slice(-6);
     const formattedMessages = [
       { role: "system", content: systemPrompt },
-      ...messages.map((m: any) => ({
+      ...recentMessages.map((m: any) => ({
         role: m.role === "user" || m.role === "client" ? "user" : "assistant",
         content: m.text || m.content || "",
       }))
     ];
 
-    // 5. Call OpenRouter API using google/gemini-2.5-flash as the primary fast/cheap model
+    // 5. Call OpenRouter API using ultra-fast low-latency models (google/gemini-2.0-flash-001 or deepseek/deepseek-chat)
     const openrouterUrl = "https://openrouter.ai/api/v1/chat/completions";
 
     let response = await fetch(openrouterUrl, {
@@ -321,15 +322,15 @@ ${timePrompt}
         "X-Title": "Arko Portfolio Assistant",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "google/gemini-2.0-flash-001",
         messages: formattedMessages,
-        temperature: 0.7,
+        temperature: 0.6,
+        max_tokens: 400,
       }),
     });
 
-    // If Google Gemini fails or is rate-limited on OpenRouter, fallback to openai/gpt-4o-mini
+    // Fallback if primary model is unavailable
     if (!response.ok) {
-      console.warn("OpenRouter Gemini-2.5-flash call failed, trying fallback openai/gpt-4o-mini...");
       response = await fetch(openrouterUrl, {
         method: "POST",
         headers: {
@@ -340,7 +341,8 @@ ${timePrompt}
         body: JSON.stringify({
           model: "openai/gpt-4o-mini",
           messages: formattedMessages,
-          temperature: 0.7,
+          temperature: 0.6,
+          max_tokens: 400,
         }),
       });
     }
@@ -356,14 +358,14 @@ ${timePrompt}
       data.choices?.[0]?.message?.content ||
       "Sorry, I couldn't process that. Please try again or reach out to Arko directly through the contact form.";
 
-    // Save AI response to DB
-    await prisma.chatMessage.create({
+    // Save AI response to DB asynchronously in background to avoid blocking the response
+    prisma.chatMessage.create({
       data: {
         sessionId,
         role: "assistant",
         content: replyText,
       },
-    });
+    }).catch(err => console.error("Background message save error:", err));
 
     return NextResponse.json({ reply: replyText, sessionId });
   } catch (error: any) {
