@@ -110,6 +110,9 @@ export default function ContactForm() {
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
+                data-cursor-magnetic
+                data-magnetic-max="8"
+                data-cursor-label="SEND ↗"
                 disabled={formState === "submitting"}
                 className="w-full py-4 rounded-xl font-black text-base bg-[#FF6014] hover:bg-[#E5530F] text-white transition-all flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-md shadow-orange-500/20 group"
               >

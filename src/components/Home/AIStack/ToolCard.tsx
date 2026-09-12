@@ -34,6 +34,9 @@ export default function ToolCard({ tool, isActive, onClick, index = 0 }: ToolCar
       transition={{ duration: 0.4, delay: index * 0.05 }}
       whileHover={{ y: -4, scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
+      data-cursor-parallax
+      data-parallax-speed="6"
+      data-parallax-scale="1.03"
       className={`relative w-full p-4 sm:p-5 rounded-2xl border text-left cursor-pointer flex flex-col justify-between h-40 sm:h-44 focus-visible:outline-none transition-all duration-300 backdrop-blur-xl ${
         isActive
           ? "bg-white shadow-xl ring-2 ring-orange-500/50"

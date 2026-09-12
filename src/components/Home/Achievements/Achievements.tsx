@@ -52,6 +52,10 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      data-cursor-parallax
+      data-parallax-speed="8"
+      data-parallax-scale="1.03"
+      data-cursor-label="CERTIFICATE ↗"
       style={{
         transformStyle: "preserve-3d",
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,

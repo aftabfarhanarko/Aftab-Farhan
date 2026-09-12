@@ -54,6 +54,7 @@ function EducationCard({ edu, index }: { edu: EducationData; index: number }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.15 }}
       whileHover={{ y: -6, scale: 1.01 }}
+      data-cursor-hover-x="3"
       className="rounded-2xl glass-card-primary overflow-hidden transition-all duration-300 relative text-left hover:border-orange-300 p-6 sm:p-8 group"
     >
       {/* Top ambient orange line beam on hover */}

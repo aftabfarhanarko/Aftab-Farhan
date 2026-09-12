@@ -101,6 +101,9 @@ export default function Services() {
               viewport={{ once: true, margin: "-40px" }}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
+              data-cursor-parallax
+              data-parallax-speed="8"
+              data-parallax-scale="1.02"
               className="group relative p-6 rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 text-left flex flex-col justify-between overflow-hidden cursor-default min-h-[300px]"
             >
               {/* Sweep Light Beam on Hover */}
@@ -112,12 +115,12 @@ export default function Services() {
                   <div className="w-11 h-11 rounded-xl bg-orange-50 border border-orange-200/80 flex items-center justify-center text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white group-hover:scale-105 group-hover:rotate-[-4deg] transition-all duration-300 shadow-xs">
                     <Icon className="w-5 h-5 transition-transform duration-300" strokeWidth={2.2} />
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
+                  <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-[#FF6014] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-200" />
                 </div>
 
                 {/* Title & Description */}
                 <div>
-                  <h3 className="text-lg sm:text-[19px] font-black text-slate-900 tracking-tight group-hover:text-[#FF6014] transition-colors leading-snug mb-2">
+                  <h3 data-cursor-title-parallax className="text-lg sm:text-[19px] font-black text-slate-900 tracking-tight group-hover:text-[#FF6014] transition-colors leading-snug mb-2">
                     {cap.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium text-justify">

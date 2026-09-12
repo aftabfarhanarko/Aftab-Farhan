@@ -31,6 +31,9 @@ function ContactCardItem({ item }: { item: { icon: React.ReactNode; label: strin
     <motion.a
       whileHover={{ y: -4, scale: 1.01 }}
       href={item.href}
+      data-cursor-magnetic
+      data-magnetic-max="8"
+      data-cursor-label="CONTACT ↗"
       className="flex items-center justify-between p-4.5 rounded-2xl border border-slate-200/90 bg-white hover:border-orange-300 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300 shadow-sm group relative overflow-hidden"
     >
       <div className="flex items-center gap-4 min-w-0">
@@ -44,7 +47,7 @@ function ContactCardItem({ item }: { item: { icon: React.ReactNode; label: strin
         </div>
       </div>
 
-      <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0 ml-2" />
+      <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-[#FF6014] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-200 shrink-0 ml-2" />
     </motion.a>
   );
 }
@@ -90,6 +93,9 @@ export default function ContactInfo() {
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
+            data-cursor-magnetic
+            data-magnetic-max="8"
+            data-cursor-label="VISIT ↗"
             className={`flex-1 py-3 px-4 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-center gap-2 text-slate-800 font-bold text-sm shadow-sm transition-all duration-300 ${social.color}`}
           >
             {social.icon}

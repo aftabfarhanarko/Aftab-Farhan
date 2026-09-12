@@ -57,6 +57,7 @@ export default function SkillCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
+      data-cursor-hover-y="-3"
       className="rounded-2xl glass-card-primary transition-all duration-300 overflow-hidden text-left relative hover:border-orange-300 p-6 sm:p-7"
     >
       {/* Header */}

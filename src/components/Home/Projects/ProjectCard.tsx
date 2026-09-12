@@ -64,6 +64,11 @@ export default function ProjectCard({ project }: { project: Project }) {
   return (
     <div
       onClick={handleOpenDetails}
+      data-cursor="project"
+      data-cursor-label="VIEW PROJECT ↗"
+      data-cursor-parallax
+      data-parallax-speed="10"
+      data-parallax-scale="1.025"
       className="group relative flex flex-col rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 overflow-hidden cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5"
     >
       {/* Top Sweep Beam */}
@@ -88,11 +93,13 @@ export default function ProjectCard({ project }: { project: Project }) {
       <div className="grid grid-cols-1 md:grid-cols-12 items-stretch flex-1 w-full">
         {/* Thumbnail Container (Desktop Left Column) */}
         <div className="md:col-span-5 relative aspect-[16/9.5] md:aspect-auto min-h-[220px] w-full overflow-hidden bg-slate-100 border-b md:border-b-0 md:border-r border-slate-200/80">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700 ease-out"
-          />
+          <div className="project-image-mouse-layer w-full h-full">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700 ease-out"
+            />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
           {/* Badges Overlay */}
@@ -127,7 +134,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <div className="md:col-span-7 flex flex-col flex-1 p-4.5 sm:p-6 justify-between">
           <div>
             <div className="flex items-start justify-between gap-2 mb-1">
-              <h3 className="text-lg sm:text-2xl font-black text-slate-900 leading-snug group-hover:text-[#FF6014] transition-colors duration-200">
+              <h3 data-cursor-title-parallax className="text-lg sm:text-2xl font-black text-slate-900 leading-snug group-hover:text-[#FF6014] transition-colors duration-200">
                 {project.title}
               </h3>
               <ArrowUpRight className="w-4.5 h-4.5 text-slate-400 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0 mt-1" />
@@ -186,6 +193,8 @@ export default function ProjectCard({ project }: { project: Project }) {
                   href={project.demoLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-cursor-magnetic
+                  data-magnetic-max="6"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-[#FF6014] hover:bg-[#E5530F] rounded-xl shadow-xs transition-all active:scale-95"
                 >
                   <ExternalLink className="w-3.5 h-3.5" /> Live Demo
@@ -197,6 +206,8 @@ export default function ProjectCard({ project }: { project: Project }) {
                   href={project.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-cursor-magnetic
+                  data-magnetic-max="6"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all active:scale-95"
                 >
                   <Github className="w-3.5 h-3.5" /> GitHub
@@ -205,6 +216,8 @@ export default function ProjectCard({ project }: { project: Project }) {
 
               <button
                 onClick={handleOpenDetails}
+                data-cursor-magnetic
+                data-magnetic-max="6"
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-xl shadow-2xs transition-all ml-auto cursor-pointer active:scale-95"
                 type="button"
               >

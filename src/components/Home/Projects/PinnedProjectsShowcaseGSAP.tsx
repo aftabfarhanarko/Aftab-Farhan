@@ -2,7 +2,20 @@
 import React, { useEffect, useRef, useState, useId } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ExternalLink, ArrowUpRight, ArrowRight, X, Code2 } from "lucide-react";
+import {
+  ExternalLink,
+  ArrowUpRight,
+  ArrowRight,
+  X,
+  Code2,
+  CheckCircle2,
+  Calendar,
+  Clock,
+  Briefcase,
+  User,
+  Users,
+  Layers,
+} from "lucide-react";
 import { Project, categoryLabel } from "./types";
 import { useRouter } from "next/navigation";
 
@@ -27,29 +40,69 @@ const GithubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 // Curated studio-style dark color palette for full-screen poster scenes
 const SCENE_BACKGROUNDS = [
-  "#111111", // Deep Graphite Black
-  "#161616", // Studio Charcoal
-  "#243746", // Desaturated Slate Blue
-  "#3D5F70", // Muted Muted Teal Blue
-  "#1E282A", // Dark Olive Charcoal
-  "#202A3A", // Deep Studio Navy
+  "#0F172A", // Rich Dark Slate
+  "#111827", // Charcoal Slate
+  "#161D2F", // Studio Navy
+  "#172554", // Deep Blue
+  "#1E293B", // Dark Slate Blue
+  "#0B132B", // Deep Midnight
 ];
 
+interface Highlight {
+  title: string;
+  detail: string;
+}
+
 /**
- * Returns varied editorial layout alignment offsets for each project scene
- * to ensure visual composition diversity across scenes.
+ * Parses description or generates recruiter-focused engineering highlights
  */
-function getArtworkCompositionClass(index: number): string {
-  const mode = index % 4;
-  if (mode === 1) return "md:translate-x-6 lg:translate-x-10"; // Slightly right-shifted
-  if (mode === 2) return "md:-translate-x-6 lg:-translate-x-10"; // Slightly left-shifted
-  if (mode === 3) return "md:-translate-y-2 lg:-translate-y-4 scale-[1.02]"; // Slightly larger / overlapped
-  return "translate-x-0"; // Centered default
+function getRecruiterHighlights(project: Project): Highlight[] {
+  const highlights: Highlight[] = [];
+
+  if (project.category === "FULL_STACK") {
+    highlights.push({
+      title: "FULL-STACK ARCHITECTURE & APIS",
+      detail: "Scalable client-server architecture with REST/GraphQL services & state management.",
+    });
+  } else if (project.category === "AI_ML") {
+    highlights.push({
+      title: "AI ENGINE & AGENTIC WORKFLOW",
+      detail: "Integrated LLM agent workflows and real-time prompt processing pipelines.",
+    });
+  } else if (project.category === "E_COMMERCE") {
+    highlights.push({
+      title: "E-COMMERCE & PAYMENT SYSTEM",
+      detail: "Product management, cart architecture, and payment gateway integration.",
+    });
+  } else if (project.tagline) {
+    highlights.push({
+      title: project.tagline.toUpperCase(),
+      detail: "Optimized user experience and responsive component architecture.",
+    });
+  }
+
+  if (project.tech.includes("Next.js") || project.tech.includes("React")) {
+    highlights.push({
+      title: "NEXT.JS & TYPESCRIPT FRONTEND",
+      detail: "Server-side rendering, component-driven UI, and static optimization.",
+    });
+  } else if (project.tech.includes("Node.js") || project.tech.includes("NestJS")) {
+    highlights.push({
+      title: "BACKEND SERVICES & DATABASE",
+      detail: "Robust backend API services with structured database ORM schema.",
+    });
+  } else {
+    highlights.push({
+      title: "PRODUCTION DEPLOYMENT & CI/CD",
+      detail: "Automated deployment, environment management, and performance monitoring.",
+    });
+  }
+
+  return highlights.slice(0, 2);
 }
 
 /**
  * Formats project title into bold sans-serif + italic serif key word
- * for high-end editorial studio aesthetic matching the reference image.
  */
 function renderEditorialTitle(title: string) {
   const words = title.trim().split(" ");
@@ -57,7 +110,6 @@ function renderEditorialTitle(title: string) {
     return <span className="font-sans font-black tracking-tight">{title}</span>;
   }
 
-  // Last word gets elegant serif italic styling if multi-word
   const mainText = words.slice(0, words.length - 1).join(" ");
   const accentWord = words[words.length - 1];
 
@@ -80,22 +132,6 @@ function getContextLabel(category: string, projectType: string): string {
   if (catName.toLowerCase().includes("frontend")) return "Explore UI/UX & Web Engineering";
   if (projectType === "CLIENT") return "Explore Client Software Solution";
   return `Explore ${catName} Project`;
-}
-
-/**
- * Extracts a concise 1-2 sentence human-readable summary
- */
-function getConciseDescription(description: string, tagline?: string): string {
-  if (!description) return tagline || "Production software application engineered for high performance and scale.";
-  
-  const sentences = description.split(/(?<=\.)\s+/).filter(Boolean);
-  if (sentences.length >= 2) {
-    return `${sentences[0]} ${sentences[1]}`;
-  }
-  if (sentences.length === 1 && sentences[0].length > 160) {
-    return sentences[0].slice(0, 155) + "...";
-  }
-  return sentences[0] || tagline || description;
 }
 
 interface PinnedProjectsShowcaseGSAPProps {
@@ -152,7 +188,7 @@ export default function PinnedProjectsShowcaseGSAP({
     const ctx = gsap.context(() => {
       const totalTransitions = Math.max(1, projects.length - 1);
 
-      // 1. Navbar Hiding ScrollTrigger: Hides navbar as soon as Projects stage enters 35% viewport
+      // 1. Navbar Hiding ScrollTrigger
       ScrollTrigger.create({
         trigger: pinStageRef.current,
         start: "top 35%",
@@ -169,7 +205,7 @@ export default function PinnedProjectsShowcaseGSAP({
         const scenes = gsap.utils.toArray<HTMLElement>(`.project-scene-${scopeId}`);
         if (scenes.length === 0) return;
 
-        // Position all full-screen scenes absolutely on top of each other
+        // Position all full-screen scenes absolutely
         gsap.set(scenes, {
           position: "absolute",
           inset: 0,
@@ -177,7 +213,7 @@ export default function PinnedProjectsShowcaseGSAP({
           height: "100%",
         });
 
-        // Set initial states: Scene 0 is active; Scenes 1..N start BELOW the viewport (yPercent: 100%)
+        // Set initial states: Scene 0 is active; Scenes 1..N start below (yPercent: 100%)
         scenes.forEach((scene, i) => {
           if (i === 0) {
             gsap.set(scene, {
@@ -191,14 +227,14 @@ export default function PinnedProjectsShowcaseGSAP({
             gsap.set(scene, {
               opacity: 0,
               scale: 1.04,
-              yPercent: 100, // Starts completely below viewport
+              yPercent: 100,
               zIndex: 10 + i,
               pointerEvents: "none",
             });
           }
         });
 
-        // Set initial stage background color
+        // Initial stage background
         if (bgOverlayRef.current) {
           gsap.set(bgOverlayRef.current, {
             backgroundColor: SCENE_BACKGROUNDS[0 % SCENE_BACKGROUNDS.length],
@@ -207,7 +243,7 @@ export default function PinnedProjectsShowcaseGSAP({
 
         if (totalTransitions <= 0) return;
 
-        // Master Scroll Timeline: Full-screen scenes slide UP smoothly from bottom over previous scene
+        // Master Scroll Timeline: Scenes slide UP from bottom over previous scene
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: pinStageRef.current,
@@ -247,13 +283,13 @@ export default function PinnedProjectsShowcaseGSAP({
               );
             }
 
-            // Outgoing scene animation (scale down to 0.94, move up -5%, fade out)
+            // Outgoing scene animation: complete fade out (opacity: 0) to prevent text bleeding/overlap
             sceneTL.to(
               scene,
               {
                 scale: 0.94,
                 yPercent: -5,
-                opacity: 0.3,
+                opacity: 0,
                 duration: 1,
                 ease: "power2.inOut",
                 onComplete: () => {
@@ -266,7 +302,7 @@ export default function PinnedProjectsShowcaseGSAP({
               0
             );
 
-            // Incoming scene animation (slides UP smoothly from bottom: yPercent: 100% -> 0%, scale: 1.04 -> 1, opacity: 0 -> 1)
+            // Incoming scene animation (slides UP from bottom)
             sceneTL.to(
               nextScene,
               {
@@ -293,16 +329,16 @@ export default function PinnedProjectsShowcaseGSAP({
               );
             }
 
-            // Incoming artwork presentation reveal with clip-path inset & scale reveal
+            // Incoming artwork presentation reveal
             const nextArtwork = nextScene.querySelector(`.scene-artwork-${scopeId}`);
             if (nextArtwork) {
               sceneTL.fromTo(
                 nextArtwork,
                 {
-                  scale: 1.1,
+                  scale: 1.08,
                   yPercent: 8,
                   opacity: 0,
-                  clipPath: "inset(4% 4% 4% 4%)",
+                  clipPath: "inset(3% 3% 3% 3%)",
                 },
                 {
                   scale: 1,
@@ -316,14 +352,14 @@ export default function PinnedProjectsShowcaseGSAP({
               );
             }
 
-            // Incoming description, tech stack, and action links reveal
-            const nextFooter = nextScene.querySelector(`.scene-footer-${scopeId}`);
-            if (nextFooter) {
+            // Incoming recruiter details reveal
+            const nextDetails = nextScene.querySelector(`.scene-details-${scopeId}`);
+            if (nextDetails) {
               sceneTL.fromTo(
-                nextFooter,
-                { opacity: 0, y: 20 },
+                nextDetails,
+                { opacity: 0, y: 18 },
                 { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
-                0.3
+                0.25
               );
             }
 
@@ -345,7 +381,7 @@ export default function PinnedProjectsShowcaseGSAP({
 
   return (
     <div ref={triggerRef} className="w-full relative">
-      {/* Full-Screen Pinned Stage (100vw x 100vh Full Page Showcase) */}
+      {/* Full-Screen Pinned Stage (100vw x 100vh) */}
       <div
         ref={pinStageRef}
         className="w-screen h-screen relative overflow-hidden flex items-center justify-center -mx-[calc((100vw-100%)/2)]"
@@ -358,36 +394,42 @@ export default function PinnedProjectsShowcaseGSAP({
         />
 
         {/* Ambient Subtle Studio Lighting */}
-        <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-black/40 pointer-events-none z-1" />
+        <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-black/50 pointer-events-none z-1" />
 
         {/* Project Scenes Stack */}
         <div className="relative w-full h-full z-10">
           {projects.map((project, index) => {
             const isFirst = index === 0;
             const contextLabel = getContextLabel(project.category, project.projectType);
-            const compositionClass = getArtworkCompositionClass(index);
-            const conciseDesc = getConciseDescription(project.description, project.tagline);
+            const highlights = getRecruiterHighlights(project);
+            const bgColor = SCENE_BACKGROUNDS[index % SCENE_BACKGROUNDS.length];
             
-            const mainTech = project.tech ? project.tech.slice(0, 5) : [];
-            const extraTechCount = project.tech && project.tech.length > 5 ? project.tech.length - 5 : 0;
+            const displayedTech = project.tech ? project.tech.slice(0, 6) : [];
+            const remainingTechCount = project.tech && project.tech.length > 6 ? project.tech.length - 6 : 0;
 
             return (
               <article
                 key={project.id}
-                className={`project-scene-${scopeId} w-full h-full p-6 sm:p-10 lg:p-14 flex flex-col justify-between items-center text-white select-none overflow-hidden ${
+                className={`project-scene-${scopeId} w-full h-full p-4 sm:p-8 lg:p-10 flex flex-col justify-between items-center text-white select-none overflow-hidden ${
                   isFirst ? "relative" : "absolute inset-0"
                 }`}
                 style={{
                   opacity: isFirst ? 1 : 0,
                   pointerEvents: isFirst ? "auto" : "none",
+                  backgroundColor: bgColor, // Solid background per scene to prevent text bleed
                 }}
               >
-                {/* 1. TOP EDITORIAL BAR (Floating Header) */}
-                <div className="w-full flex items-center justify-between z-20 pt-2 sm:pt-4">
-                  {/* Top-Left: Small Editorial Index */}
-                  <span className="font-mono text-sm sm:text-base tracking-widest font-light text-white/90">
-                    ({String(index + 1).padStart(2, "0")})
-                  </span>
+                {/* 1. TOP EDITORIAL BAR */}
+                <div className="w-full flex items-center justify-between z-20 pt-1 sm:pt-2 max-w-7xl mx-auto">
+                  {/* Top-Left: Index & Category Badge */}
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-sm sm:text-base tracking-widest font-bold text-[#FF6014] bg-orange-500/10 border border-orange-500/20 px-2.5 py-0.5 rounded-md">
+                      ({String(index + 1).padStart(2, "0")})
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-white/90 hidden sm:inline-block">
+                      {categoryLabel[project.category] || project.category}
+                    </span>
+                  </div>
 
                   {/* Top-Right: Contextual Editorial Label */}
                   <span className="font-sans text-xs sm:text-sm tracking-wide font-medium text-white/90">
@@ -395,108 +437,163 @@ export default function PinnedProjectsShowcaseGSAP({
                   </span>
                 </div>
 
-                {/* 2. CENTER PIECE: HUGE EDITORIAL TITLE + LARGE ARTWORK COMPOSITION */}
-                <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center flex-1 my-auto relative z-10 py-1 sm:py-3">
-                  {/* Massive Editorial Project Title */}
+                {/* 2. CENTER SECTION: BALANCED FONT-SCALED TITLE + ARTWORK */}
+                <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center flex-1 my-auto relative z-10 py-1 sm:py-2">
+                  {/* Compact Font-Scaled Title (Max 2 Lines) */}
                   <h2
                     onClick={() => router.push(`/projects/${project.id}`)}
-                    className={`scene-title-${scopeId} text-[clamp(44px,7.5vw,130px)] leading-[0.95] text-center tracking-tight text-white mb-3 sm:mb-5 cursor-pointer drop-shadow-xl transition-transform duration-500 hover:scale-[1.01]`}
+                    data-cursor-title-parallax
+                    className={`scene-title-${scopeId} text-[clamp(26px,3.8vw,52px)] leading-[1.1] text-center tracking-tight text-white mb-2 sm:mb-3 cursor-pointer drop-shadow-md transition-transform duration-300 hover:scale-[1.01] max-w-5xl`}
                   >
                     {renderEditorialTitle(project.title)}
                   </h2>
 
-                  {/* Large Centered Project Artwork Presentation with dynamic layout offsets */}
+                  {/* High-Resolution Project Artwork (Balanced 30-40vh Height) */}
                   <div
                     onClick={() => router.push(`/projects/${project.id}`)}
-                    className={`scene-artwork-${scopeId} relative w-[85vw] sm:w-[70vw] lg:w-[62vw] max-w-[1100px] h-[38vh] sm:h-[46vh] lg:h-[52vh] max-h-[640px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-black/50 cursor-pointer group border border-white/10 transition-transform duration-700 ease-out ${compositionClass}`}
+                    data-cursor="project"
+                    data-cursor-label="VIEW PROJECT ↗"
+                    data-cursor-parallax
+                    data-parallax-speed="12"
+                    data-parallax-scale="1.025"
+                    className={`scene-artwork-${scopeId} project-image-scroll-layer relative w-[88vw] sm:w-[74vw] lg:w-[62vw] max-w-[1050px] h-[30vh] sm:h-[36vh] lg:h-[40vh] max-h-[460px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-black/60 cursor-pointer group border border-white/15 transition-all duration-500 ease-out`}
                   >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
+                    <div className="project-image-mouse-layer w-full h-full">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    </div>
 
                     {/* Subtle Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                      <span className="px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md text-slate-900 text-xs font-extrabold uppercase tracking-widest shadow-2xl flex items-center gap-2">
-                        View Case Study <ArrowRight className="w-3.5 h-3.5" />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                      <span className="px-5 py-2.5 rounded-full bg-white backdrop-blur-md text-slate-950 text-xs font-extrabold uppercase tracking-widest shadow-2xl flex items-center gap-2">
+                        View Full Details <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {/* 3. BOTTOM EDITORIAL SUPPORTING FOOTER */}
+                {/* 3. RECRUITER-FOCUSED TECHNICAL DETAILS & TIMELINE PANEL */}
                 <div
-                  className={`scene-footer-${scopeId} w-full max-w-3xl mx-auto flex flex-col items-center gap-2 z-20 pb-2 sm:pb-4 text-center`}
+                  className={`scene-details-${scopeId} w-full max-w-5xl mx-auto flex flex-col gap-2.5 z-20 pb-2 sm:pb-3 bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 text-left shadow-xl`}
                 >
-                  {/* Concise 1-2 Sentence Human-Readable Summary */}
-                  <p className="text-xs sm:text-sm font-medium text-white/90 tracking-wide max-w-xl leading-relaxed">
-                    {conciseDesc}
-                  </p>
+                  {/* Timeline, Client & Type Metric Bar */}
+                  <div className="flex items-center justify-between gap-3 flex-wrap border-b border-white/10 pb-2">
+                    <div className="flex items-center gap-2.5 text-xs font-mono font-bold text-white/90">
+                      <span className="flex items-center gap-1 text-[#FF6014]">
+                        <Calendar className="w-3.5 h-3.5" /> {project.year || "2026"}
+                      </span>
+                      <span>·</span>
+                      <span className="flex items-center gap-1 text-slate-300">
+                        {project.projectType === "CLIENT" ? (
+                          <>
+                            <Briefcase className="w-3.5 h-3.5 text-amber-400" /> CLIENT PRODUCTION
+                          </>
+                        ) : project.projectType === "TEAM" ? (
+                          <>
+                            <Users className="w-3.5 h-3.5 text-blue-400" /> TEAM RELEASE
+                          </>
+                        ) : (
+                          <>
+                            <User className="w-3.5 h-3.5 text-emerald-400" /> PERSONAL WORK
+                          </>
+                        )}
+                      </span>
+                      {project.duration && (
+                        <>
+                          <span>·</span>
+                          <span className="flex items-center gap-1 text-slate-300">
+                            <Clock className="w-3.5 h-3.5 text-sky-400" /> DURATION: {project.duration}
+                          </span>
+                        </>
+                      )}
+                    </div>
 
-                  {/* User-Friendly Readable Tech Stack Line */}
-                  <div className="flex items-center gap-2 flex-wrap justify-center font-mono text-[11px] sm:text-xs text-white/80 tracking-wider">
-                    <span className="font-bold text-white/90">STACK</span>
-                    <span>:</span>
-                    <span>{mainTech.join(" · ")}</span>
-                    {extraTechCount > 0 && (
+                    {project.client && (
+                      <span className="font-mono text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                        CLIENT: {project.client}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Recruiter Engineering Highlights Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 my-0.5">
+                    {highlights.map((h, hIdx) => (
+                      <div
+                        key={hIdx}
+                        className="flex items-start gap-2 bg-white/5 border border-white/10 p-2 rounded-xl"
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-[#FF6014] shrink-0 mt-0.5" />
+                        <div>
+                          <span className="text-[10px] font-mono font-bold text-[#FF6014] uppercase tracking-wider block">
+                            {h.title}
+                          </span>
+                          <p className="text-xs text-slate-200 font-medium leading-tight">
+                            {h.detail}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* High-Contrast Crisp Technology Badges & Action Buttons */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-white/10">
+                    {/* Tech Badges */}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="font-mono text-xs font-bold text-white/90 mr-1">TECH STACK:</span>
+                      {displayedTech.map((techItem) => (
+                        <span
+                          key={techItem}
+                          className="px-2.5 py-0.5 text-xs font-mono font-semibold bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-colors"
+                        >
+                          {techItem}
+                        </span>
+                      ))}
+                      {remainingTechCount > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setTechModalProject(project)}
+                          className="px-2.5 py-0.5 text-xs font-mono font-bold bg-[#FF6014]/20 border border-[#FF6014]/40 text-[#FF6014] hover:bg-[#FF6014]/30 rounded-lg transition-colors cursor-pointer"
+                        >
+                          +{remainingTechCount} more
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Prominent Action Buttons */}
+                    <div className="flex items-center gap-2.5 shrink-0">
+                      {project.demoLink && (
+                        <a
+                          href={project.demoLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold text-white bg-[#FF6014] hover:bg-[#E5530F] rounded-xl shadow-md transition-all active:scale-95 cursor-pointer"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" /> Live Demo
+                        </a>
+                      )}
+
+                      {project.githubLink && (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl transition-all active:scale-95 cursor-pointer"
+                        >
+                          <GithubIcon className="w-3.5 h-3.5" /> GitHub
+                        </a>
+                      )}
+
                       <button
                         type="button"
-                        onClick={() => setTechModalProject(project)}
-                        className="underline text-white/90 hover:text-white transition-colors cursor-pointer ml-1"
+                        onClick={() => router.push(`/projects/${project.id}`)}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold text-slate-300 hover:text-white transition-colors cursor-pointer"
                       >
-                        (+{extraTechCount} more)
+                        Case Study <ArrowRight className="w-3.5 h-3.5" />
                       </button>
-                    )}
-                  </div>
-
-                  {/* Essential Metadata Badge */}
-                  <div className="font-mono text-[10px] sm:text-[11px] text-white/70 tracking-widest uppercase">
-                    <span>{project.year || "2026"}</span>
-                    <span className="mx-2">·</span>
-                    <span>{project.projectType === "CLIENT" ? "CLIENT PRODUCTION" : "TEAM RELEASE"}</span>
-                  </div>
-
-                  {/* Minimal Editorial Text Action Links */}
-                  <div className="flex items-center gap-6 pt-1 sm:pt-2">
-                    {project.demoLink && (
-                      <a
-                        href={project.demoLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-1 text-xs sm:text-sm font-bold tracking-wider text-white uppercase hover:opacity-80 transition-opacity"
-                      >
-                        <span className="border-b border-white/60 group-hover:border-white pb-0.5">
-                          VIEW LIVE
-                        </span>
-                        <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </a>
-                    )}
-
-                    {project.githubLink && (
-                      <a
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-1 text-xs sm:text-sm font-bold tracking-wider text-white/90 uppercase hover:text-white transition-colors"
-                      >
-                        <span className="border-b border-white/40 group-hover:border-white pb-0.5">
-                          GITHUB
-                        </span>
-                        <GithubIcon className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={() => router.push(`/projects/${project.id}`)}
-                      className="group inline-flex items-center gap-1 text-xs sm:text-sm font-bold tracking-wider text-white/80 uppercase hover:text-white transition-colors cursor-pointer"
-                    >
-                      <span className="border-b border-white/30 group-hover:border-white pb-0.5">
-                        CASE STUDY
-                      </span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </div>
                   </div>
                 </div>
               </article>
