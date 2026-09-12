@@ -169,46 +169,46 @@ export default function ChatbotWidget() {
 
   // Starter prompts configured with dynamic Lucide icons instead of raw emojis
   const starterPrompts = [
-    { 
+    {
       label: "Skills", 
-      icon: <Code2 size={10} className="text-emerald-400" />, 
+      icon: <Code2 size={10} className="text-[#FF6014]" />, 
       text: "What programming languages and frameworks do you use?" 
     },
     { 
       label: "Projects", 
-      icon: <FolderGit2 size={10} className="text-emerald-400" />, 
+      icon: <FolderGit2 size={10} className="text-[#FF6014]" />, 
       text: "Show me some of your recent web projects." 
     },
     { 
       label: "Experience", 
-      icon: <Briefcase size={10} className="text-emerald-400" />, 
+      icon: <Briefcase size={10} className="text-[#FF6014]" />, 
       text: "Where have you worked before?" 
     },
     { 
       label: "Education", 
-      icon: <GraduationCap size={10} className="text-emerald-400" />, 
+      icon: <GraduationCap size={10} className="text-[#FF6014]" />, 
       text: "Tell me about your educational background." 
     },
     { 
       label: "Soft Skills", 
-      icon: <Brain size={10} className="text-emerald-400" />, 
+      icon: <Brain size={10} className="text-[#FF6014]" />, 
       text: "What are your soft skills and communication strengths?" 
     },
     { 
       label: "AI Workflow", 
-      icon: <Sparkles size={10} className="text-emerald-400" />, 
-      text: "Can you explain your 6-stage AI-Native workflow (DeepSeek, Windsurf, Cursor, Grok, Antigravity, Trae)?" 
+      icon: <Sparkles size={10} className="text-[#FF6014]" />, 
+      text: "Can you explain your AI-Powered Engineering Workflow?" 
     },
     { 
       label: "Services", 
-      icon: <Wrench size={10} className="text-emerald-400" />, 
+      icon: <Wrench size={10} className="text-[#FF6014]" />, 
       text: "What kind of development services do you offer to clients?" 
     },
   ];
 
   return (
     // Fixed positioning updated to place the chatbot on the right edge on desktop and bottom on mobile, avoiding overlays
-    <div className="fixed z-50 font-sans bottom-24 right-4 md:bottom-44 md:right-8">
+    <div className="fixed z-50 font-sans bottom-24 right-4 md:bottom-36 md:right-8">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -216,15 +216,9 @@ export default function ChatbotWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 30 }}
             transition={{ type: "spring", stiffness: 350, damping: 28 }}
-            className="w-[90vw] sm:w-[380px] h-[550px] mb-4 rounded-2xl overflow-hidden shadow-2xl border border-black/10 dark:border-zinc-800/80 flex flex-col relative"
+            className="w-[90vw] sm:w-[380px] h-[550px] mb-4 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-white flex flex-col relative"
             style={{
-              background: isDark
-                ? "linear-gradient(160deg, rgba(10, 10, 12, 0.96) 0%, rgba(20, 20, 25, 0.96) 100%)"
-                : "linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 247, 250, 0.98) 100%)",
-              backdropFilter: "blur(20px)",
-              boxShadow: isDark
-                ? "0 10px 40px -10px rgba(16, 185, 129, 0.2)"
-                : "0 10px 40px -10px rgba(16, 185, 129, 0.1)",
+              boxShadow: "0 12px 40px -10px rgba(255, 96, 20, 0.15)",
             }}
           >
             {/* Custom Clear Confirmation Dialog Overlay */}
@@ -234,30 +228,30 @@ export default function ChatbotWidget() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-6"
+                  className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-6"
                 >
                   <motion.div
                     initial={{ scale: 0.9, y: 15 }}
                     animate={{ scale: 1, y: 0 }}
                     exit={{ scale: 0.9, y: 15 }}
-                    className="bg-zinc-950 border border-zinc-800 rounded-2xl p-5 w-full max-w-[280px] shadow-[0_10px_30px_rgba(0,0,0,0.5)] text-center space-y-4"
+                    className="bg-white border border-slate-200 rounded-2xl p-5 w-full max-w-[280px] shadow-2xl text-center space-y-4"
                   >
-                    <h4 className="text-sm font-bold text-zinc-100">Clear Chat History?</h4>
-                    <p className="text-[11px] text-zinc-400 leading-relaxed">
+                    <h4 className="text-sm font-bold text-slate-900">Clear Chat History?</h4>
+                    <p className="text-xs text-slate-600 leading-relaxed font-medium">
                       Are you sure you want to permanently clear all messages in this session?
                     </p>
                     <div className="flex gap-2 justify-center pt-1.5">
                       <button
                         type="button"
                         onClick={() => setShowConfirmClear(false)}
-                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition cursor-pointer border border-zinc-700/50"
+                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer border border-slate-200"
                       >
                         Cancel
                       </button>
                       <button
                         type="button"
                         onClick={confirmClearChat}
-                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-500 transition cursor-pointer border border-emerald-500/30"
+                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#FF6014] text-white hover:bg-[#E5530F] transition cursor-pointer shadow-sm"
                       >
                         Clear
                       </button>
@@ -274,7 +268,7 @@ export default function ChatbotWidget() {
                   initial={{ opacity: 0, y: 25, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 25, scale: 0.9 }}
-                  className="absolute bottom-20 left-1/2 -translate-x-1/2 z-50 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-emerald-500/20 flex items-center gap-1.5 border border-emerald-500"
+                  className="absolute bottom-20 left-1/2 -translate-x-1/2 z-50 bg-[#FF6014] text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-orange-500/20 flex items-center gap-1.5 border border-orange-400"
                 >
                   <span className="text-[14px]">✓</span>
                   <span>{toastMessage}</span>
@@ -283,33 +277,33 @@ export default function ChatbotWidget() {
             </AnimatePresence>
 
             {/* Header */}
-            <div className="p-4 border-b border-black/5 dark:border-zinc-800/60 flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.02]">
+            <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10 text-emerald-400">
+                <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center shadow-xs text-[#FF6014]">
                   <Bot size={18} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-zinc-100 flex items-center gap-1.5">
+                  <h3 className="text-sm font-black text-slate-900 flex items-center gap-1.5">
                     Arko's Portfolio AI
                     <span className="flex h-2 w-2 relative">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6014] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF6014]"></span>
                     </span>
                   </h3>
-                  <p className="text-[10px] text-slate-500 dark:text-zinc-500 font-medium mt-0.5">Online & Ready to Assist</p>
+                  <p className="text-[10px] text-slate-500 font-bold mt-0.5">Online &amp; Ready to Assist</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={triggerClearChatConfirm}
-                  className="text-[10px] px-2 py-1 rounded bg-black/5 dark:bg-zinc-850 hover:bg-black/10 dark:hover:bg-zinc-800 text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-emerald-400 transition cursor-pointer font-bold border border-black/5 dark:border-zinc-800"
+                  className="text-[10px] px-2.5 py-1 rounded-lg bg-white hover:bg-orange-50 text-slate-600 hover:text-[#FF6014] transition cursor-pointer font-bold border border-slate-200 hover:border-orange-200"
                   title="Clear Chat Session"
                 >
                   Clear
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg bg-black/5 dark:bg-zinc-850 hover:bg-black/10 dark:hover:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:text-slate-855 dark:hover:text-zinc-200 transition cursor-pointer border border-black/5 dark:border-zinc-800"
+                  className="p-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition cursor-pointer border border-slate-200"
                 >
                   <X size={15} />
                 </button>
@@ -317,25 +311,25 @@ export default function ChatbotWidget() {
             </div>
 
             {/* Message Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-slate-50/50 dark:bg-zinc-950/20">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-slate-50/40">
               {messages.map((msg, index) => {
                 const isBot = msg.role === "assistant";
                 return (
-                  <div key={index} className={`flex gap-3 max-w-[85%] ${isBot ? "mr-auto" : "ml-auto flex-row-reverse"}`}>
+                  <div key={index} className={`flex gap-3 max-w-[88%] ${isBot ? "mr-auto" : "ml-auto flex-row-reverse"}`}>
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 border ${
                         isBot 
-                          ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-500 dark:text-emerald-400" 
-                          : "bg-zinc-500/10 border-zinc-500/20 text-zinc-500 dark:text-zinc-400"
+                          ? "bg-orange-50 border-orange-200 text-[#FF6014]" 
+                          : "bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                     >
-                      {isBot ? <Bot size={13} /> : <User size={13} />}
+                      {isBot ? <Bot size={14} /> : <User size={14} />}
                     </div>
                     <div
-                      className={`p-3 rounded-xl text-xs md:text-sm leading-relaxed ${
+                      className={`p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed font-medium ${
                         isBot
-                          ? "bg-white dark:bg-zinc-900/90 text-slate-800 dark:text-zinc-200 border border-slate-200 dark:border-zinc-800/80 rounded-tl-none shadow-sm"
-                          : "bg-emerald-500/10 dark:bg-emerald-500/15 text-slate-900 dark:text-emerald-300 border border-emerald-500/20 dark:border-emerald-500/30 rounded-tr-none"
+                          ? "bg-white text-slate-800 border border-slate-200/90 rounded-tl-none shadow-xs text-justify"
+                          : "bg-[#FF6014] text-white rounded-tr-none shadow-xs"
                       }`}
                     >
                       <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -345,10 +339,10 @@ export default function ChatbotWidget() {
               })}
               {isLoading && (
                 <div className="flex gap-3 max-w-[85%] mr-auto">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center border bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
-                    <Bot size={13} className="animate-pulse" />
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center border bg-orange-50 border-orange-200 text-[#FF6014]">
+                    <Bot size={14} className="animate-pulse" />
                   </div>
-                  <div className="p-3 rounded-xl text-xs md:text-sm bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800/80 rounded-tl-none text-slate-400 dark:text-zinc-500 italic">
+                  <div className="p-3 rounded-xl text-xs md:text-sm bg-white border border-slate-200/90 rounded-tl-none text-slate-500 italic font-medium">
                     AI is writing response...
                   </div>
                 </div>
@@ -356,14 +350,14 @@ export default function ChatbotWidget() {
               <div ref={chatEndRef} />
             </div>
 
-            {/* Quick Starter Chips - Dynamic Lucide Icons Rendered Inline */}
-            <div className="p-2 border-t border-slate-200 dark:border-zinc-800/60 bg-slate-50 dark:bg-zinc-950/40 flex flex-wrap gap-1.5 max-h-[85px] overflow-y-auto custom-scrollbar">
+            {/* Quick Starter Chips */}
+            <div className="p-2.5 border-t border-slate-200/80 bg-white flex flex-wrap gap-1.5 max-h-[90px] overflow-y-auto custom-scrollbar">
               {starterPrompts.map((prompt, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleQuickPrompt(prompt.text)}
                   disabled={isLoading}
-                  className="text-[9px] font-bold px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-emerald-500/10 border border-slate-200 dark:border-zinc-800 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-emerald-400 hover:border-emerald-500/30 dark:hover:border-emerald-500/20 transition cursor-pointer flex items-center gap-1.5"
+                  className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-slate-50 hover:bg-orange-50 border border-slate-200 text-slate-800 hover:text-[#FF6014] hover:border-orange-300 transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
                 >
                   {prompt.icon}
                   <span>{prompt.label}</span>
@@ -372,33 +366,33 @@ export default function ChatbotWidget() {
             </div>
 
             {/* Input Form */}
-            <form onSubmit={handleSend} className="p-3 border-t border-slate-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-950/60 flex gap-2 items-center">
+            <form onSubmit={handleSend} className="p-3 border-t border-slate-200 bg-white flex gap-2 items-center">
               <input
                 type="text"
                 placeholder="Ask something..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 px-3.5 py-2 rounded-xl text-xs md:text-sm bg-slate-100 dark:bg-zinc-900/70 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-655 focus:outline-none focus:border-emerald-500/50 transition"
+                className="flex-1 px-4 py-2.5 rounded-xl text-xs md:text-sm bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#FF6014] focus:ring-1 focus:ring-[#FF6014] transition font-medium"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="w-8 h-8 rounded-xl flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white transition disabled:opacity-40 disabled:hover:bg-emerald-600 cursor-pointer shadow-lg shadow-emerald-500/20 border border-emerald-500/30"
+                className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#FF6014] hover:bg-[#E5530F] text-white transition disabled:opacity-40 disabled:hover:bg-[#FF6014] cursor-pointer shadow-md shadow-orange-500/20"
               >
-                <Send size={13} />
+                <Send size={14} />
               </button>
             </form>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Toggle Button - Sleek techy glassmorphic style with emerald-glow shadow */}
+      {/* Floating Toggle Button */}
       <motion.button
         onClick={() => setIsOpen((prev) => !prev)}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-2xl bg-zinc-950/90 dark:bg-zinc-900/90 border border-emerald-500/30 text-emerald-400 hover:text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.15)] flex items-center justify-center cursor-pointer relative group"
+        className="w-14 h-14 rounded-2xl bg-slate-900 border border-orange-300/60 text-[#FF6014] hover:text-white hover:bg-[#FF6014] hover:border-[#FF6014] shadow-xl shadow-orange-500/15 flex items-center justify-center cursor-pointer relative group transition-all duration-300"
         style={{
           outline: "none",
         }}
@@ -412,7 +406,7 @@ export default function ChatbotWidget() {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <X size={24} className="text-emerald-400 group-hover:text-emerald-300" />
+              <X size={24} className="text-white" />
             </motion.div>
           ) : (
             <motion.div
@@ -423,11 +417,11 @@ export default function ChatbotWidget() {
               transition={{ duration: 0.15 }}
               className="relative"
             >
-              <MessageSquare size={22} className="text-emerald-400 group-hover:text-emerald-300" />
+              <MessageSquare size={22} className="group-hover:text-white" />
               {/* Pulsing Dot */}
               <span className="absolute -top-1.5 -right-1.5 flex h-3.5 w-3.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border border-black/40"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6014] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#FF6014] border border-white"></span>
               </span>
             </motion.div>
           )}
