@@ -71,11 +71,12 @@ export default function AIStack() {
   ];
 
   const toolkit = [
-    { name: "Cursor", role: "IDE AI Partner" },
-    { name: "Claude Code", role: "CLI & Reasoning Agent" },
-    { name: "DeepSeek", role: "Deep Logic & Analysis" },
-    { name: "Windsurf", role: "Contextual Code Agent" },
-    { name: "Antigravity SDK", role: "Agentic Engineering Layer" },
+    { name: "Cursor", role: "IDE AI Partner", icon: "/cursor-app-icon.png" },
+    { name: "DeepSeek", role: "Logic & Deep Analysis", icon: "/deepseek-logo-icon.png" },
+    { name: "Windsurf", role: "Contextual Code Agent", icon: "/Windsurf.png" },
+    { name: "Antigravity SDK", role: "Agentic Engineering Layer", icon: "/antigravity-logo.png" },
+    { name: "Grok", role: "Real-time Reasoning", icon: "/grok.png" },
+    { name: "Trae AI", role: "Adaptive IDE Agent", icon: "/trae.jpg" },
   ];
 
   const valueAdds = [
@@ -181,10 +182,15 @@ export default function AIStack() {
                 <motion.div
                   key={tool.name}
                   whileHover={{ x: 4 }}
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-orange-200 hover:bg-orange-50/40 transition-all cursor-default"
+                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-orange-200 hover:bg-orange-50/40 transition-all cursor-default group"
                 >
-                  <span className="text-sm font-bold text-slate-900">{tool.name}</span>
-                  <span className="text-[11px] font-bold text-slate-700 bg-white px-2.5 py-0.5 rounded-md border border-slate-200/80">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-110 transition-transform">
+                      <img src={tool.icon} alt={tool.name} className="w-full h-full object-contain rounded" />
+                    </div>
+                    <span className="text-sm font-bold text-slate-900 truncate">{tool.name}</span>
+                  </div>
+                  <span className="text-[10px] font-extrabold text-slate-700 bg-white px-2 py-1 rounded-md border border-slate-200/80 shrink-0 ml-2">
                     {tool.role}
                   </span>
                 </motion.div>
