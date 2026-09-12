@@ -150,11 +150,11 @@ export default function Overview() {
         <motion.h1
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-2xl sm:text-3xl font-black tracking-tight mb-1"
+          className="text-2xl sm:text-3xl font-black tracking-tight mb-1 text-slate-900 dark:text-white font-['Bai_Jamjuree']"
         >
-          Welcome back, <span className="text-white/35">Arko</span>
+          Welcome back, <span className="text-[#FF6014]">Arko</span>
         </motion.h1>
-        <p className="text-xs sm:text-sm text-white/45 font-medium">
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-white/60 font-medium">
           Here's what's happening with your portfolio today.
         </p>
       </header>

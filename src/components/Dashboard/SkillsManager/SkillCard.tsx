@@ -19,9 +19,9 @@ export default function SkillCard({
       layout
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="p-3 bg-white/[0.03] border border-white/5 rounded-xl hover:border-white/10 transition-all group relative flex flex-col items-center gap-2"
+      className="p-3 glass-card-compact border border-slate-200/90 rounded-xl hover:border-[#FF6014]/60 transition-all duration-300 group relative flex flex-col items-center gap-2 hover:-translate-y-0.5 shadow-2xs"
     >
-      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center overflow-hidden shrink-0">
+      <div className="w-8 h-8 rounded-lg bg-orange-50 border border-orange-200/60 flex items-center justify-center overflow-hidden shrink-0">
         {skill.imageUrl ? (
           <img
             src={skill.imageUrl}
@@ -29,24 +29,24 @@ export default function SkillCard({
             className="w-5 h-5 object-contain"
           />
         ) : (
-          <Code2 className="w-4 h-4 text-white/20" />
+          <Code2 className="w-4 h-4 text-[#FF6014]" />
         )}
       </div>
-      <span className="font-semibold text-[11px] text-center leading-tight line-clamp-2 w-full text-white/70">
+      <span className="font-bold text-[11px] text-center leading-tight line-clamp-2 w-full text-slate-800 font-['Bai_Jamjuree']">
         {skill.name}
       </span>
 
       <div className="absolute top-1.5 right-1.5 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           onClick={onEdit}
-          className="p-1 bg-black/60 backdrop-blur-sm hover:bg-white/10 rounded-md transition-colors"
+          className="p-1 bg-black/60 backdrop-blur-sm hover:bg-[#FF6014] rounded-md transition-colors text-white"
           type="button"
         >
           <Edit2 className="w-2.5 h-2.5" />
         </button>
         <button
           onClick={onDelete}
-          className="p-1 bg-black/60 backdrop-blur-sm hover:bg-red-500/20 rounded-md transition-colors text-red-400"
+          className="p-1 bg-black/60 backdrop-blur-sm hover:bg-red-500 rounded-md transition-colors text-white"
           type="button"
         >
           <Trash2 className="w-2.5 h-2.5" />

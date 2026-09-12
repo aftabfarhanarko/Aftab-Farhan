@@ -22,11 +22,11 @@ export default function CategorySection({
 }) {
   return (
     <div>
-      <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-5">
-        <h2 className="text-base sm:text-lg font-bold flex items-center gap-2">
-          <span className="text-white/20 text-sm">#</span>
+      <div className="flex items-center justify-between border-b border-slate-200 pb-3 mb-5">
+        <h2 className="text-base sm:text-lg font-black flex items-center gap-2 text-slate-900 font-['Bai_Jamjuree']">
+          <span className="text-[#FF6014] text-sm">#</span>
           {category.title}
-          <span className="text-xs text-white/20 font-normal ml-1">
+          <span className="text-xs text-slate-500 font-bold ml-1">
             {category.skills.length} skill
             {category.skills.length !== 1 ? "s" : ""}
           </span>
@@ -34,14 +34,14 @@ export default function CategorySection({
         <div className="flex gap-1">
           <button
             onClick={onEditCategory}
-            className="p-1.5 hover:bg-white/5 rounded-lg transition-colors text-white/30 hover:text-white"
+            className="p-1.5 hover:bg-[#FF6014]/15 rounded-lg transition-colors text-foreground/40 dark:text-white/40 hover:text-[#FF6014]"
             type="button"
           >
             <Edit2 className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={onDeleteCategory}
-            className="p-1.5 hover:bg-red-500/10 rounded-lg transition-colors text-white/30 hover:text-red-400"
+            className="p-1.5 hover:bg-red-500/10 rounded-lg transition-colors text-foreground/40 dark:text-white/40 hover:text-red-500"
             type="button"
           >
             <Trash2 className="w-3.5 h-3.5" />

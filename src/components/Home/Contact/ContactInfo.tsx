@@ -31,7 +31,7 @@ function ContactCardItem({ item }: { item: { icon: React.ReactNode; label: strin
     <motion.a
       whileHover={{ y: -4, scale: 1.01 }}
       href={item.href}
-      data-cursor-magnetic
+      
       data-magnetic-max="8"
       data-cursor-label="CONTACT ↗"
       className="flex items-center justify-between p-4.5 rounded-2xl border border-slate-200/90 bg-white hover:border-orange-300 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300 shadow-sm group relative overflow-hidden"
@@ -93,7 +93,7 @@ export default function ContactInfo() {
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            data-cursor-magnetic
+            
             data-magnetic-max="8"
             data-cursor-label="VISIT ↗"
             className={`flex-1 py-3 px-4 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-center gap-2 text-slate-800 font-bold text-sm shadow-sm transition-all duration-300 ${social.color}`}

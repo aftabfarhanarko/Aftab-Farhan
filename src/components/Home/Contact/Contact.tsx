@@ -38,9 +38,12 @@ export default function Contact() {
             <span>GET IN TOUCH</span>
           </motion.div>
 
-          <h2 className="text-[36px] sm:text-[44px] md:text-[50px] font-black tracking-tight text-slate-900 leading-none">
-            Let&apos;s Build <span className="text-[#FF6014]">Something Great.</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-slate-900 leading-tight">
+            Let&apos;s build something <span className="text-[#FF6014]">extraordinary</span> together.
           </h2>
+          <p className="text-xs sm:text-sm font-medium text-slate-600 max-w-lg leading-relaxed">
+            Have a project in mind, want to discuss software architecture, or explore potential collaboration? Send a message and let&apos;s connect.
+          </p>
         </div>
 
         {/* Divider beam line */}

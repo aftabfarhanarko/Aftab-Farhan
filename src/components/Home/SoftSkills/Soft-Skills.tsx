@@ -67,12 +67,12 @@ export default function SoftSkills() {
           GOVERNANCE & TEAM EXCELLENCE
         </span>
         
-        <h2 className="text-[32px] sm:text-[38px] lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
-          Leadership &amp; <span className="text-[#FF6014]">Collaboration</span>
+        <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
+          How I <span className="text-[#FF6014]">Work.</span>
         </h2>
         
-        <p className="text-base sm:text-lg text-slate-800 leading-[1.7] max-w-2xl font-medium mt-2">
-          Key non-technical competencies, engineering management practices, and strategic leadership principles that ensure reliable product delivery and team success.
+        <p className="mt-2 text-xs sm:text-sm text-slate-600 max-w-xl font-medium leading-relaxed">
+          Core professional capabilities, engineering philosophy, and collaborative principles.
         </p>
       </motion.div>
 

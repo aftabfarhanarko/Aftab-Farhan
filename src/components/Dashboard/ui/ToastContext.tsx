@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -38,18 +38,18 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-              className={`px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-xl border flex items-center gap-3 min-w-[300px] ${
+              className={`px-6 py-4 rounded-2xl shadow-2xl glass-card-primary border flex items-center gap-3 min-w-[300px] ${
                 toast.type === "success"
-                  ? "bg-green-500/10 border-green-500/20 text-green-500"
+                  ? "border-[#FF6014]/40 text-[#FF6014]"
                   : toast.type === "error"
-                  ? "bg-red-500/10 border-red-500/20 text-red-500"
-                  : "bg-white/10 border-white/20 text-white"
+                  ? "border-red-500/30 text-red-500"
+                  : "border-black/10 dark:border-white/20 text-foreground dark:text-white"
               }`}
             >
-              <span className="text-xl">
-                {toast.type === "success" ? "✅" : toast.type === "error" ? "❌" : "ℹ️"}
+              <span className="text-lg">
+                {toast.type === "success" ? "⚡" : toast.type === "error" ? "❌" : "ℹ️"}
               </span>
-              <p className="font-bold text-sm tracking-tight">{toast.message}</p>
+              <p className="font-black text-sm tracking-tight font-['Bai_Jamjuree']">{toast.message}</p>
             </motion.div>
           ))}
         </AnimatePresence>

@@ -47,24 +47,24 @@ export default function ProjectModal({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/80 backdrop-blur-md"
       />
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 40, scale: 0.95 }}
-        className="relative w-full max-w-4xl bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] shadow-2xl flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-4xl glass-card-primary border border-black/10 dark:border-white/10 rounded-[2.5rem] shadow-2xl flex flex-col max-h-[90vh]"
       >
-        <div className="p-8 pb-4 border-b border-white/5 flex items-center justify-between">
-          <h2 className="text-2xl font-black tracking-tight">
+        <div className="p-8 pb-4 border-b border-black/10 dark:border-white/10 flex items-center justify-between">
+          <h2 className="text-2xl font-black tracking-tight text-foreground dark:text-white font-['Bai_Jamjuree']">
             {editingProject ? "Edit Project" : "New Project"}
           </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/5 rounded-full transition-colors"
+            className="w-10 h-10 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-[#FF6014]/20 border border-black/10 dark:border-white/10 flex items-center justify-center transition-all text-foreground/60 dark:text-white/60 hover:text-[#FF6014]"
             type="button"
           >
-            <X className="w-6 h-6 text-white/40" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 

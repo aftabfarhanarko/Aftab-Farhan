@@ -23,11 +23,11 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
           <span>Full Stack Developer</span>
         </motion.div>
 
-        <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black tracking-tight leading-tight text-slate-900 pt-1">
+        <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight leading-tight text-slate-900 pt-1">
           About <span className="text-[#FF6014]">Me.</span>
         </h2>
         
-        <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-semibold">
+        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
           Building with purpose. Shipping with precision.
         </p>
       </motion.div>

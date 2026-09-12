@@ -58,12 +58,12 @@ export default function Skills() {
           SKILLS & CAPABILITIES
         </span>
 
-        <h2 className="text-[28px] sm:text-[34px] md:text-[38px] font-black text-slate-900 tracking-tight leading-tight mb-3">
-          Technical <span className="text-[#FF6014]">Skills</span>
+        <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight mb-2">
+          Skills <span className="text-[#FF6014]">&amp; Expertise</span>
         </h2>
 
-        <p className="max-w-2xl text-slate-800 text-base sm:text-[17px] leading-[1.7] mx-auto sm:mx-0 font-medium">
-          Technologies and engineering tools I use to build scalable, maintainable, and production-ready web applications.
+        <p className="text-xs sm:text-sm font-medium text-slate-600 max-w-xl leading-relaxed mx-auto">
+          Comprehensive overview of core programming languages, frameworks, databases, and developer tools.
         </p>
       </motion.div>
 

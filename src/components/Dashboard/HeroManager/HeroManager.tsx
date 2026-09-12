@@ -154,7 +154,7 @@ export default function HeroManager() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="space-y-1.5">
-            <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+            <label className="text-[10px] font-black uppercase tracking-widest text-slate-700 font-['Bai_Jamjuree']">
               Full Name
             </label>
             <input
@@ -162,13 +162,13 @@ export default function HeroManager() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-all"
+              className="w-full glass-card-compact border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#FF6014]/60 transition-all font-medium"
               placeholder="e.g. Aftab Farhan Arko"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+            <label className="text-[10px] font-black uppercase tracking-widest text-slate-700 font-['Bai_Jamjuree']">
               Job Title
             </label>
             <input
@@ -176,7 +176,7 @@ export default function HeroManager() {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-all"
+              className="w-full glass-card-compact border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#FF6014]/60 transition-all font-medium"
               placeholder="e.g. Full-Stack Developer"
             />
           </div>
@@ -189,7 +189,7 @@ export default function HeroManager() {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+          <label className="text-[10px] font-black uppercase tracking-widest text-slate-700 font-['Bai_Jamjuree']">
             Description
           </label>
           <textarea
@@ -197,7 +197,7 @@ export default function HeroManager() {
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-all resize-none"
+            className="w-full glass-card-compact border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#FF6014]/60 transition-all resize-none font-medium leading-relaxed"
             placeholder="Write a brief introduction about yourself..."
           />
         </div>

@@ -11,23 +11,23 @@ export default function ExperienceHeader({
   onAdd: () => void;
 }) {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-white/5">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-slate-200">
       <div>
-        <p className="text-[9px] font-black uppercase tracking-[0.22em] text-white/25 mb-2">
+        <p className="text-[9px] font-black uppercase tracking-[0.22em] text-slate-500 mb-2 font-['Bai_Jamjuree']">
           Portfolio
         </p>
-        <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-none">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-slate-900 font-['Bai_Jamjuree']">
           Work Experience
         </h1>
-        <p className="text-xs text-white/35 mt-2">
-          Manage your professional journey and achievements.
+        <p className="text-xs text-slate-600 mt-2 font-medium">
+          Manage your professional journey and key achievements.
         </p>
       </div>
       <div>
         {!isAdding && (
           <button
             onClick={onAdd}
-            className="shrink-0 flex items-center w-[200px] gap-2 px-5 py-3 bg-white text-black rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.03] active:scale-[0.97] transition-transform"
+            className="shrink-0 flex items-center justify-center gap-2 px-6 py-3 bg-[#FF6014] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#FF6014]/90 active:scale-[0.98] transition-all shadow-lg shadow-[#FF6014]/25 hover:shadow-[#FF6014]/40 font-['Bai_Jamjuree']"
             type="button"
           >
             <Plus className="w-3.5 h-3.5" />

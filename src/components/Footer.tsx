@@ -104,7 +104,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    data-cursor-magnetic
+                    
                     data-magnetic-max="6"
                     className="text-sm font-bold text-slate-700 hover:text-[#FF6014] transition-colors flex items-center gap-1.5 group justify-center md:justify-start"
                   >
@@ -132,7 +132,7 @@ export default function Footer() {
                   href={href}
                   target={href.startsWith("mailto") ? undefined : "_blank"}
                   rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  data-cursor-magnetic
+                  
                   data-magnetic-max="6"
                   aria-label={label}
                   className={`w-11 h-11 rounded-2xl bg-slate-50 border border-slate-200/90 flex items-center justify-center text-slate-700 shadow-sm transition-all duration-300 ${colorClass}`}

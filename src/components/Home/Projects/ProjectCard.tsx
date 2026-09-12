@@ -67,8 +67,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       data-cursor="project"
       data-cursor-label="VIEW PROJECT ↗"
       data-cursor-parallax
-      data-parallax-speed="10"
-      data-parallax-scale="1.025"
+
       className="group relative flex flex-col rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 overflow-hidden cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5"
     >
       {/* Top Sweep Beam */}
@@ -193,7 +192,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                   href={project.demoLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  data-cursor-magnetic
+                  
                   data-magnetic-max="6"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-[#FF6014] hover:bg-[#E5530F] rounded-xl shadow-xs transition-all active:scale-95"
                 >
@@ -206,7 +205,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                   href={project.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  data-cursor-magnetic
+                  
                   data-magnetic-max="6"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all active:scale-95"
                 >
@@ -216,7 +215,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 
               <button
                 onClick={handleOpenDetails}
-                data-cursor-magnetic
+                
                 data-magnetic-max="6"
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-xl shadow-2xs transition-all ml-auto cursor-pointer active:scale-95"
                 type="button"

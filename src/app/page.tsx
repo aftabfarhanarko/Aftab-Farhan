@@ -1,4 +1,3 @@
-// import Services from "@/components/Home/Services/Services";
 import Hero from "@/components/Home/Hero/Hero";
 import About from "@/components/Home/About/About";
 import Skills from "@/components/Home/Skills/Skills";
@@ -10,6 +9,9 @@ import Experience from "@/components/Home/Experience/Experience";
 import SoftSkills from "@/components/Home/SoftSkills/Soft-Skills";
 import Education from "@/components/Home/Education/Education";
 import Services from "@/components/Home/Services/Services";
+import EngineeringImpact from "@/components/Home/EngineeringImpact/EngineeringImpact";
+import HowIEngineer from "@/components/Home/HowIEngineer/HowIEngineer";
+import SelectedCaseStudies from "@/components/Home/CaseStudies/SelectedCaseStudies";
 
 export default function Home() {
   return (
@@ -18,6 +20,8 @@ export default function Home() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Hero />
         <About />
+        <EngineeringImpact />
+        <HowIEngineer />
         <Experience />
         <Skills />
       </div>
@@ -29,6 +33,7 @@ export default function Home() {
 
       {/* Bottom 7xl Constrained Sections */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <SelectedCaseStudies />
         <Services />
         <SoftSkills />
         <Achievements />

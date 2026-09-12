@@ -6,24 +6,30 @@ import type { StatItem } from "./types";
 
 export default function StatsGrid({ stats }: { stats: StatItem[] }) {
   return (
-    <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
+    <div className="grid grid-cols-2 xl:grid-cols-4 gap-3.5 sm:gap-4">
       {stats.map((s, i) => (
         <motion.div
           key={s.label}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.08 }}
-          className="p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-white/[0.06] to-white/[0.02] border border-white/10 hover:border-white/20 transition-colors group"
+          whileHover={{ y: -4, scale: 1.02 }}
+          data-cursor-hover-x="3"
+          className="p-5 rounded-2xl glass-card-compact hover:border-orange-300 transition-all duration-300 group cursor-default text-left relative overflow-hidden shadow-sm hover:shadow-md"
         >
-          <div
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform ${s.color}`}
-          >
-            <s.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#FF6014]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-[#FF6014]/10 border border-[#FF6014]/20 flex items-center justify-center text-[#FF6014] group-hover:scale-110 transition-transform">
+              <s.icon className="w-5 h-5" />
+            </div>
+            <span className="w-2 h-2 rounded-full bg-[#FF6014] opacity-70 group-hover:opacity-100 group-hover:scale-125 transition-all" />
           </div>
-          <div className="text-xl sm:text-2xl font-black mb-0.5">
+
+          <div className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight tracking-tight group-hover:text-[#FF6014] transition-colors">
             {s.value}
           </div>
-          <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-white/35 leading-tight">
+          <div className="text-[11px] font-black uppercase tracking-wider text-slate-500 mt-1">
             {s.label}
           </div>
         </motion.div>

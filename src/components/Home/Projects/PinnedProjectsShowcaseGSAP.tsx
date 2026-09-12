@@ -454,8 +454,7 @@ export default function PinnedProjectsShowcaseGSAP({
                     data-cursor="project"
                     data-cursor-label="VIEW PROJECT ↗"
                     data-cursor-parallax
-                    data-parallax-speed="12"
-                    data-parallax-scale="1.025"
+
                     className={`scene-artwork-${scopeId} project-image-scroll-layer relative w-[88vw] sm:w-[74vw] lg:w-[62vw] max-w-[1050px] h-[30vh] sm:h-[36vh] lg:h-[40vh] max-h-[460px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-black/60 cursor-pointer group border border-white/15 transition-all duration-500 ease-out`}
                   >
                     <div className="project-image-mouse-layer w-full h-full">

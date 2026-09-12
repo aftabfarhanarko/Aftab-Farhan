@@ -80,12 +80,12 @@ export default function Services() {
           PRODUCT SOLUTIONS & ARCHITECTURE
         </span>
         
-        <h2 className="text-[32px] sm:text-[38px] lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
-          What I <span className="text-[#FF6014]">Build</span>
+        <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
+          What I <span className="text-[#FF6014]">Build.</span>
         </h2>
         
-        <p className="text-base sm:text-lg text-slate-800 leading-[1.7] max-w-2xl font-medium mt-2">
-          Enterprise-grade software solutions engineered to solve operational bottlenecks, automate business workflows, and scale high-performance web products.
+        <p className="mt-2 text-xs sm:text-sm text-slate-600 max-w-xl font-medium leading-relaxed">
+          Specialized software development capabilities tailored for production scale.
         </p>
       </motion.div>
 
@@ -102,8 +102,7 @@ export default function Services() {
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
               data-cursor-parallax
-              data-parallax-speed="8"
-              data-parallax-scale="1.02"
+
               className="group relative p-6 rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 text-left flex flex-col justify-between overflow-hidden cursor-default min-h-[300px]"
             >
               {/* Sweep Light Beam on Hover */}

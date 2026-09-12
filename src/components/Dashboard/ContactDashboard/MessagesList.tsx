@@ -32,31 +32,31 @@ export default function MessagesList({
           key={msg.id}
           layout
           onClick={() => onSelect(msg)}
-          className={`p-5 rounded-2xl border transition-all cursor-pointer group ${
+          className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer group ${
             selectedId === msg.id
-              ? "bg-white/10 border-white/20"
-              : "bg-white/[0.03] border-white/5 hover:border-white/10"
+              ? "glass-card-primary border-[#FF6014]/60 shadow-lg shadow-[#FF6014]/10"
+              : "glass-card-compact border-black/10 dark:border-white/10 hover:border-[#FF6014]/40"
           }`}
         >
           <div className="flex justify-between items-start mb-2">
             <h3
-              className={`font-bold truncate pr-4 ${
-                msg.status === "UNREAD" ? "text-white" : "text-white/40"
+              className={`font-black truncate pr-4 font-['Bai_Jamjuree'] ${
+                msg.status === "UNREAD" ? "text-foreground dark:text-white" : "text-foreground/50 dark:text-white/40"
               }`}
             >
               {msg.name}
             </h3>
             <span
-              className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${
+              className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full font-['Bai_Jamjuree'] ${
                 msg.status === "UNREAD"
-                  ? "bg-green-500 text-black"
-                  : "bg-white/5 text-white/20"
+                  ? "bg-[#FF6014] text-white shadow-md shadow-[#FF6014]/30"
+                  : "bg-black/5 dark:bg-white/5 text-foreground/40 dark:text-white/30 border border-black/10 dark:border-white/10"
               }`}
             >
               {msg.status}
             </span>
           </div>
-          <p className="text-xs text-white/40 font-medium mb-3 truncate">
+          <p className="text-xs text-foreground/60 dark:text-white/50 font-medium mb-3 truncate">
             {msg.subject}
           </p>
           <div className="flex items-center justify-between text-[10px] font-bold text-white/20 uppercase tracking-tighter">

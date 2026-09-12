@@ -5,10 +5,10 @@ import React from "react";
 export default function AboutHeader() {
   return (
     <div className="mb-8 pt-2">
-      <h1 className="text-3xl sm:text-4xl font-black tracking-tight mb-2 bg-gradient-to-r from-foreground to-foreground/40 bg-clip-text text-transparent">
+      <h1 className="text-2xl sm:text-3xl font-black tracking-tight mb-2 text-slate-900 font-['Bai_Jamjuree']">
         About Section
       </h1>
-      <p className="text-foreground/40 font-medium text-sm max-w-xl">
+      <p className="text-slate-600 font-medium text-xs sm:text-sm max-w-xl">
         Craft your personal narrative, showcase your expertise, and highlight
         your best work.
       </p>

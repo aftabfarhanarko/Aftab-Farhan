@@ -18,13 +18,13 @@ export default function StatsEditor({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="text-[10px] font-semibold uppercase tracking-widest text-white/30">
+        <label className="text-[10px] font-black uppercase tracking-widest text-slate-700 font-['Bai_Jamjuree']">
           Stats
         </label>
         <button
           type="button"
           onClick={onAdd}
-          className="flex items-center gap-1 text-[10px] text-violet-400/70 hover:text-violet-300 transition-colors uppercase tracking-wider"
+          className="flex items-center gap-1 text-[10px] font-black text-[#FF6014] hover:underline transition-colors uppercase tracking-wider font-['Bai_Jamjuree']"
         >
           <Plus size={11} /> Add Stat
         </button>
@@ -33,25 +33,25 @@ export default function StatsEditor({
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5"
+            className="flex items-center gap-2 glass-card-compact border border-slate-200 rounded-xl px-3 py-2.5 hover:border-[#FF6014]/60 transition-colors"
           >
             <input
               placeholder="Label"
               value={stat.label}
               onChange={(e) => onChange(index, "label", e.target.value)}
-              className="flex-1 bg-transparent text-xs text-white/70 placeholder:text-white/20 focus:outline-none min-w-0"
+              className="flex-1 bg-transparent text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none min-w-0 font-medium"
             />
-            <div className="w-px h-4 bg-white/[0.08]" />
+            <div className="w-px h-4 bg-slate-200" />
             <input
               placeholder="Value"
               value={stat.value}
               onChange={(e) => onChange(index, "value", e.target.value)}
-              className="w-14 bg-transparent text-xs font-semibold text-violet-400 placeholder:text-white/20 focus:outline-none text-right"
+              className="w-14 bg-transparent text-xs font-black text-[#FF6014] placeholder:text-slate-400 focus:outline-none text-right font-['Bai_Jamjuree']"
             />
             <button
               type="button"
               onClick={() => onRemove(index)}
-              className="text-white/20 hover:text-red-400 transition-colors ml-1 shrink-0"
+              className="text-slate-400 hover:text-red-500 transition-colors ml-1 shrink-0"
             >
               <Trash2 size={13} />
             </button>

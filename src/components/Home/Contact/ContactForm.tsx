@@ -110,7 +110,7 @@ export default function ContactForm() {
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                data-cursor-magnetic
+                
                 data-magnetic-max="8"
                 data-cursor-label="SEND ↗"
                 disabled={formState === "submitting"}

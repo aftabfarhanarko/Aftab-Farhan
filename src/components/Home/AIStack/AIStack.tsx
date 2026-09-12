@@ -103,12 +103,12 @@ export default function AIStack() {
           <span>AI ENGINEERING WORKFLOW</span>
         </div>
 
-        <h2 className="text-[32px] sm:text-[40px] md:text-[46px] font-black tracking-tight leading-tight text-slate-900">
-          AI-Powered <span className="text-[#FF6014]">Engineering Workflow</span>
+        <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight leading-tight text-slate-900">
+          AI Tooling <span className="text-[#FF6014]">&amp; Workflow Integration</span>
         </h2>
 
-        <p className="text-base sm:text-lg text-slate-800 leading-[1.75] font-medium max-w-3xl">
-          Leveraging AI as an advanced productivity layer to accelerate software development, conduct root-cause debugging, optimize system architecture, and deliver production-ready code faster.
+        <p className="mt-2 text-xs sm:text-sm text-slate-600 font-medium max-w-xl leading-relaxed">
+          Accelerating production output using modern generative AI tools and automated developer workflows.
         </p>
       </motion.div>
 

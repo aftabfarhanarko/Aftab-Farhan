@@ -180,17 +180,17 @@ export default function AchievementManager() {
   return (
     <div className="w-full space-y-6">
       {/* Header Panel */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 sm:p-8 bg-white/[0.02] border border-white/[0.06] rounded-[2rem]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 sm:p-8 glass-card-primary border border-black/10 dark:border-white/10 rounded-[2rem]">
         <div>
-          <h1 className="text-xl sm:text-2xl font-black">Achievements</h1>
-          <p className="text-xs sm:text-sm text-white/40 mt-1">
+          <h1 className="text-xl sm:text-2xl font-black text-foreground dark:text-white font-['Bai_Jamjuree']">Achievements</h1>
+          <p className="text-xs sm:text-sm text-foreground/50 dark:text-white/40 mt-1">
             Manage certificate assets, accolades, and key career achievements.
           </p>
         </div>
 
         <button
           onClick={openAdd}
-          className="flex items-center justify-center gap-2 px-5 py-3.5 bg-white text-black hover:scale-[1.02] active:scale-[0.98] transition-all rounded-2xl font-black text-xs sm:text-sm uppercase tracking-widest self-start sm:self-auto shadow-lg shadow-white/10 shrink-0"
+          className="flex items-center justify-center gap-2 px-6 py-3.5 bg-[#FF6014] text-white hover:bg-[#FF6014]/90 active:scale-[0.98] transition-all rounded-xl font-black text-xs uppercase tracking-widest self-start sm:self-auto shadow-lg shadow-[#FF6014]/25 shrink-0 font-['Bai_Jamjuree']"
         >
           <Plus size={16} strokeWidth={2.5} />
           Add New

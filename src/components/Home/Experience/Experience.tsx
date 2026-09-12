@@ -52,11 +52,11 @@ export default function Experience() {
             </span>
           </div>
 
-          <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black tracking-tight leading-tight mb-3 text-slate-900">
+          <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight leading-tight mb-2 text-slate-900">
             Professional <span className="text-[#FF6014]">Experience</span>
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-800 leading-[1.7] max-w-xs mx-auto lg:mx-0 font-medium">
+          <p className="text-xs sm:text-sm font-medium text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
             A chronological timeline of my professional engineering journey, highlighting key technical positions and measurable achievements.
           </p>
         </div>

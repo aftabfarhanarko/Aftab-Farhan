@@ -19,13 +19,13 @@ import {
   LogOut,
   ChevronDown,
   ChevronUp,
-  LifeBuoy,
   ChevronLeft,
   ChevronRight,
   Sparkles,
   X,
   Menu,
   Trophy,
+  User,
 } from "lucide-react";
 
 // ── Collapsible Menu Groups Config ──────────────────────────────────────────────
@@ -34,7 +34,6 @@ const GROUPS = [
     id: "sections",
     label: "Portfolio Profile",
     icon: FolderKanban,
-    color: "#7c3aed", // violet
     items: [
       { id: "hero", label: "Hero Banner", href: "/dashboard/hero", icon: Home },
       { id: "about", label: "About Me", href: "/dashboard/about", icon: UserCircle2 },
@@ -47,7 +46,6 @@ const GROUPS = [
     id: "timeline",
     label: "Career History",
     icon: BriefcaseBusiness,
-    color: "#2563eb", // blue
     items: [
       { id: "experience", label: "Experience Info", href: "/dashboard/experience", icon: BriefcaseBusiness },
       { id: "education", label: "Education Info", href: "/dashboard/education", icon: GraduationCap },
@@ -57,7 +55,6 @@ const GROUPS = [
     id: "interactions",
     label: "Visitor Connect",
     icon: MessageSquare,
-    color: "#db2777", // pink
     items: [
       { id: "contact", label: "Contact Inbox", href: "/dashboard/contact", icon: Phone },
       { id: "chat", label: "AI Chatbot Logs", href: "/dashboard/chat", icon: MessageSquare },
@@ -80,7 +77,6 @@ const SidebarContent = ({
   const userEmail = session?.user?.email || "arko@nexoviasoft.com";
   const userInitial = userName[0]?.toUpperCase() || "A";
 
-  // State to track open/closed groups
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     sections: true,
     timeline: true,
@@ -94,7 +90,6 @@ const SidebarContent = ({
     }));
   };
 
-  // Automatically expand corresponding group if a child route is active
   useEffect(() => {
     if (
       pathname.includes("/hero") ||
@@ -114,25 +109,16 @@ const SidebarContent = ({
   }, [pathname]);
 
   return (
-    <div className="relative flex flex-col h-full bg-[#0a0a0f] text-white/70 border-r border-white/[0.06] shadow-2xl select-none">
+    <div className="relative flex flex-col h-full bg-white border-r border-slate-200/90 text-slate-800 shadow-xs select-none">
       
       {/* Header Logo */}
-      <div className={`relative flex items-center justify-between py-5 px-5 border-b border-white/[0.04]`}>
-        <Link href="/dashboard" className="flex items-center gap-3 min-w-0">
+      <div className="relative flex items-center justify-between py-4 px-4 border-b border-slate-100">
+        <Link href="/dashboard" className="flex items-center gap-2.5 min-w-0 group">
           <div className="relative shrink-0">
-            <div
-              className="w-10 h-10 rounded-2xl flex items-center justify-center font-black text-lg text-white select-none"
-              style={{
-                background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
-                boxShadow: "0 0 15px rgba(124,58,237,0.4)",
-              }}
-            >
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg text-white bg-[#FF6014] shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
               A
             </div>
-            <span
-              className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-[#0a0a0f]"
-              style={{ background: "#34d399" }}
-            />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white bg-emerald-500" />
           </div>
           
           {!collapsed && (
@@ -143,22 +129,23 @@ const SidebarContent = ({
               transition={{ duration: 0.15 }}
               className="min-w-0"
             >
-              <p className="font-extrabold text-[15px] leading-none text-white tracking-tight">
-                Dashboard
+              <p className="font-black text-[15px] leading-tight tracking-tight text-slate-900 dark:text-white">
+                {"<arko />"}
               </p>
-              <p className="text-[10px] uppercase tracking-[0.15em] text-white/30 font-bold mt-0.5 flex items-center gap-1">
-                <Sparkles size={9} className="text-violet-400" />
-                Portfolio Control
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#FF6014] flex items-center gap-1 mt-0.5">
+                <Sparkles size={10} className="text-[#FF6014] animate-pulse" />
+                Admin Console
               </p>
             </motion.div>
           )}
         </Link>
 
-        {/* Desktop Collapse Arrow Button */}
+        {/* Desktop Collapse Button */}
         {setCollapsed && !collapsed && (
           <button
             onClick={() => setCollapsed(true)}
-            className="hidden md:flex w-6 h-6 items-center justify-center rounded-lg border border-white/[0.08] hover:bg-white/[0.03] text-white/40 hover:text-white transition"
+           
+            className="hidden md:flex w-7 h-7 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-orange-50 hover:border-orange-300 text-slate-500 hover:text-[#FF6014] transition-all cursor-pointer"
             title="Collapse Sidebar"
           >
             <ChevronLeft size={14} />
@@ -167,54 +154,61 @@ const SidebarContent = ({
       </div>
 
       {/* View Portfolio Shortcut Button */}
-      <div className={`mt-4 ${collapsed ? "px-2" : "px-4"}`}>
+      <div className={`mt-3 ${collapsed ? "px-2" : "px-3"}`}>
         <Link
           href="/"
           target="_blank"
-          className="flex items-center justify-center rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 hover:bg-violet-500/20 hover:border-violet-500/35 transition-all duration-200 group/site"
+         
+          className="flex items-center justify-center rounded-xl bg-orange-50 dark:bg-orange-950/30 border border-orange-200/80 dark:border-orange-800/50 text-[#FF6014] hover:bg-[#FF6014] hover:text-white hover:border-[#FF6014] transition-all duration-200 group/site shadow-xs"
           style={{
             padding: collapsed ? "10px" : "10px 14px",
             justifyContent: collapsed ? "center" : "space-between",
           }}
         >
-          <div className="flex items-center gap-2.5 min-w-0">
-            <Globe size={15} className="shrink-0 text-violet-400 group-hover/site:rotate-12 transition-transform duration-300" />
+          <div className="flex items-center gap-2 min-w-0">
+            <Globe size={15} className="shrink-0 group-hover/site:rotate-12 transition-transform duration-300" />
             {!collapsed && (
-              <span className="text-[12px] font-black uppercase tracking-wider truncate">
+              <span className="text-xs font-bold uppercase tracking-wider truncate">
                 View Portfolio
               </span>
             )}
           </div>
           {!collapsed && (
-            <ArrowUpRight size={13} className="shrink-0 text-violet-400/70 group-hover/site:text-violet-400 transition-colors" />
+            <ArrowUpRight size={13} className="shrink-0 group-hover/site:translate-x-0.5 group-hover/site:-translate-y-0.5 transition-transform" />
           )}
         </Link>
       </div>
 
       {/* Navigation Links Area */}
-      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1.5 scrollbar-thin scrollbar-thumb-white/[0.02]">
+      <div className="flex-1 overflow-y-auto py-3 px-3 space-y-1.5 scrollbar-thin">
         
         {/* Main Dashboard / Overview */}
         <div>
           <Link
             href="/dashboard"
-            className={`flex items-center rounded-xl transition-all duration-200 group`}
+           
+            className={`flex items-center rounded-xl transition-all duration-200 group ${
+              pathname === "/dashboard"
+                ? "bg-[#FF6014]/10 border border-[#FF6014]/30 text-[#FF6014] font-bold shadow-xs"
+                : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white"
+            }`}
             style={{
               padding: collapsed ? "10px 0" : "10px 14px",
               justifyContent: collapsed ? "center" : "flex-start",
               gap: collapsed ? 0 : 12,
-              background: pathname === "/dashboard" ? "#7c3aed" : "transparent",
-              color: pathname === "/dashboard" ? "#ffffff" : "",
             }}
           >
             <LayoutDashboard
               size={18}
-              className={pathname === "/dashboard" ? "text-white" : "text-white/40 group-hover:text-white/70 transition-colors"}
+              className={pathname === "/dashboard" ? "text-[#FF6014]" : "text-slate-500 group-hover:text-slate-800 dark:group-hover:text-white transition-colors"}
             />
             {!collapsed && (
-              <span className={`text-[13px] font-extrabold tracking-tight ${pathname === "/dashboard" ? "text-white" : "text-white/70 group-hover:text-white"}`}>
+              <span className="text-[13px] font-bold tracking-tight flex-1">
                 Overview
               </span>
+            )}
+            {!collapsed && pathname === "/dashboard" && (
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF6014] shrink-0" />
             )}
           </Link>
         </div>
@@ -229,250 +223,193 @@ const SidebarContent = ({
               
               {/* Group Header Button */}
               {collapsed ? (
-                <div className="flex justify-center py-2.5 text-white/40 hover:text-white/70 transition-colors" title={group.label}>
+                <div className="flex justify-center py-2.5 text-slate-400 hover:text-slate-700 transition-colors" title={group.label}>
                   <GroupIcon size={18} />
                 </div>
               ) : (
                 <button
                   onClick={() => toggleGroup(group.id)}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-white/70 hover:bg-white/[0.02] transition-colors text-left group"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors text-left group cursor-pointer"
                 >
-                  <div className="flex items-center gap-3">
-                    <GroupIcon size={16} className="text-white/40 group-hover:text-white/70 transition-colors" />
-                    <span className="text-[13px] font-extrabold text-white/80 tracking-tight">
+                  <div className="flex items-center gap-2.5">
+                    <GroupIcon size={16} className="text-[#FF6014] opacity-80" />
+                    <span className="text-[12px] font-black text-slate-800 dark:text-slate-200 tracking-wider uppercase">
                       {group.label}
                     </span>
                   </div>
                   {isOpen ? (
-                    <ChevronUp size={14} className="text-white/40" />
+                    <ChevronUp size={14} className="text-slate-400" />
                   ) : (
-                    <ChevronDown size={14} className="text-white/40" />
+                    <ChevronDown size={14} className="text-slate-400" />
                   )}
                 </button>
               )}
 
-              {/* Group Child Sub-items (Tree View) */}
-              <AnimatePresence initial={false}>
-                {isOpen && !collapsed && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className="relative overflow-hidden pl-3"
-                  >
-                    {group.items.map((subItem, idx) => {
-                      const isChildActive = pathname === subItem.href;
-                      const ChildIcon = subItem.icon;
-                      const isLast = idx === group.items.length - 1;
+              {/* Group Items List */}
+              {(!collapsed ? isOpen : true) && (
+                <div className={`${collapsed ? "space-y-1" : "pl-3 space-y-0.5 border-l-2 border-slate-200/60 dark:border-slate-800 ml-3.5 my-1"}`}>
+                  {group.items.map((item) => {
+                    const isActive = pathname === item.href;
+                    const ItemIcon = item.icon;
 
-                      return (
-                        <div key={subItem.id} className="relative pl-8 h-[38px] flex items-center">
-                          
-                          {/* Curved L-connector Tree Lines */}
-                          <div className="absolute left-[13px] top-0 bottom-0 w-4 pointer-events-none">
-                            {/* Vertical Line */}
-                            <div
-                              className={`absolute left-0 top-0 w-px bg-white/[0.08] ${
-                                isLast ? "h-[19px]" : "h-full"
-                              }`}
-                            />
-                            {/* Horizontal curve bend */}
-                            <div className="absolute left-0 top-[7px] w-3.5 h-[12px] border-l border-b border-white/[0.08] rounded-bl-md" />
-                          </div>
+                    return (
+                      <Link
+                        key={item.id}
+                        href={item.href}
+                       
+                        className={`flex items-center rounded-xl transition-all duration-200 group ${
+                          isActive
+                            ? "bg-[#FF6014]/10 border border-[#FF6014]/30 text-[#FF6014] font-bold shadow-xs"
+                            : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white"
+                        }`}
+                        style={{
+                          padding: collapsed ? "9px 0" : "8px 12px",
+                          justifyContent: collapsed ? "center" : "flex-start",
+                          gap: collapsed ? 0 : 10,
+                        }}
+                      >
+                        <ItemIcon
+                          size={16}
+                          className={isActive ? "text-[#FF6014]" : "text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors"}
+                        />
 
-                          {/* Link Sub-Item */}
-                          <Link
-                            href={subItem.href}
-                            className={`flex items-center gap-2.5 py-1.5 px-3 rounded-lg text-xs transition-all duration-200 w-full group/child ${
-                              isChildActive
-                                ? "text-violet-400 bg-violet-500/10 font-bold"
-                                : "text-white/40 hover:text-white/80 hover:bg-white/[0.02]"
-                            }`}
-                          >
-                            <ChildIcon
-                              size={13}
-                              className={isChildActive ? "text-violet-400" : "text-white/30 group-hover/child:text-white/60 transition-colors"}
-                            />
-                            <span className="truncate tracking-wide">{subItem.label}</span>
-                          </Link>
-                        </div>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                        {!collapsed && (
+                          <span className="text-xs font-bold tracking-tight truncate flex-1">
+                            {item.label}
+                          </span>
+                        )}
+
+                        {!collapsed && isActive && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#FF6014] shrink-0" />
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}
       </div>
 
-      {/* Support Card (Need Help?) */}
-      {!collapsed && (
-        <div className="p-4 border-t border-white/[0.04]">
-          <div className="p-4 rounded-2xl border border-white/[0.04] bg-white/[0.01] flex flex-col items-center text-center gap-2.5">
-            <div className="w-10 h-10 rounded-full bg-violet-500/10 flex items-center justify-center text-violet-400 shadow-sm border border-violet-500/20">
-              <LifeBuoy size={18} className="animate-spin-slow" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-white/80">Need help?</h4>
-              <p className="text-[10px] text-white/30 mt-0.5">Go to Help Center</p>
-            </div>
-            <Link
-              href="mailto:arko@nexoviasoft.com"
-              className="text-[10px] font-black text-violet-400 hover:text-violet-300 flex items-center gap-1 transition-colors uppercase tracking-wider"
-            >
-              Contact Support &rarr;
-            </Link>
-          </div>
-        </div>
-      )}
-
-      {/* Bottom Profile Footer */}
-      <div className="p-4 border-t border-white/[0.04] bg-white/[0.01]">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            {/* Avatar circle */}
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-blue-400 flex items-center justify-center text-[11px] font-bold text-white shrink-0 ring-1 ring-white/10 shadow-sm">
-              {session?.user?.image ? (
-                <img
-                  src={session.user.image}
-                  alt={userName}
-                  className="w-full h-full rounded-full object-cover"
-                />
-              ) : (
-                userInitial
-              )}
-            </div>
-            
-            {!collapsed && (
-              <div className="min-w-0 text-left">
-                <p className="text-[12px] font-extrabold text-white/80 leading-tight truncate">
+      {/* User Profile & Sign Out Footer */}
+      <div className="p-3 border-t border-slate-200/80 dark:border-slate-800">
+        {!collapsed ? (
+          <div className="p-3 rounded-2xl glass-card-compact flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-9 h-9 rounded-xl bg-orange-100 dark:bg-orange-950/60 border border-orange-200 text-[#FF6014] font-black flex items-center justify-center shrink-0">
+                {userInitial}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
                   {userName}
                 </p>
-                <p className="text-[10px] text-white/30 truncate mt-0.5">
+                <p className="text-[10px] text-slate-500 truncate">
                   {userEmail}
                 </p>
               </div>
-            )}
-          </div>
-          
-          {!collapsed && (
+            </div>
+
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
-              className="p-1.5 rounded-lg text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors shrink-0"
+             
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
               title="Sign Out"
             >
-              <LogOut size={14} />
+              <LogOut size={16} />
             </button>
-          )}
-        </div>
+          </div>
+        ) : (
+          <button
+            onClick={() => signOut({ callbackUrl: "/login" })}
+           
+            className="w-full flex justify-center py-2 text-slate-400 hover:text-red-500 transition-colors cursor-pointer"
+            title="Sign Out"
+          >
+            <LogOut size={18} />
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-// ── Main Sidebar Export ────────────────────────────────────────────────────────
-const Sidebar = () => {
+// ── Main Sidebar Export with Desktop Collapse & Mobile Drawer ───────────────────────
+export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  // Auto-close mobile menu on route change
+  // Close mobile drawer on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Lock scroll when mobile drawer is open
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [mobileOpen]);
-
   return (
     <>
-      {/* ── Desktop Expand Toggle Floating Arrow ────────────────────────────── */}
-      {collapsed && (
+      {/* Mobile Menu Bar Button (Fixed Top Left) */}
+      <div className="md:hidden fixed top-3 left-3 z-40">
         <button
-          onClick={() => setCollapsed(false)}
-          className="hidden md:flex fixed top-4 left-6 z-[60] w-6 h-6 items-center justify-center rounded-lg border border-white/[0.08] bg-[#0a0a0f] text-white/40 hover:text-white hover:bg-white/[0.03] transition shadow-sm"
-          title="Expand Sidebar"
+          onClick={() => setMobileOpen(true)}
+         
+          className="p-2.5 rounded-xl bg-white/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 text-slate-800 dark:text-slate-100 shadow-md backdrop-blur-md cursor-pointer"
+          aria-label="Open Navigation Menu"
         >
-          <ChevronRight size={14} />
+          <Menu size={20} className="text-[#FF6014]" />
         </button>
-      )}
+      </div>
 
-      {/* ── Mobile Hamburger button ─────────────────────────────────────────── */}
-      <button
-        onClick={() => setMobileOpen((p) => !p)}
-        className="fixed top-4 left-4 z-[60] md:hidden w-10 h-10 rounded-xl bg-[#0a0a0f] border border-white/[0.08] flex items-center justify-center text-white/80 backdrop-blur-md shadow-md"
-        aria-label={mobileOpen ? "Close menu" : "Open menu"}
-      >
-        <AnimatePresence mode="wait">
-          {mobileOpen ? (
-            <motion.span
-              key="x"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.12 }}
-            >
-              <X size={18} />
-            </motion.span>
-          ) : (
-            <motion.span
-              key="menu"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.12 }}
-            >
-              <Menu size={18} />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </button>
-
-      {/* ── Mobile backdrop overlay ────────────────────────────────────────── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 z-[45] bg-black/60 backdrop-blur-sm md:hidden"
-          />
-        )}
-      </AnimatePresence>
-
-      {/* ── Mobile drawer ──────────────────────────────────────────────────── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ x: -280 }}
-            animate={{ x: 0 }}
-            exit={{ x: -280 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed left-0 top-0 h-full w-[272px] z-[50] md:hidden"
-          >
-            <SidebarContent collapsed={false} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── Desktop sidebar wrapper ────────────────────────────────────────── */}
+      {/* Desktop Sidebar Container */}
       <motion.aside
-        animate={{ width: collapsed ? 72 : 272 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="hidden md:flex flex-col h-screen sticky top-0 shrink-0 z-40"
+        animate={{ width: collapsed ? 80 : 270 }}
+        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden md:block h-screen sticky top-0 shrink-0 z-30 overflow-hidden"
       >
         <SidebarContent collapsed={collapsed} setCollapsed={setCollapsed} />
+        {collapsed && (
+          <button
+            onClick={() => setCollapsed(false)}
+           
+            className="absolute bottom-20 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-md text-slate-600 hover:text-[#FF6014] transition cursor-pointer"
+            title="Expand Sidebar"
+          >
+            <ChevronRight size={14} />
+          </button>
+        )}
       </motion.aside>
+
+      {/* Mobile Drawer Navigation */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <div className="md:hidden fixed inset-0 z-50 flex">
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+              className="absolute inset-0 bg-slate-950/60 backdrop-blur-xs"
+            />
+
+            {/* Slide Drawer */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", stiffness: 350, damping: 30 }}
+              className="relative w-[280px] h-full z-10"
+            >
+              <SidebarContent collapsed={false} />
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="absolute top-4 right-3 p-1.5 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-900"
+              >
+                <X size={18} />
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   );
-};
-
-export default Sidebar;
+}

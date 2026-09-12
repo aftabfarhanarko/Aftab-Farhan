@@ -53,8 +53,7 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       data-cursor-parallax
-      data-parallax-speed="8"
-      data-parallax-scale="1.03"
+
       data-cursor-label="CERTIFICATE ↗"
       style={{
         transformStyle: "preserve-3d",
@@ -175,12 +174,12 @@ export default function Achievements() {
             <span>Official Qualifications</span>
           </div>
 
-          <h2 className="text-[32px] sm:text-[38px] lg:text-[42px] font-black tracking-tight leading-tight text-slate-900">
-            Certifications &amp; <span className="text-[#FF6014]">Achievements</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight leading-tight text-slate-900">
+            Recognitions <span className="text-[#FF6014]">&amp; Milestones</span>
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-800 leading-relaxed font-medium max-w-xs mx-auto lg:mx-0">
-            Official certifications, engineering courses, and technical achievements validating full stack software capabilities.
+          <p className="text-xs sm:text-sm font-medium text-slate-600 leading-relaxed max-w-xl">
+            Key competitive programming honors, hackathon achievements, and technical milestones.
           </p>
         </div>
 

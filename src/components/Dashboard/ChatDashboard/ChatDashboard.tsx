@@ -160,53 +160,53 @@ export default function ChatDashboard() {
   ];
 
   return (
-    <div className="w-full space-y-8 text-white">
+    <div className="w-full space-y-8 text-foreground dark:text-white">
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <Sparkles className="text-rose-500 w-5 h-5" />
-            <span className="text-xs uppercase tracking-widest text-white/30 font-bold">AI Customer Service</span>
+          <div className="flex items-center gap-2 mb-1 font-['Bai_Jamjuree']">
+            <Sparkles className="text-[#FF6014] w-5 h-5" />
+            <span className="text-xs uppercase tracking-widest text-foreground/40 dark:text-white/35 font-black">AI Customer Service</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Arko's Portfolio AI Manager</h1>
-          <p className="text-xs sm:text-sm text-white/45 font-medium mt-1">
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight font-['Bai_Jamjuree']">Arko's Portfolio AI Manager</h1>
+          <p className="text-xs sm:text-sm text-foreground/50 dark:text-white/40 font-medium mt-1">
             Monitor real-time user query sessions, inspect logs, and run agent simulations.
           </p>
         </div>
         <button
           onClick={() => refetch()}
-          className="self-start sm:self-auto flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition cursor-pointer"
+          className="self-start sm:self-auto flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold glass-card-compact border border-black/10 dark:border-white/10 hover:border-[#FF6014]/40 transition cursor-pointer font-['Bai_Jamjuree']"
         >
-          <RefreshCw size={12} className={isLoading ? "animate-spin text-rose-400" : "text-white/60"} />
+          <RefreshCw size={12} className={isLoading ? "animate-spin text-[#FF6014]" : "text-foreground/60 dark:text-white/60"} />
           Refresh Data
         </button>
       </header>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
-          <div className="text-xs font-semibold text-white/40 uppercase tracking-wider">Total Conversations</div>
-          <div className="text-2xl font-black mt-2 text-rose-400">{isLoading ? "..." : data?.stats.totalSessions}</div>
-          <div className="text-[10px] text-white/30 mt-1">Active customer support threads</div>
+        <div className="p-4 rounded-2xl border border-black/10 dark:border-white/10 glass-card-compact">
+          <div className="text-[10px] font-black text-foreground/40 dark:text-white/35 uppercase tracking-widest font-['Bai_Jamjuree']">Total Conversations</div>
+          <div className="text-2xl font-black mt-2 text-[#FF6014] font-['Bai_Jamjuree']">{isLoading ? "..." : data?.stats.totalSessions}</div>
+          <div className="text-[10px] text-foreground/40 dark:text-white/30 mt-1 font-medium">Active customer support threads</div>
         </div>
-        <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
-          <div className="text-xs font-semibold text-white/40 uppercase tracking-wider">Total AI Messages</div>
-          <div className="text-2xl font-black mt-2 text-blue-400">{isLoading ? "..." : data?.stats.totalMessages}</div>
-          <div className="text-[10px] text-white/30 mt-1">Total exchanged dialogs</div>
+        <div className="p-4 rounded-2xl border border-black/10 dark:border-white/10 glass-card-compact">
+          <div className="text-[10px] font-black text-foreground/40 dark:text-white/35 uppercase tracking-widest font-['Bai_Jamjuree']">Total AI Messages</div>
+          <div className="text-2xl font-black mt-2 text-foreground dark:text-white font-['Bai_Jamjuree']">{isLoading ? "..." : data?.stats.totalMessages}</div>
+          <div className="text-[10px] text-foreground/40 dark:text-white/30 mt-1 font-medium">Total exchanged dialogs</div>
         </div>
-        <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
-          <div className="text-xs font-semibold text-white/40 uppercase tracking-wider">Avg Messages / Session</div>
-          <div className="text-2xl font-black mt-2 text-emerald-400">{isLoading ? "..." : data?.stats.avgMessagesPerSession}</div>
-          <div className="text-[10px] text-white/30 mt-1">Engagement density metric</div>
+        <div className="p-4 rounded-2xl border border-black/10 dark:border-white/10 glass-card-compact">
+          <div className="text-[10px] font-black text-foreground/40 dark:text-white/35 uppercase tracking-widest font-['Bai_Jamjuree']">Avg Messages / Session</div>
+          <div className="text-2xl font-black mt-2 text-[#FF6014] font-['Bai_Jamjuree']">{isLoading ? "..." : data?.stats.avgMessagesPerSession}</div>
+          <div className="text-[10px] text-foreground/40 dark:text-white/30 mt-1 font-medium">Engagement density metric</div>
         </div>
-        <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md flex items-center justify-between">
+        <div className="p-4 rounded-2xl border border-black/10 dark:border-white/10 glass-card-compact flex items-center justify-between">
           <div>
-            <div className="text-xs font-semibold text-white/40 uppercase tracking-wider">Gemini status</div>
-            <div className="text-sm font-bold mt-2 text-white flex items-center gap-1.5">
+            <div className="text-[10px] font-black text-foreground/40 dark:text-white/35 uppercase tracking-widest font-['Bai_Jamjuree']">Gemini status</div>
+            <div className="text-xs font-black mt-2 text-emerald-500 flex items-center gap-1.5 font-['Bai_Jamjuree']">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               API Online
             </div>
-            <div className="text-[10px] text-white/30 mt-1">OpenRouter Gateway</div>
+            <div className="text-[10px] text-foreground/40 dark:text-white/30 mt-1 font-medium">OpenRouter Gateway</div>
           </div>
           <Activity className="text-rose-500/20 w-10 h-10" />
         </div>

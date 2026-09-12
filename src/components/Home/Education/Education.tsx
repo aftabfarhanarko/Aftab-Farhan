@@ -161,12 +161,11 @@ export default function Education() {
             <span>Academic Qualifications</span>
           </motion.div>
 
-          <h2 className="text-[36px] sm:text-[44px] md:text-[48px] font-black tracking-tight leading-tight text-slate-900">
-            My <span className="text-[#FF6014]">Education</span>
+          <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight leading-tight text-slate-900">
+            Education <span className="text-[#FF6014]">&amp; Background</span>
           </h2>
-
-          <p className="text-base sm:text-lg text-slate-800 leading-[1.7] font-medium max-w-xs mx-auto lg:mx-0">
-            Academic foundations that have shaped my analytical mindset and software engineering expertise.
+          <p className="text-xs sm:text-sm font-medium text-slate-600 leading-relaxed max-w-xl">
+            Academic qualifications, key coursework, and foundational computer science principles.
           </p>
 
           <motion.div
