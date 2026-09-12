@@ -38,15 +38,42 @@ const GithubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   </svg>
 );
 
-// Curated studio-style dark color palette for full-screen poster scenes
-const SCENE_BACKGROUNDS = [
-  "#0F172A", // Rich Dark Slate
-  "#111827", // Charcoal Slate
-  "#161D2F", // Studio Navy
-  "#172554", // Deep Blue
-  "#1E293B", // Dark Slate Blue
-  "#0B132B", // Deep Midnight
+// Vibrant rich studio color palette for full-screen poster scenes (No plain black shades)
+const VIBRANT_STUDIO_PALETTE = [
+  "#2563EB", // Royal Blue
+  "#7C3AED", // Vivid Purple
+  "#059669", // Emerald Green
+  "#D97706", // Rich Amber
+  "#DC2626", // Crimson Red
+  "#0284C7", // Bright Sky Blue
+  "#C026D3", // Electric Magenta
+  "#0D9488", // Deep Teal
+  "#4F46E5", // Deep Indigo
+  "#E11D48", // Vivid Rose
+  "#2563EB", // Cobalt Blue
+  "#9333EA", // Bright Violet
+  "#16A34A", // Lush Emerald
+  "#EA580C", // Vibrant Orange / Coral
+  "#0284C7", // Cyan Blue
+  "#B91C1C", // Deep Crimson
+  "#6D28D9", // Deep Purple
+  "#0369A1", // Ocean Blue
+  "#BE123C", // Deep Rose
+  "#15803D", // Forest Green
 ];
+
+function getProjectSceneBg(index: number, projectId?: string): string {
+  // Hash project ID if available to generate deterministic unique color index
+  if (projectId) {
+    let hash = 0;
+    for (let i = 0; i < projectId.length; i++) {
+      hash = projectId.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const colorIdx = Math.abs(hash) % VIBRANT_STUDIO_PALETTE.length;
+    return VIBRANT_STUDIO_PALETTE[colorIdx];
+  }
+  return VIBRANT_STUDIO_PALETTE[index % VIBRANT_STUDIO_PALETTE.length];
+}
 
 interface Highlight {
   title: string;
@@ -235,9 +262,9 @@ export default function PinnedProjectsShowcaseGSAP({
         });
 
         // Initial stage background
-        if (bgOverlayRef.current) {
+        if (bgOverlayRef.current && projects.length > 0) {
           gsap.set(bgOverlayRef.current, {
-            backgroundColor: SCENE_BACKGROUNDS[0 % SCENE_BACKGROUNDS.length],
+            backgroundColor: getProjectSceneBg(0, projects[0]?.id),
           });
         }
 
@@ -250,8 +277,8 @@ export default function PinnedProjectsShowcaseGSAP({
             pin: true,
             pinSpacing: true,
             start: "top top",
-            end: () => `+=${totalTransitions * window.innerHeight * 0.85}`,
-            scrub: 1.15,
+            end: () => `+=${totalTransitions * window.innerHeight * 4.0}`,
+            scrub: 3.5, // Extra smooth lag so fast wheel scrolls catch up very slowly
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               const newIndex = Math.min(
@@ -266,7 +293,7 @@ export default function PinnedProjectsShowcaseGSAP({
         scenes.forEach((scene, i) => {
           if (i < scenes.length - 1) {
             const nextScene = scenes[i + 1];
-            const nextBgColor = SCENE_BACKGROUNDS[(i + 1) % SCENE_BACKGROUNDS.length];
+            const nextBgColor = getProjectSceneBg(i + 1, projects[i + 1]?.id);
 
             const sceneTL = gsap.timeline();
 
@@ -283,13 +310,12 @@ export default function PinnedProjectsShowcaseGSAP({
               );
             }
 
-            // Outgoing scene animation: complete fade out (opacity: 0) to prevent text bleeding/overlap
+            // Outgoing scene animation: stays solid while next scene slides up over it
             sceneTL.to(
               scene,
               {
                 scale: 0.94,
-                yPercent: -5,
-                opacity: 0,
+                yPercent: -10,
                 duration: 1,
                 ease: "power2.inOut",
                 onComplete: () => {
@@ -302,7 +328,7 @@ export default function PinnedProjectsShowcaseGSAP({
               0
             );
 
-            // Incoming scene animation (slides UP from bottom)
+            // Incoming scene animation (slides UP from bottom with solid background covering previous card)
             sceneTL.to(
               nextScene,
               {
@@ -390,11 +416,11 @@ export default function PinnedProjectsShowcaseGSAP({
         <div
           ref={bgOverlayRef}
           className="absolute inset-0 w-full h-full transition-colors duration-700 ease-out z-0"
-          style={{ backgroundColor: SCENE_BACKGROUNDS[0] }}
+          style={{ backgroundColor: getProjectSceneBg(0, projects[0]?.id) }}
         />
 
         {/* Ambient Subtle Studio Lighting */}
-        <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-black/50 pointer-events-none z-1" />
+        <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/30 via-transparent to-transparent pointer-events-none z-1" />
 
         {/* Project Scenes Stack */}
         <div className="relative w-full h-full z-10">
@@ -402,7 +428,7 @@ export default function PinnedProjectsShowcaseGSAP({
             const isFirst = index === 0;
             const contextLabel = getContextLabel(project.category, project.projectType);
             const highlights = getRecruiterHighlights(project);
-            const bgColor = SCENE_BACKGROUNDS[index % SCENE_BACKGROUNDS.length];
+            const bgColor = getProjectSceneBg(index, project.id);
             
             const displayedTech = project.tech ? project.tech.slice(0, 6) : [];
             const remainingTechCount = project.tech && project.tech.length > 6 ? project.tech.length - 6 : 0;
@@ -416,7 +442,7 @@ export default function PinnedProjectsShowcaseGSAP({
                 style={{
                   opacity: isFirst ? 1 : 0,
                   pointerEvents: isFirst ? "auto" : "none",
-                  backgroundColor: bgColor, // Solid background per scene to prevent text bleed
+                  backgroundColor: bgColor,
                 }}
               >
                 {/* 1. TOP EDITORIAL BAR */}
@@ -443,7 +469,7 @@ export default function PinnedProjectsShowcaseGSAP({
                   <h2
                     onClick={() => router.push(`/projects/${project.id}`)}
                     data-cursor-title-parallax
-                    className={`scene-title-${scopeId} text-[clamp(26px,3.8vw,52px)] leading-[1.1] text-center tracking-tight text-white mb-2 sm:mb-3 cursor-pointer drop-shadow-md transition-transform duration-300 hover:scale-[1.01] max-w-5xl`}
+                    className={`scene-title-${scopeId} text-[clamp(26px,3.8vw,52px)] font-black leading-[1.1] text-center tracking-tight text-white mb-2.5 sm:mb-3.5 cursor-pointer drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-[1.01] max-w-5xl`}
                   >
                     {renderEditorialTitle(project.title)}
                   </h2>
@@ -455,7 +481,7 @@ export default function PinnedProjectsShowcaseGSAP({
                     data-cursor-label="VIEW PROJECT ↗"
                     data-cursor-parallax
 
-                    className={`scene-artwork-${scopeId} project-image-scroll-layer relative w-[88vw] sm:w-[74vw] lg:w-[62vw] max-w-[1050px] h-[30vh] sm:h-[36vh] lg:h-[40vh] max-h-[460px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-black/60 cursor-pointer group border border-white/15 transition-all duration-500 ease-out`}
+                    className={`scene-artwork-${scopeId} project-image-scroll-layer relative w-[88vw] sm:w-[74vw] lg:w-[62vw] max-w-[1050px] h-[30vh] sm:h-[36vh] lg:h-[40vh] max-h-[460px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-black/20 cursor-pointer group border border-white/40 transition-all duration-500 ease-out`}
                   >
                     <div className="project-image-mouse-layer w-full h-full">
                       <img
@@ -466,70 +492,70 @@ export default function PinnedProjectsShowcaseGSAP({
                     </div>
 
                     {/* Subtle Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                      <span className="px-5 py-2.5 rounded-full bg-white backdrop-blur-md text-slate-950 text-xs font-extrabold uppercase tracking-widest shadow-2xl flex items-center gap-2">
+                    <div className="absolute inset-0 bg-white/20 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                      <span className="px-5 py-2.5 rounded-full bg-white text-slate-900 text-xs font-extrabold uppercase tracking-widest shadow-xl flex items-center gap-2">
                         View Full Details <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {/* 3. RECRUITER-FOCUSED TECHNICAL DETAILS & TIMELINE PANEL */}
+                {/* 3. RECRUITER-FOCUSED TECHNICAL DETAILS & TIMELINE PANEL (WHITE GLASS LIGHT MODE) */}
                 <div
-                  className={`scene-details-${scopeId} w-full max-w-5xl mx-auto flex flex-col gap-2.5 z-20 pb-2 sm:pb-3 bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 text-left shadow-xl`}
+                  className={`scene-details-${scopeId} w-full max-w-5xl mx-auto flex flex-col gap-3.5 z-20 pb-3 sm:pb-4 bg-white/85 backdrop-blur-2xl border border-white/60 rounded-2xl p-4 sm:p-5 text-left shadow-2xl shadow-black/10`}
                 >
                   {/* Timeline, Client & Type Metric Bar */}
-                  <div className="flex items-center justify-between gap-3 flex-wrap border-b border-white/10 pb-2">
-                    <div className="flex items-center gap-2.5 text-xs font-mono font-bold text-white/90">
-                      <span className="flex items-center gap-1 text-[#FF6014]">
-                        <Calendar className="w-3.5 h-3.5" /> {project.year || "2026"}
+                  <div className="flex items-center justify-between gap-3 flex-wrap border-b border-slate-900/10 pb-2.5">
+                    <div className="flex items-center gap-3 text-xs sm:text-sm font-mono font-bold text-slate-900">
+                      <span className="flex items-center gap-1.5 text-[#FF6014] bg-orange-50 border border-orange-200 px-2.5 py-0.5 rounded-md shadow-2xs">
+                        <Calendar className="w-3.5 h-3.5 text-[#FF6014]" /> {project.year || "2026"}
                       </span>
-                      <span>·</span>
-                      <span className="flex items-center gap-1 text-slate-300">
+                      <span className="text-slate-400">·</span>
+                      <span className="flex items-center gap-1.5 text-slate-800">
                         {project.projectType === "CLIENT" ? (
                           <>
-                            <Briefcase className="w-3.5 h-3.5 text-amber-400" /> CLIENT PRODUCTION
+                            <Briefcase className="w-3.5 h-3.5 text-amber-600" /> CLIENT PRODUCTION
                           </>
                         ) : project.projectType === "TEAM" ? (
                           <>
-                            <Users className="w-3.5 h-3.5 text-blue-400" /> TEAM RELEASE
+                            <Users className="w-3.5 h-3.5 text-blue-600" /> TEAM RELEASE
                           </>
                         ) : (
                           <>
-                            <User className="w-3.5 h-3.5 text-emerald-400" /> PERSONAL WORK
+                            <User className="w-3.5 h-3.5 text-emerald-600" /> PERSONAL WORK
                           </>
                         )}
                       </span>
                       {project.duration && (
                         <>
-                          <span>·</span>
-                          <span className="flex items-center gap-1 text-slate-300">
-                            <Clock className="w-3.5 h-3.5 text-sky-400" /> DURATION: {project.duration}
+                          <span className="text-slate-400">·</span>
+                          <span className="flex items-center gap-1.5 text-slate-800">
+                            <Clock className="w-3.5 h-3.5 text-sky-600" /> DURATION: {project.duration}
                           </span>
                         </>
                       )}
                     </div>
 
                     {project.client && (
-                      <span className="font-mono text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                      <span className="font-mono text-xs font-bold text-amber-800 uppercase tracking-wider bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-md shadow-2xs">
                         CLIENT: {project.client}
                       </span>
                     )}
                   </div>
 
                   {/* Recruiter Engineering Highlights Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 my-0.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-0.5">
                     {highlights.map((h, hIdx) => (
                       <div
                         key={hIdx}
-                        className="flex items-start gap-2 bg-white/5 border border-white/10 p-2 rounded-xl"
+                        className="flex items-start gap-2.5 bg-white/70 border border-white/80 p-3 rounded-xl hover:border-orange-300 transition-colors shadow-xs"
                       >
-                        <CheckCircle2 className="w-4 h-4 text-[#FF6014] shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4.5 h-4.5 text-[#FF6014] shrink-0 mt-0.5" />
                         <div>
-                          <span className="text-[10px] font-mono font-bold text-[#FF6014] uppercase tracking-wider block">
+                          <span className="text-xs font-mono font-bold text-[#FF6014] uppercase tracking-wider block mb-0.5">
                             {h.title}
                           </span>
-                          <p className="text-xs text-slate-200 font-medium leading-tight">
+                          <p className="text-xs sm:text-sm text-slate-800 font-semibold leading-relaxed">
                             {h.detail}
                           </p>
                         </div>
@@ -538,14 +564,14 @@ export default function PinnedProjectsShowcaseGSAP({
                   </div>
 
                   {/* High-Contrast Crisp Technology Badges & Action Buttons */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-white/10">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 pt-2.5 border-t border-slate-900/10">
                     {/* Tech Badges */}
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="font-mono text-xs font-bold text-white/90 mr-1">TECH STACK:</span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-mono text-xs sm:text-sm font-extrabold text-slate-900 mr-1 tracking-wide">TECH STACK:</span>
                       {displayedTech.map((techItem) => (
                         <span
                           key={techItem}
-                          className="px-2.5 py-0.5 text-xs font-mono font-semibold bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-colors"
+                          className="px-3 py-1 text-xs font-mono font-bold bg-white/90 border border-slate-200/90 rounded-lg text-slate-900 hover:border-orange-300 hover:text-[#FF6014] transition-colors shadow-2xs"
                         >
                           {techItem}
                         </span>
@@ -554,7 +580,7 @@ export default function PinnedProjectsShowcaseGSAP({
                         <button
                           type="button"
                           onClick={() => setTechModalProject(project)}
-                          className="px-2.5 py-0.5 text-xs font-mono font-bold bg-[#FF6014]/20 border border-[#FF6014]/40 text-[#FF6014] hover:bg-[#FF6014]/30 rounded-lg transition-colors cursor-pointer"
+                          className="px-3 py-1 text-xs font-mono font-extrabold bg-orange-50 border border-orange-200 text-[#FF6014] hover:bg-orange-100 rounded-lg transition-colors cursor-pointer shadow-2xs"
                         >
                           +{remainingTechCount} more
                         </button>
@@ -562,13 +588,13 @@ export default function PinnedProjectsShowcaseGSAP({
                     </div>
 
                     {/* Prominent Action Buttons */}
-                    <div className="flex items-center gap-2.5 shrink-0">
+                    <div className="flex items-center gap-3 shrink-0">
                       {project.demoLink && (
                         <a
                           href={project.demoLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold text-white bg-[#FF6014] hover:bg-[#E5530F] rounded-xl shadow-md transition-all active:scale-95 cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-extrabold text-white bg-[#FF6014] hover:bg-[#E5530F] rounded-xl shadow-lg shadow-orange-600/30 transition-all active:scale-95 cursor-pointer"
                         >
                           <ExternalLink className="w-3.5 h-3.5" /> Live Demo
                         </a>
@@ -579,16 +605,16 @@ export default function PinnedProjectsShowcaseGSAP({
                           href={project.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl transition-all active:scale-95 cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-extrabold text-slate-900 bg-white/90 hover:bg-white border border-slate-200 rounded-xl transition-all active:scale-95 cursor-pointer shadow-2xs"
                         >
-                          <GithubIcon className="w-3.5 h-3.5" /> GitHub
+                          <GithubIcon className="w-3.5 h-3.5 text-slate-900" /> GitHub
                         </a>
                       )}
 
                       <button
                         type="button"
                         onClick={() => router.push(`/projects/${project.id}`)}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold text-slate-300 hover:text-white transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1 px-3.5 py-2 text-xs sm:text-sm font-bold text-slate-800 hover:text-[#FF6014] transition-colors cursor-pointer"
                       >
                         Case Study <ArrowRight className="w-3.5 h-3.5" />
                       </button>

@@ -12,7 +12,7 @@ interface AboutProfileProps {
 
 export default function AboutProfile({ stats, proficiencies, availabilityText }: AboutProfileProps) {
   return (
-    <div className="lg:col-span-2 flex flex-col gap-6 lg:gap-8 items-center text-center lg:items-start lg:text-left">
+    <div className="lg:col-span-2 lg:sticky lg:top-24 self-start flex flex-col gap-6 lg:gap-8 items-center text-center lg:items-start lg:text-left">
       {/* Role tag + heading */}
       <motion.div variants={itemVariants} className="flex flex-col items-center lg:items-start space-y-2">
         <motion.div
