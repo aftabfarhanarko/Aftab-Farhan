@@ -149,7 +149,7 @@ export default function Education() {
     >
       <div className="grid lg:grid-cols-[330px_1fr] gap-10 lg:gap-16 items-start">
         {/* Left sticky panel */}
-        <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left space-y-4">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left space-y-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}

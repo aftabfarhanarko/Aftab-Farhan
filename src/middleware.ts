@@ -12,20 +12,23 @@ export default auth((req) => {
 
   // Secure API routes (excluding /api/auth endpoints)
   if (url.pathname.startsWith("/api") && !url.pathname.startsWith("/api/auth")) {
-    // 1. Block direct browser address bar visits (e.g. navigation requests)
-    if (secFetchMode === "navigate" || secFetchSite === "none") {
-      return new NextResponse(
-        JSON.stringify({ error: "Not Found" }),
-        { status: 404, headers: { "Content-Type": "application/json" } }
-      );
-    }
+    // Only apply strict browser navigation block to non-GET requests (e.g. POST, PUT, DELETE)
+    if (req.method !== "GET") {
+      // 1. Block direct browser address bar visits (e.g. navigation requests for mutations)
+      if (secFetchMode === "navigate" || secFetchSite === "none") {
+        return new NextResponse(
+          JSON.stringify({ error: "Not Found" }),
+          { status: 404, headers: { "Content-Type": "application/json" } }
+        );
+      }
 
-    // 2. Block cross-origin/external client hits
-    if (secFetchSite && secFetchSite !== "same-origin" && secFetchSite !== "same-site") {
-      return new NextResponse(
-        JSON.stringify({ error: "Unauthorized" }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
-      );
+      // 2. Block cross-origin/external client hits for mutations
+      if (secFetchSite && secFetchSite !== "same-origin" && secFetchSite !== "same-site") {
+        return new NextResponse(
+          JSON.stringify({ error: "Unauthorized" }),
+          { status: 401, headers: { "Content-Type": "application/json" } }
+        );
+      }
     }
 
     // 3. Block requests with non-matching referer hostnames

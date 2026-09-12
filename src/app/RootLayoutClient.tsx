@@ -10,6 +10,7 @@ import { ThemeProvider, useTheme } from "@/context/Theme";
 import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
 import ChatbotWidget from "@/components/Chatbot/ChatbotWidget";
+import GlobalGSAPAnimations from "@/components/GlobalGSAPAnimations";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -285,6 +286,7 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
       </div>
 
       {!isDashboard && <Navbar />}
+      <GlobalGSAPAnimations />
 
       <div id="smooth-wrapper" className="w-full">
         <div id="smooth-content" className="w-full flex flex-col min-h-screen">

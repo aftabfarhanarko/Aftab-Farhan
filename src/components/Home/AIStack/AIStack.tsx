@@ -162,8 +162,8 @@ export default function AIStack() {
           </div>
         </div>
 
-        {/* Right Column: Sticky Toolkit & Ownership Guarantee */}
-        <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
+        {/* Right Column: Toolkit & Ownership Guarantee */}
+        <div className="lg:col-span-4 space-y-6">
           {/* AI Engineering Toolkit Card */}
           <motion.div
             whileHover={{ y: -3 }}

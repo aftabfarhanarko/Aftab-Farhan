@@ -44,7 +44,7 @@ export default function Experience() {
     <section id="experience" className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0">
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
         {/* Left panel */}
-        <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 bg-orange-50 mb-3">
             <Star className="w-4 h-4 text-[#FF6014]" />
             <span className="text-xs font-bold text-[#FF6014] uppercase tracking-wider">

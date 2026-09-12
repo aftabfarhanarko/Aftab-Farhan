@@ -13,18 +13,29 @@ import Services from "@/components/Home/Services/Services";
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-1 sm:pt-2 pb-8">
-      <Hero />
-      <About />
-      <Experience />
-      <Skills />
-      <Projects />
-      <Services />
-      <SoftSkills />
-      <Achievements />
-      <Education />
-      <AIStack />
-      <Contact />
+    <div className="pt-1 sm:pt-2 pb-8 w-full space-y-0">
+      {/* Top 7xl Constrained Sections */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <Hero />
+        <About />
+        <Experience />
+        <Skills />
+      </div>
+
+      {/* Full-Width Projects Section */}
+      <div className="w-full my-2 sm:my-4">
+        <Projects />
+      </div>
+
+      {/* Bottom 7xl Constrained Sections */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <Services />
+        <SoftSkills />
+        <Achievements />
+        <Education />
+        <AIStack />
+        <Contact />
+      </div>
     </div>
   );
 }

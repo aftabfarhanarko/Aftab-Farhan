@@ -21,7 +21,7 @@ interface AIHighlightCardProps {
 
 export default function AIHighlightCard({ selectedAIInfo }: AIHighlightCardProps) {
   return (
-    <div className="lg:col-span-4 h-full lg:sticky lg:top-24 lg:self-start">
+    <div className="lg:col-span-4 h-full">
       <AnimatePresence mode="wait">
         <motion.div
           key={selectedAIInfo.id}

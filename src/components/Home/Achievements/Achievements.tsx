@@ -164,8 +164,8 @@ export default function Achievements() {
       className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0"
     >
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
-        {/* Left Sticky Panel */}
-        <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left space-y-3">
+        {/* Left Panel */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-[#FF6014] text-xs font-bold shadow-sm">
             <Star className="w-3.5 h-3.5 text-[#FF6014] animate-pulse" />
             <span>Official Qualifications</span>
