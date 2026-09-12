@@ -53,7 +53,7 @@ export default function DevOpsWorkflow() {
   }, []);
 
   return (
-    <div className="relative mb-10 p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+    <div className="relative mb-10 p-6 sm:p-8 rounded-2xl glass-card-primary overflow-hidden">
       {/* Ambient background glow */}
       <motion.div
         className="absolute -top-24 left-1/2 -translate-x-1/2 w-[420px] h-[420px] rounded-full blur-3xl pointer-events-none"

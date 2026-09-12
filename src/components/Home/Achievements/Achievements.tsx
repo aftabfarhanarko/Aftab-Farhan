@@ -57,7 +57,7 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
       }}
       whileHover={{ y: -6, scale: 1.01 }}
-      className="cursor-pointer group relative flex flex-col rounded-2xl border border-slate-200/90 bg-white overflow-hidden transition-all duration-300 text-left shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-300"
+      className="cursor-pointer group relative flex flex-col rounded-2xl glass-card-featured overflow-hidden transition-all duration-300 text-left hover:border-orange-300"
     >
       {/* Top Sweep Light Beam */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />

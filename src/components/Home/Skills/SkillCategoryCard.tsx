@@ -44,7 +44,7 @@ function SkillChip({ skill }: { skill: { id: string; name: string; imageUrl?: st
     <motion.div
       whileHover={{ scale: 1.06, y: -2 }}
       transition={{ type: "spring", stiffness: 400, damping: 20 }}
-      className="group/chip inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-orange-50/60 hover:border-orange-300 transition-all duration-200 cursor-default shadow-xs"
+      className="group/chip inline-flex items-center gap-2 px-3 py-1.5 rounded-xl glass-card-compact hover:border-orange-300 transition-all duration-200 cursor-default shadow-xs"
     >
       {skill.imageUrl && !imgError ? (
         <div className="w-5 h-5 rounded-md overflow-hidden shrink-0 flex items-center justify-center bg-white border border-slate-200 p-0.5 shadow-2xs group-hover/chip:border-orange-200">
@@ -77,7 +77,7 @@ export default function SkillCategoryCard({ category }: SkillCategoryCardProps) 
       viewport={{ once: true, margin: "-40px" }}
       whileHover={{ y: -5 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative flex flex-col p-6 sm:p-7 rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-300 transition-all duration-300 min-h-[290px] justify-between text-left overflow-hidden"
+      className="group relative flex flex-col p-6 sm:p-7 rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 min-h-[290px] justify-between text-left overflow-hidden"
     >
       {/* Top Sweep Accent Beam */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -107,7 +107,7 @@ export default function SkillCategoryCard({ category }: SkillCategoryCardProps) 
       </div>
 
       {/* Skills list chips grid */}
-      <div className="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
+      <div className="flex flex-wrap gap-2 pt-3 border-t border-slate-200/60">
         {category.skills.map((skill) => (
           <SkillChip key={skill.id} skill={skill} />
         ))}

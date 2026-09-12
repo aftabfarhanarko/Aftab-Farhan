@@ -66,23 +66,26 @@ export default function ProjectsShowcaseGSAP({ projects }: ProjectsShowcaseGSAPP
         {featuredProjects.map((project) => (
           <div
             key={project.id}
-            className="gsap-project-card p-6 sm:p-8 lg:p-10 rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300 grid lg:grid-cols-12 gap-8 items-center"
+            className="gsap-project-card p-6 sm:p-8 lg:p-10 rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 grid lg:grid-cols-12 gap-8 items-center relative overflow-hidden group"
           >
+            {/* Top Sweep Beam */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+
             <div className="lg:col-span-7 space-y-4 text-left">
-              <span className="px-3 py-1 text-xs font-bold text-[#FF6014] bg-orange-50 border border-orange-200 rounded-full inline-block">
+              <span className="px-3 py-1 text-xs font-bold text-[#FF6014] bg-orange-50/90 border border-orange-200 rounded-full inline-block">
                 {project.category}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight group-hover:text-[#FF6014] transition-colors">
                 {project.title}
               </h3>
-              <p className="text-base text-slate-600 leading-relaxed max-w-xl font-normal">
+              <p className="text-base text-slate-800 leading-relaxed max-w-xl font-medium text-justify">
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-2 pt-2">
                 {project.tech?.slice(0, 5).map((t) => (
                   <span
                     key={t}
-                    className="px-2.5 py-1 text-xs font-medium bg-slate-100 border border-slate-200 rounded-md text-slate-700"
+                    className="px-2.5 py-1 text-xs font-bold glass-card-compact rounded-xl text-slate-900 hover:border-orange-300 hover:text-[#FF6014] transition-colors"
                   >
                     {t}
                   </span>

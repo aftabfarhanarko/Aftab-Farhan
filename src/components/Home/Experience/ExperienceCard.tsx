@@ -35,14 +35,14 @@ export default function ExperienceCard({ exp }: ExperienceCardProps) {
         />
       </div>
 
-      {/* Main Experience Card with Elevation & Glow */}
+      {/* Main Experience Card with Glass Design System */}
       <motion.div
         whileHover={{ y: -4 }}
         transition={{ type: "spring", stiffness: 350, damping: 24 }}
-        className={`rounded-2xl border overflow-hidden transition-all duration-300 relative bg-white shadow-sm hover:shadow-xl hover:shadow-orange-500/5 ${
+        className={`rounded-2xl overflow-hidden transition-all duration-300 relative glass-card-primary ${
           isCurrent
             ? "border-orange-300 ring-1 ring-orange-500/20"
-            : "border-slate-200 hover:border-orange-300"
+            : "hover:border-orange-300"
         }`}
       >
         {/* Sweep Glow Accent */}

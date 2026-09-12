@@ -16,7 +16,7 @@ export default function AboutTechStack({ frontendSkills, backendSkills, tools }:
       {(frontendSkills.length > 0 || backendSkills.length > 0) && (
         <motion.div variants={itemVariants} className="space-y-4 text-left">
           {frontendSkills.length > 0 && (
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-3">
+            <div className="p-5 rounded-2xl glass-card-primary space-y-3">
               <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FF6014]">
                 Frontend Stack
               </p>
@@ -42,7 +42,7 @@ export default function AboutTechStack({ frontendSkills, backendSkills, tools }:
           )}
 
           {backendSkills.length > 0 && (
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-3">
+            <div className="p-5 rounded-2xl glass-card-primary space-y-3">
               <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FF6014]">
                 Backend Stack
               </p>
@@ -72,7 +72,7 @@ export default function AboutTechStack({ frontendSkills, backendSkills, tools }:
       {/* Tools chips */}
       {tools.length > 0 && (
         <motion.div variants={itemVariants} className="text-left">
-          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-3">
+          <div className="p-5 rounded-2xl glass-card-primary space-y-3">
             <p className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FF6014]">
               Tools &amp; Workflow
             </p>

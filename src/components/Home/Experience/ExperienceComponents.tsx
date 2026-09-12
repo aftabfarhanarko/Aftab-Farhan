@@ -147,7 +147,7 @@ export function ExperienceAchievements({ achievements }: ExperienceAchievementsP
             key={i}
             whileHover={{ scale: 1.05, y: -2 }}
             transition={{ type: "spring", stiffness: 350, damping: 20 }}
-            className="text-center p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-orange-300 hover:bg-orange-50/40 flex flex-col justify-center transition-colors cursor-default shadow-xs"
+            className="text-center p-3.5 rounded-xl glass-card-compact hover:border-orange-300 flex flex-col justify-center transition-colors cursor-default shadow-xs"
           >
             <div className="text-2xl font-black text-slate-900 tracking-tight">
               {a.metric}

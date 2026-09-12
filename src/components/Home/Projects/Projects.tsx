@@ -75,22 +75,22 @@ export default function Projects() {
         <div className="flex flex-col items-center sm:items-start">
           <div className="flex items-center gap-2 mb-2">
             <Code2 className="w-4 h-4 text-[#FF6014]" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014]">
-              Selected Work
+            <span className="text-xs font-black uppercase tracking-[0.2em] text-[#FF6014]">
+              01 — SELECTED WORK
             </span>
           </div>
 
-          <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-[32px] sm:text-[38px] lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
             Featured <span className="text-[#FF6014]">Projects</span>
           </h2>
         </div>
         <div className="flex-1 mb-3 hidden sm:block">
-          <div className="h-px bg-slate-200" />
+          <div className="h-px bg-slate-200/90" />
         </div>
       </div>
 
       <p className="text-base sm:text-lg text-slate-800 leading-[1.7] mb-10 max-w-2xl text-center sm:text-left mx-auto sm:mx-0 font-medium">
-        A curated showcase of production-ready full-stack applications, advanced SaaS platforms, AI/ML integrations, and custom business portals built with modern architectures.
+        A curated collection of production-ready applications, SaaS platforms, and real-world digital products.
       </p>
 
       {isLoading ? (
@@ -114,15 +114,15 @@ export default function Projects() {
             filteredProjects={filteredProjects}
           />
 
-          {/* Grid */}
+          {/* Curated 2-Column Grid */}
           {filteredProjects.length > 0 ? (
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:gap-8 grid-cols-1 md:grid-cols-2">
               {filteredProjects.map((project) => (
                 <ProjectCard key={project.id} project={project} />
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 rounded-2xl border border-dashed border-slate-200 bg-slate-50 w-full">
+            <div className="text-center py-20 rounded-2xl border border-dashed border-slate-200 bg-slate-50/80 w-full">
               <p className="text-sm text-slate-500 uppercase tracking-wider font-bold">
                 No projects available in this category at the moment.
               </p>

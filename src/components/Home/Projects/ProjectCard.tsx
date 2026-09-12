@@ -1,6 +1,5 @@
-"use client";
-import React, { useRef, useState } from "react";
-import { ExternalLink, ArrowUpRight, Info, Calendar, Layers, User, Briefcase, Users } from "lucide-react";
+import React from "react";
+import { ExternalLink, ArrowUpRight, Info, Calendar, Layers, User, Briefcase, Users, CheckCircle2 } from "lucide-react";
 import {
   Project,
   categoryLabel,
@@ -22,8 +21,41 @@ const Github = ({ className = "w-4 h-4" }: { className?: string }) => (
   </svg>
 );
 
+function getTechnicalHighlights(project: Project): string[] {
+  const highlights: string[] = [];
+  
+  if (project.category === "FULL_STACK") {
+    highlights.push("Full-Stack Architecture & API Integration");
+  } else if (project.category === "AI_ML") {
+    highlights.push("LLM API & Agentic Workflow Engine");
+  } else if (project.category === "E_COMMERCE") {
+    highlights.push("Product Catalog & Checkout Engine");
+  } else if (project.tagline) {
+    highlights.push(project.tagline);
+  }
+
+  if (project.tech.includes("Next.js") || project.tech.includes("React")) {
+    highlights.push("Next.js & TypeScript UI Architecture");
+  } else if (project.tech.includes("Node.js") || project.tech.includes("Express") || project.tech.includes("NestJS")) {
+    highlights.push("RESTful Services & Backend Logic");
+  } else {
+    highlights.push("Modular Engineering & Optimization");
+  }
+
+  if (project.tech.some(t => ["PostgreSQL", "Prisma", "MongoDB", "Redis"].includes(t))) {
+    highlights.push("Database Schema & ORM Management");
+  } else if (project.projectType === "CLIENT") {
+    highlights.push("Production Client Deployment");
+  } else {
+    highlights.push("Role-Based Security & Workflows");
+  }
+
+  return highlights.slice(0, 2);
+}
+
 export default function ProjectCard({ project }: { project: Project }) {
   const router = useRouter();
+  const highlights = getTechnicalHighlights(project);
 
   const handleOpenDetails = () => {
     router.push(`/projects/${project.id}`);
@@ -32,10 +64,13 @@ export default function ProjectCard({ project }: { project: Project }) {
   return (
     <div
       onClick={handleOpenDetails}
-      className="group relative flex flex-col rounded-2xl border border-slate-200 bg-white hover:border-orange-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md cursor-pointer"
+      className="group relative flex flex-col rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 overflow-hidden cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5"
     >
+      {/* Top Sweep Beam */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+
       {/* Header Bar */}
-      <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between z-10">
+      <div className="px-3.5 py-2 bg-slate-50/90 border-b border-slate-200/80 flex items-center justify-between z-10">
         <div className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-red-400 inline-block" />
           <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />
@@ -43,41 +78,42 @@ export default function ProjectCard({ project }: { project: Project }) {
         </div>
 
         {/* Category Pill */}
-        <span className="px-2.5 py-0.5 text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-full flex items-center gap-1">
+        <span className="px-2.5 py-0.5 text-[11px] font-bold text-slate-800 bg-white border border-slate-200/90 rounded-full flex items-center gap-1 shadow-2xs">
           <Layers className="w-3 h-3 text-[#FF6014] shrink-0" />
           {categoryLabel[project.category] || project.category}
         </span>
       </div>
 
-      {/* Thumbnail */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-slate-100 border-b border-slate-200">
+      {/* Thumbnail Container (Sleek Compact Aspect Ratio) */}
+      <div className="relative aspect-[16/8.5] w-full overflow-hidden bg-slate-100 border-b border-slate-200/80">
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-500 ease-out"
+          className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700 ease-out"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-        {/* Badges */}
-        <div className="absolute top-3 left-3 right-3 flex flex-wrap items-center gap-1.5 z-10 pointer-events-none">
+        {/* Badges Overlay */}
+        <div className="absolute top-2.5 left-2.5 right-2.5 flex flex-wrap items-center gap-1.5 z-10 pointer-events-none">
           {project.projectType === "CLIENT" ? (
-            <span className="px-2.5 py-1 text-xs font-bold text-amber-900 bg-amber-50/90 border border-amber-200 rounded-full flex items-center gap-1 shadow-sm">
+            <span className="px-2.5 py-0.5 text-[11px] font-bold text-amber-900 bg-amber-50/95 border border-amber-200 rounded-full flex items-center gap-1 shadow-sm backdrop-blur-xs">
               <Briefcase className="w-3 h-3 text-amber-600 shrink-0" />
-              Client Project
+              Client
             </span>
           ) : project.projectType === "TEAM" ? (
-            <span className="px-2.5 py-1 text-xs font-bold text-slate-800 bg-white/90 border border-slate-200 rounded-full flex items-center gap-1 shadow-sm">
+            <span className="px-2.5 py-0.5 text-[11px] font-bold text-slate-800 bg-white/95 border border-slate-200 rounded-full flex items-center gap-1 shadow-sm backdrop-blur-xs">
               <Users className="w-3 h-3 text-slate-600 shrink-0" />
-              Team Project
+              Team
             </span>
           ) : (
-            <span className="px-2.5 py-1 text-xs font-bold text-slate-800 bg-white/90 border border-slate-200 rounded-full flex items-center gap-1 shadow-sm">
+            <span className="px-2.5 py-0.5 text-[11px] font-bold text-slate-800 bg-white/95 border border-slate-200 rounded-full flex items-center gap-1 shadow-sm backdrop-blur-xs">
               <User className="w-3 h-3 text-slate-600 shrink-0" />
-              Personal Project
+              Personal
             </span>
           )}
 
           {project.year && (
-            <span className="px-2.5 py-1 text-xs font-bold text-slate-800 bg-white/90 border border-slate-200 rounded-full flex items-center gap-1 shadow-sm ml-auto">
+            <span className="px-2.5 py-0.5 text-[11px] font-bold text-slate-800 bg-white/95 border border-slate-200 rounded-full flex items-center gap-1 shadow-sm ml-auto backdrop-blur-xs">
               <Calendar className="w-3 h-3 text-slate-600 shrink-0" />
               {project.year}
             </span>
@@ -86,49 +122,66 @@ export default function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Card Content Body */}
-      <div className="flex flex-col flex-1 p-6">
-        <div className="flex items-start justify-between gap-2 mb-1.5">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug group-hover:text-[#FF6014] transition-colors duration-200">
+      <div className="flex flex-col flex-1 p-4.5 sm:p-5">
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-snug group-hover:text-[#FF6014] transition-colors duration-200">
             {project.title}
           </h3>
-          <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0 mt-1" />
+          <ArrowUpRight className="w-4.5 h-4.5 text-slate-400 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0 mt-0.5" />
         </div>
 
         {project.tagline && (
-          <p className="text-xs font-bold text-[#FF6014] mb-3 uppercase tracking-wider">
+          <p className="text-[11px] font-extrabold text-[#FF6014] mb-2 uppercase tracking-wider">
             {project.tagline}
           </p>
         )}
 
-        <p className="text-sm sm:text-base text-slate-800 leading-relaxed mb-5 font-medium flex-1 text-justify">
+        <p className="text-xs sm:text-sm text-slate-800 leading-relaxed mb-3 font-medium flex-1 text-justify line-clamp-2">
           {project.description}
         </p>
 
+        {/* Technical Highlights */}
+        {highlights.length > 0 && (
+          <div className="mb-3 pt-2.5 border-t border-slate-200/70 space-y-1">
+            {highlights.map((h, i) => (
+              <div key={i} className="flex items-center gap-1.5 text-xs text-slate-800 font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#FF6014] shrink-0" />
+                <span className="truncate">{h}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Tech Stack Badges */}
         {project.tech && project.tech.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-6">
-            {project.tech.map((t) => (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {project.tech.slice(0, 5).map((t) => (
               <span
                 key={t}
-                className="px-2.5 py-1 text-xs font-bold bg-slate-100 border border-slate-300 rounded-lg text-slate-900"
+                className="px-2.5 py-0.5 text-[11px] font-bold glass-card-compact rounded-lg text-slate-900 hover:border-orange-300 hover:text-[#FF6014] transition-colors"
               >
                 {t}
               </span>
             ))}
+            {project.tech.length > 5 && (
+              <span className="px-2 py-0.5 text-[10px] font-bold bg-slate-100 border border-slate-200 rounded-lg text-slate-600">
+                +{project.tech.length - 5}
+              </span>
+            )}
           </div>
         )}
 
         {/* Actions Bar */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className="flex gap-2 flex-wrap items-center mt-auto pt-4 border-t border-slate-200"
+          className="flex gap-2 flex-wrap items-center mt-auto pt-3 border-t border-slate-200/80"
         >
           {project.demoLink && (
             <a
               href={project.demoLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-white bg-[#FF6014] hover:bg-[#E5530F] rounded-xl shadow-sm transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-[#FF6014] hover:bg-[#E5530F] rounded-xl shadow-xs transition-all active:scale-95"
             >
               <ExternalLink className="w-3.5 h-3.5" /> Live Demo
             </a>
@@ -139,7 +192,7 @@ export default function ProjectCard({ project }: { project: Project }) {
               href={project.githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all active:scale-95"
             >
               <Github className="w-3.5 h-3.5" /> GitHub
             </a>
@@ -147,10 +200,10 @@ export default function ProjectCard({ project }: { project: Project }) {
 
           <button
             onClick={handleOpenDetails}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-sm transition-all ml-auto cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-xl shadow-2xs transition-all ml-auto cursor-pointer active:scale-95"
             type="button"
           >
-            <Info className="w-3.5 h-3.5" /> Details
+            <Info className="w-3.5 h-3.5 text-[#FF6014]" /> Details
           </button>
         </div>
       </div>

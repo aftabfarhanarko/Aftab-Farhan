@@ -32,7 +32,7 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
         </p>
       </motion.div>
 
-      {/* Stat Cards with 3D Spring Hover */}
+      {/* Stat Cards with Glass Design System */}
       {stats.length > 0 && (
         <motion.div
           variants={itemVariants}
@@ -43,12 +43,13 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
               key={i}
               whileHover={{ y: -4, scale: 1.02 }}
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
-              className="group p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-orange-300 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[100px] cursor-default"
+              className="group p-4.5 sm:p-5 rounded-2xl glass-card-compact hover:border-orange-300 transition-all duration-300 flex flex-col justify-between min-h-[105px] cursor-default text-left relative overflow-hidden"
             >
-              <p className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-[#FF6014] transition-colors text-left leading-snug tracking-tight">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#FF6014]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <p className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-[#FF6014] transition-colors leading-snug tracking-tight">
                 {stat.label}
               </p>
-              <p className="text-xl sm:text-2xl font-black text-[#FF6014] text-left mt-2 tracking-tight">
+              <p className="text-xl sm:text-2xl font-black text-[#FF6014] mt-2 tracking-tight">
                 {stat.num || "20+"}
               </p>
             </motion.div>
@@ -59,7 +60,7 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
       {/* Core Technical Highlights */}
       {proficiencies.length > 0 && (
         <motion.div variants={itemVariants} className="flex flex-col gap-3 w-full">
-          <p className="text-xs font-black uppercase tracking-[0.15em] text-slate-700 text-left">
+          <p className="text-xs font-black uppercase tracking-[0.15em] text-slate-800 text-left">
             Core Competencies
           </p>
           <div className="flex flex-wrap gap-2">
@@ -68,7 +69,7 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
                 key={i}
                 whileHover={{ scale: 1.06, y: -2 }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs font-bold text-slate-900 shadow-xs cursor-default hover:border-orange-300 hover:text-[#FF6014] transition-colors"
+                className="px-3.5 py-1.5 rounded-xl glass-card-compact text-xs font-bold text-slate-900 shadow-2xs cursor-default hover:border-orange-300 hover:text-[#FF6014] transition-colors"
               >
                 {p.name}
               </motion.span>
@@ -77,13 +78,13 @@ export default function AboutProfile({ stats, proficiencies, availabilityText }:
         </motion.div>
       )}
 
-      <div className="h-px bg-slate-200 w-full" />
+      <div className="h-px bg-slate-200/80 w-full" />
 
       {/* Availability badge */}
       <motion.div
         variants={itemVariants}
         whileHover={{ scale: 1.02 }}
-        className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-bold text-slate-900 shadow-sm cursor-default"
+        className="flex items-center gap-2.5 px-4.5 py-3 rounded-xl glass-card-compact text-sm font-bold text-slate-900 shadow-sm cursor-default"
       >
         <span className="relative flex h-2.5 w-2.5 shrink-0">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6014] opacity-75" />

@@ -17,20 +17,20 @@ function ProjectsCard({ projects }: { projects: Project[] }) {
     <motion.div
       variants={itemVariants}
       whileHover={{ y: -3 }}
-      className="rounded-2xl border border-slate-200 bg-white overflow-hidden text-left shadow-sm hover:border-orange-300 hover:shadow-md transition-all duration-300"
+      className="rounded-2xl glass-card-primary overflow-hidden text-left hover:border-orange-300 transition-all duration-300"
     >
-      <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/80">
+      <div className="px-5 py-4 border-b border-slate-200/80 bg-slate-50/50">
         <p className="text-xs font-black text-slate-700 uppercase tracking-widest">
           Recent Focus Projects
         </p>
       </div>
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-slate-200/60">
         {projects.map((project, idx) => (
           <motion.div
             key={idx}
             whileHover={{ x: 4 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="px-5 py-4 hover:bg-orange-50/50 transition-colors cursor-default"
+            className="px-5 py-4 hover:bg-orange-50/40 transition-colors cursor-default"
           >
             <p className="text-sm sm:text-base font-bold text-slate-900 mb-1">
               {project.title}
@@ -51,7 +51,7 @@ function MentorCard({ title, description }: { title: string; description: string
       variants={itemVariants}
       whileHover={{ y: -3, scale: 1.01 }}
       transition={{ type: "spring", stiffness: 350, damping: 22 }}
-      className="flex items-center gap-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 text-left shadow-sm hover:border-orange-300 hover:shadow-md transition-all duration-300 cursor-default group"
+      className="flex items-center gap-3.5 rounded-2xl glass-card-primary px-5 py-4 text-left hover:border-orange-300 transition-all duration-300 cursor-default group"
     >
       <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center shrink-0 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
         <Users size={18} />

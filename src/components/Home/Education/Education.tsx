@@ -54,7 +54,7 @@ function EducationCard({ edu, index }: { edu: EducationData; index: number }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.15 }}
       whileHover={{ y: -6, scale: 1.01 }}
-      className="rounded-2xl border border-slate-200/90 bg-white overflow-hidden transition-all duration-300 relative text-left shadow-sm hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-300 p-6 sm:p-8 group"
+      className="rounded-2xl glass-card-primary overflow-hidden transition-all duration-300 relative text-left hover:border-orange-300 p-6 sm:p-8 group"
     >
       {/* Top ambient orange line beam on hover */}
       <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-[#FF6014]/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
@@ -171,7 +171,7 @@ export default function Education() {
           <motion.div
             whileHover={{ y: -4, scale: 1.02 }}
             transition={{ duration: 0.2 }}
-            className="mt-4 p-6 rounded-2xl border border-slate-200/90 bg-white text-left shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-300 space-y-2.5 relative overflow-hidden group"
+            className="mt-4 p-6 rounded-2xl glass-card-primary text-left hover:border-orange-300 transition-all duration-300 space-y-2.5 relative overflow-hidden group"
           >
             <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FF6014]" />
             <div className="flex items-center gap-2.5">

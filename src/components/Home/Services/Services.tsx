@@ -101,7 +101,7 @@ export default function Services() {
               viewport={{ once: true, margin: "-40px" }}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative p-6 rounded-2xl border border-slate-200/90 bg-white hover:border-orange-300 transition-all duration-300 text-left shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col justify-between overflow-hidden cursor-default min-h-[300px]"
+              className="group relative p-6 rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 text-left flex flex-col justify-between overflow-hidden cursor-default min-h-[300px]"
             >
               {/* Sweep Light Beam on Hover */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

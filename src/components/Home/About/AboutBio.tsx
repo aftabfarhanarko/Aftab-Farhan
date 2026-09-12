@@ -56,7 +56,7 @@ export default function AboutBio({
         <motion.div
           whileHover={{ y: -3, scale: 1.01 }}
           transition={{ type: "spring", stiffness: 350, damping: 25 }}
-          className="group relative overflow-hidden p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-300 hover:shadow-lg transition-all duration-300 space-y-3 cursor-default"
+          className="group relative overflow-hidden p-6 rounded-2xl glass-card-primary transition-all duration-300 space-y-3 cursor-default"
         >
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
@@ -76,7 +76,7 @@ export default function AboutBio({
           <motion.div
             whileHover={{ y: -3, scale: 1.01 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="group p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-300 hover:shadow-lg transition-all duration-300 space-y-2.5 cursor-default"
+            className="group p-6 rounded-2xl glass-card-primary transition-all duration-300 space-y-2.5 cursor-default"
           >
             <div className="flex items-center gap-2.5 text-slate-900">
               <div className="p-2 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
@@ -94,7 +94,7 @@ export default function AboutBio({
           <motion.div
             whileHover={{ y: -3, scale: 1.01 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="group p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-300 hover:shadow-lg transition-all duration-300 space-y-2.5 cursor-default"
+            className="group p-6 rounded-2xl glass-card-primary transition-all duration-300 space-y-2.5 cursor-default"
           >
             <div className="flex items-center gap-2.5 text-slate-900">
               <div className="p-2 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
@@ -114,7 +114,7 @@ export default function AboutBio({
         <motion.div
           whileHover={{ y: -3, scale: 1.01 }}
           transition={{ type: "spring", stiffness: 350, damping: 25 }}
-          className="group p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-300 hover:shadow-lg transition-all duration-300 space-y-2.5 cursor-default"
+          className="group p-6 rounded-2xl glass-card-primary transition-all duration-300 space-y-2.5 cursor-default"
         >
           <div className="flex items-center gap-2.5 text-slate-900">
             <div className="p-2 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
