@@ -129,16 +129,16 @@ export default function Navbar() {
     <>
       <motion.header
         id="main-navbar"
-        className="fixed top-3 sm:top-4 md:top-5 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] sm:w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-7xl z-50 rounded-2xl bg-white/55 backdrop-blur-xl backdrop-saturate-150 border border-white/65 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.07),inset_0_1px_2px_0_rgba(255,255,255,0.9)] transition-all duration-300 ease-out will-change-transform translate-z-0"
+        className="fixed top-3 sm:top-4 md:top-5 inset-x-0 mx-auto w-[calc(100%-1.5rem)] sm:w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-7xl z-50 rounded-2xl bg-white/55 backdrop-blur-xl backdrop-saturate-150 border border-white/65 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.07),inset_0_1px_2px_0_rgba(255,255,255,0.9)] transition-all duration-300 ease-out will-change-transform translate-z-0"
         initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-[64px]">
+        <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-[64px]">
           {/* Logo */}
           <motion.button
             onClick={() => scrollTo("hero")}
-            className="flex items-center gap-0.5 bg-transparent border-none cursor-pointer"
+            className="flex items-center gap-0.5 bg-transparent border-none cursor-pointer shrink-0"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -150,8 +150,8 @@ export default function Navbar() {
             </span>
           </motion.button>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full bg-white/40 backdrop-blur-md border border-white/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.7)]">
+          {/* Desktop Nav (Absolutely Centered in viewport/header) */}
+          <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 px-2 py-1.5 rounded-full bg-white/40 backdrop-blur-md border border-white/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.7)]">
             {navItems.map((item, i) => {
               const active = activeSection === item.id;
               return (

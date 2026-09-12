@@ -190,7 +190,7 @@ export default function PinnedProjectsShowcaseGSAP({
       const mainNav = document.getElementById("main-navbar") || document.querySelector("header");
       if (mainNav) {
         gsap.to(mainNav, {
-          y: "-180%",
+          yPercent: -180,
           opacity: 0,
           duration: 0.35,
           ease: "power2.out",
@@ -203,11 +203,12 @@ export default function PinnedProjectsShowcaseGSAP({
       const mainNav = document.getElementById("main-navbar") || document.querySelector("header");
       if (mainNav) {
         gsap.to(mainNav, {
-          y: "0%",
+          yPercent: 0,
           opacity: 1,
           duration: 0.35,
           ease: "power2.out",
           pointerEvents: "auto",
+          clearProps: "transform", // Clean up inline transforms so CSS margins handle centering perfectly
         });
       }
     };
