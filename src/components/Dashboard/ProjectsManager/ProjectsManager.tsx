@@ -16,8 +16,14 @@ import { projectCategories, projectTypes } from "./types";
 const newProjectState = (): ProjectFormState => ({
   title: "",
   tagline: "",
+  role: "",
   description: "",
   image: "",
+  galleryInput: "",
+  overview: "",
+  problemStatement: "",
+  keyFeaturesInput: "",
+  technicalChallengesInput: "",
   demoLink: "",
   githubLink: "",
   category: projectCategories[0],
@@ -41,7 +47,10 @@ export default function ProjectsManager() {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploadingCover, setIsUploadingCover] = useState(false);
+
+  const [galleryPreviews, setGalleryPreviews] = useState<string[]>([]);
+  const [isUploadingGallery, setIsUploadingGallery] = useState(false);
 
   const [formData, setFormData] = useState<ProjectFormState>(newProjectState);
 
@@ -82,18 +91,39 @@ export default function ProjectsManager() {
 
   const isSaving = useMemo(
     () =>
-      isUploading || addProjectMutation.isPending || updateProjectMutation.isPending,
-    [addProjectMutation.isPending, isUploading, updateProjectMutation.isPending],
+      isUploadingCover ||
+      isUploadingGallery ||
+      addProjectMutation.isPending ||
+      updateProjectMutation.isPending,
+    [
+      addProjectMutation.isPending,
+      isUploadingCover,
+      isUploadingGallery,
+      updateProjectMutation.isPending,
+    ],
   );
+
+  const isUploading = isUploadingCover || isUploadingGallery;
 
   const openModal = (project?: Project) => {
     if (project) {
       setEditingProject(project);
+      const existingGallery = project.gallery || [];
       setFormData({
         title: project.title,
         tagline: project.tagline,
+        role: project.role || "",
         description: project.description,
         image: project.image,
+        galleryInput: existingGallery.join("\n"),
+        overview: project.overview || "",
+        problemStatement: project.problemStatement || "",
+        keyFeaturesInput: project.keyFeatures
+          ? JSON.stringify(project.keyFeatures, null, 2)
+          : "",
+        technicalChallengesInput: project.technicalChallenges
+          ? JSON.stringify(project.technicalChallenges, null, 2)
+          : "",
         demoLink: project.demoLink,
         githubLink: project.githubLink || "",
         category: project.category,
@@ -109,11 +139,13 @@ export default function ProjectsManager() {
       });
       setImagePreview(project.image);
       setImageFile(null);
+      setGalleryPreviews(existingGallery);
     } else {
       setEditingProject(null);
       setFormData(newProjectState());
       setImagePreview(null);
       setImageFile(null);
+      setGalleryPreviews([]);
     }
     setIsModalOpen(true);
   };
@@ -123,15 +155,32 @@ export default function ProjectsManager() {
     setEditingProject(null);
     setImageFile(null);
     setImagePreview(null);
+    setGalleryPreviews([]);
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setImageFile(file);
+
+    // Show temporary local preview
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result as string);
     reader.readAsDataURL(file);
+
+    // Immediately upload to ImgBB and update URL
+    setIsUploadingCover(true);
+    showToast("Uploading cover image...");
+    try {
+      const url = await uploadImageToImgBB(file);
+      setImagePreview(url);
+      setFormData((p) => ({ ...p, image: url }));
+      showToast("Cover image uploaded successfully!");
+    } catch {
+      showToast("Failed to upload cover image", "error");
+    } finally {
+      setIsUploadingCover(false);
+    }
   };
 
   const clearImage = (e: React.MouseEvent) => {
@@ -141,18 +190,113 @@ export default function ProjectsManager() {
     setFormData((p) => ({ ...p, image: "" }));
   };
 
+  const handleGalleryImagesChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    // Limit total gallery images to 4
+    const availableSlots = 4 - galleryPreviews.length;
+    const filesToProcess = files.slice(0, Math.max(0, availableSlots));
+
+    if (filesToProcess.length === 0) {
+      showToast("Maximum 4 gallery images allowed", "error");
+      return;
+    }
+
+    setIsUploadingGallery(true);
+    showToast(`Uploading ${filesToProcess.length} gallery image(s)...`);
+
+    try {
+      // Upload all selected gallery images to ImgBB immediately
+      const uploads = filesToProcess.map((f) => uploadImageToImgBB(f));
+      const urls = await Promise.all(uploads);
+
+      // Append new direct ImgBB URLs to gallery previews and text area input
+      setGalleryPreviews((prev) => [...prev, ...urls]);
+      setFormData((p) => {
+        const currentUrls = p.galleryInput
+          .split(/[\n,]/)
+          .map((g) => g.trim())
+          .filter(Boolean);
+        const combined = Array.from(new Set([...currentUrls, ...urls]));
+        return { ...p, galleryInput: combined.join("\n") };
+      });
+
+      showToast("Gallery images uploaded successfully!");
+    } catch {
+      showToast("Failed to upload gallery images", "error");
+    } finally {
+      setIsUploadingGallery(false);
+    }
+  };
+
+  const removeGalleryImage = (index: number) => {
+    const targetUrl = galleryPreviews[index];
+    setGalleryPreviews((prev) => prev.filter((_, i) => i !== index));
+
+    // Remove from galleryInput
+    const urls = formData.galleryInput
+      .split(/[\n,]/)
+      .map((g) => g.trim())
+      .filter(Boolean);
+    const updatedUrls = urls.filter((url) => url !== targetUrl);
+    setFormData((p) => ({ ...p, galleryInput: updatedUrls.join("\n") }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsUploading(true);
     try {
       let finalImageUrl = formData.image;
-      if (imageFile) {
+      if (imageFile && !finalImageUrl.startsWith("http")) {
         finalImageUrl = await uploadImageToImgBB(imageFile);
+      }
+
+      const galleryUrls = Array.from(
+        new Set([
+          ...galleryPreviews,
+          ...formData.galleryInput
+            .split(/[\n,]/)
+            .map((g) => g.trim())
+            .filter((g) => g.startsWith("http://") || g.startsWith("https://")),
+        ]),
+      );
+
+      let keyFeatures = [];
+      if (formData.keyFeaturesInput.trim()) {
+        try {
+          keyFeatures = JSON.parse(formData.keyFeaturesInput);
+        } catch {
+          keyFeatures = formData.keyFeaturesInput
+            .split("\n")
+            .filter(Boolean)
+            .map((line) => {
+              const [title, ...rest] = line.split(":");
+              return { title: title.trim(), detail: rest.join(":").trim() || title.trim() };
+            });
+        }
+      }
+
+      let technicalChallenges = [];
+      if (formData.technicalChallengesInput.trim()) {
+        try {
+          technicalChallenges = JSON.parse(formData.technicalChallengesInput);
+        } catch {
+          technicalChallenges = formData.technicalChallengesInput
+            .split("\n")
+            .filter(Boolean)
+            .map((line) => {
+              const [challenge, ...rest] = line.split(":");
+              return { challenge: challenge.trim(), solution: rest.join(":").trim() || challenge.trim() };
+            });
+        }
       }
 
       const payload = {
         ...formData,
         image: finalImageUrl,
+        gallery: galleryUrls,
+        keyFeatures,
+        technicalChallenges,
         tech: formData.techInput
           .split(",")
           .map((t) => t.trim())
@@ -165,9 +309,7 @@ export default function ProjectsManager() {
         addProjectMutation.mutate(payload);
       }
     } catch {
-      showToast("Failed to upload image", "error");
-    } finally {
-      setIsUploading(false);
+      showToast("Failed to save project", "error");
     }
   };
 
@@ -199,10 +341,13 @@ export default function ProjectsManager() {
           formData={formData}
           setFormData={setFormData}
           imagePreview={imagePreview}
+          galleryPreviews={galleryPreviews}
           onClose={closeModal}
           onSubmit={handleSubmit}
           onPickImage={handleImageChange}
           onClearImage={clearImage}
+          onPickGalleryImages={handleGalleryImagesChange}
+          onRemoveGalleryImage={removeGalleryImage}
           isSaving={isSaving}
           isUploading={isUploading}
         />

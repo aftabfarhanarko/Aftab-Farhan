@@ -278,8 +278,8 @@ export default function PinnedProjectsShowcaseGSAP({
             pin: true,
             pinSpacing: true,
             start: "top top",
-            end: () => `+=${totalTransitions * window.innerHeight * 4.0}`,
-            scrub: 3.5, // Extra smooth lag so fast wheel scrolls catch up very slowly
+            end: () => `+=${totalTransitions * window.innerHeight * 1.5}`,
+            scrub: 1.0, // Fast, responsive scroll transition
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               const newIndex = Math.min(

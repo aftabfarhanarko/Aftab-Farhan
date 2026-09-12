@@ -36,12 +36,28 @@ const GithubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   </svg>
 );
 
+interface KeyFeatureItem {
+  title: string;
+  detail: string;
+}
+
+interface TechnicalChallengeItem {
+  challenge: string;
+  solution: string;
+}
+
 interface ProjectDetail {
   id: string;
   title: string;
   tagline?: string;
+  role?: string;
   description: string;
   image?: string;
+  gallery?: string[];
+  overview?: string;
+  problemStatement?: string;
+  keyFeatures?: KeyFeatureItem[];
+  technicalChallenges?: TechnicalChallengeItem[];
   demoLink?: string;
   githubLink?: string;
   category: string;
@@ -151,7 +167,7 @@ export default function ProjectDetailPage() {
               <Sparkles size={14} className="text-[#FF6014]" />
               <span>Full-Stack Engineering Case Study</span>
               <span className="hidden sm:inline text-slate-300">|</span>
-              <span className="text-slate-900 font-bold">Architected by Aftab Farhan Arko</span>
+              <span className="text-slate-900 font-bold">{project.role || "Lead Full-Stack Developer"}</span>
             </div>
             <p className="text-sm sm:text-base text-slate-700 font-medium leading-relaxed max-w-4xl">
               Engineered with modern full-stack web standards, scalable database architecture, and pixel-perfect interactive user experience.
@@ -261,16 +277,16 @@ export default function ProjectDetailPage() {
               <User size={13} className="text-[#FF6014]" /> Client / Org
             </span>
             <p className="text-base font-bold text-slate-900 truncate">
-              {project.client || (project.projectType === "CLIENT" ? "Client Work" : "Personal")}
+              {project.client || (project.projectType === "CLIENT" ? "Client Work" : "Own Product")}
             </p>
           </div>
 
           <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
             <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <Layers size={13} className="text-[#FF6014]" /> Project Type
+              <Layers size={13} className="text-[#FF6014]" /> Role / Type
             </span>
-            <p className="text-base font-bold text-slate-900">
-              {project.projectType || "Full-Stack Development"}
+            <p className="text-base font-bold text-slate-900 truncate">
+              {project.role || project.projectType || "Lead Developer"}
             </p>
           </div>
 
@@ -298,16 +314,96 @@ export default function ProjectDetailPage() {
           
           {/* Main Content Area */}
           <div className="lg:col-span-2 space-y-6">
+            {project.overview && (
+              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <Sparkles size={18} className="text-[#FF6014]" />
+                  Executive Overview
+                </h2>
+                <p className="text-slate-700 text-base leading-relaxed font-medium">
+                  {project.overview}
+                </p>
+              </div>
+            )}
+
+            {project.problemStatement && (
+              <div className="p-6 sm:p-8 rounded-3xl bg-amber-500/5 border border-amber-500/20 shadow-xl space-y-3">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <Terminal size={18} className="text-amber-600" />
+                  Problem Statement
+                </h2>
+                <p className="text-slate-700 text-base leading-relaxed font-medium">
+                  {project.problemStatement}
+                </p>
+              </div>
+            )}
+
             <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
               <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                 <Sparkles size={18} className="text-[#FF6014]" />
-                Project Case Study & Overview
+                Project Description & Architecture
               </h2>
 
               <div className="text-slate-700 text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-3 font-medium">
                 {project.description}
               </div>
             </div>
+
+            {project.keyFeatures && project.keyFeatures.length > 0 && (
+              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <CheckCircle2 size={18} className="text-emerald-600" />
+                  Key Features & Core Capabilities
+                </h2>
+                <div className="grid grid-cols-1 gap-4 pt-1">
+                  {project.keyFeatures.map((kf, idx) => (
+                    <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+                      <h3 className="font-bold text-slate-900 text-base">{kf.title}</h3>
+                      <p className="text-sm text-slate-600 font-medium leading-relaxed">{kf.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {project.technicalChallenges && project.technicalChallenges.length > 0 && (
+              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <Code2 size={18} className="text-[#FF6014]" />
+                  Technical Challenges & Solutions
+                </h2>
+                <div className="grid grid-cols-1 gap-4 pt-1">
+                  {project.technicalChallenges.map((tc, idx) => (
+                    <div key={idx} className="p-4 rounded-2xl bg-orange-500/5 border border-orange-500/20 space-y-2">
+                      <div className="font-bold text-slate-900 text-sm">
+                        <span className="text-[#FF6014] font-extrabold uppercase text-xs tracking-wider mr-2">Challenge:</span>
+                        {tc.challenge}
+                      </div>
+                      <div className="text-sm text-slate-700 font-medium leading-relaxed">
+                        <span className="text-emerald-600 font-extrabold uppercase text-xs tracking-wider mr-2">Solution:</span>
+                        {tc.solution}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {project.gallery && project.gallery.length > 0 && (
+              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <Globe size={18} className="text-[#FF6014]" />
+                  Project Screenshots & Gallery
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                  {project.gallery.map((gUrl, idx) => (
+                    <div key={idx} className="rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                      <img src={gUrl} alt={`Gallery screenshot ${idx + 1}`} className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Technologies & Tech Stack Sidebar */}
@@ -357,3 +453,4 @@ export default function ProjectDetailPage() {
     </div>
   );
 }
+

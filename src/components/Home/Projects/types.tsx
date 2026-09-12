@@ -4,8 +4,14 @@ export interface Project {
   id: string;
   title: string;
   tagline: string;
+  role?: string;
   description: string;
   image: string;
+  gallery?: string[];
+  overview?: string;
+  problemStatement?: string;
+  keyFeatures?: Array<{ title: string; detail: string }>;
+  technicalChallenges?: Array<{ challenge: string; solution: string }>;
   demoLink: string;
   githubLink?: string;
   category: string;

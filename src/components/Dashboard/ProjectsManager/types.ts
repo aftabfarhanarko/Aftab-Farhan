@@ -13,12 +13,21 @@ export const projectTypes = ["MY", "TEAM", "CLIENT"] as const;
 
 export type ProjectType = (typeof projectTypes)[number];
 
+export type KeyFeatureItem = { title: string; detail: string };
+export type TechnicalChallengeItem = { challenge: string; solution: string };
+
 export type Project = {
   id: string;
   title: string;
   tagline: string;
+  role?: string;
   description: string;
   image: string;
+  gallery?: string[];
+  overview?: string;
+  problemStatement?: string;
+  keyFeatures?: KeyFeatureItem[];
+  technicalChallenges?: TechnicalChallengeItem[];
   demoLink: string;
   githubLink?: string;
   category: ProjectCategory;
@@ -36,8 +45,14 @@ export type Project = {
 export type ProjectFormState = {
   title: string;
   tagline: string;
+  role: string;
   description: string;
   image: string;
+  galleryInput: string;
+  overview: string;
+  problemStatement: string;
+  keyFeaturesInput: string;
+  technicalChallengesInput: string;
   demoLink: string;
   githubLink: string;
   category: ProjectCategory;

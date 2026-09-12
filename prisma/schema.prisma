@@ -138,25 +138,31 @@ model ContactMessage {
 }
 
 model Project {
-  id          String          @id @default(uuid())
-  title       String
-  tagline     String
-  description String
-  image       String
-  demoLink    String
-  githubLink  String?
-  category    ProjectCategory
-  year        String
-  featured    Boolean         @default(false)
-  currentlyWorking Boolean    @default(false)
-  projectType ProjectType
-  client      String?
-  startDate   String?
-  endDate     String?
-  duration    String?
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  tech        ProjectTech[]
+  id                  String          @id @default(uuid())
+  title               String
+  tagline             String
+  role                String?
+  description         String
+  image               String
+  gallery             String[]        @default([])
+  overview            String?
+  problemStatement    String?
+  keyFeatures         Json?
+  technicalChallenges Json?
+  demoLink            String
+  githubLink          String?
+  category            ProjectCategory
+  year                String
+  featured            Boolean         @default(false)
+  currentlyWorking    Boolean         @default(false)
+  projectType         ProjectType
+  client              String?
+  startDate           String?
+  endDate             String?
+  duration            String?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  tech                ProjectTech[]
 }
 
 model Tech {
