@@ -13,7 +13,7 @@ import Services from "@/components/Home/Services/Services";
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-1 sm:pt-2 pb-8">
       <Hero />
       <About />
       <Experience />

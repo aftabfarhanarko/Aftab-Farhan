@@ -10,94 +10,132 @@ import {
   Zap,
   LayoutDashboard,
   Bot,
+  ArrowUpRight,
 } from "lucide-react";
 
 export default function Services() {
   const capabilities = [
     {
-      title: "SaaS Platforms",
+      title: "Enterprise SaaS Platforms",
       icon: Layout,
-      desc: "Multi-tenant cloud applications with authentication, subscription tiers, role-based access control, and API integrations.",
+      desc: "Scalable multi-tenant cloud ecosystems featuring robust AuthN/AuthZ, subscription management, role-based access control, and API webhooks.",
+      tags: ["Multi-Tenant", "AuthN/AuthZ", "Stripe/Billing"],
     },
     {
       title: "Business Management Systems",
       icon: Building2,
-      desc: "Internal operational software, ERP/CRM portals, workflow automation tools, and business analytics dashboards.",
+      desc: "Mission-critical operational platforms, CRM/ERP portals, automated business workflows, and real-time business intelligence analytics.",
+      tags: ["ERP & CRM", "Workflow Automation", "Analytics"],
     },
     {
-      title: "Marketplace Platforms",
+      title: "Digital Marketplace Platforms",
       icon: ShoppingCart,
-      desc: "Multi-vendor digital marketplaces with complex user roles (customer, vendor, agent, admin) and transaction management.",
+      desc: "High-scale multi-vendor marketplaces engineered for complex multi-role workflows (Customer, Vendor, Admin) and transaction engines.",
+      tags: ["Multi-Vendor", "Escrow & Payouts", "Role Engine"],
     },
     {
-      title: "Booking & Service Platforms",
+      title: "Booking & Dispatch Systems",
       icon: CalendarCheck,
-      desc: "Real-time appointment scheduling, service request dispatching, and dynamic calendar availability systems.",
+      desc: "Real-time appointment scheduling platforms with automated dispatching, dynamic availability calendars, and instant SMS/Email notifications.",
+      tags: ["Real-Time Sync", "Calendar Engines", "Dispatch"],
     },
     {
-      title: "E-commerce Systems",
+      title: "High-Scale E-Commerce",
       icon: ShoppingBag,
-      desc: "Scalable online stores with product catalogs, shopping carts, order tracking, and secure payment gateway integration.",
+      desc: "Custom headless e-commerce architectures with high-speed product catalog indexing, cart engines, and secure payment gateway integrations.",
+      tags: ["Headless Commerce", "Payment Gateways", "Cart State"],
     },
     {
-      title: "Real-time Applications",
+      title: "Real-Time Event-Driven Apps",
       icon: Zap,
-      desc: "Event-driven web apps with WebSockets and Socket.IO for live messaging, notifications, and real-time data sync.",
+      desc: "Low-latency WebSockets and Socket.IO applications built for instant messaging, collaborative document state, and live activity streams.",
+      tags: ["WebSockets", "Socket.IO", "Live Data Sync"],
     },
     {
-      title: "Admin Dashboards",
+      title: "Data-Dense Admin Control Centers",
       icon: LayoutDashboard,
-      desc: "Data-dense management panels featuring data tables, filtering, chart visualizations, and system control centers.",
+      desc: "High-density management dashboards featuring interactive charts, server-side data tables, granular filtering, and system audit logging.",
+      tags: ["Chart Analytics", "Data Tables", "Audit Logs"],
     },
     {
-      title: "AI-Powered Applications",
+      title: "AI & LLM Powered Applications",
       icon: Bot,
-      desc: "Web platforms integrated with AI model APIs, intelligent automation workflows, and conversational interfaces.",
+      desc: "Intelligent web platforms integrated with LLM APIs, vector search, automated agentic workflows, and conversational AI interfaces.",
+      tags: ["LLM Integration", "Agentic Workflows", "Vector AI"],
     },
   ];
 
   return (
     <section id="capabilities" className="mb-20 sm:mb-24 scroll-mt-24">
+      {/* Section Header */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-8 flex flex-col items-center sm:items-start text-center sm:text-left"
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="mb-10 sm:mb-12 flex flex-col items-center sm:items-start text-center sm:text-left"
       >
-        <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014] mb-2">
-          Product Solutions
+        <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014] mb-2">
+          <span className="w-2 h-2 rounded-full bg-[#FF6014] inline-block animate-pulse" />
+          PRODUCT SOLUTIONS & ARCHITECTURE
         </span>
-        <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
+        
+        <h2 className="text-[32px] sm:text-[38px] lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
           What I <span className="text-[#FF6014]">Build</span>
         </h2>
-        <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal mt-2">
-          Custom software solutions engineered to solve operational challenges, automate business processes, and scale web products.
+        
+        <p className="text-base sm:text-lg text-slate-800 leading-[1.7] max-w-2xl font-medium mt-2">
+          Enterprise-grade software solutions engineered to solve operational bottlenecks, automate business workflows, and scale high-performance web products.
         </p>
       </motion.div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Cards Grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {capabilities.map((cap, idx) => {
           const Icon = cap.icon;
           return (
             <motion.div
               key={cap.title}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.4, delay: idx * 0.04 }}
-              className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-orange-300 transition-all duration-200 text-left shadow-xs flex flex-col justify-between"
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative p-6 rounded-2xl border border-slate-200/90 bg-white hover:border-orange-300 transition-all duration-300 text-left shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col justify-between overflow-hidden cursor-default min-h-[300px]"
             >
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF6014]">
-                  <Icon className="w-5 h-5" />
+              {/* Sweep Light Beam on Hover */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              <div className="space-y-4">
+                {/* Icon Header */}
+                <div className="flex items-center justify-between">
+                  <div className="w-11 h-11 rounded-xl bg-orange-50 border border-orange-200/80 flex items-center justify-center text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white group-hover:scale-105 group-hover:rotate-[-4deg] transition-all duration-300 shadow-xs">
+                    <Icon className="w-5 h-5 transition-transform duration-300" strokeWidth={2.2} />
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 tracking-tight">
-                  {cap.title}
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed font-normal">
-                  {cap.desc}
-                </p>
+
+                {/* Title & Description */}
+                <div>
+                  <h3 className="text-lg sm:text-[19px] font-black text-slate-900 tracking-tight group-hover:text-[#FF6014] transition-colors leading-snug mb-2">
+                    {cap.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium text-justify">
+                    {cap.desc}
+                  </p>
+                </div>
+              </div>
+
+              {/* Tag Pills */}
+              <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-100 mt-4">
+                {cap.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2 py-0.5 text-[10px] sm:text-[11px] font-extrabold text-slate-700 bg-slate-100/80 border border-slate-200 rounded-md group-hover:border-orange-200 group-hover:bg-orange-50/50 group-hover:text-[#FF6014] transition-colors"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </motion.div>
           );

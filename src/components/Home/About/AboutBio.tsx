@@ -36,10 +36,11 @@ export default function AboutBio({
   return (
     <div className="lg:col-span-3 flex flex-col gap-6">
       
-      {/* Status pill */}
+      {/* Status pill with pulsing aura */}
       <motion.div
         variants={itemVariants}
-        className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-orange-50 border border-orange-200 text-sm font-semibold text-[#FF6014] w-fit shadow-sm"
+        whileHover={{ scale: 1.03 }}
+        className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-orange-50 border border-orange-200 text-sm font-bold text-[#FF6014] w-fit shadow-sm cursor-default"
       >
         <div className="relative w-2.5 h-2.5 shrink-0">
           <span className="absolute inset-0 rounded-full bg-[#FF6014] animate-ping opacity-60" />
@@ -52,51 +53,81 @@ export default function AboutBio({
       <motion.div variants={itemVariants} className="space-y-4">
         
         {/* Pillar 1: Full-Stack Engineering */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-200 hover:shadow-md transition-all space-y-3">
+        <motion.div
+          whileHover={{ y: -3, scale: 1.01 }}
+          transition={{ type: "spring", stiffness: 350, damping: 25 }}
+          className="group relative overflow-hidden p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-300 hover:shadow-lg transition-all duration-300 space-y-3 cursor-default"
+        >
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-orange-100/80 text-[#FF6014]">
-              <Rocket className="w-5 h-5 text-[#FF6014]" />
+            <div className="p-2.5 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
+              <Rocket className="w-5 h-5 transition-transform group-hover:scale-110" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900">Full Stack Software Development</h3>
+            <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#FF6014] transition-colors">
+              Full Stack Software Development
+            </h3>
           </div>
-          <p className="text-base sm:text-lg text-slate-600 leading-[1.7]">
+          <p className="text-base sm:text-lg text-slate-800 leading-[1.7] font-medium text-justify">
             {roleDescription || "Full Stack Developer responsible for designing, developing, and maintaining scalable web applications using modern frontend and backend technologies. Focused on writing clean, efficient code and delivering high-quality software solutions from concept to deployment."}
           </p>
-        </div>
+        </motion.div>
 
         {/* Pillar 2: Frontend & Backend Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-200 hover:shadow-md transition-all space-y-2.5">
+          <motion.div
+            whileHover={{ y: -3, scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="group p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-300 hover:shadow-lg transition-all duration-300 space-y-2.5 cursor-default"
+          >
             <div className="flex items-center gap-2.5 text-slate-900">
-              <Code2 className="w-5 h-5 text-[#FF6014]" />
-              <h4 className="text-lg font-bold text-slate-900">Frontend & UI/UX</h4>
+              <div className="p-2 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
+                <Code2 className="w-5 h-5 transition-transform group-hover:scale-110" />
+              </div>
+              <h4 className="text-lg font-bold text-slate-900 group-hover:text-[#FF6014] transition-colors">
+                Frontend &amp; UI/UX
+              </h4>
             </div>
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium text-justify">
               Crafting responsive interfaces with React.js, Next.js 16, TypeScript, Tailwind CSS, and Framer Motion with pixel-perfect precision.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-200 hover:shadow-md transition-all space-y-2.5">
+          <motion.div
+            whileHover={{ y: -3, scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="group p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-300 hover:shadow-lg transition-all duration-300 space-y-2.5 cursor-default"
+          >
             <div className="flex items-center gap-2.5 text-slate-900">
-              <Cpu className="w-5 h-5 text-[#FF6014]" />
-              <h4 className="text-lg font-bold text-slate-900">Backend & Cloud</h4>
+              <div className="p-2 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
+                <Cpu className="w-5 h-5 transition-transform group-hover:scale-110" />
+              </div>
+              <h4 className="text-lg font-bold text-slate-900 group-hover:text-[#FF6014] transition-colors">
+                Backend &amp; Cloud
+              </h4>
             </div>
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-              Designing secure RESTful & GraphQL APIs, microservices, authentication systems, and cloud deployments with Node.js, Express, NestJS, and Docker.
+            <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium text-justify">
+              Designing secure RESTful &amp; GraphQL APIs, microservices, authentication systems, and cloud deployments with Node.js, Express, NestJS, and Docker.
             </p>
-          </div>
+          </motion.div>
         </div>
 
         {/* Pillar 3: Engineering Quality */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-200 hover:shadow-md transition-all space-y-2.5">
+        <motion.div
+          whileHover={{ y: -3, scale: 1.01 }}
+          transition={{ type: "spring", stiffness: 350, damping: 25 }}
+          className="group p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-orange-300 hover:shadow-lg transition-all duration-300 space-y-2.5 cursor-default"
+        >
           <div className="flex items-center gap-2.5 text-slate-900">
-            <ShieldCheck className="w-5 h-5 text-[#FF6014]" />
-            <h4 className="text-lg font-bold text-slate-900">Engineering Quality & Principles</h4>
+            <div className="p-2 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white transition-colors duration-300">
+              <ShieldCheck className="w-5 h-5 transition-transform group-hover:scale-110" />
+            </div>
+            <h4 className="text-lg font-bold text-slate-900 group-hover:text-[#FF6014] transition-colors">
+              Engineering Quality &amp; Principles
+            </h4>
           </div>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium text-justify">
             Adhering to SOLID principles, Clean Architecture, and automated workflows. Experienced with PostgreSQL, MongoDB, Redis, Prisma ORM, CI/CD pipelines, and performance optimization.
           </p>
-        </div>
+        </motion.div>
 
       </motion.div>
 

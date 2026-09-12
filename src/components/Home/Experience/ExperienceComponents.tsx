@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { motion } from "framer-motion";
 import { Briefcase, MapPin, ExternalLink, CheckCircle2 } from "lucide-react";
 import { Experience, Role, Achievement, ICON_MAP } from "./types";
 
@@ -11,24 +12,28 @@ export function ExperienceHeader({ exp }: ExperienceHeaderProps) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5">
       <div className="flex items-center gap-3 sm:gap-4">
-        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center bg-orange-50 border border-orange-200 shrink-0 shadow-sm">
+        <motion.div
+          whileHover={{ scale: 1.08, rotate: -5 }}
+          transition={{ type: "spring", stiffness: 400, damping: 15 }}
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center bg-orange-50 border border-orange-200 shrink-0 shadow-sm text-[#FF6014]"
+        >
           <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF6014]" />
-        </div>
+        </motion.div>
         <div>
           <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight">
             {exp.company}
           </h3>
-          <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-slate-600 font-medium">
-            <MapPin className="w-4 h-4 text-slate-400" />
+          <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-slate-800 font-semibold">
+            <MapPin className="w-4 h-4 text-slate-600" />
             <span>{exp.location}</span>
             {exp.url && exp.url !== "#" && (
               <>
-                <span className="text-slate-300">·</span>
+                <span className="text-slate-400">·</span>
                 <a
                   href={exp.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[#FF6014] hover:underline font-semibold"
+                  className="inline-flex items-center gap-1 text-[#FF6014] hover:underline font-bold"
                 >
                   {exp.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0]}
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -50,7 +55,7 @@ export function ExperienceHeader({ exp }: ExperienceHeaderProps) {
             Present
           </span>
         )}
-        <span className="text-xs font-bold text-slate-700 bg-slate-100 border border-slate-200 px-3.5 py-1 rounded-full whitespace-nowrap shadow-sm">
+        <span className="text-xs font-bold text-slate-900 bg-slate-100 border border-slate-300 px-3.5 py-1 rounded-full whitespace-nowrap shadow-sm">
           {exp.period}
         </span>
       </div>
@@ -97,7 +102,7 @@ export function ExperienceRoles({ roles }: ExperienceRolesProps) {
                   {role.title}
                 </h4>
                 {role.subtitle && (
-                  <p className="text-sm sm:text-base font-medium text-slate-500 mt-0.5">
+                  <p className="text-sm sm:text-base font-semibold text-slate-800 mt-0.5">
                     {role.subtitle}
                   </p>
                 )}
@@ -106,12 +111,17 @@ export function ExperienceRoles({ roles }: ExperienceRolesProps) {
 
             <ul className="grid sm:grid-cols-1 gap-3 ml-0 sm:ml-9">
               {items.map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
+                <motion.li
+                  key={i}
+                  whileHover={{ x: 4 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="flex items-start gap-3 cursor-default"
+                >
                   <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#FF6014]" />
-                  <span className="text-base sm:text-lg text-slate-600 leading-[1.7] font-normal">
+                  <span className="text-base sm:text-lg text-slate-800 leading-[1.7] font-medium text-justify">
                     {item}
                   </span>
-                </li>
+                </motion.li>
               ))}
             </ul>
           </div>
@@ -128,22 +138,24 @@ interface ExperienceAchievementsProps {
 export function ExperienceAchievements({ achievements }: ExperienceAchievementsProps) {
   return (
     <div className="mt-6 pt-5 border-t border-slate-200">
-      <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
-        Key Deliverables & Metrics
+      <p className="text-xs font-black text-slate-700 uppercase tracking-wider mb-3">
+        Key Deliverables &amp; Metrics
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {achievements.map((a, i) => (
-          <div
+          <motion.div
             key={i}
-            className="text-center p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-center"
+            whileHover={{ scale: 1.05, y: -2 }}
+            transition={{ type: "spring", stiffness: 350, damping: 20 }}
+            className="text-center p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-orange-300 hover:bg-orange-50/40 flex flex-col justify-center transition-colors cursor-default shadow-xs"
           >
             <div className="text-2xl font-black text-slate-900 tracking-tight">
               {a.metric}
             </div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
+            <div className="text-xs font-extrabold text-slate-700 uppercase tracking-wider mt-1">
               {a.label}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, ArrowUpRight, Sparkles } from "lucide-react";
 
 export const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -28,59 +28,73 @@ const LinkedinIcon = () => (
 
 function ContactCardItem({ item }: { item: { icon: React.ReactNode; label: string; value: string; href: string } }) {
   return (
-    <a
+    <motion.a
+      whileHover={{ y: -4, scale: 1.01 }}
       href={item.href}
-      className="flex items-center gap-4 p-4 rounded-xl border border-slate-200 bg-white hover:border-orange-300 transition-all duration-200 shadow-sm group"
+      className="flex items-center justify-between p-4.5 rounded-2xl border border-slate-200/90 bg-white hover:border-orange-300 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300 shadow-sm group relative overflow-hidden"
     >
-      <div className="w-11 h-11 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF6014] shrink-0">
-        {item.icon}
+      <div className="flex items-center gap-4 min-w-0">
+        <div className="w-12 h-12 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF6014] shrink-0 group-hover:bg-[#FF6014] group-hover:text-white group-hover:border-[#FF6014] transition-all duration-300">
+          {item.icon}
+        </div>
+
+        <div className="min-w-0">
+          <p className="text-xs font-black text-slate-700 uppercase tracking-wider mb-0.5">{item.label}</p>
+          <p className="text-base font-bold text-slate-900 group-hover:text-[#FF6014] truncate transition-colors">{item.value}</p>
+        </div>
       </div>
 
-      <div className="min-w-0">
-        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5">{item.label}</p>
-        <p className="text-base font-bold text-slate-900 group-hover:text-[#FF6014] truncate transition-colors">{item.value}</p>
-      </div>
-    </a>
+      <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0 ml-2" />
+    </motion.a>
   );
 }
 
 export default function ContactInfo() {
   return (
     <motion.div variants={fadeUp} className="lg:col-span-2 flex flex-col gap-4">
-      {/* Opportunities Badge */}
-      <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-orange-200 bg-orange-50 text-[#FF6014] shadow-sm">
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6014] opacity-60" />
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF6014]" />
+      {/* Opportunities Availability Badge */}
+      <motion.div
+        whileHover={{ scale: 1.01 }}
+        className="flex items-center gap-3 px-4.5 py-3.5 rounded-2xl border border-emerald-300/80 bg-emerald-50/90 text-emerald-950 shadow-sm relative overflow-hidden group"
+      >
+        <span className="relative flex h-3 w-3 shrink-0">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-600" />
         </span>
-        <span className="text-sm font-semibold">
-          Open for Full Stack & Tech Lead Opportunities
+        <span className="text-sm font-black text-emerald-950">
+          Open for Full Stack & Tech Lead Roles
         </span>
-      </div>
+      </motion.div>
 
-      {/* Description */}
-      <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-sm">
-        <p className="text-base sm:text-lg text-slate-600 leading-[1.7] font-normal">
-          I&apos;m open to Full Stack Developer, Backend Developer, Software Engineer, and Technical Lead opportunities. Feel free to reach out directly.
+      {/* Description Card */}
+      <motion.div
+        whileHover={{ y: -3 }}
+        className="p-6 rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-300 relative overflow-hidden"
+      >
+        <p className="text-base sm:text-lg text-slate-800 leading-[1.75] font-medium">
+          Whether you have a groundbreaking project in mind, need technical leadership, or want to build robust enterprise applications, let&apos;s talk!
         </p>
-      </div>
+      </motion.div>
 
       {/* Social Links */}
-      <div className="flex gap-3 mb-1">
+      <div className="flex gap-3 my-1">
         {[
-          { icon: <LinkedinIcon />, href: "https://linkedin.com/in/aftabfarhanarko", color: "hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]" },
-          { icon: <GithubIcon />, href: "https://github.com/aftabfarhanarko", color: "hover:bg-slate-900 hover:text-white hover:border-slate-900" },
-          { icon: <WhatsAppIcon />, href: "https://wa.me/8801613410880", color: "hover:bg-[#25D366] hover:text-white hover:border-[#25D366]" },
+          { icon: <LinkedinIcon />, label: "LinkedIn", href: "https://linkedin.com/in/aftabfarhanarko", color: "hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]" },
+          { icon: <GithubIcon />, label: "GitHub", href: "https://github.com/aftabfarhanarko", color: "hover:bg-slate-900 hover:text-white hover:border-slate-900" },
+          { icon: <WhatsAppIcon />, label: "WhatsApp", href: "https://wa.me/8801613410880", color: "hover:bg-[#25D366] hover:text-white hover:border-[#25D366]" },
         ].map((social, i) => (
-          <a
+          <motion.a
             key={i}
+            whileHover={{ y: -4, scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 transition-all ${social.color}`}
+            className={`flex-1 py-3 px-4 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-center gap-2 text-slate-800 font-bold text-sm shadow-sm transition-all duration-300 ${social.color}`}
           >
             {social.icon}
-          </a>
+            <span>{social.label}</span>
+          </motion.a>
         ))}
       </div>
 
@@ -95,3 +109,4 @@ export default function ContactInfo() {
     </motion.div>
   );
 }
+

@@ -125,47 +125,15 @@ export default function Navbar() {
     }
   }, []);
 
-  const p = {
-    bg: "rgba(255, 255, 255, 0.92)",
-    pillBg: "rgba(248, 250, 252, 0.96)",
-    border: "rgba(229, 231, 235, 0.8)",
-    text: "#111827",
-    muted: "#4B5563",
-    activeBg: "#FFF4EE",
-    hoverBg: "#F8FAFC",
-    accent: "#FF6014",
-    accentGlow: "rgba(255, 96, 20, 0.25)",
-    accentGrad: "linear-gradient(135deg, #FF6014, #EA580C)",
-    shadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)",
-    btmBg: "rgba(255, 255, 255, 0.95)",
-    btmBorder: "#E5E7EB",
-    btmIcon: "#64748B",
-    btmActive: "#FF6014",
-    socialHoverBg: "#FFF4EE",
-  };
-
   return (
     <>
       <motion.header
-        className="fixed top-3 sm:top-4 md:top-5 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] sm:w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-7xl z-50 rounded-2xl"
-        style={{
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          backgroundColor: p.bg,
-          border: `1px solid ${p.border}`,
-          boxShadow: p.shadow,
-          transition: "background-color 0.3s, box-shadow 0.3s",
-          willChange: "transform",
-          transform: "translateZ(0)",
-        }}
+        className="fixed top-3 sm:top-4 md:top-5 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] sm:w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-7xl z-50 rounded-2xl bg-white/55 backdrop-blur-xl backdrop-saturate-150 border border-white/65 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.07),inset_0_1px_2px_0_rgba(255,255,255,0.9)] transition-all duration-300 ease-out will-change-transform translate-z-0"
         initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
-        <nav
-          className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
-          style={{ height: 64 }}
-        >
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-[64px]">
           {/* Logo */}
           <motion.button
             onClick={() => scrollTo("hero")}
@@ -173,68 +141,36 @@ export default function Navbar() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span
-              className="hidden sm:inline"
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 18,
-                fontWeight: 900,
-                letterSpacing: "-0.02em",
-                color: "#111827",
-              }}
-            >
+            <span className="hidden sm:inline font-['DM_Sans'] text-[18px] font-black tracking-tight text-gray-900">
               {"<aftab farhan arko />"}
             </span>
-            <span
-              className="inline sm:hidden"
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 16,
-                fontWeight: 900,
-                letterSpacing: "-0.02em",
-                color: "#111827",
-              }}
-            >
+            <span className="inline sm:hidden font-['DM_Sans'] text-[16px] font-black tracking-tight text-gray-900">
               {"<arko />"}
             </span>
           </motion.button>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full bg-slate-50 border border-slate-200/80">
+          <div className="hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full bg-white/40 backdrop-blur-md border border-white/60 shadow-[inset_0_1px_2px_rgba(255,255,255,0.7)]">
             {navItems.map((item, i) => {
               const active = activeSection === item.id;
               return (
                 <motion.button
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
-                  className="relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium border-none cursor-pointer whitespace-nowrap"
-                  style={{
-                    color: active ? "#FF6014" : "#4B5563",
-                    backgroundColor: active ? "#FFF4EE" : "transparent",
-                    fontFamily: "'DM Sans', sans-serif",
-                    transition: "background-color 0.2s, color 0.2s",
-                    fontSize: 14,
-                    fontWeight: active ? 700 : 500,
-                  }}
+                  className={`relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm border cursor-pointer whitespace-nowrap font-['DM_Sans'] transition-all duration-200 ${
+                    active
+                      ? "text-[#FF6014] bg-[#FF6014]/10 border-[#FF6014]/25 font-bold"
+                      : "text-gray-600 bg-transparent border-transparent font-medium hover:bg-white/70 hover:text-gray-900 hover:border-white/80"
+                  }`}
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 + i * 0.03 }}
-                  whileHover={{
-                    backgroundColor: active ? "#FFF4EE" : "#F1F5F9",
-                    color: active ? "#FF6014" : "#111827",
-                  }}
                 >
                   {item.label}
                   {active && (
                     <motion.span
                       layoutId="navDot"
-                      className="inline-block rounded-full"
-                      style={{
-                        width: 5,
-                        height: 5,
-                        background: "#FF6014",
-                        flexShrink: 0,
-                      }}
+                      className="inline-block rounded-full w-[5px] h-[5px] bg-[#FF6014] shrink-0"
                       transition={{
                         type: "spring",
                         stiffness: 380,
@@ -253,19 +189,8 @@ export default function Navbar() {
               href="https://github.com/aftabfarhanarko"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center justify-center rounded-full border border-slate-200 cursor-pointer"
-              style={{
-                width: 38,
-                height: 38,
-                backgroundColor: "#F8FAFC",
-                color: "#0F172A",
-              }}
-              whileHover={{
-                scale: 1.05,
-                backgroundColor: "#FF6014",
-                color: "#FFFFFF",
-                borderColor: "#FF6014",
-              }}
+              className="hidden sm:flex items-center justify-center rounded-full border border-slate-200 cursor-pointer w-[38px] h-[38px] bg-slate-50 text-slate-900 hover:bg-[#FF6014] hover:text-white hover:border-[#FF6014] transition-all"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               aria-label="GitHub"
             >
@@ -276,19 +201,8 @@ export default function Navbar() {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center justify-center rounded-full border border-slate-200 cursor-pointer"
-              style={{
-                width: 38,
-                height: 38,
-                backgroundColor: "#F8FAFC",
-                color: "#0A66C2",
-              }}
-              whileHover={{
-                scale: 1.05,
-                backgroundColor: "#0A66C2",
-                color: "#FFFFFF",
-                borderColor: "#0A66C2",
-              }}
+              className="hidden sm:flex items-center justify-center rounded-full border border-slate-200 cursor-pointer w-[38px] h-[38px] bg-slate-50 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-all"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               aria-label="LinkedIn"
             >
@@ -298,16 +212,7 @@ export default function Navbar() {
             {/* Login button */}
             <Link
               href="/login"
-              className="flex items-center justify-center rounded-full border border-orange-500/20 cursor-pointer transition-transform hover:scale-105 active:scale-95 text-white"
-              style={{
-                height: 38,
-                paddingLeft: 16,
-                paddingRight: 16,
-                backgroundColor: "#FF6014",
-                fontSize: 14,
-                fontWeight: 700,
-                gap: 6,
-              }}
+              className="flex items-center justify-center rounded-full border border-orange-500/20 cursor-pointer transition-transform hover:scale-105 active:scale-95 text-white h-[38px] px-4 bg-[#FF6014] text-sm font-bold gap-1.5"
               aria-label="Login"
             >
               <LogInIcon size={16} />
@@ -319,16 +224,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation Bar */}
       <motion.nav
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-50"
-        style={{
-          backgroundColor: p.btmBg,
-          borderTop: `1px solid ${p.btmBorder}`,
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          paddingBottom: "env(safe-area-inset-bottom, 0px)",
-          willChange: "transform",
-          transform: "translateZ(0)",
-        }}
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/65 border-t border-white/65 backdrop-blur-xl backdrop-saturate-150 shadow-[0_-10px_30px_-5px_rgba(0,0,0,0.08),inset_0_1px_1px_0_rgba(255,255,255,0.8)] pb-[env(safe-area-inset-bottom,0px)] will-change-transform translate-z-0"
         initial={{ y: 90, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}

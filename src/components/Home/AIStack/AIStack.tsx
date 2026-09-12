@@ -42,7 +42,7 @@ export default function AIStack() {
             AI-Assisted <span className="text-indigo-600">Development</span>
           </h3>
 
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-semibold">
             Leveraging modern AI-assisted engineering tools to accelerate debugging, refactoring, code quality checks, and technical documentation—enabling faster delivery of robust production software.
           </p>
 
@@ -54,7 +54,7 @@ export default function AIStack() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: idx * 0.08 }}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-white/80 px-2.5 py-1 rounded-lg border border-slate-200/60 shadow-xs"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-900 bg-white/80 px-2.5 py-1 rounded-lg border border-slate-300 shadow-xs"
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
                 {cap}

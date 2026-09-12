@@ -56,15 +56,15 @@ export default function Experience() {
             Professional <span className="text-[#FF6014]">Experience</span>
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-600 leading-[1.7] max-w-xs mx-auto lg:mx-0 font-normal">
+          <p className="text-base sm:text-lg text-slate-800 leading-[1.7] max-w-xs mx-auto lg:mx-0 font-medium">
             A chronological timeline of my professional engineering journey, highlighting key technical positions and measurable achievements.
           </p>
         </div>
 
         {/* Right timeline */}
         <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-slate-200 hidden sm:block" />
+          {/* Vertical Glowing Gradient Line */}
+          <div className="absolute left-5 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#FF6014] via-orange-400 to-slate-200 hidden sm:block opacity-80" />
 
           <div className="space-y-6">
             {filtered.map((exp) => (

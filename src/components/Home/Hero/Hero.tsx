@@ -5,6 +5,7 @@ import { HeroData, fetchHero } from "./types";
 import HeroSkeleton from "./HeroSkeleton";
 import HeroLeft from "./HeroLeft";
 import HeroRight from "./HeroRight";
+import { AmbientBackgroundGlow } from "./HeroDecorations";
 
 export default function Hero() {
   const { data, isLoading, isError } = useQuery<HeroData>({
@@ -37,10 +38,11 @@ export default function Hero() {
   const { name, title, description, image, socials = [], stats = [] } = hero;
 
   return (
-    <div className="pt-6 sm:pt-10">
+    <div className="relative pt-2 lg:pt-3">
+      <AmbientBackgroundGlow />
       <section
         id="hero"
-        className="relative mb-20 sm:mb-28 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 min-h-[75vh]"
+        className="relative mb-16 sm:mb-24 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 min-h-[70vh]"
       >
         <HeroLeft
           name={name}

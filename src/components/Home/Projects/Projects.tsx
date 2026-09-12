@@ -89,7 +89,7 @@ export default function Projects() {
         </div>
       </div>
 
-      <p className="text-base sm:text-lg text-slate-600 leading-[1.7] mb-10 max-w-2xl text-center sm:text-left mx-auto sm:mx-0 font-normal">
+      <p className="text-base sm:text-lg text-slate-800 leading-[1.7] mb-10 max-w-2xl text-center sm:text-left mx-auto sm:mx-0 font-medium">
         A curated showcase of production-ready full-stack applications, advanced SaaS platforms, AI/ML integrations, and custom business portals built with modern architectures.
       </p>
 

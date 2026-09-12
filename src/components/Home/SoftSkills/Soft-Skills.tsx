@@ -1,84 +1,128 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Users, MessageSquare, ShieldCheck, Brain, Target, Compass, Code2, Layers } from "lucide-react";
+import {
+  Users,
+  MessageSquare,
+  ShieldCheck,
+  Brain,
+  Target,
+  Compass,
+  Layers,
+  ArrowUpRight,
+} from "lucide-react";
 
 export default function SoftSkills() {
   const leadershipItems = [
     {
-      title: "Client Communication",
+      title: "Executive Stakeholder Alignment",
       icon: MessageSquare,
-      desc: "Translating complex technical architecture into clear business outcomes for non-technical stakeholders and client leads.",
+      desc: "Translating complex cloud architectures and technical choices into clear strategic business value for clients, founders, and non-technical stakeholders.",
+      tags: ["Tech-to-Business", "Stakeholder Sync", "Strategy"],
     },
     {
-      title: "Team Leadership",
+      title: "Engineering Team Leadership",
       icon: Users,
-      desc: "Guiding frontend and backend developers through technical challenges, code reviews, and structured task assignments.",
+      desc: "Guiding cross-functional frontend and backend developers through technical challenges, architecture reviews, code quality, and agile sprint delivery.",
+      tags: ["Technical Mentorship", "Sprint Execution", "Code Reviews"],
     },
     {
-      title: "Strategic Thinking",
+      title: "Product & Architecture Strategy",
       icon: Compass,
-      desc: "Aligning software architecture with product roadmaps, performance targets, and scalability goals.",
+      desc: "Aligning multi-tier system architecture with long-term product roadmaps, high-availability targets, performance SLAs, and scaling milestones.",
+      tags: ["Product Roadmap", "System Scaling", "SLA Targets"],
     },
     {
-      title: "Problem Solving",
+      title: "Root-Cause System Diagnostics",
       icon: Brain,
-      desc: "Diagnosing complex system bottlenecks, root cause failures, and database queries in production environments.",
+      desc: "Diagnosing complex production bottlenecks, database query locks, memory leaks, and distributed API latency issues under high user traffic.",
+      tags: ["Root Cause RCA", "Performance Audits", "Debugging"],
     },
     {
-      title: "Project Ownership",
+      title: "End-to-End Feature Ownership",
       icon: Target,
-      desc: "Taking end-to-end accountability for feature delivery from initial requirement gathering to production deployment.",
+      desc: "Driving end-to-end accountability from initial product discovery, API schema contract definitions, and database migrations to production launch.",
+      tags: ["Full Ownership", "Schema Design", "Launch Delivery"],
     },
     {
-      title: "Requirement Analysis",
+      title: "Technical Requirement Specifications",
       icon: Layers,
-      desc: "Breaking down ambiguous product specifications into clean, actionable engineering tasks and API contracts.",
+      desc: "Deconstructing ambiguous business requirements into high-fidelity engineering specifications, clean API schemas, and structured sprint tasks.",
+      tags: ["API Contracts", "Technical Specs", "Task Breakdown"],
     },
   ];
 
   return (
     <section id="leadership" className="mb-20 sm:mb-24 scroll-mt-24">
+      {/* Section Header */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-8 flex flex-col items-center sm:items-start text-center sm:text-left"
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="mb-10 sm:mb-12 flex flex-col items-center sm:items-start text-center sm:text-left"
       >
-        <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014] mb-2">
-          Collaboration & Governance
+        <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014] mb-2">
+          <span className="w-2 h-2 rounded-full bg-[#FF6014] inline-block animate-pulse" />
+          GOVERNANCE & TEAM EXCELLENCE
         </span>
-        <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
+        
+        <h2 className="text-[32px] sm:text-[38px] lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
           Leadership &amp; <span className="text-[#FF6014]">Collaboration</span>
         </h2>
-        <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal mt-2">
-          Key non-technical competencies and engineering management principles that ensure smooth project execution and team alignment.
+        
+        <p className="text-base sm:text-lg text-slate-800 leading-[1.7] max-w-2xl font-medium mt-2">
+          Key non-technical competencies, engineering management practices, and strategic leadership principles that ensure reliable product delivery and team success.
         </p>
       </motion.div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {leadershipItems.map((item, idx) => {
           const Icon = item.icon;
           return (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-orange-300 transition-all duration-200 text-left shadow-xs flex flex-col justify-between"
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative p-6 rounded-2xl border border-slate-200/90 bg-white hover:border-orange-300 transition-all duration-300 text-left shadow-sm hover:shadow-xl hover:shadow-orange-500/5 flex flex-col justify-between overflow-hidden cursor-default min-h-[290px]"
             >
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF6014]">
-                  <Icon className="w-5 h-5" />
+              {/* Top Accent Beam */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              <div className="space-y-4">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                  <div className="w-11 h-11 rounded-xl bg-orange-50 border border-orange-200/80 flex items-center justify-center text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white group-hover:scale-105 group-hover:rotate-[-4deg] transition-all duration-300 shadow-xs">
+                    <Icon className="w-5 h-5 transition-transform duration-300" strokeWidth={2.2} />
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed font-normal">
-                  {item.desc}
-                </p>
+
+                {/* Title & Description */}
+                <div>
+                  <h3 className="text-lg sm:text-[19px] font-black text-slate-900 tracking-tight group-hover:text-[#FF6014] transition-colors leading-snug mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+
+              {/* Tag Pills */}
+              <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-100 mt-4">
+                {item.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2 py-0.5 text-[10px] sm:text-[11px] font-extrabold text-slate-700 bg-slate-100/80 border border-slate-200 rounded-md group-hover:border-orange-200 group-hover:bg-orange-50/50 group-hover:text-[#FF6014] transition-colors"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </motion.div>
           );

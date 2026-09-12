@@ -2,177 +2,179 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Heart, ArrowUp, Sparkles, Terminal, Code2, ShieldCheck, Mail, MapPin } from "lucide-react";
 
 const currentYear = new Date().getFullYear();
-
-const GithubIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-  >
-    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-  </svg>
-);
-
-const LinkedinIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-  >
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 11 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-  </svg>
-);
-
-const TwitterIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-  </svg>
-);
-
-const FacebookIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
-
-const MailIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect width="20" height="16" x="2" y="4" rx="2" />
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-  </svg>
-);
 
 const socialLinks = [
   {
     href: "https://github.com/aftabfarhanarko",
     label: "GitHub",
-    icon: GithubIcon,
     imageSrc: "/github.png",
-    colorClass: "hover:text-[#ffffff] dark:hover:text-[#ffffff] hover:bg-[#181717] dark:hover:bg-[#181717] hover:border-[#181717]",
+    colorClass: "hover:bg-slate-900 hover:text-white hover:border-slate-900",
   },
   {
     href: "https://www.linkedin.com/in/aftabfarhan/",
     label: "LinkedIn",
-    icon: LinkedinIcon,
     imageSrc: "/likdin.png",
-    colorClass: "hover:text-[#ffffff] hover:bg-[#0A66C2] hover:border-[#0A66C2]",
+    colorClass: "hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]",
   },
-
   {
     href: "https://www.facebook.com/aftabfarhanarko.official",
     label: "Facebook",
-    icon: FacebookIcon,
     imageSrc: "/facebook.png",
-    colorClass: "hover:text-[#ffffff] hover:bg-[#1877F2] hover:border-[#1877F2]",
+    colorClass: "hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]",
   },
-  { href: "mailto:aftabfarhan324@gmail.com", label: "Email", icon: MailIcon, colorClass: "hover:text-[#ffffff] hover:bg-[#EA4335] hover:border-[#EA4335]" },
+  {
+    href: "mailto:aftabfarhan324@gmail.com",
+    label: "Email",
+    icon: Mail,
+    colorClass: "hover:bg-[#FF6014] hover:text-white hover:border-[#FF6014]",
+  },
+];
+
+const navLinks = [
+  { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
+  { name: "Services", href: "#capabilities" },
+  { name: "Projects", href: "#projects" },
+  { name: "Education", href: "#education" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer
-      className="footer-responsive border-t border-slate-200 bg-white px-4 sm:px-6 lg:px-8 pt-10 mt-12"
+      className="footer-responsive relative border-t border-slate-200/90 bg-white px-4 sm:px-6 lg:px-8 pt-14 pb-12 mt-20 overflow-hidden"
       style={{
         paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 80px)",
       }}
     >
+      {/* Top ambient orange glow beam */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent" />
+
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         className="max-w-7xl mx-auto"
       >
-        {/* Top row */}
-        <div className="flex flex-col items-center text-center sm:flex-row sm:justify-between sm:items-center sm:text-left gap-6 mb-8 flex-wrap">
-          {/* Brand */}
-          <div>
+        {/* Main Footer Content Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-slate-200/90">
+          {/* Col 1: Brand & Tagline (5 cols) */}
+          <div className="md:col-span-5 flex flex-col items-center text-center md:items-start md:text-left space-y-4">
             <Link
               href="/"
-              className="text-2xl font-black tracking-tight text-slate-900"
+              className="inline-flex items-center gap-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-900 group"
             >
-              Aftab Farhan Arko
+              <span>Aftab Farhan</span>
+              <span className="text-[#FF6014]">Arko</span>
+              <span className="text-[#FF6014] group-hover:rotate-12 transition-transform duration-300">.</span>
             </Link>
-            <p className="text-sm text-slate-600 mt-1.5 max-w-[280px] leading-relaxed font-sans mx-auto sm:mx-0 font-normal">
-              Full Stack Developer | Technical Lead • Building Modern Scalable Applications
+
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-medium max-w-md">
+              Full Stack Developer &amp; Technical Lead crafting scalable, high-performance web applications with clean architecture and modern engineering standards.
             </p>
+
+            <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200/90 text-slate-800 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                <Terminal className="w-3.5 h-3.5 text-[#FF6014]" />
+                Next.js 16 &amp; Node.js
+              </span>
+              <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200/90 text-slate-800 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                <Code2 className="w-3.5 h-3.5 text-[#FF6014]" />
+                TypeScript &amp; Prisma
+              </span>
+            </div>
           </div>
 
-          {/* Social icons */}
-          <div className="flex items-center justify-center gap-2.5 flex-wrap">
-            {socialLinks.map(({ href, label, icon: Icon, imageSrc, colorClass }) => (
-              <a
-                key={label}
-                href={href}
-                target={href.startsWith("mailto") ? undefined : "_blank"}
-                rel={
-                  href.startsWith("mailto") ? undefined : "noopener noreferrer"
-                }
-                aria-label={label}
-                className={`w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 hover:-translate-y-0.5 transition-all duration-200 ${colorClass}`}
-              >
-                {imageSrc ? (
-                  <img
-                    src={imageSrc}
-                    alt={label}
-                    className="w-5 h-5 object-contain"
-                  />
-                ) : (
-                  <Icon />
-                )}
-              </a>
-            ))}
+          {/* Col 2: Quick Navigation Links (4 cols) */}
+          <div className="md:col-span-4 flex flex-col items-center text-center md:items-start md:text-left space-y-3">
+            <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#FF6014]" />
+              Navigation &amp; Sections
+            </h4>
+            <ul className="grid grid-cols-2 gap-2.5 w-full max-w-xs pt-1">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-sm font-bold text-slate-700 hover:text-[#FF6014] transition-colors flex items-center gap-1.5 group justify-center md:justify-start"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-[#FF6014] group-hover:scale-125 transition-all" />
+                    <span>{link.name}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 3: Social Connect & Back to Top (3 cols) */}
+          <div className="md:col-span-3 flex flex-col items-center text-center md:items-end md:text-right space-y-4">
+            <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest">
+              Connect &amp; Socials
+            </h4>
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-2.5">
+              {socialLinks.map(({ href, label, icon: Icon, imageSrc, colorClass }) => (
+                <motion.a
+                  key={label}
+                  whileHover={{ y: -4, scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  href={href}
+                  target={href.startsWith("mailto") ? undefined : "_blank"}
+                  rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                  aria-label={label}
+                  className={`w-11 h-11 rounded-2xl bg-slate-50 border border-slate-200/90 flex items-center justify-center text-slate-700 shadow-sm transition-all duration-300 ${colorClass}`}
+                >
+                  {imageSrc ? (
+                    <img src={imageSrc} alt={label} className="w-5 h-5 object-contain" />
+                  ) : Icon ? (
+                    <Icon className="w-5 h-5" />
+                  ) : null}
+                </motion.a>
+              ))}
+            </div>
+
+            {/* Back to Top Button */}
+            <motion.button
+              whileHover={{ y: -3, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={scrollToTop}
+              className="mt-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200/90 bg-slate-50 hover:bg-orange-50 hover:border-orange-200 hover:text-[#FF6014] text-xs font-bold text-slate-800 transition-all cursor-pointer shadow-xs"
+            >
+              <span>Back to top</span>
+              <ArrowUp className="w-3.5 h-3.5" />
+            </motion.button>
           </div>
         </div>
 
-        {/* Bottom row */}
-        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between pt-6 border-t border-slate-200">
-          <p className="text-sm text-slate-500 font-sans text-center sm:text-left font-medium">
-            © {currentYear} Aftab Farhan Arko. All rights reserved.
+        {/* Bottom Rights & Tech Attribution */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs font-bold text-slate-700">
+          <p className="flex items-center gap-1 text-center sm:text-left">
+            <span>© {currentYear} Aftab Farhan Arko. All rights reserved.</span>
           </p>
-          <p className="text-sm text-slate-500 font-sans text-center sm:text-right font-medium">
-            Built with Next.js 16, TypeScript, PostgreSQL, Prisma & Tailwind CSS
-          </p>
+
+          <div className="flex items-center gap-1.5 text-center sm:text-right">
+            <span>Built with precision using Next.js 16, TypeScript &amp; Tailwind CSS</span>
+          </div>
         </div>
       </motion.div>
+
       <style>{`
         @media (min-width: 1024px) {
           footer.footer-responsive {
-            padding-bottom: 40px !important;
+            padding-bottom: 48px !important;
           }
         }
       `}</style>
     </footer>
   );
 }
+

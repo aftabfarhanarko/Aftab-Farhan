@@ -62,7 +62,7 @@ export default function Skills() {
           Technical <span className="text-[#FF6014]">Skills</span>
         </h2>
 
-        <p className="max-w-2xl text-slate-600 text-base sm:text-[17px] leading-[1.7] mx-auto sm:mx-0 font-normal">
+        <p className="max-w-2xl text-slate-800 text-base sm:text-[17px] leading-[1.7] mx-auto sm:mx-0 font-medium">
           Technologies and engineering tools I use to build scalable, maintainable, and production-ready web applications.
         </p>
       </motion.div>

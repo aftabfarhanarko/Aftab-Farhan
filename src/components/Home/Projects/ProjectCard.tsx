@@ -100,7 +100,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           </p>
         )}
 
-        <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-5 font-normal flex-1">
+        <p className="text-sm sm:text-base text-slate-800 leading-relaxed mb-5 font-medium flex-1 text-justify">
           {project.description}
         </p>
 
@@ -110,7 +110,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="px-2.5 py-1 text-xs font-semibold bg-slate-100 border border-slate-200 rounded-lg text-slate-700"
+                className="px-2.5 py-1 text-xs font-bold bg-slate-100 border border-slate-300 rounded-lg text-slate-900"
               >
                 {t}
               </span>

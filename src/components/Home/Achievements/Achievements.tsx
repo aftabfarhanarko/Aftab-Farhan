@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trophy, Award, Loader2, Star, Calendar, X } from "lucide-react";
+import { Trophy, Loader2, Star, Calendar, X, ExternalLink, CheckCircle2, ArrowUpRight } from "lucide-react";
 
 interface AchievementData {
   id: string;
@@ -31,8 +31,8 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const tiltX = ((y - rect.height / 2) / (rect.height / 2)) * -4;
-    const tiltY = ((x - rect.width / 2) / (rect.width / 2)) * 4;
+    const tiltX = ((y - rect.height / 2) / (rect.height / 2)) * -5;
+    const tiltY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
 
     setTilt({ x: tiltX, y: tiltY });
     setSpotlight({ x, y, show: true });
@@ -45,6 +45,10 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
 
   return (
     <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -52,80 +56,91 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
         transformStyle: "preserve-3d",
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
       }}
-      whileHover={{
-        borderColor: "rgba(234, 88, 12, 0.3)",
-        boxShadow: "0 20px 40px -15px rgba(234, 88, 12, 0.12)",
-      }}
-      className="cursor-pointer group relative flex flex-col rounded-[2rem] border border-slate-200 bg-white overflow-hidden transition-all duration-300 text-left shadow-lg"
+      whileHover={{ y: -6, scale: 1.01 }}
+      className="cursor-pointer group relative flex flex-col rounded-2xl border border-slate-200/90 bg-white overflow-hidden transition-all duration-300 text-left shadow-sm hover:shadow-xl hover:shadow-orange-500/5 hover:border-orange-300"
     >
-      {/* Spotlight */}
+      {/* Top Sweep Light Beam */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+
+      {/* Radial Spotlight Follow */}
       {spotlight.show && (
         <div
-          className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
+          className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(220px circle at ${spotlight.x}px ${spotlight.y}px, rgba(234,88,12,0.06), transparent 80%)`,
+            background: `radial-gradient(240px circle at ${spotlight.x}px ${spotlight.y}px, rgba(255, 96, 20, 0.08), transparent 80%)`,
           }}
         />
       )}
 
-      {/* Sweep Glare Shine */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-orange-500/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1200ms] ease-out pointer-events-none" />
-
-      {/* Sleek Certificate Frame */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-50 border-b border-slate-100 group/img">
+      {/* Certificate Thumbnail Frame */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50 border-b border-slate-100 group/img">
         {item.image ? (
           <img
             src={item.image}
             alt={item.name}
-            className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700"
+            className="w-full h-full object-cover object-top group-hover:scale-106 transition-all duration-700 ease-out"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-slate-300">
-            <Trophy className="w-12 h-12" />
+          <div className="w-full h-full flex items-center justify-center text-slate-300 bg-orange-50/30">
+            <Trophy className="w-12 h-12 text-[#FF6014]/40" />
           </div>
         )}
         
-        {/* Top Trophy Badge */}
-        <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-xl bg-white/90 backdrop-blur-md flex items-center gap-1.5 border border-slate-200 text-amber-600 text-xs font-bold shadow-md">
-          <Trophy className="w-3.5 h-3.5 text-amber-500" />
-          <span>Certificate</span>
+        {/* Top Trophy Tag */}
+        <div className="absolute top-3.5 left-3.5 px-3 py-1.5 rounded-xl bg-white/90 backdrop-blur-md flex items-center gap-1.5 border border-slate-200 text-[#FF6014] text-xs font-bold shadow-md z-10">
+          <Trophy className="w-3.5 h-3.5 text-[#FF6014]" />
+          <span>Verified Certificate</span>
         </div>
 
-        {/* Hover View Hint */}
-        <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <span className="px-4 py-2 rounded-xl bg-orange-600 text-white text-xs font-bold shadow-xl transform translate-y-2 group-hover:translate-y-0 transition-transform">
-            Click to View Full Certificate
+        {/* Hover View Full Overlay */}
+        <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-[3px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center z-10">
+          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF6014] text-white text-xs font-bold shadow-xl transform translate-y-3 group-hover:translate-y-0 transition-all duration-300">
+            <span>View Full Certificate</span>
+            <ExternalLink className="w-3.5 h-3.5" />
           </span>
         </div>
       </div>
 
-      {/* Details */}
-      <div className="p-6 flex-1 flex flex-col justify-between" style={{ transform: "translateZ(20px)", transformStyle: "preserve-3d" }}>
+      {/* Card Content Body */}
+      <div className="p-6 flex-1 flex flex-col justify-between" style={{ transform: "translateZ(15px)", transformStyle: "preserve-3d" }}>
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-2">
-            <span className="text-xs font-extrabold text-orange-600 uppercase tracking-widest block font-mono">
+            <span className="text-[11px] font-black text-[#FF6014] uppercase tracking-widest block font-mono">
               {item.title || "Certification"}
             </span>
 
             {item.startDate && (
-              <span className="inline-flex items-center gap-1 text-xs font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-md shadow-xs">
-                <Calendar className="w-3 h-3 text-slate-400 shrink-0" />
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-700 bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-full shadow-2xs">
+                <Calendar className="w-3 h-3 text-slate-500 shrink-0" />
                 {item.startDate} {item.endDate ? `– ${item.endDate}` : ""}
               </span>
             )}
           </div>
 
-          <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug group-hover:text-orange-600 transition-colors">
-            {item.issuer}
-          </h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug group-hover:text-[#FF6014] transition-colors">
+              {item.issuer}
+            </h3>
+            <ArrowUpRight className="w-5 h-5 text-slate-300 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 mt-1" />
+          </div>
 
-          <h4 className="text-sm sm:text-base font-bold text-slate-700 leading-snug">
+          <h4 className="text-sm sm:text-base font-bold text-slate-800 leading-snug">
             {item.name}
           </h4>
 
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium line-clamp-3">
+          <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium line-clamp-2 text-justify">
             {item.description}
           </p>
+        </div>
+
+        <div className="pt-4 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span className="inline-flex items-center gap-1 text-[11px] font-extrabold text-slate-600 uppercase tracking-wider">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+            Verified Credential
+          </span>
+          <span className="text-xs font-bold text-[#FF6014] group-hover:underline flex items-center gap-1">
+            Details &rarr;
+          </span>
         </div>
       </div>
     </motion.div>
@@ -146,22 +161,22 @@ export default function Achievements() {
   return (
     <section
       id="achievements"
-      className="mb-12 sm:mb-16 lg:mb-20 scroll-mt-24 px-4 sm:px-6 lg:px-0"
+      className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0"
     >
       <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
         {/* Left Sticky Panel */}
         <div className="lg:sticky lg:top-28 flex flex-col items-center text-center lg:items-start lg:text-left space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 text-orange-600 text-xs font-bold shadow-xs">
-            <Star className="w-3.5 h-3.5 text-orange-600" />
-            <span>Credentials</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-[#FF6014] text-xs font-bold shadow-sm">
+            <Star className="w-3.5 h-3.5 text-[#FF6014] animate-pulse" />
+            <span>Official Qualifications</span>
           </div>
 
-          <h2 className="text-[32px] sm:text-[38px] lg:text-[40px] font-black tracking-tight leading-tight text-slate-900">
-            Certifications &amp; <span className="text-orange-600">Achievements</span>
+          <h2 className="text-[32px] sm:text-[38px] lg:text-[42px] font-black tracking-tight leading-tight text-slate-900">
+            Certifications &amp; <span className="text-[#FF6014]">Achievements</span>
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium max-w-xs mx-auto lg:mx-0">
-            Official certifications and technical course credentials validating my web development expertise.
+          <p className="text-base sm:text-lg text-slate-800 leading-relaxed font-medium max-w-xs mx-auto lg:mx-0">
+            Official certifications, engineering courses, and technical achievements validating full stack software capabilities.
           </p>
         </div>
 
@@ -169,7 +184,7 @@ export default function Achievements() {
         <div>
           {isLoading ? (
             <div className="flex justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-orange-600" />
+              <Loader2 className="w-8 h-8 animate-spin text-[#FF6014]" />
             </div>
           ) : achievements && achievements.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -198,7 +213,7 @@ export default function Achievements() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedItem(null)}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+              className="absolute inset-0 bg-slate-900/65 backdrop-blur-md"
             />
 
             <motion.div
@@ -206,14 +221,14 @@ export default function Achievements() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 24, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 350, damping: 30 }}
-              className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:grid md:grid-cols-[1.2fr_1fr] max-h-[85vh] md:max-h-[80vh] text-left"
+              className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:grid md:grid-cols-[1.2fr_1fr] max-h-[85vh] md:max-h-[80vh] text-left z-10"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedItem(null)}
-                className="absolute top-4 right-4 z-20 p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 rounded-xl border border-slate-200 transition-colors cursor-pointer"
+                className="absolute top-4 right-4 z-20 p-2.5 bg-white/90 hover:bg-slate-100 text-slate-700 hover:text-slate-900 rounded-xl border border-slate-200 transition-all cursor-pointer shadow-md"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4.5 h-4.5" />
               </button>
 
               {/* Left: Full Image */}
@@ -229,20 +244,20 @@ export default function Achievements() {
               <div className="p-6 sm:p-8 flex flex-col justify-between overflow-y-auto max-h-[45vh] md:max-h-[80vh]">
                 <div className="space-y-4">
                   <div className="space-y-1">
-                    <span className="text-xs font-extrabold text-orange-600 uppercase tracking-widest font-mono">
+                    <span className="text-xs font-black text-[#FF6014] uppercase tracking-widest font-mono">
                       {selectedItem.title}
                     </span>
                     <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
                       {selectedItem.issuer}
                     </h3>
-                    <h4 className="text-base font-bold text-slate-700">
+                    <h4 className="text-base font-bold text-slate-800">
                       {selectedItem.name}
                     </h4>
                   </div>
 
                   {selectedItem.startDate && (
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700">
-                      <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-800">
+                      <Calendar className="w-3.5 h-3.5 text-[#FF6014]" />
                       <span>
                         {selectedItem.startDate} {selectedItem.endDate ? `– ${selectedItem.endDate}` : ""}
                       </span>
@@ -252,10 +267,10 @@ export default function Achievements() {
                   <div className="h-px bg-slate-100 my-4" />
 
                   <div className="space-y-2">
-                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest font-mono block">
+                    <span className="text-xs font-black text-slate-700 uppercase tracking-widest font-mono block">
                       Credential Details
                     </span>
-                    <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium whitespace-pre-line">
+                    <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium whitespace-pre-line">
                       {selectedItem.description}
                     </p>
                   </div>
@@ -264,7 +279,7 @@ export default function Achievements() {
                 <div className="mt-8 pt-4 border-t border-slate-100 flex justify-end">
                   <button
                     onClick={() => setSelectedItem(null)}
-                    className="px-6 py-2.5 bg-orange-600 text-white hover:bg-orange-700 active:scale-[0.98] transition-all rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer shadow-md"
+                    className="px-6 py-2.5 bg-[#FF6014] text-white hover:bg-[#E5530F] active:scale-[0.98] transition-all rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer shadow-md"
                   >
                     Close Viewer
                   </button>

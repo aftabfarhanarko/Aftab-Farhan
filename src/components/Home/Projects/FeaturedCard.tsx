@@ -96,7 +96,7 @@ export default function FeaturedCard({ project }: { project: Project }) {
               const trimmed = line.trim();
               if (!trimmed) return null;
               return (
-                <p key={idx} className="text-base sm:text-lg text-slate-600 leading-[1.7] font-normal">
+                <p key={idx} className="text-base sm:text-lg text-slate-800 leading-[1.7] font-medium text-justify">
                   {trimmed}
                 </p>
               );

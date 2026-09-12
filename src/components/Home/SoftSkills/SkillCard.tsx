@@ -80,7 +80,7 @@ export default function SkillCard({
         <h3 className="text-xl font-bold text-slate-900 mb-2">
           {title}
         </h3>
-        <p className="text-base text-slate-600 leading-relaxed font-normal">
+        <p className="text-base text-slate-800 leading-relaxed font-medium text-justify">
           {description}
         </p>
       </div>
