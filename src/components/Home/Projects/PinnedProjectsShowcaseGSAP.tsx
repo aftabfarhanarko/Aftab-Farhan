@@ -15,9 +15,12 @@ import {
   User,
   Users,
   Layers,
+  Terminal,
+  Sparkles,
 } from "lucide-react";
 import { Project, categoryLabel } from "./types";
 import { useRouter } from "next/navigation";
+import ProjectCaseStudyModal, { normalizeTechnicalChallenges } from "./ProjectCaseStudyModal";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -175,6 +178,8 @@ export default function PinnedProjectsShowcaseGSAP({
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [techModalProject, setTechModalProject] = useState<Project | null>(null);
+  const [selectedCaseStudyProject, setSelectedCaseStudyProject] = useState<Project | null>(null);
+  const [activeGalleryIndices, setActiveGalleryIndices] = useState<Record<string, number>>({});
 
   const scopeId = useId().replace(/:/g, "");
 
@@ -465,45 +470,84 @@ export default function PinnedProjectsShowcaseGSAP({
                 </div>
 
                 {/* 2. CENTER SECTION: BALANCED FONT-SCALED TITLE + ARTWORK */}
-                <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center flex-1 my-auto relative z-10 py-1 sm:py-2">
+                <div className="w-11/12 sm:w-[94%] max-w-[1700px] mx-auto flex flex-col items-center justify-center flex-1 my-auto relative z-10 py-1 sm:py-2">
                   {/* Compact Font-Scaled Title (Max 2 Lines) */}
                   <h2
-                    onClick={() => router.push(`/projects/${project.id}`)}
+                    onClick={() => setSelectedCaseStudyProject(project)}
                     data-cursor-title-parallax
-                    className={`scene-title-${scopeId} text-[clamp(26px,3.8vw,52px)] font-black leading-[1.1] text-center tracking-tight text-white mb-2.5 sm:mb-3.5 cursor-pointer drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-[1.01] max-w-5xl`}
+                    className={`scene-title-${scopeId} text-[clamp(26px,3.8vw,52px)] font-black leading-[1.1] text-center tracking-tight text-white mb-2.5 sm:mb-3.5 cursor-pointer drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-[1.01] max-w-6xl`}
                   >
                     {renderEditorialTitle(project.title)}
                   </h2>
 
-                  {/* High-Resolution Project Artwork (Balanced 30-40vh Height) */}
-                  <div
-                    onClick={() => router.push(`/projects/${project.id}`)}
-                    data-cursor="project"
-                    data-cursor-label="VIEW PROJECT ↗"
-                    data-cursor-parallax
+                    {/* High-Resolution Project Artwork (Full-Width Responsive 11/12 Screen Width) */}
+                    {(() => {
+                      const allProjectImages = Array.from(
+                        new Set([project.image, ...(project.gallery || [])].filter(Boolean) as string[])
+                      );
+                      const currentGalleryIdx = activeGalleryIndices[project.id] || 0;
+                      const activeImage = allProjectImages[currentGalleryIdx] || project.image;
 
-                    className={`scene-artwork-${scopeId} project-image-scroll-layer relative w-[88vw] sm:w-[74vw] lg:w-[62vw] max-w-[1050px] h-[30vh] sm:h-[36vh] lg:h-[40vh] max-h-[460px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-black/20 cursor-pointer group border border-white/40 transition-all duration-500 ease-out`}
-                  >
-                    <div className="project-image-mouse-layer w-full h-full">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
-                    </div>
+                      return (
+                        <div
+                          onClick={() => setSelectedCaseStudyProject(project)}
+                          data-cursor="project"
+                          data-cursor-label="VIEW CASE STUDY ↗"
+                          data-cursor-parallax
+                          className={`scene-artwork-${scopeId} project-image-scroll-layer relative w-full h-[36vh] sm:h-[42vh] lg:h-[48vh] max-h-[560px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-black/20 cursor-pointer group border border-white/40 transition-all duration-500 ease-out`}
+                        >
+                          <div className="project-image-mouse-layer w-full h-full">
+                            <img
+                              src={activeImage}
+                              alt={project.title}
+                              className="w-full h-full object-cover object-top transition-all duration-500 ease-out group-hover:scale-105"
+                            />
+                          </div>
 
-                    {/* Subtle Hover Overlay */}
-                    <div className="absolute inset-0 bg-white/20 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                      <span className="px-5 py-2.5 rounded-full bg-white text-slate-900 text-xs font-extrabold uppercase tracking-widest shadow-xl flex items-center gap-2">
-                        View Full Details <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
+                          {/* Gallery Thumbnail Pill Overlay for Quick Preview */}
+                          {allProjectImages.length > 1 && (
+                            <div
+                              onClick={(e) => e.stopPropagation()}
+                              className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 p-1.5 rounded-full bg-slate-950/70 backdrop-blur-md border border-white/20 shadow-xl opacity-90 group-hover:opacity-100 transition-opacity"
+                            >
+                              {allProjectImages.map((imgUrl, imgIdx) => (
+                                <button
+                                  key={imgIdx}
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveGalleryIndices((prev) => ({
+                                      ...prev,
+                                      [project.id]: imgIdx,
+                                    }));
+                                  }}
+                                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden border transition-all cursor-pointer ${
+                                    currentGalleryIdx === imgIdx
+                                      ? "border-[#FF6014] ring-2 ring-[#FF6014]/50 scale-110"
+                                      : "border-white/40 opacity-60 hover:opacity-100"
+                                  }`}
+                                  title={`View Image ${imgIdx + 1}`}
+                                >
+                                  <img src={imgUrl} alt={`Thumb ${imgIdx + 1}`} className="w-full h-full object-cover object-top" />
+                                </button>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Subtle Hover Overlay */}
+                          <div className="absolute inset-0 bg-white/20 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 pointer-events-none">
+                            <span className="px-6 py-3 rounded-full bg-white text-slate-900 text-xs sm:text-sm font-extrabold uppercase tracking-widest shadow-xl flex items-center gap-2">
+                              View Recruiter Case Study <ArrowRight className="w-4 h-4 text-[#FF6014]" />
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
-                </div>
 
                 {/* 3. RECRUITER-FOCUSED TECHNICAL DETAILS & TIMELINE PANEL (WHITE GLASS LIGHT MODE) */}
                 <div
-                  className={`scene-details-${scopeId} w-full max-w-5xl mx-auto flex flex-col gap-3.5 z-20 pb-3 sm:pb-4 bg-white/85 backdrop-blur-2xl border border-white/60 rounded-2xl p-4 sm:p-5 text-left shadow-2xl shadow-black/10`}
+                  className={`scene-details-${scopeId} w-11/12 sm:w-[94%] max-w-[1700px] mx-auto flex flex-col gap-3.5 z-20 pb-3 sm:pb-4 bg-white/85 backdrop-blur-2xl border border-white/60 rounded-2xl p-4 sm:p-5 text-left shadow-2xl shadow-black/10`}
                 >
                   {/* Timeline, Client & Type Metric Bar */}
                   <div className="flex items-center justify-between gap-3 flex-wrap border-b border-slate-900/10 pb-2.5">
@@ -614,8 +658,8 @@ export default function PinnedProjectsShowcaseGSAP({
 
                       <button
                         type="button"
-                        onClick={() => router.push(`/projects/${project.id}`)}
-                        className="inline-flex items-center gap-1 px-3.5 py-2 text-xs sm:text-sm font-bold text-slate-800 hover:text-[#FF6014] transition-colors cursor-pointer"
+                        onClick={() => setSelectedCaseStudyProject(project)}
+                        className="inline-flex items-center gap-1 px-4 py-2 text-xs sm:text-sm font-extrabold text-slate-900 bg-white/90 hover:bg-white border border-slate-200 hover:border-orange-300 hover:text-[#FF6014] rounded-xl transition-all cursor-pointer shadow-2xs"
                       >
                         Case Study <ArrowRight className="w-3.5 h-3.5" />
                       </button>
@@ -675,6 +719,13 @@ export default function PinnedProjectsShowcaseGSAP({
           </div>
         </div>
       )}
+
+      {/* Recruiter Full-Screen Case Study Modal */}
+      <ProjectCaseStudyModal
+        isOpen={!!selectedCaseStudyProject}
+        onClose={() => setSelectedCaseStudyProject(null)}
+        project={selectedCaseStudyProject}
+      />
     </div>
   );
 }

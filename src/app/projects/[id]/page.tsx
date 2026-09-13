@@ -18,8 +18,18 @@ import {
   CheckCircle2,
   Globe,
   Terminal,
+  Server,
+  Database,
+  Cpu,
+  Layout,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  groupTechStack,
+  normalizeTechnicalChallenges,
+  KeyFeatureItem,
+  TechnicalChallengeItem,
+} from "@/components/Home/Projects/ProjectCaseStudyModal";
 
 const GithubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg
@@ -35,16 +45,6 @@ const GithubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
-
-interface KeyFeatureItem {
-  title: string;
-  detail: string;
-}
-
-interface TechnicalChallengeItem {
-  challenge: string;
-  solution: string;
-}
 
 interface ProjectDetail {
   id: string;
@@ -80,6 +80,7 @@ export default function ProjectDetailPage() {
   const [project, setProject] = useState<ProjectDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -107,7 +108,7 @@ export default function ProjectDetailPage() {
     return (
       <div className="min-h-[70vh] bg-transparent text-slate-900 flex flex-col items-center justify-center p-6">
         <Loader2 className="w-10 h-10 text-[#FF6014] animate-spin mb-4" />
-        <p className="text-slate-600 font-medium">Loading project showcase...</p>
+        <p className="text-slate-600 font-medium">Loading project case study...</p>
       </div>
     );
   }
@@ -131,15 +132,21 @@ export default function ProjectDetailPage() {
     );
   }
 
+  const allImages = Array.from(
+    new Set([project.image, ...(project.gallery || [])].filter(Boolean) as string[])
+  );
+  const currentImage = allImages[activeImageIndex] || project.image || "";
+  const techGroups = groupTechStack(project.tech || []);
+
   return (
     <div className="bg-transparent text-slate-900 py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Navigation & Header Trail */}
+        {/* Navigation Trail */}
         <div className="flex items-center justify-between gap-4">
           <button
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:border-[#FF6014]/50 hover:bg-slate-50 transition-all text-xs sm:text-sm font-semibold shadow-sm group cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:border-[#FF6014]/50 hover:bg-slate-50 transition-all text-xs sm:text-sm font-semibold shadow-xs group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#FF6014] group-hover:-translate-x-1 transition-transform" />
             Back to Portfolio
@@ -154,67 +161,38 @@ export default function ProjectDetailPage() {
           </div>
         </div>
 
-        {/* Hero Section */}
-        <motion.div
+        {/* 1. HEADER BAR */}
+        <motion.header
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="space-y-6"
+          className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
         >
-          {/* Professional Developer Branding Banner */}
-          <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-orange-500/10 via-orange-500/5 to-transparent border border-orange-500/20 shadow-md space-y-2 relative overflow-hidden">
-            <div className="flex flex-wrap items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#FF6014]">
-              <Sparkles size={14} className="text-[#FF6014]" />
-              <span>Full-Stack Engineering Case Study</span>
-              <span className="hidden sm:inline text-slate-300">|</span>
-              <span className="text-slate-900 font-bold">{project.role || "Lead Full-Stack Developer"}</span>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2.5">
+              <span className="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-[#FF6014]/10 text-[#FF6014] border border-[#FF6014]/20">
+                {project.category.replace("_", " ")}
+              </span>
+              <span className="text-xs font-bold text-slate-400">
+                {project.year || "2026"}
+              </span>
             </div>
-            <p className="text-sm sm:text-base text-slate-700 font-medium leading-relaxed max-w-4xl">
-              Engineered with modern full-stack web standards, scalable database architecture, and pixel-perfect interactive user experience.
-            </p>
-          </div>
-
-          {/* Category & Status Tags */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-[#FF6014]/15 border border-[#FF6014]/30 text-[#FF6014] shadow-xs">
-              {project.category}
-            </span>
-
-            {project.currentlyWorking && (
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-50 border border-emerald-200 text-emerald-700 shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                Active Development
-              </span>
-            )}
-
-            {project.featured && (
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-50 border border-amber-200 text-amber-700 shadow-xs">
-                <Sparkles size={13} />
-                Featured Project
-              </span>
-            )}
-          </div>
-
-          {/* Title & Tagline */}
-          <div className="space-y-3">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
               {project.title}
             </h1>
             {project.tagline && (
-              <p className="text-lg sm:text-xl text-slate-600 font-medium max-w-3xl leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-600 font-medium max-w-2xl leading-relaxed">
                 {project.tagline}
               </p>
             )}
           </div>
 
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-3.5 pt-2">
+          <div className="flex flex-wrap items-center gap-3">
             {project.demoLink && (
               <a
                 href={project.demoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#FF6014] hover:bg-[#E0530A] text-white text-sm font-bold shadow-lg shadow-[#FF6014]/25 hover:shadow-[#FF6014]/40 hover:-translate-y-0.5 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#FF6014] hover:bg-[#E0530A] text-white text-sm font-bold hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
               >
                 <ExternalLink size={16} />
                 Live Demo
@@ -226,231 +204,354 @@ export default function ProjectDetailPage() {
                 href={project.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 text-sm font-bold shadow-md hover:-translate-y-0.5 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 text-sm font-bold hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
               >
                 <GithubIcon className="w-4 h-4 text-slate-800" />
-                Source Code
+                GitHub
               </a>
             )}
           </div>
-        </motion.div>
+        </motion.header>
 
-        {/* MacOS Interactive Preview Frame */}
-        {project.image && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="rounded-3xl border border-slate-200 bg-white shadow-xl overflow-hidden group/frame"
-          >
-            {/* MacOS Window Top Bar */}
-            <div className="flex items-center justify-between px-4 py-3 bg-slate-100/90 border-b border-slate-200">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-rose-500/80 border border-rose-600/40" />
-                <span className="w-3 h-3 rounded-full bg-amber-500/80 border border-amber-600/40" />
-                <span className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-600/40" />
-              </div>
-
-              <div className="flex items-center gap-2 px-4 py-1 rounded-full bg-white border border-slate-200 text-[11px] text-slate-600 font-mono max-w-sm truncate shadow-xs">
-                <Globe size={11} className="text-[#FF6014]" />
-                <span className="truncate">{project.demoLink || `https://project-showcase/${project.id}`}</span>
-              </div>
-
-              <div className="w-12" />
-            </div>
-
-            {/* Showcase Image */}
-            <div className="relative overflow-hidden bg-slate-50">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full max-h-[580px] object-cover object-top transition-transform duration-700 group-hover/frame:scale-[1.02]"
-              />
-            </div>
-          </motion.div>
-        )}
-
-        {/* Quick Highlights / Stats Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <User size={13} className="text-[#FF6014]" /> Client / Org
-            </span>
-            <p className="text-base font-bold text-slate-900 truncate">
-              {project.client || (project.projectType === "CLIENT" ? "Client Work" : "Own Product")}
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <Layers size={13} className="text-[#FF6014]" /> Role / Type
-            </span>
-            <p className="text-base font-bold text-slate-900 truncate">
-              {project.role || project.projectType || "Lead Developer"}
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <Calendar size={13} className="text-[#FF6014]" /> Timeline / Year
-            </span>
-            <p className="text-base font-bold text-slate-900">
-              {project.year || project.startDate || "2026"}
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <Clock size={13} className="text-[#FF6014]" /> Duration
-            </span>
-            <p className="text-base font-bold text-slate-900">
-              {project.duration || "Production Ready"}
-            </p>
-          </div>
-        </div>
-
-        {/* Detailed Case Study / Engineering Overview Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* 2. EXECUTIVE SUMMARY (2-COLUMN LAYOUT: 70% Left Column, 30% Right Sidebar) */}
+        <section className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-start">
           
-          {/* Main Content Area */}
-          <div className="lg:col-span-2 space-y-6">
+          {/* LEFT COLUMN (70% = 7 cols in 10-col grid) */}
+          <div className="lg:col-span-7 space-y-6">
             {project.overview && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <Sparkles size={18} className="text-[#FF6014]" />
-                  Executive Overview
+              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 space-y-3">
+                <h2 className="text-xs font-black uppercase tracking-widest text-[#FF6014] flex items-center gap-2">
+                  <Sparkles size={16} />
+                  Project Overview
                 </h2>
-                <p className="text-slate-700 text-base leading-relaxed font-medium">
+                <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-medium">
                   {project.overview}
                 </p>
               </div>
             )}
 
             {project.problemStatement && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-amber-500/5 border border-amber-500/20 shadow-xl space-y-3">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <Terminal size={18} className="text-amber-600" />
+              <div className="p-6 sm:p-8 rounded-3xl bg-amber-500/5 border border-amber-500/20 space-y-3">
+                <h2 className="text-xs font-black uppercase tracking-widest text-amber-600 flex items-center gap-2">
+                  <Terminal size={16} />
                   Problem Statement
                 </h2>
-                <p className="text-slate-700 text-base leading-relaxed font-medium">
+                <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-medium">
                   {project.problemStatement}
                 </p>
               </div>
             )}
 
-            <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <Sparkles size={18} className="text-[#FF6014]" />
-                Project Description & Architecture
-              </h2>
-
-              <div className="text-slate-700 text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-3 font-medium">
-                {project.description}
-              </div>
-            </div>
-
-            {project.keyFeatures && project.keyFeatures.length > 0 && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <CheckCircle2 size={18} className="text-emerald-600" />
-                  Key Features & Core Capabilities
+            {project.description && !project.overview && (
+              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 space-y-3">
+                <h2 className="text-xs font-black uppercase tracking-widest text-[#FF6014] flex items-center gap-2">
+                  <Sparkles size={16} />
+                  Project Description
                 </h2>
-                <div className="grid grid-cols-1 gap-4 pt-1">
-                  {project.keyFeatures.map((kf, idx) => (
-                    <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
-                      <h3 className="font-bold text-slate-900 text-base">{kf.title}</h3>
-                      <p className="text-sm text-slate-600 font-medium leading-relaxed">{kf.detail}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {project.technicalChallenges && project.technicalChallenges.length > 0 && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <Code2 size={18} className="text-[#FF6014]" />
-                  Technical Challenges & Solutions
-                </h2>
-                <div className="grid grid-cols-1 gap-4 pt-1">
-                  {project.technicalChallenges.map((tc, idx) => (
-                    <div key={idx} className="p-4 rounded-2xl bg-orange-500/5 border border-orange-500/20 space-y-2">
-                      <div className="font-bold text-slate-900 text-sm">
-                        <span className="text-[#FF6014] font-extrabold uppercase text-xs tracking-wider mr-2">Challenge:</span>
-                        {tc.challenge}
-                      </div>
-                      <div className="text-sm text-slate-700 font-medium leading-relaxed">
-                        <span className="text-emerald-600 font-extrabold uppercase text-xs tracking-wider mr-2">Solution:</span>
-                        {tc.solution}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {project.gallery && project.gallery.length > 0 && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <Globe size={18} className="text-[#FF6014]" />
-                  Project Screenshots & Gallery
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                  {project.gallery.map((gUrl, idx) => (
-                    <div key={idx} className="rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                      <img src={gUrl} alt={`Gallery screenshot ${idx + 1}`} className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
-                    </div>
-                  ))}
-                </div>
+                <p className="text-slate-700 text-base leading-relaxed font-medium whitespace-pre-line">
+                  {project.description}
+                </p>
               </div>
             )}
           </div>
 
-          {/* Technologies & Tech Stack Sidebar */}
-          <div className="space-y-6">
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Code2 size={16} className="text-[#FF6014]" />
-                Technologies & Tools
+          {/* RIGHT SIDEBAR (30% = 3 cols in 10-col grid) - STICKY META INFO CARD */}
+          <div className="lg:col-span-3 lg:sticky lg:top-8 space-y-4">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-5">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 border-b border-slate-100 pb-3 flex items-center gap-2">
+                <Briefcase size={14} className="text-[#FF6014]" />
+                Project Metadata
               </h3>
 
-              <div className="flex flex-wrap gap-2 pt-1">
-                {project.tech && project.tech.length > 0 ? (
-                  project.tech.map((techItem, idx) => (
+              <div className="space-y-4 text-xs font-medium">
+                {/* Role */}
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <User size={12} className="text-[#FF6014]" /> Developer Role
+                  </span>
+                  <p className="text-sm font-bold text-slate-900">
+                    {project.role || "Lead Full-Stack Developer"}
+                  </p>
+                </div>
+
+                {/* Project Type */}
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <Layers size={12} className="text-[#FF6014]" /> Project Type
+                  </span>
+                  <p className="text-sm font-bold text-slate-900">
+                    {project.projectType || "TEAM"}
+                  </p>
+                </div>
+
+                {/* Client */}
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <Globe size={12} className="text-[#FF6014]" /> Client / Organization
+                  </span>
+                  <p className="text-sm font-bold text-slate-900">
+                    {project.client || "Independent Project"}
+                  </p>
+                </div>
+
+                {/* Duration & Timeline */}
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <Clock size={12} className="text-[#FF6014]" /> Duration & Timeline
+                  </span>
+                  <p className="text-sm font-bold text-slate-900">
+                    {project.duration || "14 Days"}{" "}
+                    <span className="text-slate-400 font-normal">
+                      ({project.startDate || "03-05-26"} – {project.endDate || "17-05-26"})
+                    </span>
+                  </p>
+                </div>
+
+                {/* Category */}
+                <div className="space-y-1">
+                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <Layout size={12} className="text-[#FF6014]" /> Domain Category
+                  </span>
+                  <p className="text-sm font-bold text-slate-900">
+                    {project.category.replace("_", " ")}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3. MEDIA GALLERY (MAIN DISPLAY + GRID THUMBNAILS) */}
+        {allImages.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+              <Globe size={14} className="text-[#FF6014]" />
+              Interactive Media Showcase & Gallery ({allImages.length} Screenshots)
+            </h2>
+
+            <div className="rounded-3xl border border-slate-200 bg-slate-950 overflow-hidden group">
+              {/* Main Image Display */}
+              <div className="relative aspect-[16/10] sm:aspect-[16/9] max-h-[600px] overflow-hidden bg-slate-950 flex items-center justify-center p-2 sm:p-4">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImage}
+                    src={currentImage}
+                    alt={project.title}
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="w-full h-full object-contain max-h-[560px] rounded-xl shadow-2xl"
+                  />
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Clickable Image Thumbnails Grid */}
+            {allImages.length > 1 && (
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 pt-1">
+                {allImages.map((imgUrl, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setActiveImageIndex(idx)}
+                    className={`relative aspect-[16/10] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer bg-slate-900 ${
+                      activeImageIndex === idx
+                        ? "border-[#FF6014] ring-2 ring-[#FF6014]/40 scale-105 opacity-100"
+                        : "border-slate-200 opacity-60 hover:opacity-100 hover:border-slate-400"
+                    }`}
+                  >
+                    <img
+                      src={imgUrl}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* 4. CORE FEATURES & TECHNICAL CHALLENGES */}
+        <section className="space-y-8">
+          {/* Key Features Grid */}
+          {project.keyFeatures && project.keyFeatures.length > 0 && (
+            <div className="space-y-4">
+              <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                <CheckCircle2 size={15} className="text-emerald-500" />
+                Key Features & Capabilities
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {project.keyFeatures.map((feature, idx) => (
+                  <div
+                    key={idx}
+                    className="p-6 rounded-3xl bg-white border border-slate-200 space-y-2 hover:border-[#FF6014]/40 transition-colors"
+                  >
+                    <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#FF6014]" />
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                      {feature.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Technical Challenges (Clean White Design) */}
+          {project.technicalChallenges &&
+            project.technicalChallenges.length > 0 && (() => {
+              const normalizedChallenges = normalizeTechnicalChallenges(project.technicalChallenges);
+              if (normalizedChallenges.length === 0) return null;
+              return (
+                <div className="space-y-4">
+                  <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                    <Code2 size={15} className="text-[#FF6014]" />
+                    Technical Challenges & Solutions
+                  </h2>
+
+                  <div className="space-y-4">
+                    {normalizedChallenges.map((tc, idx) => (
+                      <div
+                        key={idx}
+                        className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 text-slate-900 space-y-4 shadow-sm"
+                      >
+                        {/* Challenge */}
+                        {tc.challenge && (
+                          <div className="space-y-1.5">
+                            <div className="flex items-center gap-2 text-rose-600 text-xs font-extrabold uppercase tracking-wider">
+                              <Terminal size={14} className="text-rose-600" />
+                              <span>Engineering Challenge</span>
+                            </div>
+                            <p className="text-sm sm:text-base text-slate-800 font-medium leading-relaxed pl-4 border-l-2 border-rose-500 bg-rose-50/40 p-2.5 rounded-r-xl">
+                              {tc.challenge}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Solution */}
+                        {tc.solution && (
+                          <div className="space-y-1.5 pt-3 border-t border-slate-100">
+                            <div className="flex items-center gap-2 text-emerald-600 text-xs font-extrabold uppercase tracking-wider">
+                              <CheckCircle2 size={14} className="text-emerald-600" />
+                              <span>Architecture Solution</span>
+                            </div>
+                            <p className="text-sm sm:text-base text-slate-800 font-medium leading-relaxed pl-4 border-l-2 border-emerald-500 bg-emerald-50/40 p-2.5 rounded-r-xl">
+                              {tc.solution}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+        </section>
+
+        {/* 5. TECH STACK SECTION (GROUPED BADGES: Frontend, Backend, Database, DevOps/Tools) */}
+        <section className="space-y-4">
+          <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+            <Cpu size={15} className="text-[#FF6014]" />
+            Technologies & System Architecture Stack
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Frontend */}
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
+                <Layout size={14} className="text-[#FF6014]" />
+                <span>Frontend</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {techGroups.Frontend.length > 0 ? (
+                  techGroups.Frontend.map((item, i) => (
                     <span
-                      key={idx}
-                      className="px-3.5 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800 hover:border-[#FF6014]/60 transition-all shadow-xs"
+                      key={i}
+                      className="px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
                     >
-                      {techItem}
+                      {item}
                     </span>
                   ))
                 ) : (
-                  <span className="text-xs text-slate-500">Next.js, TypeScript, Tailwind CSS, Node.js</span>
+                  <span className="text-xs text-slate-400 font-medium">React, Next.js, TypeScript</span>
                 )}
               </div>
             </div>
 
-            {/* Quick Contact Card */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-orange-500/10 via-white to-slate-50 border border-orange-500/20 shadow-xl space-y-3">
-              <h3 className="text-base font-bold text-slate-900">
-                Interested in similar engineering solutions?
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                I can help build high-performance scalable web applications tailored to your business needs.
-              </p>
-              <Link
-                href="/#contact"
-                className="inline-flex items-center gap-2 text-sm font-bold text-[#FF6014] hover:text-[#ff7c42] transition-colors pt-1"
-              >
-                Let&apos;s build something together →
-              </Link>
+            {/* Backend */}
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
+                <Server size={14} className="text-blue-500" />
+                <span>Backend & APIs</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {techGroups.Backend.length > 0 ? (
+                  techGroups.Backend.map((item, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs text-slate-400 font-medium">Node.js, Express, Nest.js</span>
+                )}
+              </div>
+            </div>
+
+            {/* Database */}
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
+                <Database size={14} className="text-emerald-500" />
+                <span>Database & ORM</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {techGroups.Database.length > 0 ? (
+                  techGroups.Database.map((item, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs text-slate-400 font-medium">PostgreSQL, TypeORM</span>
+                )}
+              </div>
+            </div>
+
+            {/* DevOps & Tools */}
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
+                <Cpu size={14} className="text-purple-500" />
+                <span>DevOps & Tools</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {techGroups["DevOps & Tools"].length > 0 ? (
+                  techGroups["DevOps & Tools"].map((item, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs text-slate-400 font-medium">Git, Docker, Vercel</span>
+                )}
+              </div>
             </div>
           </div>
-
-        </div>
+        </section>
 
       </div>
     </div>
   );
 }
-
