@@ -1,9 +1,12 @@
 "use client";
-import React, { useState } from "react";
+
+import React from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
-import { Trophy, Loader2, Star, Calendar, X, ExternalLink, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Trophy, Loader2, Calendar, ExternalLink, CheckCircle2, ArrowUpRight } from "lucide-react";
+import SectionHeader from "@/components/Common/SectionHeader";
 
 interface AchievementData {
   id: string;
@@ -18,12 +21,12 @@ interface AchievementData {
 
 interface AchievementCardProps {
   item: AchievementData;
-  onClick: () => void;
 }
 
-function AchievementCard({ item, onClick }: AchievementCardProps) {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [spotlight, setSpotlight] = useState({ x: 0, y: 0, show: false });
+function AchievementCard({ item }: AchievementCardProps) {
+  const router = useRouter();
+  const [tilt, setTilt] = React.useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = React.useState({ x: 0, y: 0, show: false });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
@@ -43,18 +46,21 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
     setSpotlight({ x: 0, y: 0, show: false });
   };
 
+  const handleNavigate = () => {
+    router.push(`/achievements/${item.id}`);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      onClick={onClick}
+      onClick={handleNavigate}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       data-cursor-parallax
-
-      data-cursor-label="CERTIFICATE ↗"
+      data-cursor-label="VIEW DETAILS ↗"
       style={{
         transformStyle: "preserve-3d",
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
@@ -96,9 +102,9 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
         </div>
 
         {/* Hover View Full Overlay */}
-        <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-[3px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center z-10">
+        <div className="absolute inset-0 bg-slate-950/30 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center z-10">
           <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF6014] text-white text-xs font-bold shadow-xl transform translate-y-3 group-hover:translate-y-0 transition-all duration-300">
-            <span>View Full Certificate</span>
+            <span>View Full Details</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </span>
         </div>
@@ -151,8 +157,6 @@ function AchievementCard({ item, onClick }: AchievementCardProps) {
 }
 
 export default function Achievements() {
-  const [selectedItem, setSelectedItem] = useState<AchievementData | null>(null);
-
   const { data: achievements, isLoading } = useQuery<AchievementData[]>({
     queryKey: ["achievements"],
     queryFn: async () => {
@@ -164,134 +168,57 @@ export default function Achievements() {
   return (
     <section
       id="achievements"
-      className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0"
+      className="mb-20 sm:mb-24 scroll-mt-24 w-full"
     >
-      <div className="grid lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
-        {/* Left Panel */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-[#FF6014] text-xs font-bold shadow-sm">
-            <Star className="w-3.5 h-3.5 text-[#FF6014] animate-pulse" />
-            <span>Official Qualifications</span>
+      {/* Header & Section Metrics */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-slate-200/80">
+        <SectionHeader
+          badge="OFFICIAL QUALIFICATIONS & CERTIFICATIONS"
+          titlePrefix="Recognitions &"
+          titleHighlight="Milestones"
+          subtitle="A curated showcase of verified technical certifications, competitive engineering honors, and industry qualifications."
+          align="left"
+          icon={Trophy}
+          className="mb-0"
+        />
+
+        {/* Verified Certificate Stat Badge */}
+        <div className="shrink-0 flex items-center gap-4 p-4 rounded-2xl bg-orange-50/60 border border-orange-200/80 shadow-2xs">
+          <div className="p-3 rounded-xl bg-[#FF6014] text-white shadow-md">
+            <Trophy className="w-6 h-6" />
           </div>
-
-          <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight leading-tight text-slate-900">
-            Recognitions <span className="text-[#FF6014]">&amp; Milestones</span>
-          </h2>
-
-          <p className="text-xs sm:text-sm font-medium text-slate-600 leading-relaxed max-w-xl">
-            Key competitive programming honors, hackathon achievements, and technical milestones.
-          </p>
-        </div>
-
-        {/* Right Grid */}
-        <div>
-          {isLoading ? (
-            <div className="flex justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-[#FF6014]" />
+          <div>
+            <div className="text-2xl font-black text-slate-900 font-mono tracking-tight">
+              {achievements ? String(achievements.length).padStart(2, "0") : "00"}
             </div>
-          ) : achievements && achievements.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {achievements.map((item) => (
-                <AchievementCard
-                  key={item.id}
-                  item={item}
-                  onClick={() => setSelectedItem(item)}
-                />
-              ))}
+            <div className="text-[11px] font-mono font-extrabold text-[#FF6014] uppercase tracking-wider">
+              Verified Credentials
             </div>
-          ) : (
-            <div className="text-center py-20 text-slate-500 border border-dashed border-slate-300 rounded-3xl bg-slate-50/50">
-              No achievements found.
-            </div>
-          )}
+          </div>
         </div>
       </div>
 
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {selectedItem && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedItem(null)}
-              className="absolute inset-0 bg-slate-900/65 backdrop-blur-md"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 24, scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 350, damping: 30 }}
-              className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:grid md:grid-cols-[1.2fr_1fr] max-h-[85vh] md:max-h-[80vh] text-left z-10"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedItem(null)}
-                className="absolute top-4 right-4 z-20 p-2.5 bg-white/90 hover:bg-slate-100 text-slate-700 hover:text-slate-900 rounded-xl border border-slate-200 transition-all cursor-pointer shadow-md"
-              >
-                <X className="w-4.5 h-4.5" />
-              </button>
-
-              {/* Left: Full Image */}
-              <div className="relative bg-slate-50 flex items-center justify-center border-b md:border-b-0 md:border-r border-slate-200 overflow-hidden min-h-[260px] md:min-h-[480px]">
-                <img
-                  src={selectedItem.image}
-                  alt={selectedItem.name}
-                  className="w-full h-full object-contain max-h-[40vh] md:max-h-[75vh] p-4"
-                />
-              </div>
-
-              {/* Right: Info */}
-              <div className="p-6 sm:p-8 flex flex-col justify-between overflow-y-auto max-h-[45vh] md:max-h-[80vh]">
-                <div className="space-y-4">
-                  <div className="space-y-1">
-                    <span className="text-xs font-black text-[#FF6014] uppercase tracking-widest font-mono">
-                      {selectedItem.title}
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
-                      {selectedItem.issuer}
-                    </h3>
-                    <h4 className="text-base font-bold text-slate-800">
-                      {selectedItem.name}
-                    </h4>
-                  </div>
-
-                  {selectedItem.startDate && (
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-800">
-                      <Calendar className="w-3.5 h-3.5 text-[#FF6014]" />
-                      <span>
-                        {selectedItem.startDate} {selectedItem.endDate ? `– ${selectedItem.endDate}` : ""}
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="h-px bg-slate-100 my-4" />
-
-                  <div className="space-y-2">
-                    <span className="text-xs font-black text-slate-700 uppercase tracking-widest font-mono block">
-                      Credential Details
-                    </span>
-                    <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium whitespace-pre-line">
-                      {selectedItem.description}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-slate-100 flex justify-end">
-                  <button
-                    onClick={() => setSelectedItem(null)}
-                    className="px-6 py-2.5 bg-[#FF6014] text-white hover:bg-[#E5530F] active:scale-[0.98] transition-all rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer shadow-md"
-                  >
-                    Close Viewer
-                  </button>
-                </div>
-              </div>
-            </motion.div>
+      {/* Grid of Achievement Cards */}
+      <div>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-[#FF6014]" />
+          </div>
+        ) : achievements && achievements.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {achievements.map((item) => (
+              <AchievementCard
+                key={item.id}
+                item={item}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 text-slate-500 border border-dashed border-dashed border-slate-300 rounded-3xl bg-slate-50/50">
+            No achievements found.
           </div>
         )}
-      </AnimatePresence>
+      </div>
     </section>
   );
 }
