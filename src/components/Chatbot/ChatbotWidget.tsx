@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   MessageSquare, 
+  MessageCircle,
   X, 
   Send, 
   Bot, 
@@ -393,8 +394,9 @@ export default function ChatbotWidget() {
         onClick={() => setIsOpen((prev) => !prev)}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-2xl bg-slate-900 border border-orange-300/60 text-[#FF6014] hover:text-white hover:bg-[#FF6014] hover:border-[#FF6014] shadow-xl shadow-orange-500/15 flex items-center justify-center cursor-pointer relative group transition-all duration-300"
+        className="w-14 h-14 rounded-2xl bg-white border border-slate-200/90 shadow-2xl flex items-center justify-center cursor-pointer relative group transition-all duration-300"
         style={{
+          boxShadow: "0 10px 30px -5px rgba(74, 37, 116, 0.2), 0 4px 12px -2px rgba(0, 0, 0, 0.08)",
           outline: "none",
         }}
       >
@@ -406,8 +408,9 @@ export default function ChatbotWidget() {
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.15 }}
+              className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white shadow-md"
             >
-              <X size={24} className="text-white" />
+              <X size={20} />
             </motion.div>
           ) : (
             <motion.div
@@ -416,13 +419,15 @@ export default function ChatbotWidget() {
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.15 }}
-              className="relative"
+              className="relative flex items-center justify-center"
             >
-              <MessageSquare size={22} className="group-hover:text-white" />
-              {/* Pulsing Dot */}
-              <span className="absolute -top-1.5 -right-1.5 flex h-3.5 w-3.5">
+              <div className="w-10 h-10 rounded-full bg-[#4A2574] group-hover:bg-[#3D1D60] transition-colors flex items-center justify-center text-white shadow-md">
+                <MessageCircle size={20} className="text-white fill-white" />
+              </div>
+              {/* Notification Dot */}
+              <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6014] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#FF6014] border border-white"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#FF6014] border-2 border-white"></span>
               </span>
             </motion.div>
           )}
