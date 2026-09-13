@@ -22,6 +22,8 @@ import {
   Activity,
   ArrowRight,
   Bot,
+  Gauge,
+  Workflow,
 } from "lucide-react";
 import SectionHeader from "@/components/Common/SectionHeader";
 
@@ -39,8 +41,8 @@ export default function AIStack() {
       step: "01",
       title: "Plan & Research",
       icon: Compass,
-      tool: "DeepSeek & Grok",
-      howIWork: "আমি নতুন ফিচার বা প্রজেক্ট শুরু করার আগে লাইব্রেরি ডিপেনডেন্সি, আর্কিটেকচারাল প্যারামিটার এবং লজিক্যাল এপ্রোচ এনালিসিস করার জন্য AI রিকনসিলিয়েশন ব্যবহার করি।",
+      tool: "DeepSeek R1 & Grok",
+      howIWork: "Evaluate architectural tradeoffs, assess dependency compatibility, and formulate systematic technical design plans prior to implementation.",
       aiRole: "Requirement Analysis & Tech Stack Evaluation",
       x: 80,
       y: 70,
@@ -50,8 +52,8 @@ export default function AIStack() {
       title: "Architecture",
       icon: Layers,
       tool: "Antigravity SDK & DeepSeek",
-      howIWork: "ডেটাবেস স্কিমা, REST/GraphQL API এন্ডপয়েন্ট মডেলিং এবং মাইক্রোসার্ভিস বাাউন্ডারি ডিজাইন AI-এর মাধ্যমে মাল্টি-মডেল ড্রাফটিং করে ভ্যালিডেট করি।",
-      aiRole: "System Schema & API Endpoint Design",
+      howIWork: "Draft relational & NoSQL schemas, model REST/GraphQL endpoints, and map decoupled microservice boundary contracts.",
+      aiRole: "System Schema & API Endpoint Modeling",
       x: 280,
       y: 70,
     },
@@ -59,8 +61,8 @@ export default function AIStack() {
       step: "03",
       title: "Development",
       icon: Code2,
-      tool: "Cursor & Windsurf",
-      howIWork: "ক্লিন এবং টাইপড (TypeScript/React) কোড লেখার জন্য Context-aware AI এজেন্টের সাহায্যে বয়লারপ্লেট জেনারেশন ও রিয়েল-টাইম অটো-কমপ্লিশন ব্যবহার করি।",
+      tool: "Cursor IDE & Windsurf Agent",
+      howIWork: "Accelerate feature implementation using context-aware agentic coding, automated boilerplate generation, and type-safe completions.",
       aiRole: "Context-Aware Agentic Coding",
       x: 480,
       y: 70,
@@ -69,8 +71,8 @@ export default function AIStack() {
       step: "04",
       title: "Debugging",
       icon: Bug,
-      tool: "Trae AI & Cursor",
-      howIWork: "স্ট্যাক ট্রেস, অবস্কিউর রানটাইম ফেলিউর এবং মেমোরি লিক ডিটেক্ট করার জন্য AI লগ ইন্টারপ্রেট করে দ্রুত রুট কজ (Root Cause) আইসোলেট করি।",
+      tool: "Trae AI & Cursor Debugger",
+      howIWork: "Analyze complex stack traces, trace memory leaks, diagnose async race conditions, and rapidly isolate root-cause failures.",
       aiRole: "Log Analysis & Root Cause Isolation",
       x: 680,
       y: 70,
@@ -80,7 +82,7 @@ export default function AIStack() {
       title: "Refactoring",
       icon: RotateCcw,
       tool: "Cursor & DeepSeek",
-      howIWork: "মনোলিথিক ফাংশন ডিকুপল করা, SOLID নীতি প্রয়োগ করা এবং পারফর্ম্যান্স অপটিমাইজেশনের জন্য AI-অ্যাসিস্টেড রিকনস্ট্রাকশন করি।",
+      howIWork: "Deconstruct monolithic routines, enforce SOLID object-oriented principles, eliminate code smells, and optimize memory efficiency.",
       aiRole: "SOLID Abstraction & Performance Tuning",
       x: 680,
       y: 190,
@@ -89,8 +91,8 @@ export default function AIStack() {
       step: "06",
       title: "Testing",
       icon: TestTube2,
-      tool: "Antigravity Agent",
-      howIWork: "ইউনিট টেস্ট, ইন্টিগ্রেশন টেস্ট এবং এজ-কেস বাউন্ডারি ভ্যালিডেশন স্কেল করার জন্য অটোমেটেড টেস্ট কেস ডকস তৈরি করি।",
+      tool: "Antigravity Agent SDK",
+      howIWork: "Generate unit, integration, and E2E regression test suites while validating edge-case boundary parameters.",
       aiRole: "Automated Unit & E2E Test Suite",
       x: 480,
       y: 190,
@@ -100,7 +102,7 @@ export default function AIStack() {
       title: "Documentation",
       icon: FileText,
       tool: "Cursor & Antigravity",
-      howIWork: "এপিআই স্পেসিফিকেশন, ইনলাইন টাইপস এবং মেইনটেনেবল আর্কিটেকচারাল রিডমি (README) ডকুমেন্টেশন AI এর সাহায্যে অটো জেনারেট করি।",
+      howIWork: "Synthesize comprehensive OpenAPI specs, inline TypeScript docstrings, and maintainable architectural design references.",
       aiRole: "API Spec & Technical Documentation",
       x: 280,
       y: 190,
@@ -110,7 +112,7 @@ export default function AIStack() {
       title: "Delivery & CI/CD",
       icon: Rocket,
       tool: "Antigravity SDK & GitHub Actions",
-      howIWork: "বিল্ড ভ্যালিডেশন, রিলিজ নোটস সামারি এবং প্রডাকশন ডিপ্লয়মেন্ট হেলথ চেক অটোমেটেড পাইপলাইনের মাধ্যমে সুনিশ্চিত করি।",
+      howIWork: "Automate build checks, streamline release notes generation, optimize bundle distribution, and verify production deployment health.",
       aiRole: "CI/CD Pipeline & Production Check",
       x: 80,
       y: 190,
@@ -203,38 +205,28 @@ export default function AIStack() {
         icon={Sparkles}
       />
 
-      {/* WHITE BACKGROUND PURE SVG GSAP WORKFLOW CARD */}
-      <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="p-6 sm:p-8 md:p-10 rounded-3xl bg-white border border-slate-200/90 text-slate-900 shadow-xl relative overflow-hidden group text-left"
-      >
-        {/* Subtle Ambient Background Gradient */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
-
-        {/* Top Header Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-5 border-b border-slate-100 relative z-10">
+      {/* FREESTANDING GSAP ANIMATED SVG WORKFLOW (BACKGROUND-TRANSPARENT & BORDERLESS) */}
+      <div className="mb-10 w-full text-left">
+        {/* Top Floating Status Row */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200/80">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-orange-50 border border-orange-200/80 flex items-center justify-center text-[#FF6014] shadow-xs">
-              <Activity className="w-5 h-5 animate-pulse" />
+            <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF6014] shadow-2xs">
+              <Workflow className="w-5 h-5 animate-pulse" />
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight flex items-center gap-2">
-                Automated 8-Stage AI Engineering Circuit
+                Automated 8-Stage Engineering Circuit
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 text-[10px] font-mono font-black uppercase tracking-wider">
-                  LIVE PIPELINE
+                  ACTIVE
                 </span>
               </h3>
-              <p className="text-xs text-slate-500 font-bold mt-0.5">
-                Click or hover any node in the SVG diagram to inspect how I work with AI at each stage.
+              <p className="text-xs text-slate-500 font-semibold">
+                Select any node in the SVG circuit to examine stage mechanics.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-50 border border-slate-200/80 px-4 py-2 rounded-2xl shadow-2xs">
+          <div className="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-2xl shadow-2xs">
             <Bot className="w-4 h-4 text-[#FF6014]" />
             <span className="text-xs font-mono font-bold text-slate-700">
               Active Stage: <span className="text-[#FF6014] font-black">{activeStage.step} - {activeStage.title}</span>
@@ -242,8 +234,8 @@ export default function AIStack() {
           </div>
         </div>
 
-        {/* SVG Circuit Diagram Frame */}
-        <div className="w-full overflow-x-auto custom-scrollbar pb-4 relative z-10">
+        {/* Freestanding SVG Circuit Canvas */}
+        <div className="w-full overflow-x-auto custom-scrollbar pb-2">
           <div className="min-w-[760px] relative">
             <svg
               ref={svgRef}
@@ -251,23 +243,22 @@ export default function AIStack() {
               className="w-full h-auto overflow-visible select-none"
             >
               <defs>
-                {/* SVG Glow Filters */}
-                <filter id="glow-orange-light" x="-20%" y="-20%" width="140%" height="140%">
+                <filter id="glow-orange-clean" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+                <filter id="glow-node-clean" x="-30%" y="-30%" width="160%" height="160%">
                   <feGaussianBlur stdDeviation="5" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
-                <filter id="glow-node-light" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur stdDeviation="6" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-                <linearGradient id="pathGradientLight" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="pathGradientClean" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#FF6014" />
                   <stop offset="50%" stopColor="#8B5CF6" />
                   <stop offset="100%" stopColor="#FF6014" />
                 </linearGradient>
               </defs>
 
-              {/* Connecting Track (Background) */}
+              {/* Connecting Background Track */}
               <path
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
                 fill="none"
@@ -276,17 +267,17 @@ export default function AIStack() {
                 strokeLinecap="round"
               />
 
-              {/* Animated GSAP Gradient Track */}
+              {/* Animated GSAP Path Track */}
               <path
                 className="workflow-path"
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
                 fill="none"
-                stroke="url(#pathGradientLight)"
+                stroke="url(#pathGradientClean)"
                 strokeWidth="3.5"
                 strokeLinecap="round"
               />
 
-              {/* Pulse Light Dot Running Along Circuit */}
+              {/* Pulse Beam Particle */}
               <path
                 className="path-pulse"
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
@@ -295,7 +286,7 @@ export default function AIStack() {
                 strokeWidth="5"
                 strokeLinecap="round"
                 strokeDasharray="25 175"
-                filter="url(#glow-orange-light)"
+                filter="url(#glow-orange-clean)"
               />
 
               {/* SVG Stage Nodes */}
@@ -309,7 +300,7 @@ export default function AIStack() {
                     onClick={() => setActiveStageIdx(idx)}
                     onMouseEnter={() => setActiveStageIdx(idx)}
                   >
-                    {/* Active Pulsing Ring */}
+                    {/* Active Halo Pulse */}
                     {isActive && (
                       <circle
                         cx={stage.x}
@@ -330,7 +321,7 @@ export default function AIStack() {
                       fill={isActive ? "#FF6014" : "#FFFFFF"}
                       stroke={isActive ? "#FF6014" : "#CBD5E1"}
                       strokeWidth={isActive ? "3" : "2"}
-                      filter={isActive ? "url(#glow-node-light)" : undefined}
+                      filter={isActive ? "url(#glow-node-clean)" : undefined}
                       className="transition-all duration-300 group-hover/node:stroke-[#FF6014] group-hover/node:scale-110 shadow-md"
                     />
 
@@ -375,7 +366,7 @@ export default function AIStack() {
           </div>
         </div>
 
-        {/* Dynamic Detail Spotlight Panel: How I Work With AI */}
+        {/* Dynamic Detail Spotlight Box (Clean Professional English) */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeStage.step}
@@ -383,10 +374,10 @@ export default function AIStack() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3 }}
-            className="mt-6 p-6 rounded-2xl bg-slate-50 border border-slate-200/90 grid md:grid-cols-12 gap-6 items-center shadow-xs"
+            className="mt-6 p-6 rounded-2xl bg-white border border-slate-200/90 grid md:grid-cols-12 gap-6 items-center shadow-xs"
           >
-            {/* Left Column: Stage Info & AI Tool */}
-            <div className="md:col-span-4 space-y-3 border-b md:border-b-0 md:border-r border-slate-200 pb-4 md:pb-0 md:pr-6">
+            {/* Left Info Column */}
+            <div className="md:col-span-4 space-y-3 border-b md:border-b-0 md:border-r border-slate-100 pb-4 md:pb-0 md:pr-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-[#FF6014] text-white flex items-center justify-center shrink-0 shadow-md">
                   <ActiveIcon size={20} />
@@ -401,18 +392,18 @@ export default function AIStack() {
                 </div>
               </div>
 
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800 shadow-2xs">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-800 shadow-2xs">
                 <Cpu size={14} className="text-[#FF6014]" />
                 <span>AI Tool: <strong className="text-[#FF6014]">{activeStage.tool}</strong></span>
               </div>
             </div>
 
-            {/* Right Column: How I Work Description */}
+            {/* Right Work Mechanism Description */}
             <div className="md:col-span-8 space-y-2">
               <div className="flex items-center gap-2">
                 <Sparkles size={16} className="text-[#FF6014]" />
                 <span className="text-xs font-black uppercase tracking-wider text-slate-900 font-mono">
-                  আমি কিভাবে AI দিয়ে কাজ করি (Workflow Mechanics):
+                  Engineering Integration &amp; Workflow Mechanics:
                 </span>
               </div>
               <p className="text-sm sm:text-base text-slate-800 font-medium leading-relaxed text-justify">
@@ -420,16 +411,16 @@ export default function AIStack() {
               </p>
               <div className="pt-1 flex items-center gap-2 text-xs font-extrabold text-emerald-600">
                 <ShieldCheck size={15} />
-                <span>AI Role: {activeStage.aiRole}</span>
+                <span>Primary Focus: {activeStage.aiRole}</span>
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Stage Selector Pills */}
-        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2">
+        {/* Stage Navigation Pills */}
+        <div className="mt-6 pt-4 border-t border-slate-200/80 flex items-center justify-between flex-wrap gap-2">
           <span className="text-xs font-bold text-slate-500 uppercase tracking-wider font-mono">
-            Direct Stage Navigation:
+            Quick Stage Selector:
           </span>
           <div className="flex items-center gap-1.5 flex-wrap">
             {workflowStages.map((st, i) => (
@@ -439,7 +430,7 @@ export default function AIStack() {
                 className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer border ${
                   activeStageIdx === i
                     ? "bg-[#FF6014] text-white border-[#FF6014] shadow-xs"
-                    : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-orange-50 hover:border-orange-200 hover:text-[#FF6014]"
+                    : "bg-white text-slate-700 border-slate-200 hover:bg-orange-50 hover:border-orange-200 hover:text-[#FF6014]"
                 }`}
               >
                 {st.step}. {st.title}
@@ -447,9 +438,9 @@ export default function AIStack() {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* AI TOOLKIT GRID & OWNERSHIP GUARANTEE */}
+      {/* AI TOOLKIT ROW & OWNERSHIP STATEMENT */}
       <div className="mt-8 grid lg:grid-cols-12 gap-8 items-start">
         {/* Left: AI Engineering Toolkit */}
         <motion.div
@@ -459,7 +450,7 @@ export default function AIStack() {
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
               <Cpu className="w-4 h-4 text-[#FF6014]" />
-              AI Engineering Toolkit & IDE Integration
+              AI Engineering Toolkit &amp; IDE Integration
             </h3>
             <span className="text-xs font-bold text-[#FF6014] bg-orange-50 border border-orange-200 px-3 py-1 rounded-full">
               Production Force Multiplier
