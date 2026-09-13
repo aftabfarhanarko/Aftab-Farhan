@@ -276,15 +276,15 @@ export default function PinnedProjectsShowcaseGSAP({
 
         if (totalTransitions <= 0) return;
 
-        // Master Scroll Timeline: Scenes slide UP from bottom over previous scene
+        // Master Scroll Timeline: Scenes slide UP from bottom over previous scene with smooth scrub
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: pinStageRef.current,
             pin: true,
             pinSpacing: true,
             start: "top top",
-            end: () => `+=${totalTransitions * window.innerHeight * 1.5}`,
-            scrub: 1.0, // Fast, responsive scroll transition
+            end: () => `+=${totalTransitions * window.innerHeight * 1.8}`,
+            scrub: 1.2, // Ultra-smooth fluid scroll-driven animation
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               const newIndex = Math.min(
@@ -303,7 +303,7 @@ export default function PinnedProjectsShowcaseGSAP({
 
             const sceneTL = gsap.timeline();
 
-            // Background color interpolation
+            // Background color smooth transition
             if (bgOverlayRef.current) {
               sceneTL.to(
                 bgOverlayRef.current,
@@ -316,25 +316,26 @@ export default function PinnedProjectsShowcaseGSAP({
               );
             }
 
-            // Outgoing scene animation: stays solid while next scene slides up over it
+            // Outgoing scene scale down and fade out completely to avoid background bleed & text overlap
             sceneTL.to(
               scene,
               {
                 scale: 0.94,
-                yPercent: -10,
+                yPercent: -15,
+                opacity: 0,
                 duration: 1,
                 ease: "power2.inOut",
                 onComplete: () => {
                   gsap.set(scene, { pointerEvents: "none" });
                 },
                 onReverseComplete: () => {
-                  gsap.set(scene, { pointerEvents: "auto" });
+                  gsap.set(scene, { pointerEvents: "auto", opacity: 1 });
                 },
               },
               0
             );
 
-            // Incoming scene animation (slides UP from bottom with solid background covering previous card)
+            // Incoming scene smooth slide UP from bottom
             sceneTL.to(
               nextScene,
               {
@@ -342,7 +343,7 @@ export default function PinnedProjectsShowcaseGSAP({
                 scale: 1,
                 yPercent: 0,
                 duration: 1,
-                ease: "power2.inOut",
+                ease: "power3.inOut",
                 onStart: () => {
                   gsap.set(nextScene, { pointerEvents: "auto" });
                 },
@@ -350,48 +351,44 @@ export default function PinnedProjectsShowcaseGSAP({
               0
             );
 
-            // Incoming title reveal
+            // Staggered Element Animations for incoming scene
             const nextTitle = nextScene.querySelector(`.scene-title-${scopeId}`);
             if (nextTitle) {
               sceneTL.fromTo(
                 nextTitle,
-                { opacity: 0, yPercent: 12 },
-                { opacity: 1, yPercent: 0, duration: 0.8, ease: "power2.out" },
-                0.15
+                { opacity: 0, y: 35 },
+                { opacity: 1, y: 0, duration: 0.85, ease: "power3.out" },
+                0.12
               );
             }
 
-            // Incoming artwork presentation reveal
             const nextArtwork = nextScene.querySelector(`.scene-artwork-${scopeId}`);
             if (nextArtwork) {
               sceneTL.fromTo(
                 nextArtwork,
                 {
-                  scale: 1.08,
-                  yPercent: 8,
+                  scale: 0.96,
+                  y: 40,
                   opacity: 0,
-                  clipPath: "inset(3% 3% 3% 3%)",
                 },
                 {
                   scale: 1,
-                  yPercent: 0,
+                  y: 0,
                   opacity: 1,
-                  clipPath: "inset(0% 0% 0% 0%)",
                   duration: 0.9,
-                  ease: "power2.out",
+                  ease: "power3.out",
                 },
-                0.1
+                0.18
               );
             }
 
-            // Incoming recruiter details reveal
             const nextDetails = nextScene.querySelector(`.scene-details-${scopeId}`);
             if (nextDetails) {
               sceneTL.fromTo(
                 nextDetails,
-                { opacity: 0, y: 18 },
-                { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
-                0.25
+                { opacity: 0, y: 45 },
+                { opacity: 1, y: 0, duration: 0.85, ease: "power3.out" },
+                0.24
               );
             }
 
@@ -449,6 +446,7 @@ export default function PinnedProjectsShowcaseGSAP({
                   opacity: isFirst ? 1 : 0,
                   pointerEvents: isFirst ? "auto" : "none",
                   backgroundColor: bgColor,
+                  zIndex: index + 10,
                 }}
               >
                 {/* 1. TOP EDITORIAL BAR */}
@@ -469,18 +467,21 @@ export default function PinnedProjectsShowcaseGSAP({
                   </span>
                 </div>
 
-                {/* 2. CENTER SECTION: BALANCED FONT-SCALED TITLE + ARTWORK */}
-                <div className="w-11/12 sm:w-[94%] max-w-[1700px] mx-auto flex flex-col items-center justify-center flex-1 my-auto relative z-10 py-1 sm:py-2">
-                  {/* Compact Font-Scaled Title (Max 2 Lines) */}
+                {/* 2. CENTER SECTION: SPLIT 2-COLUMN LAYOUT (LEFT: IMAGES & GALLERY, RIGHT: FULL DETAILS & TECH) */}
+                <div className="w-full max-w-[1700px] mx-auto flex-1 my-auto relative z-10 py-2 px-2 sm:px-6 flex flex-col justify-center">
+                  {/* Title (Full Width Top) */}
                   <h2
                     onClick={() => setSelectedCaseStudyProject(project)}
                     data-cursor-title-parallax
-                    className={`scene-title-${scopeId} text-[clamp(26px,3.8vw,52px)] font-black leading-[1.1] text-center tracking-tight text-white mb-2.5 sm:mb-3.5 cursor-pointer drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-[1.01] max-w-6xl`}
+                    className={`scene-title-${scopeId} text-[clamp(24px,3.2vw,44px)] font-black leading-[1.15] text-center lg:text-left tracking-tight text-white mb-3 sm:mb-4 cursor-pointer drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-[1.01]`}
                   >
                     {renderEditorialTitle(project.title)}
                   </h2>
 
-                    {/* High-Resolution Project Artwork (Full-Width Responsive 11/12 Screen Width) */}
+                  {/* 2-Column Grid */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+                    
+                    {/* LEFT COLUMN: Premium Laptop/Browser Mockup Showcase with Floating Gallery Thumbnails (7 Cols) */}
                     {(() => {
                       const allProjectImages = Array.from(
                         new Set([project.image, ...(project.gallery || [])].filter(Boolean) as string[])
@@ -490,179 +491,233 @@ export default function PinnedProjectsShowcaseGSAP({
 
                       return (
                         <div
-                          onClick={() => setSelectedCaseStudyProject(project)}
-                          data-cursor="project"
-                          data-cursor-label="VIEW CASE STUDY ↗"
-                          data-cursor-parallax
-                          className={`scene-artwork-${scopeId} project-image-scroll-layer relative w-full h-[36vh] sm:h-[42vh] lg:h-[48vh] max-h-[560px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-black/20 cursor-pointer group border border-white/40 transition-all duration-500 ease-out`}
+                          className={`scene-artwork-${scopeId} lg:col-span-7 flex flex-col justify-between h-full relative group`}
                         >
-                          <div className="project-image-mouse-layer w-full h-full">
-                            <img
-                              src={activeImage}
-                              alt={project.title}
-                              className="w-full h-full object-cover object-top transition-all duration-500 ease-out group-hover:scale-105"
-                            />
+                          {/* Realistic macOS Web Browser Frame Container */}
+                          <div
+                            onClick={() => setSelectedCaseStudyProject(project)}
+                            data-cursor="project"
+                            data-cursor-label="VIEW CASE STUDY ↗"
+                            data-cursor-parallax
+                            className="project-image-scroll-layer relative w-full flex-1 min-h-[320px] sm:min-h-[380px] lg:min-h-[440px] max-h-[520px] rounded-2xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border border-white/30 bg-slate-950 flex flex-col transition-all duration-500 ease-out hover:border-white/60"
+                          >
+                            {/* Browser Top Window Bar */}
+                            <div className="w-full h-8 bg-slate-900/90 backdrop-blur-md border-b border-white/10 px-3 flex items-center justify-between z-20 shrink-0 select-none">
+                              {/* macOS Window Controls */}
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-3 h-3 rounded-full bg-rose-500/80 border border-rose-600/50 block" />
+                                <span className="w-3 h-3 rounded-full bg-amber-500/80 border border-amber-600/50 block" />
+                                <span className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-600/50 block" />
+                              </div>
+
+                              {/* Browser Address Bar Pill */}
+                              <div className="px-4 py-0.5 rounded-full bg-slate-800/80 border border-white/10 text-[11px] font-mono text-slate-300 flex items-center gap-1.5 max-w-[220px] sm:max-w-xs truncate shadow-inner">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                <span className="truncate">{project.demoLink ? project.demoLink.replace(/^https?:\/\//, "") : `${project.title.toLowerCase().replace(/\s+/g, "")}.com`}</span>
+                              </div>
+
+                              {/* Window Action Indicator */}
+                              <div className="text-[10px] font-mono text-white/50 hidden sm:block">
+                                HD SCREENSHOT
+                              </div>
+                            </div>
+
+                            {/* Main Screen Display Area (Object Contain to show 100% full screenshot without clipping) */}
+                            <div className="project-image-mouse-layer relative w-full flex-1 overflow-hidden bg-slate-950 flex items-center justify-center p-1 sm:p-2">
+                              <img
+                                key={activeImage}
+                                src={activeImage}
+                                alt={project.title}
+                                className="w-full h-full object-contain max-h-[460px] rounded-lg transition-all duration-300 ease-out"
+                              />
+                            </div>
+
+                            {/* Subtle & Minimalist Hover Overlay */}
+                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 pointer-events-none z-10">
+                              <span className="px-5 py-2.5 rounded-full bg-white/95 text-slate-900 text-xs font-bold uppercase tracking-wider shadow-lg flex items-center gap-1.5 backdrop-blur-xs">
+                                View Case Study <ArrowRight className="w-3.5 h-3.5 text-[#FF6014]" />
+                              </span>
+                            </div>
                           </div>
 
-                          {/* Gallery Thumbnail Pill Overlay for Quick Preview */}
+                          {/* Floating Sleek Glass Gallery Bar */}
                           {allProjectImages.length > 1 && (
-                            <div
-                              onClick={(e) => e.stopPropagation()}
-                              className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 p-1.5 rounded-full bg-slate-950/70 backdrop-blur-md border border-white/20 shadow-xl opacity-90 group-hover:opacity-100 transition-opacity"
-                            >
-                              {allProjectImages.map((imgUrl, imgIdx) => (
-                                <button
-                                  key={imgIdx}
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setActiveGalleryIndices((prev) => ({
-                                      ...prev,
-                                      [project.id]: imgIdx,
-                                    }));
-                                  }}
-                                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden border transition-all cursor-pointer ${
-                                    currentGalleryIdx === imgIdx
-                                      ? "border-[#FF6014] ring-2 ring-[#FF6014]/50 scale-110"
-                                      : "border-white/40 opacity-60 hover:opacity-100"
-                                  }`}
-                                  title={`View Image ${imgIdx + 1}`}
-                                >
-                                  <img src={imgUrl} alt={`Thumb ${imgIdx + 1}`} className="w-full h-full object-cover object-top" />
-                                </button>
-                              ))}
+                            <div className="mt-3 flex items-center justify-center gap-2 p-2 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-2xl shrink-0">
+                              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-white/90 px-2 shrink-0 flex items-center gap-1.5">
+                                <Sparkles className="w-3.5 h-3.5 text-[#FF6014]" /> Screenshots ({allProjectImages.length}):
+                              </span>
+                              <div className="flex items-center gap-2 overflow-x-auto p-0.5">
+                                {allProjectImages.map((imgUrl, imgIdx) => (
+                                  <button
+                                    key={imgIdx}
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setActiveGalleryIndices((prev) => ({
+                                        ...prev,
+                                        [project.id]: imgIdx,
+                                      }));
+                                    }}
+                                    className={`relative w-14 h-10 sm:w-16 sm:h-11 rounded-xl overflow-hidden border-2 transition-all shrink-0 cursor-pointer bg-slate-900 ${
+                                      currentGalleryIdx === imgIdx
+                                        ? "border-[#FF6014] ring-2 ring-[#FF6014]/40 opacity-100 shadow-md"
+                                        : "border-white/30 opacity-60 hover:opacity-100 hover:border-white"
+                                    }`}
+                                    title={`View Screenshot ${imgIdx + 1}`}
+                                  >
+                                    <img src={imgUrl} alt={`Thumb ${imgIdx + 1}`} className="w-full h-full object-cover object-top" />
+                                  </button>
+                                ))}
+                              </div>
                             </div>
                           )}
-
-                          {/* Subtle Hover Overlay */}
-                          <div className="absolute inset-0 bg-white/20 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 pointer-events-none">
-                            <span className="px-6 py-3 rounded-full bg-white text-slate-900 text-xs sm:text-sm font-extrabold uppercase tracking-widest shadow-xl flex items-center gap-2">
-                              View Recruiter Case Study <ArrowRight className="w-4 h-4 text-[#FF6014]" />
-                            </span>
-                          </div>
                         </div>
                       );
                     })()}
-                  </div>
 
-                {/* 3. RECRUITER-FOCUSED TECHNICAL DETAILS & TIMELINE PANEL (WHITE GLASS LIGHT MODE) */}
-                <div
-                  className={`scene-details-${scopeId} w-11/12 sm:w-[94%] max-w-[1700px] mx-auto flex flex-col gap-3.5 z-20 pb-3 sm:pb-4 bg-white/85 backdrop-blur-2xl border border-white/60 rounded-2xl p-4 sm:p-5 text-left shadow-2xl shadow-black/10`}
-                >
-                  {/* Timeline, Client & Type Metric Bar */}
-                  <div className="flex items-center justify-between gap-3 flex-wrap border-b border-slate-900/10 pb-2.5">
-                    <div className="flex items-center gap-3 text-xs sm:text-sm font-mono font-bold text-slate-900">
-                      <span className="flex items-center gap-1.5 text-[#FF6014] bg-orange-50 border border-orange-200 px-2.5 py-0.5 rounded-md shadow-2xs">
-                        <Calendar className="w-3.5 h-3.5 text-[#FF6014]" /> {project.year || "2026"}
-                      </span>
-                      <span className="text-slate-400">·</span>
-                      <span className="flex items-center gap-1.5 text-slate-800">
-                        {project.projectType === "CLIENT" ? (
-                          <>
-                            <Briefcase className="w-3.5 h-3.5 text-amber-600" /> CLIENT PRODUCTION
-                          </>
-                        ) : project.projectType === "TEAM" ? (
-                          <>
-                            <Users className="w-3.5 h-3.5 text-blue-600" /> TEAM RELEASE
-                          </>
-                        ) : (
-                          <>
-                            <User className="w-3.5 h-3.5 text-emerald-600" /> PERSONAL WORK
-                          </>
+                    {/* RIGHT COLUMN: Full Details Panel (5 Cols) - Transparent Dynamic Glass (No white block) */}
+                    <div
+                      className={`scene-details-${scopeId} lg:col-span-5 flex flex-col justify-between gap-4 text-left text-white overflow-y-auto max-h-[560px] pr-2.5 custom-showcase-scrollbar`}
+                    >
+                      {/* Timeline, Client & Type Metric Bar */}
+                      <div className="flex items-center justify-between gap-2 flex-wrap border-b border-white/15 pb-3">
+                        <div className="flex items-center gap-2.5 text-xs font-mono font-bold">
+                          <span className="flex items-center gap-1.5 text-white bg-white/15 border border-white/20 px-2.5 py-1 rounded-lg shadow-sm">
+                            <Calendar className="w-3.5 h-3.5 text-[#FF6014]" /> {project.year || "2026"}
+                          </span>
+                          <span className="text-white/40">·</span>
+                          <span className="flex items-center gap-1.5 text-white/90">
+                            {project.projectType === "CLIENT" ? (
+                              <>
+                                <Briefcase className="w-3.5 h-3.5 text-amber-300" /> CLIENT
+                              </>
+                            ) : project.projectType === "TEAM" ? (
+                              <>
+                                <Users className="w-3.5 h-3.5 text-sky-300" /> TEAM RELEASE
+                              </>
+                            ) : (
+                              <>
+                                <User className="w-3.5 h-3.5 text-emerald-300" /> PERSONAL
+                              </>
+                            )}
+                          </span>
+                          {project.duration && (
+                            <>
+                              <span className="text-white/40">·</span>
+                              <span className="flex items-center gap-1.5 text-white/90">
+                                <Clock className="w-3.5 h-3.5 text-amber-400" /> {project.duration} Days
+                              </span>
+                            </>
+                          )}
+                        </div>
+
+                        {project.client && (
+                          <span className="font-mono text-[10px] font-extrabold text-amber-300 uppercase tracking-wider bg-amber-500/20 border border-amber-400/30 px-2.5 py-1 rounded-lg shadow-sm">
+                            {project.client}
+                          </span>
                         )}
-                      </span>
-                      {project.duration && (
-                        <>
-                          <span className="text-slate-400">·</span>
-                          <span className="flex items-center gap-1.5 text-slate-800">
-                            <Clock className="w-3.5 h-3.5 text-sky-600" /> DURATION: {project.duration}
-                          </span>
-                        </>
-                      )}
-                    </div>
+                      </div>
 
-                    {project.client && (
-                      <span className="font-mono text-xs font-bold text-amber-800 uppercase tracking-wider bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-md shadow-2xs">
-                        CLIENT: {project.client}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Recruiter Engineering Highlights Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-0.5">
-                    {highlights.map((h, hIdx) => (
-                      <div
-                        key={hIdx}
-                        className="flex items-start gap-2.5 bg-white/70 border border-white/80 p-3 rounded-xl hover:border-orange-300 transition-colors shadow-xs"
-                      >
-                        <CheckCircle2 className="w-4.5 h-4.5 text-[#FF6014] shrink-0 mt-0.5" />
-                        <div>
-                          <span className="text-xs font-mono font-bold text-[#FF6014] uppercase tracking-wider block mb-0.5">
-                            {h.title}
+                      {/* Project Overview / Tagline */}
+                      {project.overview || project.tagline ? (
+                        <div className="space-y-1.5 bg-black/25 backdrop-blur-md border border-white/20 p-4 rounded-2xl shadow-xl">
+                          <span className="text-[10px] font-mono font-extrabold text-[#FF6014] uppercase tracking-widest block">
+                            PROJECT OVERVIEW
                           </span>
-                          <p className="text-xs sm:text-sm text-slate-800 font-semibold leading-relaxed">
-                            {h.detail}
+                          <p className="text-xs sm:text-sm text-white/90 font-medium leading-relaxed drop-shadow-sm">
+                            {project.overview || project.tagline}
                           </p>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ) : null}
 
-                  {/* High-Contrast Crisp Technology Badges & Action Buttons */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 pt-2.5 border-t border-slate-900/10">
-                    {/* Tech Badges */}
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-xs sm:text-sm font-extrabold text-slate-900 mr-1 tracking-wide">TECH STACK:</span>
-                      {displayedTech.map((techItem) => (
-                        <span
-                          key={techItem}
-                          className="px-3 py-1 text-xs font-mono font-bold bg-white/90 border border-slate-200/90 rounded-lg text-slate-900 hover:border-orange-300 hover:text-[#FF6014] transition-colors shadow-2xs"
-                        >
-                          {techItem}
+                      {/* Recruiter Engineering Highlights Grid */}
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-mono font-extrabold text-white/70 uppercase tracking-widest block">
+                          ENGINEERING HIGHLIGHTS
                         </span>
-                      ))}
-                      {remainingTechCount > 0 && (
-                        <button
-                          type="button"
-                          onClick={() => setTechModalProject(project)}
-                          className="px-3 py-1 text-xs font-mono font-extrabold bg-orange-50 border border-orange-200 text-[#FF6014] hover:bg-orange-100 rounded-lg transition-colors cursor-pointer shadow-2xs"
-                        >
-                          +{remainingTechCount} more
-                        </button>
-                      )}
-                    </div>
+                        <div className="grid grid-cols-1 gap-2.5">
+                          {highlights.map((h, hIdx) => (
+                            <div
+                              key={hIdx}
+                              className="flex items-start gap-2.5 bg-black/25 backdrop-blur-md border border-white/20 p-3 rounded-2xl shadow-xl hover:border-white/40 transition-colors"
+                            >
+                              <CheckCircle2 className="w-4.5 h-4.5 text-[#FF6014] shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-[10px] font-mono font-bold text-[#FF6014] uppercase tracking-wider block">
+                                  {h.title}
+                                </span>
+                                <p className="text-xs sm:text-sm text-white/90 font-semibold leading-snug drop-shadow-xs">
+                                  {h.detail}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
 
-                    {/* Prominent Action Buttons */}
-                    <div className="flex items-center gap-3 shrink-0">
-                      {project.demoLink && (
-                        <a
-                          href={project.demoLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-extrabold text-white bg-[#FF6014] hover:bg-[#E5530F] rounded-xl shadow-lg shadow-orange-600/30 transition-all active:scale-95 cursor-pointer"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" /> Live Demo
-                        </a>
-                      )}
+                      {/* Full Tech Stack & Action Buttons */}
+                      <div className="space-y-3.5 pt-3 border-t border-white/15">
+                        {/* Tech Badges */}
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-mono text-xs font-extrabold text-white uppercase tracking-wider">
+                              TECH STACK ({project.tech ? project.tech.length : 0}):
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            {displayedTech.map((techItem) => (
+                              <span
+                                key={techItem}
+                                className="px-3 py-1.5 text-xs font-mono font-bold bg-black/40 backdrop-blur-md border border-white/25 rounded-xl text-white shadow-sm hover:border-[#FF6014] transition-colors"
+                              >
+                                {techItem}
+                              </span>
+                            ))}
+                            {remainingTechCount > 0 && (
+                              <button
+                                type="button"
+                                onClick={() => setTechModalProject(project)}
+                                className="px-3 py-1.5 text-xs font-mono font-bold bg-[#FF6014] text-white border border-orange-400 rounded-xl hover:bg-orange-600 transition-colors cursor-pointer shadow-md"
+                              >
+                                +{remainingTechCount} more
+                              </button>
+                            )}
+                          </div>
+                        </div>
 
-                      {project.githubLink && (
-                        <a
-                          href={project.githubLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-extrabold text-slate-900 bg-white/90 hover:bg-white border border-slate-200 rounded-xl transition-all active:scale-95 cursor-pointer shadow-2xs"
-                        >
-                          <GithubIcon className="w-3.5 h-3.5 text-slate-900" /> GitHub
-                        </a>
-                      )}
+                        {/* Action Buttons */}
+                        <div className="flex items-center justify-end gap-2.5 pt-1">
+                          {project.demoLink && (
+                            <a
+                              href={project.demoLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-4 py-2.5 rounded-xl bg-[#FF6014] hover:bg-[#E0530A] text-white text-xs font-extrabold shadow-xl shadow-orange-600/30 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+                            >
+                              <ExternalLink size={14} /> Live Demo
+                            </a>
+                          )}
 
-                      <button
-                        type="button"
-                        onClick={() => setSelectedCaseStudyProject(project)}
-                        className="inline-flex items-center gap-1 px-4 py-2 text-xs sm:text-sm font-extrabold text-slate-900 bg-white/90 hover:bg-white border border-slate-200 hover:border-orange-300 hover:text-[#FF6014] rounded-xl transition-all cursor-pointer shadow-2xs"
-                      >
-                        Case Study <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
+                          {project.githubLink && (
+                            <a
+                              href={project.githubLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/30 text-xs font-extrabold backdrop-blur-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+                            >
+                              <GithubIcon className="w-4 h-4 text-white" /> GitHub
+                            </a>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() => setSelectedCaseStudyProject(project)}
+                            className="px-4 py-2.5 rounded-xl bg-white text-slate-900 hover:bg-slate-200 text-xs font-extrabold shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-1 cursor-pointer"
+                          >
+                            Case Study <ArrowRight size={14} />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

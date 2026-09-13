@@ -8,6 +8,7 @@ import { Project, categoryLabel } from "./types";
 import ProjectsSkeleton from "./ProjectsSkeleton";
 import ProjectsFilters from "./ProjectsFilters";
 import PinnedProjectsShowcaseGSAP from "./PinnedProjectsShowcaseGSAP";
+import SectionHeader from "@/components/Common/SectionHeader";
 
 // Framer motion variants for subtle, high-end entrance animations
 const containerVariants = {
@@ -92,82 +93,44 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6">
         
         {/* Redesigned Premium Projects Header Area */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="relative mb-8 sm:mb-10"
-        >
-          {/* Subtle Editorial Background Number "01" */}
-          <div
-            aria-hidden="true"
-            className="absolute -top-6 -left-3 sm:-top-8 sm:-left-4 select-none pointer-events-none font-mono font-black text-6xl sm:text-8xl text-slate-100/70 z-0 tracking-tighter"
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10 mb-8 sm:mb-10 pb-6 border-b border-slate-200/80">
+          <SectionHeader
+            badge="01 — SELECTED WORK"
+            titlePrefix="Featured"
+            titleHighlight="Projects"
+            subtitle="A curated collection of production-ready applications, SaaS platforms, and real-world digital products engineered for performance, scale, and user experience."
+            align="left"
+            icon={Terminal}
+            className="mb-0 pb-0 border-none"
+          />
+
+          {/* RIGHT COLUMN: TECHNICAL METRIC / PROJECT COUNT BADGE */}
+          <motion.div
+            variants={itemVariants}
+            className="shrink-0 flex items-center md:flex-col md:items-end justify-between md:justify-end gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-slate-200/90 shadow-2xs md:max-w-xs"
           >
-            01
-          </div>
-
-          {/* Two-Column Desktop Header Composition */}
-          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10 pb-6 border-b border-slate-200/80">
-            {/* LEFT COLUMN: Eyebrow, Heading, Description */}
-            <div className="flex-1 max-w-3xl">
-              {/* 1. EYEBROW */}
-              <motion.div
-                variants={itemVariants}
-                className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-orange-500/5 border border-orange-500/20 mb-3 sm:mb-4"
-              >
-                <Terminal className="w-3.5 h-3.5 text-[#FF6014]" />
-                <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014]">
-                  01 — SELECTED WORK
+            <div className="flex items-baseline gap-2">
+              <span className="font-mono text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
+                {String(allProjects.length).padStart(2, "0")}
+              </span>
+              <div className="flex flex-col">
+                <span className="font-mono text-[10px] sm:text-xs font-bold text-[#FF6014] tracking-widest uppercase">
+                  PROJECTS
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF6014] animate-pulse" />
-              </motion.div>
-
-              {/* 2. MAIN HEADING */}
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl sm:text-4xl lg:text-[46px] font-black text-slate-900 tracking-tight leading-[1.15] mb-3 sm:mb-4"
-              >
-                Featured <span className="text-[#FF6014]">Projects</span>
-              </motion.h2>
-
-              {/* 4. DESCRIPTION */}
-              <motion.p
-                variants={itemVariants}
-                className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-2xl"
-              >
-                A curated collection of production-ready applications, SaaS platforms, and real-world digital products engineered for performance, scale, and user experience.
-              </motion.p>
+                <span className="text-[10px] font-mono text-slate-500 font-semibold tracking-wider uppercase">
+                  RELEASES
+                </span>
+              </div>
             </div>
 
-            {/* RIGHT COLUMN: 5. TECHNICAL METRIC / PROJECT COUNT BADGE */}
-            <motion.div
-              variants={itemVariants}
-              className="shrink-0 flex items-center md:flex-col md:items-end justify-between md:justify-end gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-slate-200/90 shadow-2xs md:max-w-xs"
-            >
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
-                  {String(allProjects.length).padStart(2, "0")}
-                </span>
-                <div className="flex flex-col">
-                  <span className="font-mono text-[10px] sm:text-xs font-bold text-[#FF6014] tracking-widest uppercase">
-                    PROJECTS
-                  </span>
-                  <span className="text-[10px] font-mono text-slate-500 font-semibold tracking-wider uppercase">
-                    RELEASES
-                  </span>
-                </div>
-              </div>
+            <div className="h-8 w-px bg-slate-200 md:w-full md:h-px md:my-1" />
 
-              <div className="h-8 w-px bg-slate-200 md:w-full md:h-px md:my-1" />
-
-              <div className="flex items-center gap-1.5 text-[11px] font-mono font-medium text-slate-500">
-                <Sparkles className="w-3.5 h-3.5 text-[#FF6014]" />
-                <span>SYS.PORTFOLIO / V2.4</span>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
+            <div className="flex items-center gap-1.5 text-[11px] font-mono font-medium text-slate-500">
+              <Sparkles className="w-3.5 h-3.5 text-[#FF6014]" />
+              <span>SYS.PORTFOLIO / V2.4</span>
+            </div>
+          </motion.div>
+        </div>
 
         {isLoading ? (
           <ProjectsSkeleton />

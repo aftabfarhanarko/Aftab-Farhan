@@ -7,6 +7,7 @@ import { SkillCategory } from "./types";
 import SkillsSkeleton from "./SkillsSkeleton";
 import SkillsMarquee from "./SkillsMarquee";
 import SkillCategoryCard from "./SkillCategoryCard";
+import SectionHeader from "@/components/Common/SectionHeader";
 
 interface MarqueeItem {
   id: string;
@@ -46,26 +47,13 @@ export default function Skills() {
   return (
     <section id="skills" className="mb-20 sm:mb-24 scroll-mt-24">
       {/* Heading */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-10 sm:mb-12 flex flex-col items-center text-center sm:items-start sm:text-left"
-      >
-        <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#FF6014] font-bold mb-2">
-          <span className="w-2 h-2 rounded-full bg-[#FF6014] inline-block" />
-          SKILLS & CAPABILITIES
-        </span>
-
-        <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight mb-2">
-          Skills <span className="text-[#FF6014]">&amp; Expertise</span>
-        </h2>
-
-        <p className="text-xs sm:text-sm font-medium text-slate-600 max-w-xl leading-relaxed mx-auto">
-          Comprehensive overview of core programming languages, frameworks, databases, and developer tools.
-        </p>
-      </motion.div>
+      <SectionHeader
+        badge="SKILLS & CAPABILITIES"
+        titlePrefix="Skills &"
+        titleHighlight="Expertise"
+        subtitle="Comprehensive overview of core programming languages, frameworks, databases, and developer tools."
+        align="left"
+      />
 
       {/* Cards */}
       {isLoading ? (

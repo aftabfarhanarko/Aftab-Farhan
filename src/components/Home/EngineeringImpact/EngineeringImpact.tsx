@@ -43,26 +43,22 @@ const impactMetrics = [
   },
 ];
 
+import SectionHeader from "@/components/Common/SectionHeader";
+
 export default function EngineeringImpact() {
   return (
     <section id="engineering-impact" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/80 text-[#FF6014] text-[11px] font-bold uppercase tracking-wider mb-2.5">
-              <Activity className="w-3.5 h-3.5" />
-              Measurable Performance
-            </div>
-            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
-              Engineering <span className="text-[#FF6014]">Impact</span>
-            </h2>
-          </div>
-          <p className="text-slate-600 max-w-md text-xs sm:text-sm font-medium leading-relaxed">
-            Architecting robust full-stack applications with an unrelenting focus on performance benchmarks, scalability, and clean system design.
-          </p>
-        </div>
+        <SectionHeader
+          badge="MEASURABLE PERFORMANCE"
+          titlePrefix="Engineering"
+          titleHighlight="Impact"
+          subtitle="Architecting robust full-stack applications with an unrelenting focus on performance benchmarks, scalability, and clean system design."
+          align="left"
+          icon={Activity}
+        />
 
         {/* Grid of Metric Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">

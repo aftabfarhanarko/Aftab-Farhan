@@ -35,26 +35,22 @@ const caseStudies = [
   },
 ];
 
+import SectionHeader from "@/components/Common/SectionHeader";
+
 export default function SelectedCaseStudies() {
   return (
     <section id="case-studies" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/80 text-[#FF6014] text-[11px] font-bold uppercase tracking-wider mb-2.5">
-              <FolderKanban className="w-3.5 h-3.5" />
-              Technical Breakdown
-            </div>
-            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
-              Selected <span className="text-[#FF6014]">Case Studies</span>
-            </h2>
-          </div>
-          <p className="text-slate-600 max-w-md text-xs sm:text-sm font-medium leading-relaxed">
-            Deep dive into production engineering solutions, system architecture decisions, and measured performance outcomes.
-          </p>
-        </div>
+        <SectionHeader
+          badge="TECHNICAL BREAKDOWN"
+          titlePrefix="Selected"
+          titleHighlight="Case Studies"
+          subtitle="Deep dive into production engineering solutions, system architecture decisions, and measured performance outcomes."
+          align="left"
+          icon={FolderKanban}
+        />
 
         {/* Case Studies Cards */}
         <div className="space-y-8">

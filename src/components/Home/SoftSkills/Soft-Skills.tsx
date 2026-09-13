@@ -12,6 +12,8 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
+import SectionHeader from "@/components/Common/SectionHeader";
+
 export default function SoftSkills() {
   const leadershipItems = [
     {
@@ -55,26 +57,14 @@ export default function SoftSkills() {
   return (
     <section id="leadership" className="mb-20 sm:mb-24 scroll-mt-24">
       {/* Section Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-10 sm:mb-12 flex flex-col items-center sm:items-start text-center sm:text-left"
-      >
-        <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#FF6014] mb-2">
-          <span className="w-2 h-2 rounded-full bg-[#FF6014] inline-block animate-pulse" />
-          GOVERNANCE & TEAM EXCELLENCE
-        </span>
-        
-        <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-tight">
-          How I <span className="text-[#FF6014]">Work.</span>
-        </h2>
-        
-        <p className="mt-2 text-xs sm:text-sm text-slate-600 max-w-xl font-medium leading-relaxed">
-          Core professional capabilities, engineering philosophy, and collaborative principles.
-        </p>
-      </motion.div>
+      <SectionHeader
+        badge="GOVERNANCE & TEAM EXCELLENCE"
+        titlePrefix="How I"
+        titleHighlight="Work."
+        subtitle="Core professional capabilities, engineering philosophy, and collaborative team leadership principles."
+        align="left"
+        icon={Users}
+      />
 
       {/* Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
