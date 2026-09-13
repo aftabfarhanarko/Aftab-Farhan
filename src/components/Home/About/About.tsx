@@ -1,13 +1,22 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AboutData, containerVariants } from "./types";
 import AboutProfile from "./AboutProfile";
 import AboutBio from "./AboutBio";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export default function About() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const profileRef = useRef<HTMLDivElement | null>(null);
+
   const {
     data: aboutData,
     isLoading,
@@ -19,6 +28,43 @@ export default function About() {
       return res.json();
     },
   });
+
+  useEffect(() => {
+    if (isLoading || !sectionRef.current || !profileRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
+        // GSAP ScrollTrigger pinning for left profile column
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top 90px",
+          end: "bottom bottom",
+          pin: profileRef.current,
+          pinSpacing: false,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        });
+
+        // Micro scale & fade stagger for left profile elements
+        gsap.from(".about-profile-card", {
+          opacity: 0,
+          y: 24,
+          scale: 0.95,
+          stagger: 0.08,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        });
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [isLoading]);
 
   if (isLoading) {
     return (
@@ -44,7 +90,7 @@ export default function About() {
   const introParagraphs = aboutData?.introParagraphs || [];
 
   return (
-    <section id="about" className="mt-10 md:mt-0 lg:mt-0 mb-20 sm:mb-24 scroll-mt-24">
+    <section id="about" ref={sectionRef} className="mt-10 md:mt-0 lg:mt-0 mb-20 sm:mb-24 scroll-mt-24 relative">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -56,6 +102,7 @@ export default function About() {
           stats={stats}
           proficiencies={proficiencies}
           availabilityText={availabilityText}
+          profileRef={profileRef}
         />
         <AboutBio
           clientFocusedText={clientFocusedText}

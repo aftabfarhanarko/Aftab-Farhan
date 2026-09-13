@@ -10,7 +10,7 @@ export interface Project {
 
 export interface Proficiency {
   name: string;
-  pct: number;
+  pct?: number;
 }
 
 export interface AboutData {
