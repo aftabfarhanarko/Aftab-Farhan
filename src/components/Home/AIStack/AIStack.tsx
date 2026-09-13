@@ -129,7 +129,7 @@ export default function AIStack() {
     { name: "Trae AI", role: "Adaptive IDE Agent", icon: "/trae.jpg" },
   ];
 
-  // GSAP Real-Life Dynamic Motion Animations
+  // GSAP Real-Life Dynamic Motion Animations (Primary Orange Palette)
   useEffect(() => {
     if (!svgRef.current || !mainPathRef.current || !containerRef.current) return;
 
@@ -164,14 +164,14 @@ export default function AIStack() {
         });
       }
 
-      // 3. Real-Life Energy Particles Traveling Along SVG Path (getPointAtLength)
+      // 3. Real-Life Energy Particles Traveling Along SVG Path (Primary Orange Colors)
       const particleElements = svgRef.current?.querySelectorAll(".path-energy-particle");
       particleElements?.forEach((particle, idx) => {
         const progressObj = { progress: idx * 0.25 }; // Staggered starting points
 
         gsap.to(progressObj, {
           progress: "+=1",
-          duration: 5,
+          duration: 4.5,
           repeat: -1,
           ease: "none",
           onUpdate: () => {
@@ -223,7 +223,7 @@ export default function AIStack() {
         icon={Sparkles}
       />
 
-      {/* FREESTANDING GSAP REAL-LIFE ANIMATED SVG WORKFLOW (BACKGROUND-TRANSPARENT) */}
+      {/* FREESTANDING GSAP ANIMATED SVG WORKFLOW (PRIMARY ORANGE BRAND PALETTE) */}
       <div className="mb-10 w-full text-left">
         {/* Top Status Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200/80">
@@ -234,8 +234,8 @@ export default function AIStack() {
             <div>
               <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight flex items-center gap-2">
                 Automated 8-Stage Engineering Circuit
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 text-[10px] font-mono font-black uppercase tracking-wider flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                <span className="px-2.5 py-0.5 rounded-full bg-orange-50 text-[#FF6014] border border-orange-200 text-[10px] font-mono font-black uppercase tracking-wider flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF6014] animate-ping" />
                   REAL-TIME GSAP MOTION
                 </span>
               </h3>
@@ -253,7 +253,7 @@ export default function AIStack() {
           </div>
         </div>
 
-        {/* Freestanding SVG Circuit Canvas with Real-Life Line Motion */}
+        {/* Freestanding SVG Circuit Canvas with Primary Orange Palette */}
         <div className="w-full overflow-x-auto custom-scrollbar pb-2">
           <div className="min-w-[760px] relative">
             <svg
@@ -262,21 +262,22 @@ export default function AIStack() {
               className="w-full h-auto overflow-visible select-none"
             >
               <defs>
-                {/* SVG Glow Filters */}
-                <filter id="glow-particle-filter" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="6" result="blur" />
+                {/* SVG Glow Filters - Primary Orange */}
+                <filter id="glow-orange-particle" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="5" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
 
-                <filter id="glow-path-filter" x="-20%" y="-20%" width="140%" height="140%">
+                <filter id="glow-orange-path" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur stdDeviation="4" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
 
-                <linearGradient id="realLifeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                {/* Primary Orange Brand Gradient */}
+                <linearGradient id="brandOrangeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#FF6014" />
-                  <stop offset="35%" stopColor="#EC4899" />
-                  <stop offset="70%" stopColor="#8B5CF6" />
+                  <stop offset="35%" stopColor="#FF8A00" />
+                  <stop offset="70%" stopColor="#EA580C" />
                   <stop offset="100%" stopColor="#FF6014" />
                 </linearGradient>
               </defs>
@@ -285,23 +286,23 @@ export default function AIStack() {
               <path
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
                 fill="none"
-                stroke="#E2E8F0"
+                stroke="#F1F5F9"
                 strokeWidth="6"
                 strokeLinecap="round"
               />
 
-              {/* 2. Main Gradient Path (GSAP Animated Draw) */}
+              {/* 2. Main Primary Orange Gradient Path */}
               <path
                 ref={mainPathRef}
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
                 fill="none"
-                stroke="url(#realLifeGradient)"
+                stroke="url(#brandOrangeGradient)"
                 strokeWidth="4"
                 strokeLinecap="round"
-                filter="url(#glow-path-filter)"
+                filter="url(#glow-orange-path)"
               />
 
-              {/* 3. Flowing Dashed Signal Line (Real-Life Moving Dashes) */}
+              {/* 3. Flowing Dashed Signal Line */}
               <path
                 className="flowing-dash-line"
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
@@ -310,41 +311,41 @@ export default function AIStack() {
                 strokeWidth="2.5"
                 strokeDasharray="10 14"
                 strokeLinecap="round"
-                opacity="0.8"
+                opacity="0.9"
               />
 
-              {/* 4. Real-Life GSAP Moving Energy Particles along SVG Path */}
+              {/* 4. Real-Life Energy Particles (Primary Orange & Amber Accents) */}
               <circle
                 className="path-energy-particle"
-                r="7"
+                r="7.5"
                 fill="#FF6014"
                 stroke="#FFFFFF"
                 strokeWidth="2"
-                filter="url(#glow-particle-filter)"
+                filter="url(#glow-orange-particle)"
               />
               <circle
                 className="path-energy-particle"
-                r="7"
-                fill="#8B5CF6"
+                r="7.5"
+                fill="#FF8A00"
                 stroke="#FFFFFF"
                 strokeWidth="2"
-                filter="url(#glow-particle-filter)"
+                filter="url(#glow-orange-particle)"
               />
               <circle
                 className="path-energy-particle"
-                r="7"
-                fill="#EC4899"
+                r="7.5"
+                fill="#EA580C"
                 stroke="#FFFFFF"
                 strokeWidth="2"
-                filter="url(#glow-particle-filter)"
+                filter="url(#glow-orange-particle)"
               />
               <circle
                 className="path-energy-particle"
-                r="7"
+                r="7.5"
                 fill="#FF6014"
                 stroke="#FFFFFF"
                 strokeWidth="2"
-                filter="url(#glow-particle-filter)"
+                filter="url(#glow-orange-particle)"
               />
 
               {/* 5. SVG Stage Nodes */}
@@ -358,7 +359,7 @@ export default function AIStack() {
                     onClick={() => setActiveStageIdx(idx)}
                     onMouseEnter={() => setActiveStageIdx(idx)}
                   >
-                    {/* Active Ripple Wave */}
+                    {/* Active Primary Orange Ripple Waves */}
                     {isActive && (
                       <>
                         <circle
@@ -367,7 +368,7 @@ export default function AIStack() {
                           r="34"
                           fill="none"
                           stroke="#FF6014"
-                          strokeWidth="2"
+                          strokeWidth="2.5"
                           className="animate-ping opacity-60"
                         />
                         <circle
@@ -375,7 +376,7 @@ export default function AIStack() {
                           cy={stage.y}
                           r="42"
                           fill="none"
-                          stroke="#8B5CF6"
+                          stroke="#FF8A00"
                           strokeWidth="1.5"
                           className="animate-pulse opacity-40"
                         />
@@ -390,7 +391,7 @@ export default function AIStack() {
                       fill={isActive ? "#FF6014" : "#FFFFFF"}
                       stroke={isActive ? "#FF6014" : "#CBD5E1"}
                       strokeWidth={isActive ? "3" : "2"}
-                      filter={isActive ? "url(#glow-particle-filter)" : undefined}
+                      filter={isActive ? "url(#glow-orange-particle)" : undefined}
                       className="transition-all duration-300 group-hover/node:stroke-[#FF6014] group-hover/node:scale-110 shadow-md"
                     />
 
@@ -461,7 +462,7 @@ export default function AIStack() {
                 </div>
               </div>
 
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-800 shadow-2xs">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-orange-50/60 border border-orange-200/80 text-xs font-bold text-slate-800 shadow-2xs">
                 <Cpu size={14} className="text-[#FF6014]" />
                 <span>AI Tool: <strong className="text-[#FF6014]">{activeStage.tool}</strong></span>
               </div>
