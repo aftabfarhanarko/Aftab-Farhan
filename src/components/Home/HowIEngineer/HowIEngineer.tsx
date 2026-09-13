@@ -296,16 +296,16 @@ export default function HowIEngineer() {
               <div
                 onClick={() => setActiveStepIdx(0)}
                 onMouseEnter={() => setActiveStepIdx(0)}
-                className={`branch-node-card absolute left-4 top-[35px] z-20 w-[240px] p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer shadow-2xs ${
+                className={`branch-node-card absolute left-4 top-[35px] z-20 w-[240px] p-3.5 rounded-2xl transition-all duration-300 cursor-pointer shadow-2xs ${
                   activeStepIdx === 0
-                    ? "bg-white border-2 border-[#FF6014] shadow-md ring-1 ring-[#FF6014]/20"
-                    : "bg-white/95 border-slate-200/90 hover:border-orange-300"
+                    ? "glass-card-featured border-2 border-[#FF6014] shadow-md ring-1 ring-[#FF6014]/20"
+                    : "glass-card-compact hover:border-orange-300"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                      activeStepIdx === 0 ? "bg-[#FF6014] text-white" : "bg-orange-50 text-[#FF6014] border border-orange-200/70"
+                      activeStepIdx === 0 ? "bg-[#FF6014] text-white" : "bg-orange-50/80 text-[#FF6014] border border-orange-200/70"
                     }`}>
                       <Layers size={15} />
                     </div>
@@ -326,16 +326,16 @@ export default function HowIEngineer() {
               <div
                 onClick={() => setActiveStepIdx(1)}
                 onMouseEnter={() => setActiveStepIdx(1)}
-                className={`branch-node-card absolute left-4 bottom-[35px] z-20 w-[240px] p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer shadow-2xs ${
+                className={`branch-node-card absolute left-4 bottom-[35px] z-20 w-[240px] p-3.5 rounded-2xl transition-all duration-300 cursor-pointer shadow-2xs ${
                   activeStepIdx === 1
-                    ? "bg-white border-2 border-[#FF6014] shadow-md ring-1 ring-[#FF6014]/20"
-                    : "bg-white/95 border-slate-200/90 hover:border-orange-300"
+                    ? "glass-card-featured border-2 border-[#FF6014] shadow-md ring-1 ring-[#FF6014]/20"
+                    : "glass-card-compact hover:border-orange-300"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                      activeStepIdx === 1 ? "bg-[#FF6014] text-white" : "bg-orange-50 text-[#FF6014] border border-orange-200/70"
+                      activeStepIdx === 1 ? "bg-[#FF6014] text-white" : "bg-orange-50/80 text-[#FF6014] border border-orange-200/70"
                     }`}>
                       <Code2 size={15} />
                     </div>
@@ -356,16 +356,16 @@ export default function HowIEngineer() {
               <div
                 onClick={() => setActiveStepIdx(2)}
                 onMouseEnter={() => setActiveStepIdx(2)}
-                className={`branch-node-card absolute right-4 top-[35px] z-20 w-[240px] p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer shadow-2xs ${
+                className={`branch-node-card absolute right-4 top-[35px] z-20 w-[240px] p-3.5 rounded-2xl transition-all duration-300 cursor-pointer shadow-2xs ${
                   activeStepIdx === 2
-                    ? "bg-white border-2 border-[#FF6014] shadow-md ring-1 ring-[#FF6014]/20"
-                    : "bg-white/95 border-slate-200/90 hover:border-orange-300"
+                    ? "glass-card-featured border-2 border-[#FF6014] shadow-md ring-1 ring-[#FF6014]/20"
+                    : "glass-card-compact hover:border-orange-300"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                      activeStepIdx === 2 ? "bg-[#FF6014] text-white" : "bg-orange-50 text-[#FF6014] border border-orange-200/70"
+                      activeStepIdx === 2 ? "bg-[#FF6014] text-white" : "bg-orange-50/80 text-[#FF6014] border border-orange-200/70"
                     }`}>
                       <Database size={15} />
                     </div>
@@ -386,16 +386,16 @@ export default function HowIEngineer() {
               <div
                 onClick={() => setActiveStepIdx(3)}
                 onMouseEnter={() => setActiveStepIdx(3)}
-                className={`branch-node-card absolute right-4 bottom-[35px] z-20 w-[240px] p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer shadow-2xs ${
+                className={`branch-node-card absolute right-4 bottom-[35px] z-20 w-[240px] p-3.5 rounded-2xl transition-all duration-300 cursor-pointer shadow-2xs ${
                   activeStepIdx === 3
-                    ? "bg-white border-2 border-[#FF6014] shadow-md ring-1 ring-[#FF6014]/20"
-                    : "bg-white/95 border-slate-200/90 hover:border-orange-300"
+                    ? "glass-card-featured border-2 border-[#FF6014] shadow-md ring-1 ring-[#FF6014]/20"
+                    : "glass-card-compact hover:border-orange-300"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                      activeStepIdx === 3 ? "bg-[#FF6014] text-white" : "bg-orange-50 text-[#FF6014] border border-orange-200/70"
+                      activeStepIdx === 3 ? "bg-[#FF6014] text-white" : "bg-orange-50/80 text-[#FF6014] border border-orange-200/70"
                     }`}>
                       <Terminal size={15} />
                     </div>
@@ -424,7 +424,7 @@ export default function HowIEngineer() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3 }}
-            className="p-7 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-6 text-left"
+            className="p-7 sm:p-8 rounded-3xl glass-card-primary space-y-6 text-left shadow-md"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
               <div className="flex items-center gap-3">
@@ -457,7 +457,7 @@ export default function HowIEngineer() {
               </span>
               <div className="grid sm:grid-cols-3 gap-3">
                 {activePrinciple.points.map((pt, pIdx) => (
-                  <div key={pIdx} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-2.5">
+                  <div key={pIdx} className="p-3.5 rounded-xl glass-card-compact flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#FF6014] shrink-0 mt-0.5" />
                     <span className="text-xs text-slate-800 font-semibold leading-relaxed">
                       {pt}

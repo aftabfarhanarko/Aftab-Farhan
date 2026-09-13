@@ -444,7 +444,7 @@ export default function AIStack() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3 }}
-            className="mt-6 p-6 rounded-2xl bg-white border border-slate-200/90 grid md:grid-cols-12 gap-6 items-center shadow-xs"
+            className="mt-6 p-6 rounded-2xl glass-card-primary grid md:grid-cols-12 gap-6 items-center shadow-xs"
           >
             {/* Left Info Column */}
             <div className="md:col-span-4 space-y-3 border-b md:border-b-0 md:border-r border-slate-100 pb-4 md:pb-0 md:pr-6">
@@ -500,7 +500,7 @@ export default function AIStack() {
                 className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer border ${
                   activeStageIdx === i
                     ? "bg-[#FF6014] text-white border-[#FF6014] shadow-xs"
-                    : "bg-white text-slate-700 border-slate-200 hover:bg-orange-50 hover:border-orange-200 hover:text-[#FF6014]"
+                    : "glass-card-compact text-slate-700 hover:border-orange-200 hover:text-[#FF6014]"
                 }`}
               >
                 {st.step}. {st.title}
@@ -515,7 +515,7 @@ export default function AIStack() {
         {/* Left: AI Engineering Toolkit */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="lg:col-span-8 p-6 rounded-3xl border border-slate-200/90 bg-white shadow-sm hover:shadow-md transition-all text-left space-y-4"
+          className="lg:col-span-8 p-6 rounded-3xl glass-card-primary shadow-sm hover:shadow-md transition-all text-left space-y-4"
         >
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
@@ -532,7 +532,7 @@ export default function AIStack() {
               <motion.div
                 key={tool.name}
                 whileHover={{ y: -2 }}
-                className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-orange-300 hover:bg-orange-50/30 transition-all"
+                className="flex items-center gap-3 p-3 rounded-2xl glass-card-compact hover:border-orange-300 transition-all"
               >
                 <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 p-1.5 flex items-center justify-center shrink-0 shadow-2xs">
                   <img src={tool.icon} alt={tool.name} className="w-full h-full object-contain rounded" />
@@ -549,7 +549,7 @@ export default function AIStack() {
         {/* Right: Engineering Ownership Guarantee */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="lg:col-span-4 p-6 rounded-3xl border border-orange-200/90 bg-orange-50/50 text-left space-y-3 relative overflow-hidden shadow-sm hover:shadow-md transition-all"
+          className="lg:col-span-4 p-6 rounded-3xl glass-card-featured text-left space-y-3 relative overflow-hidden shadow-sm hover:shadow-md transition-all"
         >
           <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FF6014]" />
           <div className="flex items-center gap-2 text-[#FF6014]">

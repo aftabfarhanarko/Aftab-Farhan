@@ -31,7 +31,7 @@ export default function AboutTechStack({ frontendSkills, backendSkills, tools }:
                       key={`frontend-${i}`}
                       whileHover={{ scale: 1.06, y: -2 }}
                       transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                      className="text-sm font-bold px-4 py-2 rounded-xl border border-slate-300 text-slate-900 bg-slate-50 hover:bg-orange-50 hover:border-orange-300 hover:text-[#FF6014] transition-all duration-200 cursor-default"
+                      className="text-sm font-bold px-4 py-2 rounded-xl glass-card-compact text-slate-900 hover:border-orange-300 hover:text-[#FF6014] transition-all duration-200 cursor-default"
                     >
                       {skill}
                     </motion.span>
@@ -57,7 +57,7 @@ export default function AboutTechStack({ frontendSkills, backendSkills, tools }:
                       key={`backend-${i}`}
                       whileHover={{ scale: 1.06, y: -2 }}
                       transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                      className="text-sm font-bold px-4 py-2 rounded-xl border border-slate-300 text-slate-900 bg-slate-50 hover:bg-orange-50 hover:border-orange-300 hover:text-[#FF6014] transition-all duration-200 cursor-default"
+                      className="text-sm font-bold px-4 py-2 rounded-xl glass-card-compact text-slate-900 hover:border-orange-300 hover:text-[#FF6014] transition-all duration-200 cursor-default"
                     >
                       {skill}
                     </motion.span>
@@ -87,7 +87,7 @@ export default function AboutTechStack({ frontendSkills, backendSkills, tools }:
                     key={`tool-${i}`}
                     whileHover={{ scale: 1.06, y: -2 }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                    className="text-sm font-bold px-4 py-2 rounded-xl border border-slate-300 text-slate-900 bg-slate-50 hover:bg-orange-50 hover:border-orange-300 hover:text-[#FF6014] transition-all duration-200 cursor-default tracking-wide"
+                    className="text-sm font-bold px-4 py-2 rounded-xl glass-card-compact text-slate-900 hover:border-orange-300 hover:text-[#FF6014] transition-all duration-200 cursor-default tracking-wide"
                   >
                     {tool}
                   </motion.span>
