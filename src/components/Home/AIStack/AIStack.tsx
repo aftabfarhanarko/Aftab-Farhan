@@ -34,6 +34,7 @@ if (typeof window !== "undefined") {
 export default function AIStack() {
   const [activeStageIdx, setActiveStageIdx] = useState<number>(0);
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const mainPathRef = useRef<SVGPathElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const workflowStages = [
@@ -128,50 +129,67 @@ export default function AIStack() {
     { name: "Trae AI", role: "Adaptive IDE Agent", icon: "/trae.jpg" },
   ];
 
-  // GSAP Animations setup
+  // GSAP Real-Life Dynamic Motion Animations
   useEffect(() => {
-    if (!svgRef.current || !containerRef.current) return;
+    if (!svgRef.current || !mainPathRef.current || !containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      // 1. Animate SVG Path Lines drawing on scroll
-      const paths = svgRef.current?.querySelectorAll(".workflow-path");
-      paths?.forEach((path) => {
-        const p = path as SVGPathElement;
-        const length = p.getTotalLength();
-        gsap.set(p, {
-          strokeDasharray: length,
-          strokeDashoffset: length,
-        });
+      const pathEl = mainPathRef.current!;
+      const pathLength = pathEl.getTotalLength();
 
-        gsap.to(p, {
-          strokeDashoffset: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
+      // 1. Initial SVG Line Draw on Scroll
+      gsap.set(pathEl, {
+        strokeDasharray: pathLength,
+        strokeDashoffset: pathLength,
+      });
+
+      gsap.to(pathEl, {
+        strokeDashoffset: 0,
+        duration: 1.6,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+      });
+
+      // 2. Animated Flowing Dashed Signal Line
+      const flowDash = svgRef.current?.querySelector(".flowing-dash-line");
+      if (flowDash) {
+        gsap.to(flowDash, {
+          strokeDashoffset: -200,
+          duration: 3,
+          repeat: -1,
+          ease: "none",
+        });
+      }
+
+      // 3. Real-Life Energy Particles Traveling Along SVG Path (getPointAtLength)
+      const particleElements = svgRef.current?.querySelectorAll(".path-energy-particle");
+      particleElements?.forEach((particle, idx) => {
+        const progressObj = { progress: idx * 0.25 }; // Staggered starting points
+
+        gsap.to(progressObj, {
+          progress: "+=1",
+          duration: 5,
+          repeat: -1,
+          ease: "none",
+          onUpdate: () => {
+            const currentProgress = progressObj.progress % 1;
+            const pt = pathEl.getPointAtLength(currentProgress * pathLength);
+            particle.setAttribute("cx", String(pt.x));
+            particle.setAttribute("cy", String(pt.y));
           },
         });
       });
 
-      // 2. Animate GSAP Pulse Dots along the line continuously
-      const pulses = svgRef.current?.querySelectorAll(".path-pulse");
-      pulses?.forEach((pulse) => {
-        gsap.to(pulse, {
-          strokeDashoffset: -240,
-          duration: 3.2,
-          repeat: -1,
-          ease: "none",
-        });
-      });
-
-      // 3. Stagger animate SVG Nodes scale in
+      // 4. Stagger animate SVG Nodes scale in
       gsap.from(".svg-workflow-node", {
         scale: 0,
         opacity: 0,
         transformOrigin: "center center",
         stagger: 0.08,
-        duration: 0.5,
+        duration: 0.6,
         ease: "back.out(1.7)",
         scrollTrigger: {
           trigger: containerRef.current,
@@ -179,7 +197,7 @@ export default function AIStack() {
         },
       });
 
-      // 4. Auto stage loop timer
+      // 5. Auto stage loop timer
       const interval = setInterval(() => {
         setActiveStageIdx((prev) => (prev + 1) % workflowStages.length);
       }, 4500);
@@ -205,9 +223,9 @@ export default function AIStack() {
         icon={Sparkles}
       />
 
-      {/* FREESTANDING GSAP ANIMATED SVG WORKFLOW (BACKGROUND-TRANSPARENT & BORDERLESS) */}
+      {/* FREESTANDING GSAP REAL-LIFE ANIMATED SVG WORKFLOW (BACKGROUND-TRANSPARENT) */}
       <div className="mb-10 w-full text-left">
-        {/* Top Floating Status Row */}
+        {/* Top Status Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200/80">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FF6014] shadow-2xs">
@@ -216,12 +234,13 @@ export default function AIStack() {
             <div>
               <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight flex items-center gap-2">
                 Automated 8-Stage Engineering Circuit
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 text-[10px] font-mono font-black uppercase tracking-wider">
-                  ACTIVE
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 text-[10px] font-mono font-black uppercase tracking-wider flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                  REAL-TIME GSAP MOTION
                 </span>
               </h3>
               <p className="text-xs text-slate-500 font-semibold">
-                Select any node in the SVG circuit to examine stage mechanics.
+                Select any node in the circuit to observe real-time data flow mechanics.
               </p>
             </div>
           </div>
@@ -234,7 +253,7 @@ export default function AIStack() {
           </div>
         </div>
 
-        {/* Freestanding SVG Circuit Canvas */}
+        {/* Freestanding SVG Circuit Canvas with Real-Life Line Motion */}
         <div className="w-full overflow-x-auto custom-scrollbar pb-2">
           <div className="min-w-[760px] relative">
             <svg
@@ -243,53 +262,92 @@ export default function AIStack() {
               className="w-full h-auto overflow-visible select-none"
             >
               <defs>
-                <filter id="glow-orange-clean" x="-20%" y="-20%" width="140%" height="140%">
+                {/* SVG Glow Filters */}
+                <filter id="glow-particle-filter" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+
+                <filter id="glow-path-filter" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur stdDeviation="4" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
-                <filter id="glow-node-clean" x="-30%" y="-30%" width="160%" height="160%">
-                  <feGaussianBlur stdDeviation="5" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-                <linearGradient id="pathGradientClean" x1="0%" y1="0%" x2="100%" y2="0%">
+
+                <linearGradient id="realLifeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#FF6014" />
-                  <stop offset="50%" stopColor="#8B5CF6" />
+                  <stop offset="35%" stopColor="#EC4899" />
+                  <stop offset="70%" stopColor="#8B5CF6" />
                   <stop offset="100%" stopColor="#FF6014" />
                 </linearGradient>
               </defs>
 
-              {/* Connecting Background Track */}
+              {/* 1. Underlying Base Track */}
               <path
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
                 fill="none"
                 stroke="#E2E8F0"
-                strokeWidth="5"
+                strokeWidth="6"
                 strokeLinecap="round"
               />
 
-              {/* Animated GSAP Path Track */}
+              {/* 2. Main Gradient Path (GSAP Animated Draw) */}
               <path
-                className="workflow-path"
+                ref={mainPathRef}
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
                 fill="none"
-                stroke="url(#pathGradientClean)"
-                strokeWidth="3.5"
+                stroke="url(#realLifeGradient)"
+                strokeWidth="4"
                 strokeLinecap="round"
+                filter="url(#glow-path-filter)"
               />
 
-              {/* Pulse Beam Particle */}
+              {/* 3. Flowing Dashed Signal Line (Real-Life Moving Dashes) */}
               <path
-                className="path-pulse"
+                className="flowing-dash-line"
                 d="M 80,70 L 280,70 L 480,70 L 680,70 C 750,70 750,190 680,190 L 480,190 L 280,190 L 80,190"
                 fill="none"
-                stroke="#FF6014"
-                strokeWidth="5"
+                stroke="#FFFFFF"
+                strokeWidth="2.5"
+                strokeDasharray="10 14"
                 strokeLinecap="round"
-                strokeDasharray="25 175"
-                filter="url(#glow-orange-clean)"
+                opacity="0.8"
               />
 
-              {/* SVG Stage Nodes */}
+              {/* 4. Real-Life GSAP Moving Energy Particles along SVG Path */}
+              <circle
+                className="path-energy-particle"
+                r="7"
+                fill="#FF6014"
+                stroke="#FFFFFF"
+                strokeWidth="2"
+                filter="url(#glow-particle-filter)"
+              />
+              <circle
+                className="path-energy-particle"
+                r="7"
+                fill="#8B5CF6"
+                stroke="#FFFFFF"
+                strokeWidth="2"
+                filter="url(#glow-particle-filter)"
+              />
+              <circle
+                className="path-energy-particle"
+                r="7"
+                fill="#EC4899"
+                stroke="#FFFFFF"
+                strokeWidth="2"
+                filter="url(#glow-particle-filter)"
+              />
+              <circle
+                className="path-energy-particle"
+                r="7"
+                fill="#FF6014"
+                stroke="#FFFFFF"
+                strokeWidth="2"
+                filter="url(#glow-particle-filter)"
+              />
+
+              {/* 5. SVG Stage Nodes */}
               {workflowStages.map((stage, idx) => {
                 const isActive = activeStageIdx === idx;
 
@@ -300,20 +358,31 @@ export default function AIStack() {
                     onClick={() => setActiveStageIdx(idx)}
                     onMouseEnter={() => setActiveStageIdx(idx)}
                   >
-                    {/* Active Halo Pulse */}
+                    {/* Active Ripple Wave */}
                     {isActive && (
-                      <circle
-                        cx={stage.x}
-                        cy={stage.y}
-                        r="32"
-                        fill="none"
-                        stroke="#FF6014"
-                        strokeWidth="2.5"
-                        className="animate-ping opacity-60"
-                      />
+                      <>
+                        <circle
+                          cx={stage.x}
+                          cy={stage.y}
+                          r="34"
+                          fill="none"
+                          stroke="#FF6014"
+                          strokeWidth="2"
+                          className="animate-ping opacity-60"
+                        />
+                        <circle
+                          cx={stage.x}
+                          cy={stage.y}
+                          r="42"
+                          fill="none"
+                          stroke="#8B5CF6"
+                          strokeWidth="1.5"
+                          className="animate-pulse opacity-40"
+                        />
+                      </>
                     )}
 
-                    {/* Outer Circle Container */}
+                    {/* Outer Node Ring */}
                     <circle
                       cx={stage.x}
                       cy={stage.y}
@@ -321,11 +390,11 @@ export default function AIStack() {
                       fill={isActive ? "#FF6014" : "#FFFFFF"}
                       stroke={isActive ? "#FF6014" : "#CBD5E1"}
                       strokeWidth={isActive ? "3" : "2"}
-                      filter={isActive ? "url(#glow-node-clean)" : undefined}
+                      filter={isActive ? "url(#glow-particle-filter)" : undefined}
                       className="transition-all duration-300 group-hover/node:stroke-[#FF6014] group-hover/node:scale-110 shadow-md"
                     />
 
-                    {/* Inner Circle Disc */}
+                    {/* Inner Node Disc */}
                     <circle
                       cx={stage.x}
                       cy={stage.y}
@@ -366,7 +435,7 @@ export default function AIStack() {
           </div>
         </div>
 
-        {/* Dynamic Detail Spotlight Box (Clean Professional English) */}
+        {/* Dynamic Detail Spotlight Box */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeStage.step}
