@@ -1,8 +1,10 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   GraduationCap,
   MapPin,
@@ -14,6 +16,11 @@ import {
   Sparkles,
   Loader2,
 } from "lucide-react";
+import SectionHeader from "@/components/Common/SectionHeader";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface EducationData {
   id: string;
@@ -135,6 +142,9 @@ function EducationCard({ edu, index }: { edu: EducationData; index: number }) {
 }
 
 export default function Education() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const leftPanelRef = useRef<HTMLDivElement | null>(null);
+
   const { data: education, isLoading } = useQuery<EducationData[]>({
     queryKey: ["education"],
     queryFn: async () => {
@@ -143,31 +153,45 @@ export default function Education() {
     },
   });
 
+  useEffect(() => {
+    if (isLoading || !sectionRef.current || !leftPanelRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top 90px",
+          end: "bottom bottom",
+          pin: leftPanelRef.current,
+          pinSpacing: false,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        });
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [isLoading, education]);
+
   return (
     <section
       id="education"
-      className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0"
+      ref={sectionRef}
+      className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0 relative"
     >
       <div className="grid lg:grid-cols-[330px_1fr] gap-10 lg:gap-16 items-start">
-        {/* Left sticky panel */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left space-y-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-200/80 bg-orange-50/80 text-[#FF6014] text-xs font-black shadow-sm"
-          >
-            <Star className="w-4 h-4 text-[#FF6014] fill-[#FF6014]/20" />
-            <span>Academic Qualifications</span>
-          </motion.div>
-
-          <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight leading-tight text-slate-900">
-            Education <span className="text-[#FF6014]">&amp; Background</span>
-          </h2>
-          <p className="text-xs sm:text-sm font-medium text-slate-600 leading-relaxed max-w-xl">
-            Academic qualifications, key coursework, and foundational computer science principles.
-          </p>
-
+        {/* Left sticky panel with GSAP Pin */}
+        <div ref={leftPanelRef} className="flex flex-col space-y-4 lg:sticky lg:top-24 self-start z-20">
+          <SectionHeader
+            badge="ACADEMIC QUALIFICATIONS"
+            titlePrefix="Education &"
+            titleHighlight="Background"
+            subtitle="Formal computer science degree & foundational academic coursework powering my software engineering expertise."
+            align="left"
+            icon={GraduationCap}
+          />
           <motion.div
             whileHover={{ y: -4, scale: 1.02 }}
             transition={{ duration: 0.2 }}
