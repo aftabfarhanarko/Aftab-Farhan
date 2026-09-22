@@ -2,10 +2,9 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import { useToast } from "@/components/Dashboard/ui/ToastContext";
 import AboutHeader from "./AboutHeader";
-import FloatingSaveBar from "./FloatingSaveBar";
 import type { AboutData, Project, Stat } from "./types";
 import BasicInfoSection from "./BasicInfoSection";
 import IntroductionSection from "./IntroductionSection";
@@ -14,7 +13,6 @@ import SkillsSection from "./SkillsSection";
 import WorkHighlightsSection from "./WorkHighlightsSection";
 import PhilosophySection from "./PhilosophySection";
 import MentorshipSection from "./MentorshipSection";
-
 
 const emptyStat: Stat = { num: "", label: "" };
 const emptyProject: Project = { title: "", description: "" };
@@ -35,6 +33,27 @@ const defaultAboutData: AboutData = {
   mentorTitle: "",
   mentorDescription: "",
 };
+
+/* Reusable premium section wrapper */
+function SectionCard({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex items-center gap-2 mb-5">
+        <span className="w-2 h-2 rounded-full bg-[#FF6014] animate-pulse" />
+        <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-black/60 font-['Bai_Jamjuree']">
+          {title}
+        </h2>
+      </div>
+      {children}
+    </div>
+  );
+}
 
 export default function AboutManager() {
   const { showToast } = useToast();
@@ -181,59 +200,123 @@ export default function AboutManager() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-7 h-7 animate-spin text-foreground/20" />
+        <Loader2 className="w-7 h-7 animate-spin text-[#FF6014]" />
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-full px-4 sm:px-6 lg:px-8 pb-32">
-      <AboutHeader />
+    <div className="w-full pb-24 bg-gray-50 min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ===== Sticky Header with Save Button ===== */}
+        <div className="sticky top-0 z-30 bg-gray-50/95 backdrop-blur-sm pt-6 pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 mb-2">
+          <div className="flex items-start justify-between gap-4">
+            <AboutHeader />
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <BasicInfoSection formData={formData} onChange={handleChange} />
+            <button
+              type="submit"
+              form="about-form"
+              disabled={mutation.isPending}
+              className="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF6014] hover:bg-[#e5540f] disabled:opacity-60 disabled:cursor-not-allowed text-white text-xs font-black uppercase tracking-widest font-['Bai_Jamjuree'] shadow-sm hover:shadow-md transition-all"
+            >
+              {mutation.isPending ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Saving…
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4" />
+                  Save
+                </>
+              )}
+            </button>
+          </div>
+        </div>
 
-        <IntroductionSection
-          paragraphs={formData.introParagraphs}
-          onAdd={() => addStringArrayItem("introParagraphs")}
-          onRemove={(i) => removeStringArrayItem("introParagraphs", i)}
-          onChange={setStringArrayValue("introParagraphs")}
-        />
+        {/* ===== Form Sections ===== */}
+        <form id="about-form" onSubmit={handleSubmit} className="space-y-6">
+          <SectionCard title="Basic Information">
+            <BasicInfoSection formData={formData} onChange={handleChange} />
+          </SectionCard>
 
-        <StatisticsSection
-          stats={formData.stats}
-          onAdd={addStat}
-          onRemove={removeStat}
-          onChange={changeStat}
-        />
+          <SectionCard title="Introduction">
+            <IntroductionSection
+              paragraphs={formData.introParagraphs}
+              onAdd={() => addStringArrayItem("introParagraphs")}
+              onRemove={(i) => removeStringArrayItem("introParagraphs", i)}
+              onChange={setStringArrayValue("introParagraphs")}
+            />
+          </SectionCard>
 
-        <SkillsSection
-          frontendSkills={formData.frontendSkills}
-          backendSkills={formData.backendSkills}
-          tools={formData.tools}
-          onAddFrontend={() => addStringArrayItem("frontendSkills")}
-          onRemoveFrontend={(i) => removeStringArrayItem("frontendSkills", i)}
-          onChangeFrontend={setStringArrayValue("frontendSkills")}
-          onAddBackend={() => addStringArrayItem("backendSkills")}
-          onRemoveBackend={(i) => removeStringArrayItem("backendSkills", i)}
-          onChangeBackend={setStringArrayValue("backendSkills")}
-          onAddTools={() => addStringArrayItem("tools")}
-          onRemoveTools={(i) => removeStringArrayItem("tools", i)}
-          onChangeTools={setStringArrayValue("tools")}
-        />
+          <SectionCard title="Statistics">
+            <StatisticsSection
+              stats={formData.stats}
+              onAdd={addStat}
+              onRemove={removeStat}
+              onChange={changeStat}
+            />
+          </SectionCard>
 
-        <WorkHighlightsSection
-          projects={formData.projects}
-          onAdd={addProject}
-          onRemove={removeProject}
-          onChange={changeProject}
-        />
+          <SectionCard title="Skills & Tools">
+            <SkillsSection
+              frontendSkills={formData.frontendSkills}
+              backendSkills={formData.backendSkills}
+              tools={formData.tools}
+              onAddFrontend={() => addStringArrayItem("frontendSkills")}
+              onRemoveFrontend={(i) =>
+                removeStringArrayItem("frontendSkills", i)
+              }
+              onChangeFrontend={setStringArrayValue("frontendSkills")}
+              onAddBackend={() => addStringArrayItem("backendSkills")}
+              onRemoveBackend={(i) => removeStringArrayItem("backendSkills", i)}
+              onChangeBackend={setStringArrayValue("backendSkills")}
+              onAddTools={() => addStringArrayItem("tools")}
+              onRemoveTools={(i) => removeStringArrayItem("tools", i)}
+              onChangeTools={setStringArrayValue("tools")}
+            />
+          </SectionCard>
 
-        <PhilosophySection formData={formData} onChange={handleChange} />
-        <MentorshipSection formData={formData} onChange={handleChange} />
+          <SectionCard title="Work Highlights">
+            <WorkHighlightsSection
+              projects={formData.projects}
+              onAdd={addProject}
+              onRemove={removeProject}
+              onChange={changeProject}
+            />
+          </SectionCard>
 
-        <FloatingSaveBar isSaving={mutation.isPending} />
-      </form>
+          <SectionCard title="Philosophy">
+            <PhilosophySection formData={formData} onChange={handleChange} />
+          </SectionCard>
+
+          <SectionCard title="Mentorship">
+            <MentorshipSection formData={formData} onChange={handleChange} />
+          </SectionCard>
+
+          {/* ===== Bottom Save Button (backup for long scroll) ===== */}
+          <div className="flex justify-end pt-2">
+            <button
+              type="submit"
+              form="about-form"
+              disabled={mutation.isPending}
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF6014] hover:bg-[#e5540f] disabled:opacity-60 disabled:cursor-not-allowed text-white text-xs font-black uppercase tracking-widest font-['Bai_Jamjuree'] shadow-sm hover:shadow-md transition-all"
+            >
+              {mutation.isPending ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Saving…
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4" />
+                  Save Changes
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

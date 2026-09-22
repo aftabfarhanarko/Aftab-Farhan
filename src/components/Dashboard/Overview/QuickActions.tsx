@@ -21,22 +21,22 @@ export default function QuickActions({ actions }: { actions: ActionItem[] }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + i * 0.08 }}
               whileHover={{ y: -3, scale: 1.01 }}
-              className="p-4 sm:p-5 rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 group flex items-center justify-between gap-4 cursor-pointer shadow-xs hover:shadow-md relative overflow-hidden"
+              className="p-4 sm:p-5 rounded-2xl bg-white border border-gray-200 hover:border-[#FF6014] transition-all duration-300 group flex items-center justify-between gap-4 cursor-pointer shadow-sm hover:shadow-lg relative overflow-hidden"
             >
               <div className="flex items-center gap-3.5 min-w-0">
                 <div className="w-10 h-10 rounded-xl bg-[#FF6014]/10 border border-[#FF6014]/20 flex items-center justify-center text-[#FF6014] group-hover:scale-110 transition-transform">
                   <a.icon className="w-5 h-5" />
                 </div>
                 <div className="min-w-0 text-left">
-                  <h3 className="text-sm sm:text-base font-black text-slate-900 leading-tight group-hover:text-[#FF6014] transition-colors truncate">
+                  <h3 className="text-sm sm:text-base font-black text-black leading-tight group-hover:text-[#FF6014] transition-colors truncate">
                     {a.title}
                   </h3>
-                  <p className="text-xs text-slate-600 font-medium truncate mt-0.5">
+                  <p className="text-xs text-black/60 font-medium truncate mt-0.5">
                     {a.desc}
                   </p>
                 </div>
               </div>
-              <ArrowUpRight className="w-4.5 h-4.5 text-slate-400 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+              <ArrowUpRight className="w-4.5 h-4.5 text-black/30 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
             </motion.div>
           </Link>
         ))}

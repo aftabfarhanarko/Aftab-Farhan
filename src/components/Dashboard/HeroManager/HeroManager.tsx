@@ -88,7 +88,9 @@ export default function HeroManager() {
   const changeStat = (index: number, field: keyof HeroStat, value: string) => {
     setFormData((prev) => ({
       ...prev,
-      stats: prev.stats.map((s, i) => (i === index ? { ...s, [field]: value } : s)),
+      stats: prev.stats.map((s, i) =>
+        i === index ? { ...s, [field]: value } : s,
+      ),
     }));
   };
 
@@ -142,83 +144,119 @@ export default function HeroManager() {
   if (fetching) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="animate-spin w-5 h-5 text-white/30" />
+        <Loader2 className="animate-spin w-5 h-5 text-[#FF6014]" />
       </div>
     );
   }
 
   return (
-    <div className="w-full pb-24">
+    <div className="w-full pb-24 bg-gray-50 min-h-screen">
       <HeroHeader />
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-black uppercase tracking-widest text-slate-700 font-['Bai_Jamjuree']">
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full glass-card-compact border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#FF6014]/60 transition-all font-medium"
-              placeholder="e.g. Aftab Farhan Arko"
-            />
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        {/* ===== Profile Identity + Image ===== */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-2 mb-5">
+            <span className="w-2 h-2 rounded-full bg-[#FF6014] animate-pulse" />
+            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-black/60 font-['Bai_Jamjuree']">
+              Profile Identity
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
+            {/* Left column: name + title stacked */}
+            <div className="lg:col-span-2 space-y-5">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black uppercase tracking-widest text-black/60 font-['Bai_Jamjuree']">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-[#FF6014] focus:ring-2 focus:ring-[#FF6014]/10 transition-all font-medium"
+                  placeholder="e.g. Aftab Farhan Arko"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black uppercase tracking-widest text-black/60 font-['Bai_Jamjuree']">
+                  Job Title
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-[#FF6014] focus:ring-2 focus:ring-[#FF6014]/10 transition-all font-medium"
+                  placeholder="e.g. Full-Stack Developer"
+                />
+              </div>
+
+              {/* Optional: short preview of image on mobile can go here */}
+            </div>
+
+            {/* Right column: image upload */}
+            <div className="lg:col-span-1">
+              <HeroImageUpload
+                image={formData.image}
+                isUploading={isUploading}
+                onUpload={handleImageUpload}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* ===== Bio / Description ===== */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-2 mb-5">
+            <span className="w-2 h-2 rounded-full bg-[#FF6014] animate-pulse" />
+            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-black/60 font-['Bai_Jamjuree']">
+              Bio & Introduction
+            </h2>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[10px] font-black uppercase tracking-widest text-slate-700 font-['Bai_Jamjuree']">
-              Job Title
+            <label className="text-[10px] font-black uppercase tracking-widest text-black/60 font-['Bai_Jamjuree']">
+              Description
             </label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
+            <textarea
+              name="description"
+              value={formData.description}
               onChange={handleChange}
-              className="w-full glass-card-compact border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#FF6014]/60 transition-all font-medium"
-              placeholder="e.g. Full-Stack Developer"
+              rows={5}
+              className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-[#FF6014] focus:ring-2 focus:ring-[#FF6014]/10 transition-all resize-none font-medium leading-relaxed"
+              placeholder="Write a brief introduction about yourself..."
             />
           </div>
+        </div>
 
-          <HeroImageUpload
-            image={formData.image}
-            isUploading={isUploading}
-            onUpload={handleImageUpload}
+        {/* ===== Stats ===== */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+          <StatsEditor
+            stats={formData.stats}
+            onAdd={addStat}
+            onRemove={removeStat}
+            onChange={changeStat}
           />
         </div>
 
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase tracking-widest text-slate-700 font-['Bai_Jamjuree']">
-            Description
-          </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={4}
-            className="w-full glass-card-compact border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#FF6014]/60 transition-all resize-none font-medium leading-relaxed"
-            placeholder="Write a brief introduction about yourself..."
+        {/* ===== Socials ===== */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+          <SocialsEditor
+            socials={formData.socials}
+            onAdd={addSocial}
+            onRemove={removeSocial}
+            onChange={changeSocial}
           />
         </div>
-
-        <StatsEditor
-          stats={formData.stats}
-          onAdd={addStat}
-          onRemove={removeStat}
-          onChange={changeStat}
-        />
-
-        <SocialsEditor
-          socials={formData.socials}
-          onAdd={addSocial}
-          onRemove={removeSocial}
-          onChange={changeSocial}
-        />
 
         <SubmitBar disabled={isSaving || isUploading} isSaving={isSaving} />
       </form>
     </div>
   );
 }
-

@@ -9,9 +9,12 @@ import {
   PlusCircle,
   Trash2,
   X,
+  Building2,
+  Users,
+  Trophy,
 } from "lucide-react";
 import type { Achievement, Experience, Role } from "./types";
-import { cls, Field, SectionDivider } from "./ui";
+import { cls, Field } from "./ui";
 
 export default function ExperienceEditor({
   isOpen,
@@ -60,24 +63,28 @@ export default function ExperienceEditor({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.18 }}
-          className={`mb-10 ${cls.card} p-5 sm:p-8`}
+          className="mb-6 bg-white border border-gray-200 rounded-2xl p-5 sm:p-8 shadow-sm"
         >
-          <div className="flex items-center justify-between mb-8 pb-5 border-b border-white/[0.06]">
-            <div className="flex items-center gap-2.5">
+          {/* ===== Editor Header ===== */}
+          <div className="flex items-center justify-between mb-8 pb-5 border-b border-gray-100">
+            <div className="flex items-center gap-3">
               <button
                 onClick={onCancel}
-                className="p-2 hover:bg-white/5 rounded-lg transition-colors text-white/40 hover:text-white"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-black/40 hover:text-black"
                 type="button"
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
-              <h2 className="text-base font-black">
-                {editingId ? "Edit Experience" : "Add New Experience"}
-              </h2>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#FF6014] animate-pulse" />
+                <h2 className="text-base font-black text-black font-['Bai_Jamjuree']">
+                  {editingId ? "Edit Experience" : "Add New Experience"}
+                </h2>
+              </div>
             </div>
             <button
               onClick={onCancel}
-              className="p-2 hover:bg-white/5 rounded-lg transition-colors text-white/30 hover:text-white"
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-black/40 hover:text-black"
               type="button"
             >
               <X className="w-4 h-4" />
@@ -91,8 +98,16 @@ export default function ExperienceEditor({
             }}
             className="space-y-10"
           >
+            {/* ===== Company Information ===== */}
             <section>
-              <SectionDivider label="Company Information" />
+              <div className="flex items-center gap-2 mb-5">
+                <div className="w-7 h-7 rounded-lg bg-[#FF6014]/10 border border-[#FF6014]/20 flex items-center justify-center shrink-0">
+                  <Building2 className="w-3.5 h-3.5 text-[#FF6014]" />
+                </div>
+                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-black/60 font-['Bai_Jamjuree']">
+                  Company Information
+                </h3>
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field
                   label="Company Name"
@@ -156,13 +171,21 @@ export default function ExperienceEditor({
               </div>
             </section>
 
+            {/* ===== Roles & Responsibilities ===== */}
             <section>
               <div className="flex items-center justify-between mb-5">
-                <SectionDivider label="Roles & Responsibilities" />
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-[#FF6014]/10 border border-[#FF6014]/20 flex items-center justify-center shrink-0">
+                    <Users className="w-3.5 h-3.5 text-[#FF6014]" />
+                  </div>
+                  <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-black/60 font-['Bai_Jamjuree']">
+                    Roles & Responsibilities
+                  </h3>
+                </div>
                 <button
                   type="button"
                   onClick={addRole}
-                  className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white/70 transition-colors shrink-0 ml-4"
+                  className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#FF6014] hover:text-[#e5540f] transition-colors shrink-0 ml-4 font-['Bai_Jamjuree']"
                 >
                   <PlusCircle className="w-3.5 h-3.5" /> Add Role
                 </button>
@@ -171,18 +194,18 @@ export default function ExperienceEditor({
                 {currentExp.roles.map((role, ri) => (
                   <div
                     key={ri}
-                    className="relative p-5 bg-white/[0.02] border border-white/[0.06] rounded-xl"
+                    className="relative p-5 bg-gray-50 border border-gray-200 rounded-xl"
                   >
                     {currentExp.roles.length > 1 && (
                       <button
                         type="button"
                         onClick={() => removeRole(ri)}
-                        className="absolute -top-2.5 -right-2.5 p-1.5 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg hover:scale-105 transition-transform"
+                        className="absolute -top-2.5 -right-2.5 p-1.5 bg-red-50 border border-red-200 text-red-600 rounded-lg hover:bg-red-100 hover:scale-105 transition-all shadow-sm"
                       >
                         <X className="w-3 h-3" />
                       </button>
                     )}
-                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-4">
+                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40 mb-4 font-['Bai_Jamjuree']">
                       Role {ri + 1}
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -203,13 +226,16 @@ export default function ExperienceEditor({
                     </div>
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <label className={cls.label} style={{ marginBottom: 0 }}>
+                        <label
+                          className={cls.label}
+                          style={{ marginBottom: 0 }}
+                        >
                           Responsibilities
                         </label>
                         <button
                           type="button"
                           onClick={() => addResp(ri)}
-                          className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-white/25 hover:text-white/60 transition-colors"
+                          className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-[#FF6014] hover:text-[#e5540f] transition-colors font-['Bai_Jamjuree']"
                         >
                           <Plus className="w-3 h-3" /> Add
                         </button>
@@ -217,20 +243,22 @@ export default function ExperienceEditor({
                       <div className="space-y-2">
                         {role.responsibilities.map((resp, pi) => (
                           <div key={pi} className="flex items-center gap-2.5">
-                            <span className="w-1 h-1 rounded-full bg-white/20 shrink-0" />
+                            <span className="w-1 h-1 rounded-full bg-[#FF6014] shrink-0" />
                             <input
                               required
                               type="text"
                               value={resp}
-                              onChange={(e) => patchResp(ri, pi, e.target.value)}
-                              className="flex-1 min-w-0 bg-transparent border-b border-white/[0.07] focus:border-white/20 py-2 px-1 text-xs font-medium placeholder:text-white/20 focus:outline-none transition-colors"
+                              onChange={(e) =>
+                                patchResp(ri, pi, e.target.value)
+                              }
+                              className="flex-1 min-w-0 bg-white border-b border-gray-200 focus:border-[#FF6014] py-2 px-1 text-xs font-medium text-black placeholder:text-black/30 focus:outline-none transition-colors rounded-t-sm"
                               placeholder="Describe a responsibility…"
                             />
                             {role.responsibilities.length > 1 && (
                               <button
                                 type="button"
                                 onClick={() => removeResp(ri, pi)}
-                                className="text-white/15 hover:text-red-400 transition-colors shrink-0"
+                                className="text-black/20 hover:text-red-600 transition-colors shrink-0"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>
@@ -244,13 +272,21 @@ export default function ExperienceEditor({
               </div>
             </section>
 
+            {/* ===== Key Achievements ===== */}
             <section>
               <div className="flex items-center justify-between mb-5">
-                <SectionDivider label="Key Achievements" />
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-[#FF6014]/10 border border-[#FF6014]/20 flex items-center justify-center shrink-0">
+                    <Trophy className="w-3.5 h-3.5 text-[#FF6014]" />
+                  </div>
+                  <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-black/60 font-['Bai_Jamjuree']">
+                    Key Achievements
+                  </h3>
+                </div>
                 <button
                   type="button"
                   onClick={addAchv}
-                  className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white/70 transition-colors shrink-0 ml-4"
+                  className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#FF6014] hover:text-[#e5540f] transition-colors shrink-0 ml-4 font-['Bai_Jamjuree']"
                 >
                   <PlusCircle className="w-3.5 h-3.5" /> Add
                 </button>
@@ -259,7 +295,7 @@ export default function ExperienceEditor({
                 {currentExp.achievements.map((ach, ai) => (
                   <div
                     key={ai}
-                    className="flex gap-3 items-start p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl"
+                    className="flex gap-3 items-start p-4 bg-gray-50 border border-gray-200 rounded-xl"
                   >
                     <div className="flex-1 grid grid-cols-2 gap-3 min-w-0">
                       <div>
@@ -268,8 +304,10 @@ export default function ExperienceEditor({
                           required
                           type="text"
                           value={ach.metric}
-                          onChange={(e) => patchAchv(ai, "metric", e.target.value)}
-                          className="w-full bg-transparent border-b border-white/[0.07] focus:border-white/20 py-1.5 text-lg font-black placeholder:text-white/15 focus:outline-none transition-colors"
+                          onChange={(e) =>
+                            patchAchv(ai, "metric", e.target.value)
+                          }
+                          className="w-full bg-white border-b border-gray-200 focus:border-[#FF6014] py-1.5 text-lg font-black text-black placeholder:text-black/20 focus:outline-none transition-colors rounded-t-sm"
                           placeholder="9+"
                         />
                       </div>
@@ -279,8 +317,10 @@ export default function ExperienceEditor({
                           required
                           type="text"
                           value={ach.label}
-                          onChange={(e) => patchAchv(ai, "label", e.target.value)}
-                          className="w-full bg-transparent border-b border-white/[0.07] focus:border-white/20 py-1.5 text-xs font-medium placeholder:text-white/15 focus:outline-none transition-colors"
+                          onChange={(e) =>
+                            patchAchv(ai, "label", e.target.value)
+                          }
+                          className="w-full bg-white border-b border-gray-200 focus:border-[#FF6014] py-1.5 text-xs font-medium text-black placeholder:text-black/20 focus:outline-none transition-colors rounded-t-sm"
                           placeholder="Projects Delivered"
                         />
                       </div>
@@ -289,7 +329,7 @@ export default function ExperienceEditor({
                       <button
                         type="button"
                         onClick={() => removeAchv(ai)}
-                        className="mt-6 shrink-0 text-white/15 hover:text-red-400 transition-colors"
+                        className="mt-6 shrink-0 text-black/20 hover:text-red-600 transition-colors"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -299,18 +339,19 @@ export default function ExperienceEditor({
               </div>
             </section>
 
-            <div className="flex flex-col xs:flex-row gap-3 pt-6 border-t border-white/[0.06]">
+            {/* ===== Actions ===== */}
+            <div className="flex flex-col xs:flex-row gap-3 pt-6 border-t border-gray-100">
               <button
                 type="button"
                 onClick={onCancel}
-                className="flex-1 py-3.5 bg-white/5 hover:bg-white/8 border border-white/[0.06] rounded-xl text-xs font-black uppercase tracking-widest transition-colors"
+                className="flex-1 py-3.5 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-xl text-xs font-black uppercase tracking-widest text-black/70 transition-colors font-['Bai_Jamjuree']"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSaving}
-                className="flex-[2] py-3.5 bg-white text-black rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100 flex items-center justify-center gap-2"
+                className="flex-[2] py-3.5 bg-[#FF6014] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#e5540f] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100 flex items-center justify-center gap-2 font-['Bai_Jamjuree'] shadow-sm hover:shadow-md"
               >
                 {isSaving ? (
                   <>
@@ -329,4 +370,3 @@ export default function ExperienceEditor({
     </AnimatePresence>
   );
 }
-

@@ -130,7 +130,10 @@ export default function ExperienceManager() {
   };
 
   const addAchv = () =>
-    patch("achievements", [...currentExp.achievements, { metric: "", label: "" }]);
+    patch("achievements", [
+      ...currentExp.achievements,
+      { metric: "", label: "" },
+    ]);
 
   const removeAchv = (i: number) =>
     patch(
@@ -149,44 +152,45 @@ export default function ExperienceManager() {
   };
 
   return (
-    <div className="w-full">
-      <ExperienceHeader
-        isAdding={isAdding}
-        onAdd={() => {
-          setCurrentExp(INITIAL_EXP);
-          setEditingId(null);
-          setIsAdding(true);
-        }}
-      />
+    <div className="w-full bg-gray-50 min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 space-y-6">
+        <ExperienceHeader
+          isAdding={isAdding}
+          onAdd={() => {
+            setCurrentExp(INITIAL_EXP);
+            setEditingId(null);
+            setIsAdding(true);
+          }}
+        />
 
-      <ExperienceEditor
-        isOpen={isAdding}
-        editingId={editingId}
-        currentExp={currentExp}
-        isSaving={saveMutation.isPending}
-        onCancel={handleCancel}
-        onSubmit={() => saveMutation.mutate(currentExp)}
-        patch={patch}
-        addRole={addRole}
-        removeRole={removeRole}
-        patchRole={patchRole}
-        addResp={addResp}
-        removeResp={removeResp}
-        patchResp={patchResp}
-        addAchv={addAchv}
-        removeAchv={removeAchv}
-        patchAchv={patchAchv}
-      />
+        <ExperienceEditor
+          isOpen={isAdding}
+          editingId={editingId}
+          currentExp={currentExp}
+          isSaving={saveMutation.isPending}
+          onCancel={handleCancel}
+          onSubmit={() => saveMutation.mutate(currentExp)}
+          patch={patch}
+          addRole={addRole}
+          removeRole={removeRole}
+          patchRole={patchRole}
+          addResp={addResp}
+          removeResp={removeResp}
+          patchResp={patchResp}
+          addAchv={addAchv}
+          removeAchv={removeAchv}
+          patchAchv={patchAchv}
+        />
 
-      <ExperienceCards
-        experiences={experiences}
-        isLoading={isLoading}
-        isAdding={isAdding}
-        isDeleting={deleteMutation.isPending}
-        onEdit={handleEdit}
-        onDelete={(id) => deleteMutation.mutate(id)}
-      />
+        <ExperienceCards
+          experiences={experiences}
+          isLoading={isLoading}
+          isAdding={isAdding}
+          isDeleting={deleteMutation.isPending}
+          onEdit={handleEdit}
+          onDelete={(id) => deleteMutation.mutate(id)}
+        />
+      </div>
     </div>
   );
 }
-

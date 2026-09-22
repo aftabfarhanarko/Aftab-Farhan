@@ -56,25 +56,25 @@ export default function Overview() {
       label: "Projects",
       value: isLoading ? "…" : String(data?.projects.total ?? 0),
       icon: Rocket,
-      color: "bg-blue-500/10 text-blue-400",
+      color: "bg-blue-100 text-blue-600",
     },
     {
       label: "Experience",
       value: isLoading ? "…" : String(data?.experience.total ?? 0),
       icon: BriefcaseBusiness,
-      color: "bg-green-500/10 text-green-400",
+      color: "bg-green-100 text-green-600",
     },
     {
       label: "Skills",
       value: isLoading ? "…" : String(data?.skills.total ?? 0),
       icon: Wrench,
-      color: "bg-yellow-500/10 text-yellow-400",
+      color: "bg-yellow-100 text-yellow-600",
     },
     {
       label: "Unread Msgs",
       value: isLoading ? "…" : String(data?.messages.unread ?? 0),
       icon: Mail,
-      color: "bg-purple-500/10 text-purple-400",
+      color: "bg-purple-100 text-purple-600",
     },
   ];
 
@@ -145,16 +145,16 @@ export default function Overview() {
   ];
 
   return (
-    <div className="w-full space-y-8">
+    <div className="w-full space-y-8 bg-gray-50 min-h-screen p-4 sm:p-6 lg:p-8">
       <header>
         <motion.h1
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-2xl sm:text-3xl font-black tracking-tight mb-1 text-slate-900 dark:text-white font-['Bai_Jamjuree']"
+          className="text-2xl sm:text-3xl font-black tracking-tight mb-1 text-black font-['Bai_Jamjuree']"
         >
           Welcome back, <span className="text-[#FF6014]">Arko</span>
         </motion.h1>
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-white/60 font-medium">
+        <p className="text-xs sm:text-sm text-black/70 font-medium">
           Here's what's happening with your portfolio today.
         </p>
       </header>

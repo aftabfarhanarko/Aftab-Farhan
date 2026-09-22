@@ -40,17 +40,18 @@ export default function ExperienceCards({
 
   return (
     <div>
-      <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.22em] text-white/25 mb-5">
-        <span className="w-5 h-px bg-white/10 shrink-0" />
+      {/* Section label */}
+      <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.22em] text-black/40 mb-5 font-['Bai_Jamjuree']">
+        <span className="w-5 h-px bg-gray-300 shrink-0" />
         Existing Experiences
-        <span className="ml-auto font-black text-white/20">
+        <span className="ml-auto font-black text-black/30">
           {experiences.length} {experiences.length === 1 ? "entry" : "entries"}
         </span>
       </div>
 
       {isLoading ? (
         <div className="flex items-center justify-center h-40">
-          <Loader2 className="w-6 h-6 animate-spin text-white/20" />
+          <Loader2 className="w-6 h-6 animate-spin text-[#FF6014]" />
         </div>
       ) : (
         <div className="space-y-4">
@@ -63,39 +64,40 @@ export default function ExperienceCards({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ delay: i * 0.04, duration: 0.15 }}
-                className={`${cls.card} overflow-hidden`}
+                className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-[#FF6014] transition-all"
               >
+                {/* ===== Card Header ===== */}
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4 p-5 sm:p-6">
-                  <div className="shrink-0 w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center">
-                    <Briefcase className="w-4 h-4 text-white/30" />
+                  <div className="shrink-0 w-10 h-10 rounded-xl bg-[#FF6014]/10 border border-[#FF6014]/20 flex items-center justify-center">
+                    <Briefcase className="w-4 h-4 text-[#FF6014]" />
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span
-                        className={`px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest border ${
+                        className={`px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest border font-['Bai_Jamjuree'] ${
                           exp.type === "current"
-                            ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-                            : "bg-white/[0.04] border-white/[0.08] text-white/30"
+                            ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+                            : "bg-gray-50 border-gray-200 text-black/50"
                         }`}
                       >
                         {exp.type}
                       </span>
-                      <span className="flex items-center gap-1 text-[11px] text-white/30">
+                      <span className="flex items-center gap-1 text-[11px] text-black/50 font-medium">
                         <Calendar className="w-3 h-3" /> {exp.period}
                       </span>
                     </div>
 
-                    <h3 className="text-base sm:text-lg font-black tracking-tight leading-none mb-2 truncate">
+                    <h3 className="text-base sm:text-lg font-black tracking-tight leading-none mb-2 truncate text-black font-['Bai_Jamjuree']">
                       {exp.company}
                     </h3>
 
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/35">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-black/60 font-medium">
                       <a
                         href={exp.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 hover:text-white/70 transition-colors min-w-0"
+                        className="flex items-center gap-1 hover:text-[#FF6014] transition-colors min-w-0"
                       >
                         <Globe className="w-3 h-3 shrink-0" />
                         <span className="truncate">{getHostname(exp.url)}</span>
@@ -110,7 +112,7 @@ export default function ExperienceCards({
                         {exp.techStack.map((tech, idx) => (
                           <span
                             key={`${tech}-${idx}`}
-                            className="px-2.5 py-0.5 bg-white/[0.04] border border-white/[0.07] rounded-lg text-[10px] font-medium text-white/45"
+                            className="px-2.5 py-0.5 bg-gray-50 border border-gray-200 rounded-lg text-[10px] font-medium text-black/70"
                           >
                             {tech}
                           </span>
@@ -119,10 +121,11 @@ export default function ExperienceCards({
                     )}
                   </div>
 
+                  {/* Actions */}
                   <div className="flex sm:flex-col gap-2 shrink-0 self-start">
                     <button
                       onClick={() => onEdit(exp)}
-                      className="p-2.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.07] text-white/40 hover:text-white rounded-xl transition-all hover:scale-105 active:scale-95"
+                      className="p-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-[#FF6014] text-black/60 hover:text-[#FF6014] rounded-xl transition-all hover:scale-105 active:scale-95"
                       type="button"
                       aria-label="Edit experience"
                     >
@@ -136,7 +139,7 @@ export default function ExperienceCards({
                         onDelete(exp.id);
                       }}
                       disabled={isDeleting}
-                      className="p-2.5 bg-red-500/[0.04] hover:bg-red-500/10 border border-red-500/[0.12] text-red-400/60 hover:text-red-400 rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-30"
+                      className="p-2.5 bg-red-50 hover:bg-red-100 border border-red-200 hover:border-red-300 text-red-500 hover:text-red-600 rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-30"
                       type="button"
                       aria-label="Delete experience"
                     >
@@ -149,35 +152,37 @@ export default function ExperienceCards({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 border-t border-white/[0.05]">
-                  <div className="p-5 sm:p-6 md:border-r border-white/[0.05]">
-                    <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-4">
+                {/* ===== Card Body ===== */}
+                <div className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
+                  {/* Roles */}
+                  <div className="p-5 sm:p-6 md:border-r border-gray-100">
+                    <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-black/50 mb-4 font-['Bai_Jamjuree']">
                       Roles & Responsibilities
                     </h4>
                     <div className="space-y-4">
                       {exp.roles.map((role, idx) => (
                         <div
                           key={idx}
-                          className="relative pl-4 border-l border-white/[0.08]"
+                          className="relative pl-4 border-l border-gray-200"
                         >
-                          <span className="absolute -left-[3px] top-1.5 w-1.5 h-1.5 rounded-full bg-white/10 border border-white/20" />
-                          <p className="text-sm font-bold mb-0.5 leading-snug">
+                          <span className="absolute -left-[3px] top-1.5 w-1.5 h-1.5 rounded-full bg-[#FF6014] border border-white shadow-sm" />
+                          <p className="text-sm font-black mb-0.5 leading-snug text-black font-['Bai_Jamjuree']">
                             {role.title}
                           </p>
-                          <p className="text-xs text-white/35 mb-2">
+                          <p className="text-xs text-black/50 mb-2 font-medium">
                             {role.subtitle}
                           </p>
                           <ul className="space-y-1">
                             {role.responsibilities.slice(0, 2).map((r, j) => (
                               <li
                                 key={j}
-                                className="text-xs text-white/40 leading-relaxed"
+                                className="text-xs text-black/60 leading-relaxed font-medium"
                               >
                                 · {r}
                               </li>
                             ))}
                             {role.responsibilities.length > 2 && (
-                              <li className="text-[9px] font-black uppercase tracking-widest text-white/20">
+                              <li className="text-[9px] font-black uppercase tracking-widest text-[#FF6014] font-['Bai_Jamjuree']">
                                 +{role.responsibilities.length - 2} more
                               </li>
                             )}
@@ -187,20 +192,21 @@ export default function ExperienceCards({
                     </div>
                   </div>
 
-                  <div className="p-5 sm:p-6 border-t md:border-t-0 border-white/[0.05]">
-                    <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 mb-4">
+                  {/* Achievements */}
+                  <div className="p-5 sm:p-6 border-t md:border-t-0 border-gray-100">
+                    <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-black/50 mb-4 font-['Bai_Jamjuree']">
                       Key Achievements
                     </h4>
                     <div className="grid grid-cols-2 gap-2">
                       {exp.achievements.map((ach, idx) => (
                         <div
                           key={idx}
-                          className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06]"
+                          className="p-3 bg-gray-50 rounded-xl border border-gray-200"
                         >
-                          <div className="text-xl font-black leading-none mb-1">
+                          <div className="text-xl font-black leading-none mb-1 text-[#FF6014] font-['Bai_Jamjuree']">
                             {ach.metric}
                           </div>
-                          <div className="text-[9px] font-bold text-white/35 uppercase tracking-widest leading-tight">
+                          <div className="text-[9px] font-black text-black/50 uppercase tracking-widest leading-tight font-['Bai_Jamjuree']">
                             {ach.label}
                           </div>
                         </div>
@@ -212,10 +218,13 @@ export default function ExperienceCards({
             ))}
           </AnimatePresence>
 
+          {/* Empty state */}
           {experiences.length === 0 && !isAdding && (
-            <div className="text-center py-16 border border-dashed border-white/[0.08] rounded-2xl">
-              <Briefcase className="w-8 h-8 text-white/10 mx-auto mb-3" />
-              <p className="text-[10px] font-black uppercase tracking-widest text-white/20">
+            <div className="text-center py-16 border border-dashed border-gray-300 rounded-2xl bg-white">
+              <div className="w-12 h-12 rounded-xl bg-[#FF6014]/10 border border-[#FF6014]/20 flex items-center justify-center mx-auto mb-3">
+                <Briefcase className="w-5 h-5 text-[#FF6014]" />
+              </div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-black/40 font-['Bai_Jamjuree']">
                 No experiences yet — add one to get started.
               </p>
             </div>

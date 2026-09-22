@@ -11,15 +11,15 @@ export default function ExperienceHeader({
   onAdd: () => void;
 }) {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-slate-200">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-gray-200">
       <div>
-        <p className="text-[9px] font-black uppercase tracking-[0.22em] text-slate-500 mb-2 font-['Bai_Jamjuree']">
+        <p className="text-[9px] font-black uppercase tracking-[0.22em] text-black/50 mb-2 font-['Bai_Jamjuree']">
           Portfolio
         </p>
-        <h1 className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-slate-900 font-['Bai_Jamjuree']">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-black font-['Bai_Jamjuree']">
           Work Experience
         </h1>
-        <p className="text-xs text-slate-600 mt-2 font-medium">
+        <p className="text-xs text-black/60 mt-2 font-medium">
           Manage your professional journey and key achievements.
         </p>
       </div>
@@ -27,7 +27,7 @@ export default function ExperienceHeader({
         {!isAdding && (
           <button
             onClick={onAdd}
-            className="shrink-0 flex items-center justify-center gap-2 px-6 py-3 bg-[#FF6014] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#FF6014]/90 active:scale-[0.98] transition-all shadow-lg shadow-[#FF6014]/25 hover:shadow-[#FF6014]/40 font-['Bai_Jamjuree']"
+            className="shrink-0 flex items-center justify-center gap-2 px-6 py-3 bg-[#FF6014] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#e5540f] active:scale-[0.98] transition-all shadow-sm hover:shadow-md font-['Bai_Jamjuree']"
             type="button"
           >
             <Plus className="w-3.5 h-3.5" />
@@ -38,4 +38,3 @@ export default function ExperienceHeader({
     </div>
   );
 }
-

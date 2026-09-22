@@ -81,6 +81,29 @@ export async function POST(req: Request) {
       });
     }
 
+    // Deduplicate and process tech records sequentially to prevent connection pool ETIMEDOUT
+    const uniqueTechNames = Array.from(
+      new Set(
+        (Array.isArray(tech) ? tech : [])
+          .map((t: string) => (typeof t === "string" ? t.trim() : ""))
+          .filter(Boolean),
+      ),
+    );
+
+    const techConnections = [];
+    for (const techName of uniqueTechNames) {
+      const techRecord = await prisma.tech.upsert({
+        where: { name: techName },
+        update: {},
+        create: { name: techName },
+      });
+      techConnections.push({
+        tech: {
+          connect: { id: techRecord.id },
+        },
+      });
+    }
+
     const project = (await prisma.project.create({
       data: {
         title,
@@ -105,20 +128,7 @@ export async function POST(req: Request) {
         endDate,
         duration,
         tech: {
-          create: await Promise.all(
-            (tech || []).map(async (techName: string) => {
-              const techRecord = await prisma.tech.upsert({
-                where: { name: techName },
-                update: {},
-                create: { name: techName },
-              });
-              return {
-                tech: {
-                  connect: { id: techRecord.id },
-                },
-              };
-            }),
-          ),
+          create: techConnections,
         },
       },
       include: {
