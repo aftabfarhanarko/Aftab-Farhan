@@ -140,7 +140,6 @@ export default function AboutBio({
       <div className="h-px bg-slate-200" />
 
       <AboutHighlights
-        projects={projects}
         quoteText={quoteText}
         quoteAuthor={quoteAuthor}
         mentorTitle={mentorTitle}

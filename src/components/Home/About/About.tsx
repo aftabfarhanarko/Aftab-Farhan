@@ -1,17 +1,11 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AboutData, containerVariants } from "./types";
 import AboutProfile from "./AboutProfile";
 import AboutBio from "./AboutBio";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export default function About() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -29,43 +23,6 @@ export default function About() {
     },
   });
 
-  useEffect(() => {
-    if (isLoading || !sectionRef.current || !profileRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      mm.add("(min-width: 1024px)", () => {
-        // GSAP ScrollTrigger pinning for left profile column
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: "top 90px",
-          end: "bottom bottom",
-          pin: profileRef.current,
-          pinSpacing: false,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        });
-
-        // Micro scale & fade stagger for left profile elements
-        gsap.from(".about-profile-card", {
-          opacity: 0,
-          y: 24,
-          scale: 0.95,
-          stagger: 0.08,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-          },
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [isLoading]);
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -76,8 +33,26 @@ export default function About() {
 
   const clientFocusedText = aboutData?.clientFocusedText ?? "Client focused & fully committed";
   const availabilityText = aboutData?.availabilityText ?? "Available for freelance Remote-friendly";
-  const stats = aboutData?.stats || [];
-  const proficiencies = aboutData?.proficiencies || [];
+  const profileImage = aboutData?.profileImage || "/image.png";
+
+  const defaultStats = [
+    { label: "Projects Completed", num: "20+" },
+    { label: "Technologies", num: "20+" },
+    { label: "Client Satisfaction", num: "100%" },
+    { label: "Experience", num: "2+ Years" },
+  ];
+
+  const defaultProficiencies = [
+    { name: "React / Next.js 16" },
+    { name: "TypeScript" },
+    { name: "Node.js & Express" },
+    { name: "MongoDB & PostgreSQL" },
+    { name: "REST & GraphQL APIs" },
+    { name: "Tailwind CSS & UI/UX" },
+  ];
+
+  const stats = aboutData?.stats && aboutData.stats.length > 0 ? aboutData.stats : defaultStats;
+  const proficiencies = aboutData?.proficiencies && aboutData.proficiencies.length > 0 ? aboutData.proficiencies : defaultProficiencies;
   const frontendSkills = aboutData?.frontendSkills || [];
   const backendSkills = aboutData?.backendSkills || [];
   const tools = aboutData?.tools || [];
@@ -100,7 +75,6 @@ export default function About() {
       >
         <AboutProfile
           stats={stats}
-          proficiencies={proficiencies}
           availabilityText={availabilityText}
           profileRef={profileRef}
         />

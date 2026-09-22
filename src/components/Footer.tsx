@@ -14,7 +14,7 @@ const socialLinks = [
     colorClass: "hover:bg-slate-900 hover:text-white hover:border-slate-900",
   },
   {
-    href: "https://www.linkedin.com/in/aftabfarhan/",
+    href: "https://www.linkedin.com/in/aftabfarhanarko",
     label: "LinkedIn",
     imageSrc: "/likdin.png",
     colorClass: "hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]",

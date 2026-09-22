@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${baiJamjuree.variable} h-full antialiased dark`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col relative overflow-x-hidden">
+      <body className="min-h-full flex flex-col relative overflow-x-clip">
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>

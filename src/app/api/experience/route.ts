@@ -2,6 +2,45 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
+const DEFAULT_EXPERIENCES = [
+  {
+    id: "exp-1",
+    company: "Jevxo Enterprise Software",
+    url: "https://jevxo.com",
+    location: "Remote / On-site",
+    period: "2023 - Present",
+    type: "current",
+    techStack: [
+      "Next.js",
+      "React.js",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "MongoDB",
+      "Docker",
+      "Tailwind CSS",
+    ],
+    roles: [
+      {
+        id: "role-1",
+        title: "Full Stack Software Engineer",
+        subtitle: "Enterprise Software & Scalable Web Applications",
+        iconName: "Code2",
+        responsibilities: [
+          "Architected and delivered responsive full-stack web applications using Next.js 16, React, TypeScript, and Node.js.",
+          "Designed secure RESTful & GraphQL API architectures with JWT, RBAC authorization, and third-party payment integrations.",
+          "Optimized application performance, SEO, accessibility, and automated CI/CD pipelines via Vercel, Docker, and GitHub Actions.",
+        ],
+      },
+    ],
+    achievements: [
+      { id: "ach-1", metric: "99.9%", label: "Uptime & Reliability" },
+      { id: "ach-2", metric: "3.5x", label: "Delivery Velocity" },
+      { id: "ach-3", metric: "100%", label: "Type Safety & Security" },
+    ],
+  },
+];
+
 export async function GET() {
   try {
     const experiences = await prisma.experience.findMany({
@@ -13,13 +52,23 @@ export async function GET() {
         createdAt: "desc",
       },
     });
-    return NextResponse.json(experiences);
+
+    if (experiences && experiences.length > 0) {
+      const sanitized = experiences.map((exp) => ({
+        ...exp,
+        techStack: (exp.techStack || []).slice(0, 8),
+        roles: (exp.roles || []).map((r: any) => ({
+          ...r,
+          responsibilities: (r.responsibilities || []).slice(0, 3),
+        })),
+      }));
+      return NextResponse.json(sanitized);
+    }
+
+    return NextResponse.json(DEFAULT_EXPERIENCES);
   } catch (error) {
     console.error("Experience GET Error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch experiences" },
-      { status: 500 }
-    );
+    return NextResponse.json(DEFAULT_EXPERIENCES);
   }
 }
 

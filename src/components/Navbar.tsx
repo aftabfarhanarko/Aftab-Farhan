@@ -58,9 +58,10 @@ interface NavItemType {
 const navItems: NavItemType[] = [
   { id: "hero", label: "Home", icon: Home },
   { id: "about", label: "About", icon: User },
-  { id: "experience", label: "Experience", icon: Briefcase },
+  { id: "services", label: "Services", icon: Wrench },
   { id: "skills", label: "Skills", icon: Layers },
   { id: "projects", label: "Projects", icon: FolderKanban, highlight: true },
+  { id: "experience", label: "Experience", icon: Briefcase },
   { id: "education", label: "Education", icon: GraduationCap },
   { id: "contact", label: "Contact", icon: Mail },
 ];

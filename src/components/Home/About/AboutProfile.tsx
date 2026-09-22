@@ -1,21 +1,20 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Stat, Proficiency, itemVariants } from "./types";
+import { Stat, itemVariants } from "./types";
 import { Sparkles } from "lucide-react";
 
 interface AboutProfileProps {
   stats: Stat[];
-  proficiencies: Proficiency[];
   availabilityText: string;
   profileRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-export default function AboutProfile({ stats, proficiencies, availabilityText, profileRef }: AboutProfileProps) {
+export default function AboutProfile({ stats, availabilityText, profileRef }: AboutProfileProps) {
   return (
     <div
       ref={profileRef}
-      className="lg:col-span-2 lg:sticky lg:top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto custom-scrollbar flex flex-col gap-6 lg:gap-8 items-center text-center lg:items-start lg:text-left pr-2 z-20 w-full"
+      className="lg:col-span-2 lg:sticky lg:top-28 self-start flex flex-col gap-6 lg:gap-7 items-center text-center lg:items-start lg:text-left pr-2 z-30 w-full"
     >
       {/* Role tag + heading */}
       <motion.div variants={itemVariants} className="about-profile-card flex flex-col items-center lg:items-start space-y-2">
@@ -78,34 +77,13 @@ export default function AboutProfile({ stats, proficiencies, availabilityText, p
         </motion.div>
       )}
 
-      {/* Core Technical Highlights */}
-      {proficiencies.length > 0 && (
-        <motion.div variants={itemVariants} className="flex flex-col gap-3 w-full">
-          <p className="text-xs font-black uppercase tracking-[0.15em] text-slate-800 text-left">
-            Core Competencies
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {proficiencies.map((p, i) => (
-              <motion.span
-                key={i}
-                whileHover={{ scale: 1.06, y: -2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="px-3.5 py-1.5 rounded-xl glass-card-compact text-xs font-bold text-slate-900 shadow-2xs cursor-default hover:border-orange-300 hover:text-[#FF6014] transition-colors"
-              >
-                {p.name}
-              </motion.span>
-            ))}
-          </div>
-        </motion.div>
-      )}
-
       <div className="h-px bg-slate-200/80 w-full" />
 
       {/* Availability badge */}
       <motion.div
         variants={itemVariants}
         whileHover={{ scale: 1.02 }}
-        className="flex items-center gap-2.5 px-4.5 py-3 rounded-xl glass-card-compact text-sm font-bold text-slate-900 shadow-sm cursor-default"
+        className="flex items-center gap-2.5 px-4.5 py-3 rounded-xl glass-card-compact text-sm font-bold text-slate-900 shadow-sm cursor-default w-full"
       >
         <span className="relative flex h-2.5 w-2.5 shrink-0">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6014] opacity-75" />

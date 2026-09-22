@@ -11,6 +11,44 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const DEFAULT_EXPERIENCES: ExperienceType[] = [
+  {
+    id: 1,
+    company: "Jevxo Enterprise Software",
+    url: "https://jevxo.com",
+    location: "Remote / On-site",
+    period: "2023 - Present",
+    type: "current",
+    techStack: [
+      "Next.js",
+      "React.js",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "MongoDB",
+      "Docker",
+      "Tailwind CSS",
+    ],
+    roles: [
+      {
+        title: "Full Stack Software Engineer",
+        subtitle: "Enterprise Software & Scalable Web Applications",
+        iconName: "Code2",
+        responsibilities: [
+          "Architected and delivered responsive full-stack web applications using Next.js 16, React, TypeScript, and Node.js.",
+          "Designed secure RESTful & GraphQL API architectures with JWT, RBAC authorization, and third-party payment integrations.",
+          "Optimized application performance, SEO, accessibility, and automated CI/CD pipelines via Vercel, Docker, and GitHub Actions.",
+        ],
+      },
+    ],
+    achievements: [
+      { metric: "99.9%", label: "Uptime & Reliability" },
+      { metric: "3.5x", label: "Delivery Velocity" },
+      { metric: "100%", label: "Type Safety & Security" },
+    ],
+  },
+];
+
 export default function Experience() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const leftPanelRef = useRef<HTMLDivElement | null>(null);
@@ -24,10 +62,17 @@ export default function Experience() {
         const res = await fetch("/api/experience");
         if (res.ok) {
           const data = await res.json();
-          setExperiences(data);
+          if (Array.isArray(data) && data.length > 0) {
+            setExperiences(data);
+          } else {
+            setExperiences(DEFAULT_EXPERIENCES);
+          }
+        } else {
+          setExperiences(DEFAULT_EXPERIENCES);
         }
       } catch (error) {
         console.error("Error fetching experiences:", error);
+        setExperiences(DEFAULT_EXPERIENCES);
       } finally {
         setIsLoading(false);
       }
@@ -65,7 +110,7 @@ export default function Experience() {
     );
   }
 
-  if (experiences.length === 0) return null;
+  const displayExperiences = experiences.length > 0 ? experiences : DEFAULT_EXPERIENCES;
 
   return (
     <section id="experience" ref={sectionRef} className="mb-20 sm:mb-24 scroll-mt-24 px-4 sm:px-6 lg:px-0 relative">
@@ -102,7 +147,7 @@ export default function Experience() {
           <div className="absolute left-5 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#FF6014] via-orange-400 to-slate-200 hidden sm:block opacity-80" />
 
           <div className="space-y-6">
-            {experiences.map((exp) => (
+            {displayExperiences.map((exp) => (
               <ExperienceCard key={exp.id} exp={exp} />
             ))}
           </div>

@@ -3,54 +3,61 @@ import React from "react";
 import { motion } from "framer-motion";
 import {
   Users,
-  MessageSquare,
+  Globe,
   ShieldCheck,
   Brain,
   Target,
-  Compass,
+  MessageSquare,
+  Award,
+  Sparkles,
   Layers,
-  ArrowUpRight,
 } from "lucide-react";
 
 import SectionHeader from "@/components/Common/SectionHeader";
 
 export default function SoftSkills() {
-  const leadershipItems = [
+  const fullStackSoftSkills = [
     {
-      title: "Executive Stakeholder Alignment",
-      icon: MessageSquare,
-      desc: "Translating complex cloud architectures and technical choices into clear strategic business value for clients, founders, and non-technical stakeholders.",
-      tags: ["Tech-to-Business", "Stakeholder Sync", "Strategy"],
+      title: "Fluent English & Client Communication",
+      icon: Globe,
+      badge: "Global Communication",
+      desc: "Fluent verbal and written English communication for conducting live client demos, technical sprint reviews, requirement discovery calls, and clear asynchronous documentation across global distributed teams.",
+      tags: ["Fluent English", "Client Demos", "Remote Standups", "Technical Writing"],
     },
     {
-      title: "Engineering Team Leadership",
+      title: "Cross-Functional Full-Stack Teamwork",
       icon: Users,
-      desc: "Guiding cross-functional frontend and backend developers through technical challenges, architecture reviews, code quality, and agile sprint delivery.",
-      tags: ["Technical Mentorship", "Sprint Execution", "Code Reviews"],
+      badge: "Team Dynamics",
+      desc: "Bridging frontend UI/UX designers, backend engineers, database architects, and QA teams. Synchronizing API contracts, resolving technical blockers, and maintaining sprint velocity.",
+      tags: ["Frontend & Backend Sync", "API Contracts", "Agile Sprints", "PR Reviews"],
     },
     {
-      title: "Product & Architecture Strategy",
-      icon: Compass,
-      desc: "Aligning multi-tier system architecture with long-term product roadmaps, high-availability targets, performance SLAs, and scaling milestones.",
-      tags: ["Product Roadmap", "System Scaling", "SLA Targets"],
+      title: "Technical Leadership & Mentorship",
+      icon: Award,
+      badge: "Technical Leadership",
+      desc: "Leading engineering initiatives, establishing clean code guidelines, conducting rigorous peer pull-request reviews, and mentoring junior developers on system design and SOLID principles.",
+      tags: ["Tech Leadership", "Code Reviews", "SOLID Design", "Developer Mentorship"],
     },
     {
-      title: "Root-Cause System Diagnostics",
+      title: "Tech-to-Business Stakeholder Alignment",
+      icon: MessageSquare,
+      badge: "Business Alignment",
+      desc: "Translating full-stack technical tradeoffs, cloud infrastructure decisions, and database indexing strategies into actionable business metrics and ROI for founders, clients, and non-technical stakeholders.",
+      tags: ["Stakeholder Sync", "Tech-to-Business", "ROI & Scalability", "Product Strategy"],
+    },
+    {
+      title: "Analytical Debugging & Incident RCA",
       icon: Brain,
-      desc: "Diagnosing complex production bottlenecks, database query locks, memory leaks, and distributed API latency issues under high user traffic.",
-      tags: ["Root Cause RCA", "Performance Audits", "Debugging"],
+      badge: "Problem Solving",
+      desc: "Systematically isolating complex production bugs, async memory leaks, high-concurrency race conditions, and database lockups using structured Root Cause Analysis (RCA).",
+      tags: ["Root Cause RCA", "Performance Audits", "Production Debugging", "Incident Response"],
     },
     {
-      title: "End-to-End Feature Ownership",
+      title: "End-to-End Architecture Ownership",
       icon: Target,
-      desc: "Driving end-to-end accountability from initial product discovery, API schema contract definitions, and database migrations to production launch.",
-      tags: ["Full Ownership", "Schema Design", "Launch Delivery"],
-    },
-    {
-      title: "Technical Requirement Specifications",
-      icon: Layers,
-      desc: "Deconstructing ambiguous business requirements into high-fidelity engineering specifications, clean API schemas, and structured sprint tasks.",
-      tags: ["API Contracts", "Technical Specs", "Task Breakdown"],
+      badge: "Full Ownership",
+      desc: "Driving complete feature lifecycles from initial DB schema design and REST/GraphQL endpoint modeling to reactive UI implementation, automated testing, and CI/CD production release.",
+      tags: ["Full-Stack Ownership", "DB Schema Design", "E2E Scaffolding", "CI/CD Deploy"],
     },
   ];
 
@@ -58,17 +65,17 @@ export default function SoftSkills() {
     <section id="leadership" className="mb-20 sm:mb-24 scroll-mt-24">
       {/* Section Header */}
       <SectionHeader
-        badge="GOVERNANCE & TEAM EXCELLENCE"
-        titlePrefix="How I"
-        titleHighlight="Work."
-        subtitle="Core professional capabilities, engineering philosophy, and collaborative team leadership principles."
+        badge="FULL-STACK LEADERSHIP & SOFT SKILLS"
+        titlePrefix="Soft Skills &"
+        titleHighlight="Communication"
+        subtitle="Professional technical leadership, fluent English client communication, cross-functional full-stack teamwork, and end-to-end product ownership."
         align="left"
-        icon={Users}
+        icon={Sparkles}
       />
 
       {/* Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {leadershipItems.map((item, idx) => {
+        {fullStackSoftSkills.map((item, idx) => {
           const Icon = item.icon;
           return (
             <motion.div
@@ -78,7 +85,7 @@ export default function SoftSkills() {
               viewport={{ once: true, margin: "-40px" }}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative p-6 rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 text-left flex flex-col justify-between overflow-hidden cursor-default min-h-[290px]"
+              className="group relative p-6 rounded-2xl glass-card-primary hover:border-orange-300 transition-all duration-300 text-left flex flex-col justify-between overflow-hidden cursor-default min-h-[300px]"
             >
               {/* Top Accent Beam */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6014]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -89,7 +96,9 @@ export default function SoftSkills() {
                   <div className="w-11 h-11 rounded-xl bg-orange-50 border border-orange-200/80 flex items-center justify-center text-[#FF6014] group-hover:bg-[#FF6014] group-hover:text-white group-hover:scale-105 group-hover:rotate-[-4deg] transition-all duration-300 shadow-xs">
                     <Icon className="w-5 h-5 transition-transform duration-300" strokeWidth={2.2} />
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-[#FF6014] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
+                  <span className="text-[10px] font-mono font-black text-[#FF6014] bg-orange-50/80 border border-orange-200/70 px-2 py-0.5 rounded-md uppercase">
+                    {item.badge}
+                  </span>
                 </div>
 
                 {/* Title & Description */}

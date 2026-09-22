@@ -29,6 +29,7 @@ export interface AboutData {
   mentorTitle?: string;
   mentorDescription?: string;
   availabilityText?: string;
+  profileImage?: string;
 }
 
 export const containerVariants = {

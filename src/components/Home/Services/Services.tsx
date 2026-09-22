@@ -68,7 +68,7 @@ export default function Services() {
   ];
 
   return (
-    <section id="capabilities" className="mb-20 sm:mb-24 scroll-mt-24">
+    <section id="services" className="mb-20 sm:mb-24 scroll-mt-24">
       {/* Section Header */}
       <SectionHeader
         badge="PRODUCT SOLUTIONS & ARCHITECTURE"

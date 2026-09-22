@@ -2,47 +2,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Users } from "lucide-react";
-import { Project, itemVariants } from "./types";
+import { itemVariants } from "./types";
 
 interface AboutHighlightsProps {
-  projects: Project[];
   quoteText: string;
   quoteAuthor: string;
   mentorTitle: string;
   mentorDescription: string;
-}
-
-function ProjectsCard({ projects }: { projects: Project[] }) {
-  return (
-    <motion.div
-      variants={itemVariants}
-      whileHover={{ y: -3 }}
-      className="rounded-2xl glass-card-primary overflow-hidden text-left hover:border-orange-300 transition-all duration-300"
-    >
-      <div className="px-5 py-4 border-b border-slate-200/80 bg-slate-50/50">
-        <p className="text-xs font-black text-slate-700 uppercase tracking-widest">
-          Recent Focus Projects
-        </p>
-      </div>
-      <div className="divide-y divide-slate-200/60">
-        {projects.map((project, idx) => (
-          <motion.div
-            key={idx}
-            whileHover={{ x: 4 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="px-5 py-4 hover:bg-orange-50/40 transition-colors cursor-default"
-          >
-            <p className="text-sm sm:text-base font-bold text-slate-900 mb-1">
-              {project.title}
-            </p>
-            <p className="text-sm text-slate-800 leading-relaxed font-medium">
-              {project.description}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
-  );
 }
 
 function MentorCard({ title, description }: { title: string; description: string }) {
@@ -69,7 +35,6 @@ function MentorCard({ title, description }: { title: string; description: string
 }
 
 export default function AboutHighlights({
-  projects,
   quoteText,
   quoteAuthor,
   mentorTitle,
@@ -77,11 +42,6 @@ export default function AboutHighlights({
 }: AboutHighlightsProps) {
   return (
     <>
-      {/* Recent Projects card */}
-      {projects.length > 0 && (
-        <ProjectsCard projects={projects} />
-      )}
-
       {/* Quote */}
       {quoteText && (
         <motion.div
