@@ -24,9 +24,50 @@ interface Message {
   content: string;
 }
 
+function renderFormattedContent(content: string) {
+  if (!content) return null;
+
+  const parts = content.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\n)/g);
+
+  return parts.map((part, index) => {
+    if (!part) return null;
+
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      const [, linkText, linkUrl] = linkMatch;
+      return (
+        <a
+          key={index}
+          href={linkUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#FF6014] font-bold underline hover:opacity-80 transition-opacity inline-flex items-center gap-0.5"
+        >
+          {linkText} ↗
+        </a>
+      );
+    }
+
+    const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
+    if (boldMatch) {
+      return (
+        <strong key={index} className="font-extrabold text-slate-900">
+          {boldMatch[1]}
+        </strong>
+      );
+    }
+
+    if (part === "\n") {
+      return <br key={index} />;
+    }
+
+    return <span key={index}>{part}</span>;
+  });
+}
+
 export default function ChatbotWidget() {
   const { theme } = useTheme();
-  const isDark = theme === "dark";
+ 
 
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -208,16 +249,16 @@ export default function ChatbotWidget() {
   ];
 
   return (
-    // Fixed positioning updated to place the chatbot on the right edge on desktop and bottom on mobile, avoiding overlays
     <div className="fixed z-50 font-sans bottom-24 right-4 md:bottom-36 md:right-8">
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            data-lenis-prevent
             initial={{ opacity: 0, scale: 0.85, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 30 }}
             transition={{ type: "spring", stiffness: 350, damping: 28 }}
-            className="w-[90vw] sm:w-[380px] h-[550px] mb-4 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-white flex flex-col relative"
+            className="w-[92vw] sm:w-[400px] h-[550px] max-h-[calc(100vh-140px)] mb-4 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-white flex flex-col relative"
             style={{
               boxShadow: "0 12px 40px -10px rgba(255, 96, 20, 0.15)",
             }}
@@ -312,7 +353,10 @@ export default function ChatbotWidget() {
             </div>
 
             {/* Message Area */}
-            <div className="flex-1 overflow-y-auto p-3.5 space-y-3.5 custom-scrollbar bg-slate-50/40">
+            <div
+              data-lenis-prevent
+              className="flex-1 overflow-y-auto p-3.5 space-y-3.5 custom-scrollbar bg-slate-50/40 overscroll-contain touch-pan-y"
+            >
               {messages.map((msg, index) => {
                 const isBot = msg.role === "assistant";
                 return (
@@ -334,7 +378,9 @@ export default function ChatbotWidget() {
                       }`}
                       style={{ wordBreak: "break-word", overflowWrap: "anywhere" }}
                     >
-                      <p className="whitespace-pre-wrap break-words">{msg.content}</p>
+                      <div className="whitespace-pre-wrap break-words">
+                        {isBot ? renderFormattedContent(msg.content) : msg.content}
+                      </div>
                     </div>
                   </div>
                 );
@@ -353,7 +399,10 @@ export default function ChatbotWidget() {
             </div>
 
             {/* Quick Starter Chips */}
-            <div className="p-2.5 border-t border-slate-200/80 bg-white flex flex-wrap gap-1.5 max-h-[90px] overflow-y-auto custom-scrollbar">
+            <div
+              data-lenis-prevent
+              className="p-2.5 border-t border-slate-200/80 bg-white flex flex-wrap gap-1.5 max-h-[90px] overflow-y-auto custom-scrollbar overscroll-contain touch-pan-y"
+            >
               {starterPrompts.map((prompt, idx) => (
                 <button
                   key={idx}
