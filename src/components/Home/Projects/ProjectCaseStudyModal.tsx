@@ -74,7 +74,7 @@ const GithubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 export function groupTechStack(techList: string[] = []) {
   const frontendKeywords = [
-    "next.js",
+    "next",
     "react",
     "typescript",
     "javascript",
@@ -84,6 +84,9 @@ export function groupTechStack(techList: string[] = []) {
     "tailwind",
     "html",
     "css",
+    "ui",
+    "shadcn",
+    "vue",
   ];
   const backendKeywords = [
     "node",
@@ -95,6 +98,8 @@ export function groupTechStack(techList: string[] = []) {
     "jwt",
     "passport",
     "oauth",
+    "api",
+    "auth",
   ];
   const databaseKeywords = [
     "postgres",
@@ -103,6 +108,8 @@ export function groupTechStack(techList: string[] = []) {
     "mongo",
     "redis",
     "sql",
+    "db",
+    "orm",
   ];
 
   const groups = {

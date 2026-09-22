@@ -17,15 +17,17 @@ export default function GlobalGSAPAnimations() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    // Small delay to allow DOM hydration and data fetching
+    let ctx: gsap.Context | null = null;
+
     const timer = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        // 1. Animate Section Headings (h1, h2, h3) across all sections
-        const headings = gsap.utils.toArray<HTMLElement>("section h2, section h3, section h1, .gsap-title");
+      ctx = gsap.context(() => {
+        // 1. Animate Section Headings (.gsap-title)
+        const headings = gsap.utils.toArray<HTMLElement>(".gsap-title");
         headings.forEach((heading) => {
+          if (!heading || !heading.parentNode) return;
           gsap.fromTo(
             heading,
-            { opacity: 0, y: 35, scale: 0.98 },
+            { opacity: 0, y: 30, scale: 0.98 },
             {
               opacity: 1,
               y: 0,
@@ -35,18 +37,19 @@ export default function GlobalGSAPAnimations() {
               scrollTrigger: {
                 trigger: heading,
                 start: "top 90%",
-                toggleActions: "play none none reverse",
+                once: true,
               },
             }
           );
         });
 
-        // 2. Animate Paragraphs & Text Content (p) across all sections
-        const paragraphs = gsap.utils.toArray<HTMLElement>("section p, .gsap-text");
+        // 2. Animate Elements marked with .gsap-text
+        const paragraphs = gsap.utils.toArray<HTMLElement>(".gsap-text");
         paragraphs.forEach((p) => {
+          if (!p || !p.parentNode) return;
           gsap.fromTo(
             p,
-            { opacity: 0, y: 25 },
+            { opacity: 0, y: 20 },
             {
               opacity: 1,
               y: 0,
@@ -55,43 +58,40 @@ export default function GlobalGSAPAnimations() {
               scrollTrigger: {
                 trigger: p,
                 start: "top 92%",
-                toggleActions: "play none none reverse",
+                once: true,
               },
             }
           );
         });
 
-        // 3. Animate Cards & Feature Panels across all sections
-        const cards = gsap.utils.toArray<HTMLElement>(
-          ".glass-card-primary, .glass-card-compact, .glass-card-featured, .gsap-card"
-        );
+        // 3. Animate Cards & Feature Panels with .gsap-card
+        const cards = gsap.utils.toArray<HTMLElement>(".gsap-card");
         cards.forEach((card) => {
+          if (!card || !card.parentNode) return;
           gsap.fromTo(
             card,
-            { opacity: 0, y: 40, scale: 0.97 },
+            { opacity: 0, y: 35, scale: 0.98 },
             {
               opacity: 1,
               y: 0,
               scale: 1,
-              duration: 0.75,
+              duration: 0.7,
               ease: "power2.out",
               scrollTrigger: {
                 trigger: card,
                 start: "top 88%",
-                toggleActions: "play none none reverse",
+                once: true,
               },
             }
           );
         });
-
-        // Recalculate positions
-        ScrollTrigger.refresh();
       });
+    }, 100);
 
-      return () => ctx.revert();
-    }, 300);
-
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (ctx) ctx.revert();
+    };
   }, [pathname]);
 
   return null;

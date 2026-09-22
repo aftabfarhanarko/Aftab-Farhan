@@ -80,27 +80,7 @@ export default function Experience() {
     fetchExperiences();
   }, []);
 
-  useEffect(() => {
-    if (isLoading || !sectionRef.current || !leftPanelRef.current) return;
 
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      mm.add("(min-width: 1024px)", () => {
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: "top 90px",
-          end: "bottom bottom",
-          pin: leftPanelRef.current,
-          pinSpacing: false,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [isLoading, experiences]);
 
   if (isLoading) {
     return (

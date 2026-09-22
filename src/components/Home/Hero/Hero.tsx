@@ -38,7 +38,7 @@ export default function Hero() {
   const { name, title, description, image, socials = [], stats = [] } = hero;
 
   return (
-    <div className="relative pt-2 lg:pt-3">
+    <div className="relative pt-0">
       <AmbientBackgroundGlow />
       <section
         id="hero"

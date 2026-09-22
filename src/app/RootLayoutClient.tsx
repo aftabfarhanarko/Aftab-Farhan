@@ -13,10 +13,10 @@ import ChatbotWidget from "@/components/Chatbot/ChatbotWidget";
 import GlobalGSAPAnimations from "@/components/GlobalGSAPAnimations";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
+import Lenis from "lenis";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 
@@ -204,18 +204,42 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+    window.scrollTo(0, 0);
 
-    const smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1,
-      effects: true,
-      smoothTouch: 0.1,
+    const lenis = new Lenis({
+      duration: 0.9,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.2,
+      autoResize: true,
     });
 
+    lenis.scrollTo(0, { immediate: true });
+    lenis.on("scroll", ScrollTrigger.update);
+
+    const updateTicker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
+
+    const resizeObserver = new ResizeObserver(() => {
+      lenis.resize();
+      ScrollTrigger.refresh();
+    });
+
+    if (document.body) {
+      resizeObserver.observe(document.body);
+    }
+
     return () => {
-      smoother.kill();
+      resizeObserver.disconnect();
+      lenis.destroy();
+      gsap.ticker.remove(updateTicker);
     };
   }, [pathname]);
 

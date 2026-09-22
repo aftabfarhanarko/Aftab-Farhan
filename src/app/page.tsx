@@ -13,7 +13,7 @@ import HowIEngineer from "@/components/Home/HowIEngineer/HowIEngineer";
 
 export default function Home() {
   return (
-    <div className="pt-1 sm:pt-2 pb-8 w-full space-y-0">
+    <div className="pt-0 pb-8 w-full space-y-0">
       {/* Top 7xl Constrained Sections */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Hero />

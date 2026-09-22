@@ -98,6 +98,9 @@ export default function ProjectDetailPage() {
         setError(err.message || "Failed to load project details");
       } finally {
         setIsLoading(false);
+        if (typeof window !== "undefined") {
+          window.scrollTo(0, 0);
+        }
       }
     }
 
@@ -257,64 +260,75 @@ export default function ProjectDetailPage() {
 
           {/* RIGHT SIDEBAR (30% = 3 cols in 10-col grid) - STICKY META INFO CARD */}
           <div className="lg:col-span-3 lg:sticky lg:top-8 space-y-4">
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-5">
-              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 border-b border-slate-100 pb-3 flex items-center gap-2">
-                <Briefcase size={14} className="text-[#FF6014]" />
-                Project Metadata
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-5">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-500 border-b border-slate-100 pb-3 flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <Briefcase size={15} className="text-[#FF6014]" />
+                  Project Metadata
+                </span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-bold border border-slate-200">
+                  Verified
+                </span>
               </h3>
 
-              <div className="space-y-4 text-xs font-medium">
-                {/* Role */}
-                <div className="space-y-1">
-                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
-                    <User size={12} className="text-[#FF6014]" /> Developer Role
+              <div className="space-y-3.5">
+                {/* Developer Role */}
+                <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
+                  <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <User size={13} className="text-[#FF6014]" /> Developer Role
                   </span>
-                  <p className="text-sm font-bold text-slate-900">
-                    {project.role || "Lead Full-Stack Developer"}
-                  </p>
+                  <div className="pt-0.5">
+                    <span className="inline-block px-2.5 py-1 rounded-xl bg-[#FF6014]/10 text-[#FF6014] border border-[#FF6014]/20 text-xs font-black">
+                      {project.role || "Lead Full-Stack Developer"}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Project Type */}
-                <div className="space-y-1">
-                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
-                    <Layers size={12} className="text-[#FF6014]" /> Project Type
+                <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
+                  <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <Layers size={13} className="text-indigo-500" /> Project Type
                   </span>
-                  <p className="text-sm font-bold text-slate-900">
-                    {project.projectType || "TEAM"}
-                  </p>
+                  <div className="pt-0.5">
+                    <span className="inline-block px-2.5 py-1 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-black tracking-wide">
+                      {project.projectType || "TEAM"}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Client */}
-                <div className="space-y-1">
-                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
-                    <Globe size={12} className="text-[#FF6014]" /> Client / Organization
+                {/* Client / Organization */}
+                <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
+                  <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <Globe size={13} className="text-emerald-500" /> Client / Organization
                   </span>
-                  <p className="text-sm font-bold text-slate-900">
+                  <p className="text-xs font-bold text-slate-900 pt-0.5">
                     {project.client || "Independent Project"}
                   </p>
                 </div>
 
                 {/* Duration & Timeline */}
-                <div className="space-y-1">
-                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
-                    <Clock size={12} className="text-[#FF6014]" /> Duration & Timeline
+                <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
+                  <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <Clock size={13} className="text-amber-500" /> Duration & Timeline
                   </span>
-                  <p className="text-sm font-bold text-slate-900">
-                    {project.duration || "14 Days"}{" "}
-                    <span className="text-slate-400 font-normal">
+                  <div className="text-xs font-bold text-slate-900 pt-0.5 flex flex-col gap-0.5">
+                    <span>{project.duration || "14 Days"}</span>
+                    <span className="text-[11px] text-slate-500 font-medium">
                       ({project.startDate || "03-05-26"} – {project.endDate || "17-05-26"})
                     </span>
-                  </p>
+                  </div>
                 </div>
 
-                {/* Category */}
-                <div className="space-y-1">
-                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
-                    <Layout size={12} className="text-[#FF6014]" /> Domain Category
+                {/* Domain Category */}
+                <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
+                  <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <Layout size={13} className="text-purple-500" /> Domain Category
                   </span>
-                  <p className="text-sm font-bold text-slate-900">
-                    {project.category.replace("_", " ")}
-                  </p>
+                  <div className="pt-0.5">
+                    <span className="inline-block px-2.5 py-1 rounded-xl bg-purple-50 text-purple-700 border border-purple-200 text-xs font-black uppercase">
+                      {project.category.replace("_", " ")}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -454,25 +468,35 @@ export default function ProjectDetailPage() {
         </section>
 
         {/* 5. TECH STACK SECTION (GROUPED BADGES: Frontend, Backend, Database, DevOps/Tools) */}
-        <section className="space-y-4">
-          <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
-            <Cpu size={15} className="text-[#FF6014]" />
-            Technologies & System Architecture Stack
-          </h2>
+        <section className="space-y-6">
+          <div className="flex items-center justify-between border-b border-slate-200/60 pb-3">
+            <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+              <Cpu size={15} className="text-[#FF6014]" />
+              Technologies & System Architecture Stack
+            </h2>
+            {project.tech && project.tech.length > 0 && (
+              <span className="text-[11px] font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                {project.tech.length} Technologies
+              </span>
+            )}
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Frontend */}
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
-                <Layout size={14} className="text-[#FF6014]" />
-                <span>Frontend</span>
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-4 hover:border-orange-300 transition-colors shadow-xs">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-900">
+                  <Layout size={15} className="text-[#FF6014]" />
+                  <span>Frontend</span>
+                </div>
+                <span className="w-2 h-2 rounded-full bg-[#FF6014]" />
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {techGroups.Frontend.length > 0 ? (
                   techGroups.Frontend.map((item, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+                      className="px-3 py-1 rounded-xl bg-orange-50 border border-orange-200 text-xs font-extrabold text-orange-900"
                     >
                       {item}
                     </span>
@@ -484,17 +508,20 @@ export default function ProjectDetailPage() {
             </div>
 
             {/* Backend */}
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
-                <Server size={14} className="text-blue-500" />
-                <span>Backend & APIs</span>
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-4 hover:border-blue-300 transition-colors shadow-xs">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-900">
+                  <Server size={15} className="text-blue-500" />
+                  <span>Backend & APIs</span>
+                </div>
+                <span className="w-2 h-2 rounded-full bg-blue-500" />
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {techGroups.Backend.length > 0 ? (
                   techGroups.Backend.map((item, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+                      className="px-3 py-1 rounded-xl bg-blue-50 border border-blue-200 text-xs font-extrabold text-blue-900"
                     >
                       {item}
                     </span>
@@ -506,17 +533,20 @@ export default function ProjectDetailPage() {
             </div>
 
             {/* Database */}
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
-                <Database size={14} className="text-emerald-500" />
-                <span>Database & ORM</span>
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-4 hover:border-emerald-300 transition-colors shadow-xs">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-900">
+                  <Database size={15} className="text-emerald-500" />
+                  <span>Database & ORM</span>
+                </div>
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {techGroups.Database.length > 0 ? (
                   techGroups.Database.map((item, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+                      className="px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-extrabold text-emerald-900"
                     >
                       {item}
                     </span>
@@ -528,17 +558,20 @@ export default function ProjectDetailPage() {
             </div>
 
             {/* DevOps & Tools */}
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-900">
-                <Cpu size={14} className="text-purple-500" />
-                <span>DevOps & Tools</span>
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-4 hover:border-purple-300 transition-colors shadow-xs">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-900">
+                  <Cpu size={15} className="text-purple-500" />
+                  <span>DevOps & Tools</span>
+                </div>
+                <span className="w-2 h-2 rounded-full bg-purple-500" />
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {techGroups["DevOps & Tools"].length > 0 ? (
                   techGroups["DevOps & Tools"].map((item, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+                      className="px-3 py-1 rounded-xl bg-purple-50 border border-purple-200 text-xs font-extrabold text-purple-900"
                     >
                       {item}
                     </span>
@@ -549,6 +582,33 @@ export default function ProjectDetailPage() {
               </div>
             </div>
           </div>
+
+          {/* Full Tech Stack Cloud */}
+          {project.tech && project.tech.length > 0 && (
+            <div className="p-6 sm:p-8 rounded-3xl bg-white text-slate-900 space-y-4 shadow-xs border border-slate-200">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2">
+                  <Sparkles size={16} className="text-[#FF6014]" />
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-700">
+                    All Verified Project Technologies & Libraries
+                  </h3>
+                </div>
+                <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                  Total: {project.tech.length}
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {project.tech.map((t, i) => (
+                  <span
+                    key={i}
+                    className="px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-extrabold text-slate-800 hover:bg-slate-100 hover:border-[#FF6014]/50 transition-all cursor-default"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
       </div>

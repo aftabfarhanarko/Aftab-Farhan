@@ -29,7 +29,7 @@ export default function HeroLeft({ name, title, description, stats }: HeroLeftPr
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl order-2 md:order-1 items-center md:items-start pt-2 sm:pt-4">
+    <div className="flex-1 flex flex-col gap-6 z-10 max-w-2xl order-2 md:order-1 items-center md:items-start pt-0">
       
       {/* Animated Availability Status Pill */}
       <motion.div {...fadeLeft(0.08)}>
@@ -90,8 +90,8 @@ export default function HeroLeft({ name, title, description, stats }: HeroLeftPr
         </motion.a>
 
         <motion.a
-          href="/AFTAB_FARHAN_ARKO_CV.pdf"
-          download="AFTAB_FARHAN_ARKO_CV.pdf"
+          href="/Aftab-Farhan.pdf"
+          download="Aftab-Farhan.pdf"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.03, y: -2 }}
