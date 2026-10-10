@@ -10,6 +10,7 @@ import SoftSkills from "@/components/Home/SoftSkills/Soft-Skills";
 import Education from "@/components/Home/Education/Education";
 import Services from "@/components/Home/Services/Services";
 import HowIEngineer from "@/components/Home/HowIEngineer/HowIEngineer";
+import DesignTools from "@/components/Home/DesignTools/DesignTools";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <About />
         <Services />
         <Skills />
+        {/* <DesignTools /> */}
       </div>
 
       {/* Full-Width Projects Section */}

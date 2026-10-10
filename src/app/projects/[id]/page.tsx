@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft,
   ExternalLink,
-  Calendar,
   Layers,
   User,
   Clock,
   Briefcase,
   Sparkles,
   ChevronRight,
+  ChevronLeft,
   Loader2,
   Code2,
   CheckCircle2,
@@ -22,6 +22,8 @@ import {
   Database,
   Cpu,
   Layout,
+  Pause,
+  Play,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -81,6 +83,24 @@ export default function ProjectDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isSliding, setIsSliding] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const slideIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const allImagesRef = useRef<string[]>([]);
+
+  const goToImage = useCallback((idx: number) => {
+    setActiveImageIndex(idx);
+  }, []);
+
+  const goNext = useCallback(() => {
+    setActiveImageIndex((prev) => (prev + 1) % allImagesRef.current.length);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setActiveImageIndex((prev) =>
+      prev === 0 ? allImagesRef.current.length - 1 : prev - 1
+    );
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -94,6 +114,7 @@ export default function ProjectDetailPage() {
         }
         const data = await res.json();
         setProject(data);
+        setActiveImageIndex(0);
       } catch (err: any) {
         setError(err.message || "Failed to load project details");
       } finally {
@@ -107,6 +128,32 @@ export default function ProjectDetailPage() {
     fetchProject();
   }, [id]);
 
+  // Derive images safely even while project is still null (keeps hook order stable)
+  const allImages = project
+    ? Array.from(
+        new Set(
+          [project.image, ...(project.gallery || [])].filter(Boolean) as string[]
+        )
+      )
+    : [];
+  allImagesRef.current = allImages;
+
+  // Gallery auto-slide — always called in the same order on every render
+  useEffect(() => {
+    if (allImages.length <= 1) return;
+    if (slideIntervalRef.current) clearInterval(slideIntervalRef.current);
+    if (!isSliding || isHovered) return;
+
+    slideIntervalRef.current = setInterval(() => {
+      setActiveImageIndex((prev) => (prev + 1) % allImagesRef.current.length);
+    }, 3500);
+
+    return () => {
+      if (slideIntervalRef.current) clearInterval(slideIntervalRef.current);
+    };
+  }, [isSliding, isHovered, allImages.length]);
+
+  // ---- Early returns AFTER all hooks ----
   if (isLoading) {
     return (
       <div className="min-h-[70vh] bg-transparent text-slate-900 flex flex-col items-center justify-center p-6">
@@ -123,7 +170,9 @@ export default function ProjectDetailPage() {
           <Code2 className="w-8 h-8" />
         </div>
         <h1 className="text-2xl font-bold text-slate-900 mb-2">Project Not Found</h1>
-        <p className="text-slate-600 max-w-md mb-6">{error || "The requested project case study could not be found."}</p>
+        <p className="text-slate-600 max-w-md mb-6">
+          {error || "The requested project case study could not be found."}
+        </p>
         <button
           onClick={() => router.back()}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition-all shadow-md cursor-pointer"
@@ -135,16 +184,12 @@ export default function ProjectDetailPage() {
     );
   }
 
-  const allImages = Array.from(
-    new Set([project.image, ...(project.gallery || [])].filter(Boolean) as string[])
-  );
   const currentImage = allImages[activeImageIndex] || project.image || "";
   const techGroups = groupTechStack(project.tech || []);
 
   return (
     <div className="bg-transparent text-slate-900 py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
-        
         {/* Navigation Trail */}
         <div className="flex items-center justify-between gap-4">
           <button
@@ -156,11 +201,15 @@ export default function ProjectDetailPage() {
           </button>
 
           <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-            <Link href="/" className="hover:text-slate-900 transition-colors">Home</Link>
+            <Link href="/" className="hover:text-slate-900 transition-colors">
+              Home
+            </Link>
             <ChevronRight size={12} className="text-slate-400" />
             <span className="text-slate-500">Projects</span>
             <ChevronRight size={12} className="text-slate-400" />
-            <span className="text-[#FF6014] font-semibold truncate max-w-[160px]">{project.title}</span>
+            <span className="text-[#FF6014] font-semibold truncate max-w-[160px]">
+              {project.title}
+            </span>
           </div>
         </div>
 
@@ -216,10 +265,9 @@ export default function ProjectDetailPage() {
           </div>
         </motion.header>
 
-        {/* 2. EXECUTIVE SUMMARY (2-COLUMN LAYOUT: 70% Left Column, 30% Right Sidebar) */}
+        {/* 2. EXECUTIVE SUMMARY */}
         <section className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-start">
-          
-          {/* LEFT COLUMN (70% = 7 cols in 10-col grid) */}
+          {/* LEFT COLUMN */}
           <div className="lg:col-span-7 space-y-6">
             {project.overview && (
               <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 space-y-3">
@@ -258,7 +306,7 @@ export default function ProjectDetailPage() {
             )}
           </div>
 
-          {/* RIGHT SIDEBAR (30% = 3 cols in 10-col grid) - STICKY META INFO CARD */}
+          {/* RIGHT SIDEBAR */}
           <div className="lg:col-span-3 lg:sticky lg:top-8 space-y-4">
             <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-5">
               <h3 className="text-xs font-black uppercase tracking-widest text-slate-500 border-b border-slate-100 pb-3 flex items-center justify-between">
@@ -272,7 +320,6 @@ export default function ProjectDetailPage() {
               </h3>
 
               <div className="space-y-3.5">
-                {/* Developer Role */}
                 <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
                   <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
                     <User size={13} className="text-[#FF6014]" /> Developer Role
@@ -284,7 +331,6 @@ export default function ProjectDetailPage() {
                   </div>
                 </div>
 
-                {/* Project Type */}
                 <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
                   <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
                     <Layers size={13} className="text-indigo-500" /> Project Type
@@ -296,7 +342,6 @@ export default function ProjectDetailPage() {
                   </div>
                 </div>
 
-                {/* Client / Organization */}
                 <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
                   <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
                     <Globe size={13} className="text-emerald-500" /> Client / Organization
@@ -306,7 +351,6 @@ export default function ProjectDetailPage() {
                   </p>
                 </div>
 
-                {/* Duration & Timeline */}
                 <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
                   <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
                     <Clock size={13} className="text-amber-500" /> Duration & Timeline
@@ -319,7 +363,6 @@ export default function ProjectDetailPage() {
                   </div>
                 </div>
 
-                {/* Domain Category */}
                 <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-1">
                   <span className="text-slate-400 font-extrabold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
                     <Layout size={13} className="text-purple-500" /> Domain Category
@@ -335,44 +378,124 @@ export default function ProjectDetailPage() {
           </div>
         </section>
 
-        {/* 3. MEDIA GALLERY (MAIN DISPLAY + GRID THUMBNAILS) */}
+        {/* 3. MEDIA GALLERY — no black side gaps */}
         {allImages.length > 0 && (
           <section className="space-y-4">
-            <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
-              <Globe size={14} className="text-[#FF6014]" />
-              Interactive Media Showcase & Gallery ({allImages.length} Screenshots)
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                <Globe size={14} className="text-[#FF6014]" />
+                Interactive Media Showcase &amp; Gallery ({allImages.length} Screenshots)
+              </h2>
+              {allImages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setIsSliding((s) => !s)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-600 hover:border-[#FF6014]/40 hover:text-[#FF6014] transition-all cursor-pointer"
+                >
+                  {isSliding ? (
+                    <Pause className="w-3.5 h-3.5" />
+                  ) : (
+                    <Play className="w-3.5 h-3.5" />
+                  )}
+                  {isSliding ? "Pause" : "Play"}
+                </button>
+              )}
+            </div>
 
-            <div className="rounded-3xl border border-slate-200 bg-slate-950 overflow-hidden group">
-              {/* Main Image Display */}
-              <div className="relative aspect-[16/10] sm:aspect-[16/9] max-h-[600px] overflow-hidden bg-slate-950 flex items-center justify-center p-2 sm:p-4">
+            <div
+              className="rounded-3xl border border-slate-200 bg-white overflow-hidden group"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {/* Main Image — fills frame edge-to-edge */}
+              <div className="relative aspect-[16/10] sm:aspect-[16/9] max-h-[560px] overflow-hidden bg-slate-100">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={currentImage}
                     src={currentImage}
                     alt={project.title}
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="w-full h-full object-contain max-h-[560px] rounded-xl shadow-2xl"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
                   />
                 </AnimatePresence>
+
+                {/* Prev / Next Arrows */}
+                {allImages.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={goPrev}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 border border-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-all cursor-pointer opacity-0 group-hover:opacity-100 z-10"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goNext}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 border border-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-all cursor-pointer opacity-0 group-hover:opacity-100 z-10"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
+
+                {/* Slide dots */}
+                {allImages.length > 1 && (
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                    {allImages.map((_, di) => (
+                      <button
+                        key={di}
+                        type="button"
+                        onClick={() => goToImage(di)}
+                        className={`block rounded-full transition-all duration-300 cursor-pointer ${
+                          di === activeImageIndex
+                            ? "w-5 h-1.5 bg-[#FF6014]"
+                            : "w-1.5 h-1.5 bg-white/70 hover:bg-white"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
+
+              {/* Progress bar */}
+              {allImages.length > 1 && (
+                <div className="relative h-0.5 bg-slate-200">
+                  <div
+                    key={`${activeImageIndex}-${isSliding}`}
+                    className={`absolute inset-y-0 left-0 bg-[#FF6014] ${
+                      isSliding && !isHovered ? "animate-gallery-progress" : ""
+                    }`}
+                    style={{
+                      width:
+                        !isSliding || isHovered
+                          ? `${((activeImageIndex + 1) / allImages.length) * 100}%`
+                          : undefined,
+                      animationDuration: "3.5s",
+                    }}
+                  />
+                </div>
+              )}
             </div>
 
-            {/* Clickable Image Thumbnails Grid */}
+            {/* Thumbnails */}
             {allImages.length > 1 && (
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 pt-1">
                 {allImages.map((imgUrl, idx) => (
                   <button
                     key={idx}
                     type="button"
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`relative aspect-[16/10] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer bg-slate-900 ${
+                    onClick={() => {
+                      goToImage(idx);
+                      setIsSliding(false);
+                    }}
+                    className={`relative aspect-[16/10] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer bg-slate-100 ${
                       activeImageIndex === idx
                         ? "border-[#FF6014] ring-2 ring-[#FF6014]/40 scale-105 opacity-100"
-                        : "border-slate-200 opacity-60 hover:opacity-100 hover:border-slate-400"
+                        : "border-slate-200 opacity-70 hover:opacity-100 hover:border-slate-400 hover:scale-105"
                     }`}
                   >
                     <img
@@ -380,6 +503,9 @@ export default function ProjectDetailPage() {
                       alt={`Thumbnail ${idx + 1}`}
                       className="w-full h-full object-cover object-top"
                     />
+                    {activeImageIndex === idx && (
+                      <div className="absolute inset-0 bg-[#FF6014]/10" />
+                    )}
                   </button>
                 ))}
               </div>
@@ -389,7 +515,6 @@ export default function ProjectDetailPage() {
 
         {/* 4. CORE FEATURES & TECHNICAL CHALLENGES */}
         <section className="space-y-8">
-          {/* Key Features Grid */}
           {project.keyFeatures && project.keyFeatures.length > 0 && (
             <div className="space-y-4">
               <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
@@ -416,10 +541,12 @@ export default function ProjectDetailPage() {
             </div>
           )}
 
-          {/* Technical Challenges (Clean White Design) */}
           {project.technicalChallenges &&
-            project.technicalChallenges.length > 0 && (() => {
-              const normalizedChallenges = normalizeTechnicalChallenges(project.technicalChallenges);
+            project.technicalChallenges.length > 0 &&
+            (() => {
+              const normalizedChallenges = normalizeTechnicalChallenges(
+                project.technicalChallenges
+              );
               if (normalizedChallenges.length === 0) return null;
               return (
                 <div className="space-y-4">
@@ -434,7 +561,6 @@ export default function ProjectDetailPage() {
                         key={idx}
                         className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 text-slate-900 space-y-4 shadow-sm"
                       >
-                        {/* Challenge */}
                         {tc.challenge && (
                           <div className="space-y-1.5">
                             <div className="flex items-center gap-2 text-rose-600 text-xs font-extrabold uppercase tracking-wider">
@@ -447,7 +573,6 @@ export default function ProjectDetailPage() {
                           </div>
                         )}
 
-                        {/* Solution */}
                         {tc.solution && (
                           <div className="space-y-1.5 pt-3 border-t border-slate-100">
                             <div className="flex items-center gap-2 text-emerald-600 text-xs font-extrabold uppercase tracking-wider">
@@ -467,7 +592,7 @@ export default function ProjectDetailPage() {
             })()}
         </section>
 
-        {/* 5. TECH STACK SECTION (GROUPED BADGES: Frontend, Backend, Database, DevOps/Tools) */}
+        {/* 5. TECH STACK SECTION */}
         <section className="space-y-6">
           <div className="flex items-center justify-between border-b border-slate-200/60 pb-3">
             <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
@@ -502,7 +627,9 @@ export default function ProjectDetailPage() {
                     </span>
                   ))
                 ) : (
-                  <span className="text-xs text-slate-400 font-medium">React, Next.js, TypeScript</span>
+                  <span className="text-xs text-slate-400 font-medium">
+                    React, Next.js, TypeScript
+                  </span>
                 )}
               </div>
             </div>
@@ -527,7 +654,9 @@ export default function ProjectDetailPage() {
                     </span>
                   ))
                 ) : (
-                  <span className="text-xs text-slate-400 font-medium">Node.js, Express, Nest.js</span>
+                  <span className="text-xs text-slate-400 font-medium">
+                    Node.js, Express, Nest.js
+                  </span>
                 )}
               </div>
             </div>
@@ -552,7 +681,9 @@ export default function ProjectDetailPage() {
                     </span>
                   ))
                 ) : (
-                  <span className="text-xs text-slate-400 font-medium">PostgreSQL, TypeORM</span>
+                  <span className="text-xs text-slate-400 font-medium">
+                    PostgreSQL, TypeORM
+                  </span>
                 )}
               </div>
             </div>
@@ -577,13 +708,14 @@ export default function ProjectDetailPage() {
                     </span>
                   ))
                 ) : (
-                  <span className="text-xs text-slate-400 font-medium">Git, Docker, Vercel</span>
+                  <span className="text-xs text-slate-400 font-medium">
+                    Git, Docker, Vercel
+                  </span>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Full Tech Stack Cloud */}
           {project.tech && project.tech.length > 0 && (
             <div className="p-6 sm:p-8 rounded-3xl bg-white text-slate-900 space-y-4 shadow-xs border border-slate-200">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -610,7 +742,6 @@ export default function ProjectDetailPage() {
             </div>
           )}
         </section>
-
       </div>
     </div>
   );

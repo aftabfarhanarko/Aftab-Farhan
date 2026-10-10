@@ -242,3 +242,13 @@ body {
     color: #111827;
   }
 }
+
+/* ── Gallery Auto-Slide Progress Bar ── */
+@keyframes gallery-progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.animate-gallery-progress {
+  animation: gallery-progress 3s linear forwards;
+}
