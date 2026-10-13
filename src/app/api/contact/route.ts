@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import nodemailer from "nodemailer";
-import { auth } from "@/auth";
+import { verifyApiAuth } from "@/lib/auth-jwt";
 
-export async function GET() {
-  const session = await auth();
-  if (!session) {
+export async function GET(req: Request) {
+  const user = await verifyApiAuth(req);
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

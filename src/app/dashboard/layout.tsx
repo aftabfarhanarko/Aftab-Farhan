@@ -12,7 +12,7 @@ export default function DashboardLayout({
   return (
     <ToastProvider>
       <AuthProvider>
-        <div className="flex min-h-screen bg-gray-50 text-black relative overflow-hidden font-sans">
+        <div className="flex h-screen bg-gray-50 text-black relative overflow-hidden font-sans">
           {/* Subtle Grid Pattern Overlay */}
           <div
             className="fixed inset-0 pointer-events-none z-0 opacity-[0.4]"
@@ -36,7 +36,7 @@ export default function DashboardLayout({
           <Sidebar />
 
           {/* Right side — navbar + scrollable content */}
-          <div className="flex flex-col flex-1 min-w-0 max-h-screen overflow-hidden relative z-10">
+          <div className="flex flex-col flex-1 min-w-0 h-full overflow-hidden relative z-10">
             {/* Top Navbar */}
             <TopNavbar />
 

@@ -4,24 +4,34 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.aftabfarhan.tech"),
 
   title: {
-    default: "Aftab Farhan Arko | Full Stack Developer & Technical Lead",
+    default:
+      "Aftab Farhan Arko | Backend Software Engineer | Full Stack Engineer",
     template: "%s | Aftab Farhan Arko",
   },
 
   description:
-    "Full Stack Developer and Technical Lead specializing in Next.js, React, TypeScript, Node.js, NestJS, PostgreSQL and scalable web applications.",
+    "Backend Software Engineer | Full Stack Engineer | Go (Golang) • Node.js • NestJS • TypeScript • PostgreSQL • System Design • Scalable Backend Systems • API Development • Cloud & DevOps",
 
   keywords: [
     "Aftab Farhan Arko",
-    "Full Stack Developer",
-    "Technical Lead",
-    "React Developer",
-    "Next.js Developer",
-    "Node.js Developer",
-    "TypeScript Developer",
-    "Software Engineer",
-    "PostgreSQL",
+    "Backend Software Engineer",
+    "Full Stack Engineer",
+    "Go (Golang)",
+    "Golang",
+    "Node.js",
     "NestJS",
+    "TypeScript",
+    "PostgreSQL",
+    "System Design",
+    "Scalable Backend Systems",
+    "API Development",
+    "Cloud & DevOps",
+    "Software Engineer",
+    "Backend Developer",
+    "Microservices",
+    "Distributed Systems",
+    "Docker",
+    "Kubernetes",
     "Portfolio",
   ],
 
@@ -51,15 +61,16 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.aftabfarhan.tech",
     siteName: "Aftab Farhan Arko",
-    title: "Aftab Farhan Arko | Full Stack Developer & Technical Lead",
+    title:
+      "Aftab Farhan Arko | Backend Software Engineer | Full Stack Engineer",
     description:
-      "Full Stack Developer and Technical Lead specializing in Next.js, React, TypeScript, Node.js, NestJS, PostgreSQL and scalable web applications.",
+      "Backend Software Engineer | Full Stack Engineer | Go (Golang) • Node.js • NestJS • TypeScript • PostgreSQL • System Design • Scalable Backend Systems • API Development • Cloud & DevOps",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Aftab Farhan Arko — Full Stack Developer & Technical Lead Portfolio",
+        alt: "Aftab Farhan Arko — Backend Software Engineer | Full Stack Engineer Portfolio",
         type: "image/png",
       },
     ],
@@ -67,9 +78,10 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Aftab Farhan Arko | Full Stack Developer & Technical Lead",
+    title:
+      "Aftab Farhan Arko | Backend Software Engineer | Full Stack Engineer",
     description:
-      "Full Stack Developer and Technical Lead specializing in Next.js, React, TypeScript, Node.js, NestJS, PostgreSQL and scalable web applications.",
+      "Backend Software Engineer | Full Stack Engineer | Go (Golang) • Node.js • NestJS • TypeScript • PostgreSQL • System Design • Scalable Backend Systems • API Development • Cloud & DevOps",
     images: ["/og-image.png"],
     creator: "@aftabfarhanarko",
     site: "@aftabfarhanarko",

@@ -84,7 +84,7 @@ export default function ContactInfo() {
       {/* Social Links */}
       <div className="flex gap-3 my-1">
         {[
-          { icon: <LinkedinIcon />, label: "LinkedIn", href: "https://linkedin.com/in/aftabfarhanarko", color: "hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]" },
+          { icon: <LinkedinIcon />, label: "LinkedIn", href: "https://www.linkedin.com/in/aftabfarhan", color: "hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]" },
           { icon: <GithubIcon />, label: "GitHub", href: "https://github.com/aftabfarhanarko", color: "hover:bg-slate-900 hover:text-white hover:border-slate-900" },
           { icon: <WhatsAppIcon />, label: "WhatsApp", href: "https://wa.me/8801613410880", color: "hover:bg-[#25D366] hover:text-white hover:border-[#25D366]" },
         ].map((social, i) => (
@@ -109,7 +109,7 @@ export default function ContactInfo() {
       {/* Contact Cards */}
       {[
         { icon: <Mail size={18} />, label: "Email", value: "aftabfarhan324@gmail.com", href: "mailto:aftabfarhan324@gmail.com" },
-        { icon: <MapPin size={18} />, label: "Location", value: "Rangpur, Bangladesh", href: "#" },
+        { icon: <MapPin size={18} />, label: "Location", value: "Momuhabpur,Dhaka, Bangladesh", href: "#" },
         { icon: <Phone size={18} />, label: "Phone", value: "+8801613410880", href: "tel:+8801613410880" },
       ].map((item, i) => (
         <ContactCardItem key={i} item={item} />

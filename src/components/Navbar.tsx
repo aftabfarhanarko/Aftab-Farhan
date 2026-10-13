@@ -200,7 +200,7 @@ export default function Navbar() {
             </motion.a>
 
             <motion.a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/aftabfarhan"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center justify-center rounded-full border border-slate-200 cursor-pointer w-[38px] h-[38px] bg-slate-50 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-all"

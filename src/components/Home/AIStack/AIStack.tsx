@@ -10,7 +10,9 @@ import {
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
+  Activity,
   ArrowRight,
+  BadgeCheck,
   BrainCircuit,
   Bug,
   Check,
@@ -21,10 +23,9 @@ import {
   Compass,
   Copy,
   Cpu,
-  FastForward,
   FileText,
   Layers,
-  Lock,
+  LockKeyhole,
   Pause,
   Play,
   RotateCcw,
@@ -34,25 +35,13 @@ import {
   Terminal,
   TestTube2,
   Workflow,
+  Zap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import SectionHeader from "@/components/Common/SectionHeader";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-/* -------------------------------------------------------------------------- */
-/*  Design Tokens                                                             */
-/* -------------------------------------------------------------------------- */
-
-const BRAND = "#FF6014"; // primary orange
-const BRAND_SOFT = "#FF8A4C"; // orange for text on dark surfaces
 const AUTOPLAY_MS = 5000;
-
-/* -------------------------------------------------------------------------- */
-/*  Data Models                                                               */
-/* -------------------------------------------------------------------------- */
+const ACCENT = "#FF6014";
 
 interface WorkflowStage {
   step: string;
@@ -71,7 +60,7 @@ interface ToolItem {
   name: string;
   role: string;
   tag: string;
-  icon: string;
+  monogram: string;
   useCase: string;
 }
 
@@ -239,7 +228,7 @@ const TOOLKIT: ToolItem[] = [
     name: "Cursor IDE",
     role: "Primary agentic IDE partner",
     tag: "Daily driver",
-    icon: "/cursor-app-icon.png",
+    monogram: "Cu",
     useCase:
       "Multi-file context coding, workspace refactoring & instant inline AI edits.",
   },
@@ -248,7 +237,7 @@ const TOOLKIT: ToolItem[] = [
     name: "DeepSeek R1",
     role: "Deep reasoning engine",
     tag: "Logic & math",
-    icon: "/deepseek-logo-icon.png",
+    monogram: "D",
     useCase:
       "Architectural tradeoff evaluation, complex algorithm design & math logic.",
   },
@@ -257,7 +246,7 @@ const TOOLKIT: ToolItem[] = [
     name: "Windsurf Agent",
     role: "Contextual codebase agent",
     tag: "Deep context",
-    icon: "/Windsurf.png",
+    monogram: "W",
     useCase:
       "Full-repo dependency graph awareness & automated feature propagation.",
   },
@@ -266,7 +255,7 @@ const TOOLKIT: ToolItem[] = [
     name: "Antigravity SDK",
     role: "Agentic engineering layer",
     tag: "Orchestration",
-    icon: "/antigravity-logo.png",
+    monogram: "A",
     useCase:
       "Autonomous multi-agent task execution, testing & workflow validation.",
   },
@@ -275,7 +264,7 @@ const TOOLKIT: ToolItem[] = [
     name: "Grok 3",
     role: "Real-time AI intelligence",
     tag: "Research & benchmarking",
-    icon: "/grok.png",
+    monogram: "G",
     useCase:
       "Latest API specs, benchmark research & fast technological comparison.",
   },
@@ -284,7 +273,7 @@ const TOOLKIT: ToolItem[] = [
     name: "Trae AI",
     role: "Adaptive diagnostic IDE agent",
     tag: "Debugging partner",
-    icon: "/trae.jpg",
+    monogram: "T",
     useCase:
       "Runtime stack trace analysis, memory leak isolation & rapid error fixing.",
   },
@@ -293,9 +282,9 @@ const TOOLKIT: ToolItem[] = [
 const METRICS: Metric[] = [
   {
     label: "Development speedup",
-    value: "3.5x",
+    value: "3.5×",
     subtext: "Faster boilerplate & feature delivery",
-    icon: FastForward,
+    icon: Zap,
   },
   {
     label: "Code ownership",
@@ -307,11 +296,11 @@ const METRICS: Metric[] = [
     label: "Type safety",
     value: "Zero drift",
     subtext: "Strict TypeScript & DB contracts",
-    icon: Lock,
+    icon: LockKeyhole,
   },
   {
     label: "Workflow integration",
-    value: "8 stages",
+    value: "08 stages",
     subtext: "Automated end-to-end circuit",
     icon: Workflow,
   },
@@ -323,12 +312,8 @@ const OWNERSHIP_CHECKS = [
   "Zero unchecked LLM-generated logic",
 ];
 
-/* -------------------------------------------------------------------------- */
-/*  Syntax Highlighter Helper                                                 */
-/* -------------------------------------------------------------------------- */
-
 const TOKEN_RE =
-  /("[^"]*"|'[^']*'|`[^`]*`|@[\w.]+|\b(?:const|await|export|interface|readonly|class|constructor|private|implements|describe|it|async|function|return|expect|true|false)\b|\b\d[\d,]*\b)/g;
+  /("[^"]*"|'[^']*'|`[^`]*`|@[\w.]+|\b(?:const|await|export|interface|readonly|class|constructor|private|implements|describe|it|async|function|return|expect|true|false|name|on|jobs|steps)\b|\b\d[\d,]*\b)/g;
 
 function renderLine(line: string): React.ReactNode {
   const trimmed = line.trim();
@@ -339,81 +324,85 @@ function renderLine(line: string): React.ReactNode {
     trimmed.startsWith("/**") ||
     trimmed.startsWith("*")
   ) {
-    return <span className="italic text-slate-500 font-normal">{line}</span>;
+    return <span className="italic text-slate-500">{line}</span>;
   }
 
   const tag = line.match(/^(\[[A-Z]+\])(.*)$/);
   if (tag) {
     return (
       <>
-        <span className="font-bold" style={{ color: BRAND_SOFT }}>
-          {tag[1]}
-        </span>
-        <span className="text-slate-300 font-normal">{tag[2]}</span>
+        <span className="font-bold text-orange-300">{tag[1]}</span>
+        <span className="text-slate-300">{tag[2]}</span>
       </>
     );
   }
 
-  return line.split(TOKEN_RE).map((token, i) => {
-    if (i % 2 === 0) return <React.Fragment key={i}>{token}</React.Fragment>;
-    if (/^["'`]/.test(token))
+  return line.split(TOKEN_RE).map((token, index) => {
+    if (index % 2 === 0) {
+      return <React.Fragment key={index}>{token}</React.Fragment>;
+    }
+
+    if (/^["'`]/.test(token)) {
       return (
-        <span key={i} className="text-emerald-300 font-semibold">
+        <span key={index} className="font-medium text-emerald-300">
           {token}
         </span>
       );
-    if (token.startsWith("@"))
+    }
+
+    if (token.startsWith("@")) {
       return (
-        <span key={i} className="text-sky-300 font-semibold">
+        <span key={index} className="font-medium text-sky-300">
           {token}
         </span>
       );
-    if (/^\d/.test(token))
+    }
+
+    if (/^\d/.test(token)) {
       return (
-        <span key={i} className="text-amber-300 font-semibold">
+        <span key={index} className="font-medium text-amber-300">
           {token}
         </span>
       );
+    }
+
     return (
-      <span key={i} style={{ color: BRAND_SOFT }} className="font-semibold">
+      <span key={index} className="font-semibold text-orange-300">
         {token}
       </span>
     );
   });
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Main Component                                                            */
-/* -------------------------------------------------------------------------- */
+const reveal = {
+  hidden: { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function AIStack() {
-  const stages = WORKFLOW_STAGES;
-  const total = stages.length;
-
   const [activeIdx, setActiveIdx] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
   const [copied, setCopied] = useState(false);
-
+  const [copyError, setCopyError] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
-  const railRef = useRef<HTMLDivElement | null>(null);
-  const chipsRef = useRef<HTMLDivElement | null>(null);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  const isInView = useInView(sectionRef, { amount: 0.15 });
   const reduceMotion = useReducedMotion();
-  const inView = useInView(sectionRef, { amount: 0.2 });
 
-  const running = isAutoPlay && inView && !isHovering && !reduceMotion;
-
-  const active = stages[activeIdx];
+  const total = WORKFLOW_STAGES.length;
+  const active = WORKFLOW_STAGES[activeIdx];
   const ActiveIcon = active.icon;
-  const fillPct = (activeIdx / (total - 1)) * 100;
   const codeLines = active.snippet.split("\n");
+  const shouldAutoPlay =
+    isAutoPlay && isInView && !isHovering && !reduceMotion;
 
-  const goTo = (idx: number) => setActiveIdx((idx + total) % total);
+  const goTo = (index: number) => {
+    setActiveIdx((index + total) % total);
+  };
 
-  const selectStage = (idx: number) => {
-    goTo(idx);
+  const selectStage = (index: number) => {
+    goTo(index);
     setIsAutoPlay(false);
   };
 
@@ -421,12 +410,135 @@ export default function AIStack() {
     try {
       await navigator.clipboard.writeText(active.snippet);
       setCopied(true);
+      setCopyError(false);
       if (copyTimer.current) clearTimeout(copyTimer.current);
       copyTimer.current = setTimeout(() => setCopied(false), 1800);
     } catch {
-      /* clipboard unavailable */
+      setCopyError(true);
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopyError(false), 2200);
     }
   };
+
+  useEffect(() => {
+    if (!shouldAutoPlay) return;
+    const timer = setInterval(() => {
+      setActiveIdx((current) => (current + 1) % total);
+    }, AUTOPLAY_MS);
+    return () => clearInterval(timer);
+  }, [shouldAutoPlay, total]);
+
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root || reduceMotion) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const context = gsap.context(() => {
+      const introItems = root.querySelectorAll(".gsap-intro");
+      if (introItems.length) {
+        gsap.fromTo(
+          introItems,
+          { autoAlpha: 0, y: 22 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.75,
+            stagger: 0.11,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: introItems[0],
+              start: "top 88%",
+              once: true,
+            },
+          },
+        );
+      }
+
+      const rail = root.querySelector(".stage-rail");
+      const nodes = root.querySelectorAll(".stage-node");
+      if (rail && nodes.length) {
+        gsap.fromTo(
+          nodes,
+          { autoAlpha: 0, y: 14, scale: 0.92 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.55,
+            stagger: 0.065,
+            ease: "back.out(1.5)",
+            scrollTrigger: {
+              trigger: rail,
+              start: "top 88%",
+              once: true,
+            },
+          },
+        );
+      }
+
+      const particles = root.querySelectorAll<HTMLElement>(".pipe-particle");
+      particles.forEach((particle, index) => {
+        gsap
+          .timeline({ repeat: -1, delay: index * 1.35 })
+          .set(particle, { left: "0%", autoAlpha: 0 })
+          .to(
+            particle,
+            {
+              left: "100%",
+              autoAlpha: 1,
+              duration: 4.6,
+              ease: "none",
+            },
+            0,
+          )
+          .to(particle, { autoAlpha: 0, duration: 0.3 }, 4.3);
+      });
+
+      const ambientOrbs = root.querySelectorAll(".ambient-orb");
+      ambientOrbs.forEach((orb, index) => {
+        gsap.to(orb, {
+          x: index === 0 ? -22 : 24,
+          y: index === 0 ? 18 : -18,
+          duration: 8 + index * 2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      });
+    }, root);
+
+    return () => context.revert();
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+
+    const lines = root.querySelectorAll(".code-line");
+    if (!lines.length) return;
+    if (reduceMotion) {
+      gsap.set(lines, { clearProps: "all" });
+      return;
+    }
+
+    const tween = gsap.fromTo(
+      lines,
+      { autoAlpha: 0, x: -7 },
+      {
+        autoAlpha: 1,
+        x: 0,
+        duration: 0.28,
+        stagger: 0.025,
+        ease: "power2.out",
+        clearProps: "all",
+      },
+    );
+
+    return () => {
+      tween.kill();
+    };
+  }, [active.step, reduceMotion]);
 
   useEffect(() => {
     return () => {
@@ -434,571 +546,652 @@ export default function AIStack() {
     };
   }, []);
 
-  // GSAP Rail animation
-  useEffect(() => {
-    const root = sectionRef.current;
-    if (!root || reduceMotion) return;
-
-    const ctx = gsap.context(() => {
-      const rail = railRef.current;
-      if (!rail) return;
-
-      gsap.from(rail.querySelectorAll(".pipe-node"), {
-        y: 18,
-        opacity: 0,
-        duration: 0.55,
-        ease: "power3.out",
-        stagger: 0.07,
-        scrollTrigger: { trigger: rail, start: "top 85%", once: true },
-      });
-
-      rail.querySelectorAll<HTMLElement>(".pipe-particle").forEach((el, i) => {
-        gsap
-          .timeline({ repeat: -1, delay: i * 1.5 })
-          .set(el, { left: "0%", opacity: 0 })
-          .to(el, { left: "100%", duration: 4.5, ease: "none" }, 0)
-          .to(el, { opacity: 1, duration: 0.4 }, 0)
-          .to(el, { opacity: 0, duration: 0.4 }, 4.1);
-      });
-    }, root);
-
-    return () => ctx.revert();
-  }, [reduceMotion]);
-
-  useEffect(() => {
-    const container = chipsRef.current;
-    const chip = container?.children[activeIdx] as HTMLElement | undefined;
-    if (!container || !chip) return;
-    container.scrollTo({
-      left: chip.offsetLeft - container.clientWidth / 2 + chip.clientWidth / 2,
-      behavior: reduceMotion ? "auto" : "smooth",
-    });
-  }, [activeIdx, reduceMotion]);
-
   return (
     <section
       id="ai-assisted-dev"
       ref={sectionRef}
-      className="mb-20 w-full scroll-mt-24 sm:mb-24 text-left"
+      className="relative mb-20 w-full scroll-mt-24 text-left sm:mb-24"
     >
-      <SectionHeader
-        badge="AI-POWERED SOFTWARE ENGINEERING"
-        titlePrefix="AI Tooling &"
-        titleHighlight="Workflow Integration"
-        subtitle="Leveraging agentic coding models, deep reasoning engines, and automated validation circuits to deliver production-grade software at enterprise speed."
-        align="left"
-        icon={Sparkles}
-      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
+        <div className="ambient-orb absolute -right-32 -top-40 size-[32rem] rounded-full bg-orange-400/[0.04] blur-[120px]" />
+        <div className="ambient-orb absolute -bottom-56 -left-32 size-[30rem] rounded-full bg-amber-400/[0.04] blur-[120px]" />
+      </div>
 
-      {/* ------------------------------ Metrics ------------------------------ */}
-      <dl className="mb-12 grid grid-cols-2 border-y border-slate-200 lg:grid-cols-4">
-        {METRICS.map((m, i) => {
-          const MIcon = m.icon;
-          return (
-            <div
-              key={m.label}
-              className={[
-                "border-slate-200 px-4 py-5 sm:px-6",
-                i % 2 === 1 ? "border-l" : "",
-                i >= 2 ? "border-t lg:border-t-0" : "",
-                i > 0 ? "lg:border-l" : "",
-              ].join(" ")}
-            >
-              <dt className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-800">
-                <MIcon size={15} style={{ color: BRAND }} aria-hidden />
-                {m.label}
-              </dt>
-              <dd className="mt-2 text-2xl sm:text-3xl font-black tracking-tight text-slate-900 font-mono">
-                {m.value}
-              </dd>
-              <dd className="mt-1 text-xs text-slate-600 font-medium">
-                {m.subtext}
-              </dd>
-            </div>
-          );
-        })}
-      </dl>
+      <div className="mx-auto max-w-7xl">
+        {/* Intro */}
+        <SectionHeader
+          badge="AI-POWERED WORKFLOW"
+          titlePrefix="Better tools."
+          titleHighlight="Thoughtful"
+          titleSuffix="engineering."
+          subtitle="AI accelerates the work. Clear architecture, human judgment, and careful validation keep every release grounded in quality."
+          align="left"
+          icon={Sparkles}
+        />
 
-      {/* ------------------------- 8-Stage Pipeline Console -------------------------- */}
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        {/* Rail area */}
-        <div
-          className="p-5 sm:p-7"
-          style={{
-            backgroundImage:
-              "radial-gradient(rgb(226 232 240) 1px, transparent 1px)",
-            backgroundSize: "18px 18px",
-          }}
+        {/* Metrics */}
+        <motion.dl
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.65, delay: 0.08, ease: "easeOut" }}
+          className="mb-12 grid grid-cols-2 gap-3 lg:grid-cols-4"
         >
-          <div className="mb-7 max-w-2xl">
-            <h3 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
-              Eight stages, one pipeline
-            </h3>
-            <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-slate-600 font-medium">
-              Pick a stage to see what AI does there, what I check myself, and
-              the code that comes out of it.
-            </p>
+          {METRICS.map((metric, index) => {
+            const Icon = metric.icon;
+            return (
+              <motion.div
+                key={metric.label}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
+                transition={{ duration: 0.2 }}
+                className="group rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm backdrop-blur-sm transition-all hover:border-orange-200 hover:shadow-md sm:p-5"
+              >
+                <dt className="flex items-center gap-2 text-[11px] font-medium text-slate-500 sm:text-xs">
+                  <Icon size={15} className="text-[#FF6014]" aria-hidden />
+                  {metric.label}
+                </dt>
+                <dd className="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                  {metric.value}
+                </dd>
+                <dd className="mt-1 text-[11px] leading-5 text-slate-500 sm:text-xs">
+                  {metric.subtext}
+                </dd>
+                <div
+                  className="mt-4 h-0.5 origin-left bg-gradient-to-r from-[#FF6014]/60 to-transparent transition-transform duration-500 group-hover:scale-x-110"
+                  style={{ width: `${45 + index * 10}%` }}
+                />
+              </motion.div>
+            );
+          })}
+        </motion.dl>
+
+        {/* Workflow console */}
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.12 }}
+          transition={{ duration: 0.7, delay: 0.12, ease: "easeOut" }}
+          className="overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.04),0_20px_40px_-20px_rgba(15,23,42,0.08)]"
+        >
+          <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200 bg-slate-50/50 px-5 py-5 sm:px-7 sm:py-6">
+            <div>
+              <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6014]">
+                <Activity size={13} aria-hidden />
+                Engineering workflow
+              </div>
+              <h3 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+                Eight stages. One quality bar.
+              </h3>
+              <p className="mt-1.5 max-w-xl text-xs leading-5 text-slate-600 sm:text-sm">
+                Select a stage to explore the process, the AI contribution, and
+                the human checks behind it.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[10px] font-medium text-emerald-700">
+              <motion.span
+                aria-hidden
+                animate={reduceMotion ? undefined : { opacity: [0.45, 1, 0.45] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="size-1.5 rounded-full bg-emerald-500"
+              />
+              Pipeline active
+            </div>
           </div>
 
-          {/* Desktop rail */}
-          <nav aria-label="Engineering pipeline stages" className="hidden md:block">
-            <div ref={railRef} className="relative grid grid-cols-8">
-              {/* Track */}
-              <div
-                aria-hidden
-                className="absolute left-[6.25%] right-[6.25%] top-7 h-[3px] -translate-y-1/2 rounded-full bg-slate-200"
-              >
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{
-                    background: `linear-gradient(90deg, #FF8A00, ${BRAND})`,
-                  }}
-                  initial={false}
-                  animate={{ width: `${fillPct}%` }}
-                  transition={{
-                    duration: reduceMotion ? 0 : 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                />
-                {[0, 1, 2].map((p) => (
-                  <span
-                    key={p}
-                    className="pipe-particle absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
-                    style={{
-                      left: "0%",
-                      opacity: 0,
-                      boxShadow: `0 0 0 2px ${BRAND}, 0 0 12px 3px rgba(255,96,20,0.55)`,
-                    }}
-                  />
-                ))}
-              </div>
-
-              {stages.map((s, i) => {
-                const Icon = s.icon;
-                const isActive = i === activeIdx;
-                const isDone = i < activeIdx;
-                return (
-                  <button
-                    key={s.step}
-                    type="button"
-                    onClick={() => selectStage(i)}
-                    aria-current={isActive ? "step" : undefined}
-                    aria-label={`Stage ${s.step}: ${s.title}`}
-                    className="pipe-node group flex cursor-pointer flex-col items-center outline-none"
-                  >
+          {/* Stage navigation */}
+          <div className="border-b border-slate-200 bg-slate-50/30 px-4 py-5 sm:px-7">
+            <nav aria-label="Engineering workflow stages">
+              <div className="stage-rail relative hidden items-start md:grid md:grid-cols-8">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute left-[6.25%] right-[6.25%] top-[19px] z-0 h-px bg-slate-200"
+                >
+                  {[0, 1, 2].map((particle) => (
                     <span
-                      className={[
-                        "relative z-10 grid size-14 place-items-center rounded-full border-2 transition-all duration-200",
-                        "group-focus-visible:ring-4 group-focus-visible:ring-orange-300",
-                        isActive
-                          ? "border-[#FF6014] bg-[#FF6014] text-white shadow-xs"
-                          : isDone
-                            ? "border-orange-300 bg-orange-50 text-[#FF6014] group-hover:bg-orange-100"
-                            : "border-slate-200 bg-white text-slate-400 group-hover:border-slate-300 group-hover:text-slate-600",
-                      ].join(" ")}
+                      key={particle}
+                      className="pipe-particle absolute left-0 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-0 ring-2 ring-[#FF6014]"
+                      style={{
+                        boxShadow: `0 0 0 2px ${ACCENT}, 0 0 10px rgba(255, 96, 20, 0.4)`,
+                      }}
+                    />
+                  ))}
+                </span>
+                {WORKFLOW_STAGES.map((stage, index) => {
+                  const Icon = stage.icon;
+                  const isActive = index === activeIdx;
+                  const isComplete = index < activeIdx;
+                  return (
+                    <button
+                      key={stage.step}
+                      type="button"
+                      onClick={() => selectStage(index)}
+                      aria-current={isActive ? "step" : undefined}
+                      aria-label={`Stage ${stage.step}: ${stage.title}`}
+                      className="stage-node group relative z-10 flex min-w-0 flex-col items-center text-center outline-none focus-visible:ring-2 focus-visible:ring-[#FF6014] focus-visible:ring-offset-4 focus-visible:ring-offset-white"
                     >
-                      {isActive && (
+                      {index < total - 1 && (
                         <span
                           aria-hidden
-                          className="absolute inset-0 -z-10 animate-ping rounded-full bg-[#FF6014]/30 motion-reduce:animate-none"
-                        />
+                          className="absolute left-1/2 top-[19px] h-0.5 w-full bg-slate-200"
+                        >
+                          <motion.span
+                            className="block h-full origin-left bg-[#FF6014]"
+                            initial={false}
+                            animate={{
+                              scaleX: isComplete || isActive ? 1 : 0,
+                            }}
+                            transition={{
+                              duration: reduceMotion ? 0 : 0.45,
+                              ease: "easeOut",
+                            }}
+                          />
+                        </span>
                       )}
-                      <Icon size={22} />
-                    </span>
-                    <span
-                      className={`mt-3 font-mono text-[11px] tabular-nums ${
-                        isActive ? "text-[#FF6014]" : "text-slate-400"
-                      }`}
-                    >
-                      {s.step}
-                    </span>
-                    <span
-                      className={`mt-0.5 max-w-[96px] text-center text-xs leading-snug ${
+                      <span
+                        className={`relative z-10 grid size-10 place-items-center rounded-xl border transition-all duration-300 ${
+                          isActive
+                            ? "border-[#FF6014] bg-[#FF6014] text-white shadow-md shadow-orange-500/25"
+                            : isComplete
+                              ? "border-orange-200 bg-orange-50 text-[#FF6014]"
+                              : "border-slate-200 bg-white text-slate-400 group-hover:border-slate-300 group-hover:text-slate-600"
+                        }`}
+                      >
+                        <Icon size={17} aria-hidden />
+                        {isActive && (
+                          <motion.span
+                            aria-hidden
+                            className="absolute -inset-1 rounded-[14px] border border-[#FF6014]/50"
+                            animate={
+                              reduceMotion
+                                ? undefined
+                                : { opacity: [0.65, 0], scale: [1, 1.28] }
+                            }
+                            transition={{
+                              duration: 1.8,
+                              repeat: Infinity,
+                              ease: "easeOut",
+                            }}
+                          />
+                        )}
+                      </span>
+                      <span
+                        className={`mt-3 font-mono text-[9px] tracking-wider ${
+                          isActive ? "font-bold text-[#FF6014]" : "text-slate-400"
+                        }`}
+                      >
+                        {stage.step}
+                      </span>
+                      <span
+                        className={`mt-1 max-w-[100px] px-1 text-[10px] leading-4 ${
+                          isActive
+                            ? "font-bold text-slate-900"
+                            : "text-slate-500 group-hover:text-slate-700"
+                        }`}
+                      >
+                        {stage.title}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] md:hidden">
+                {WORKFLOW_STAGES.map((stage, index) => {
+                  const Icon = stage.icon;
+                  const isActive = index === activeIdx;
+                  return (
+                    <button
+                      key={stage.step}
+                      type="button"
+                      onClick={() => selectStage(index)}
+                      aria-current={isActive ? "step" : undefined}
+                      className={`flex shrink-0 items-center gap-2 rounded-xl border px-3 py-2.5 text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-300 ${
                         isActive
-                          ? "font-semibold text-slate-900"
-                          : "text-slate-500 group-hover:text-slate-800"
+                          ? "border-orange-200 bg-orange-50 font-semibold text-[#FF6014]"
+                          : "border-slate-200 bg-white text-slate-600"
                       }`}
                     >
-                      {s.title}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </nav>
+                      <Icon size={14} aria-hidden />
+                      <span className="font-mono text-[10px] opacity-70">
+                        {stage.step}
+                      </span>
+                      <span>{stage.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </nav>
+          </div>
 
-          {/* Mobile stage picker */}
-          <nav
-            aria-label="Engineering pipeline stages"
-            className="md:hidden"
+          {/* Active stage details + code */}
+          <div
+            className="grid lg:grid-cols-[0.88fr_1.12fr]"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
           >
-            <div
-              ref={chipsRef}
-              className="relative -mx-1 flex snap-x gap-2 overflow-x-auto px-1 pb-2 [scrollbar-width:none]"
-            >
-              {stages.map((s, i) => {
-                const Icon = s.icon;
-                const isActive = i === activeIdx;
-                return (
-                  <button
-                    key={s.step}
-                    type="button"
-                    onClick={() => selectStage(i)}
-                    aria-current={isActive ? "step" : undefined}
-                    className={`flex shrink-0 snap-center items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF6014] ${
-                      isActive
-                        ? "border-[#FF6014] bg-[#FF6014] font-semibold text-white"
-                        : "border-slate-200 bg-white text-slate-600"
-                    }`}
-                  >
-                    <Icon size={15} />
-                    <span className="font-mono text-xs tabular-nums opacity-80">
-                      {s.step}
+            <div className="flex flex-col border-b border-slate-200 bg-white p-5 sm:p-7 lg:border-b-0 lg:border-r">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={active.step}
+                  initial={{
+                    opacity: 0,
+                    y: reduceMotion ? 0 : 10,
+                    filter: reduceMotion ? "none" : "blur(5px)",
+                  }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{
+                    opacity: 0,
+                    y: reduceMotion ? 0 : -6,
+                    filter: reduceMotion ? "none" : "blur(3px)",
+                  }}
+                  transition={{ duration: reduceMotion ? 0 : 0.24 }}
+                  className="flex-1"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="grid size-11 place-items-center rounded-xl border border-orange-200 bg-orange-50 text-[#FF6014]">
+                      <ActiveIcon size={20} aria-hidden />
+                    </div>
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
+                        Stage {active.step} / {String(total).padStart(2, "0")}
+                      </p>
+                      <h4 className="mt-0.5 text-lg font-bold tracking-tight text-slate-900">
+                        {active.title}
+                      </h4>
+                    </div>
+                  </div>
+
+                  <p className="mt-5 text-sm leading-6 text-slate-600">
+                    {active.howIWork}
+                  </p>
+
+                  <div className="mt-4 inline-flex max-w-full items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700">
+                    <Cpu
+                      size={14}
+                      className="shrink-0 text-[#FF6014]"
+                      aria-hidden
+                    />
+                    <span className="truncate">
+                      <span className="text-slate-500">Tools </span>
+                        <span className="font-medium text-slate-900">
+                        {active.tool}
+                      </span>
                     </span>
-                    <span>{s.title}</span>
+                  </div>
+
+                  <div className="mt-5 space-y-4 border-t border-slate-200 pt-5">
+                    <div className="flex gap-3">
+                      <BrainCircuit
+                        size={16}
+                        className="mt-0.5 shrink-0 text-violet-600"
+                        aria-hidden
+                      />
+                      <div>
+                        <h5 className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                          AI contribution
+                        </h5>
+                        <p className="mt-1 text-xs leading-5 text-slate-600">
+                          {active.aiRole}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <ShieldCheck
+                        size={16}
+                        className="mt-0.5 shrink-0 text-emerald-600"
+                        aria-hidden
+                      />
+                      <div>
+                        <h5 className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                          Human verification
+                        </h5>
+                        <p className="mt-1 text-xs leading-5 text-slate-600">
+                          {active.guardrail}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="mt-7 border-t border-slate-200 pt-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => selectStage(activeIdx - 1)}
+                      aria-label="Previous stage"
+                      className="grid size-9 place-items-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-2xs transition-colors hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-[#FF6014]"
+                    >
+                      <ChevronLeft size={17} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => selectStage(activeIdx + 1)}
+                      aria-label="Next stage"
+                      className="grid size-9 place-items-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-2xs transition-colors hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-[#FF6014]"
+                    >
+                      <ChevronRight size={17} />
+                    </button>
+                    <span className="ml-2 font-mono text-[10px] text-slate-500">
+                      {active.step} <span className="text-slate-700">/</span>{" "}
+                      {String(total).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsAutoPlay((current) => !current)}
+                    aria-pressed={isAutoPlay}
+                    className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-[11px] font-medium text-slate-700 shadow-2xs transition-colors hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-[#FF6014]"
+                  >
+                    {isAutoPlay ? (
+                      <Pause size={13} className="text-[#FF6014]" />
+                    ) : (
+                      <Play size={13} className="text-[#FF6014]" />
+                    )}
+                    <span>{isAutoPlay ? "Pause" : "Auto-play"}</span>
                   </button>
-                );
-              })}
+                </div>
+                <div
+                  className="mt-3 h-1 overflow-hidden rounded-full bg-slate-100"
+                  aria-hidden
+                >
+                  {shouldAutoPlay && (
+                    <motion.div
+                      key={`${activeIdx}-${shouldAutoPlay}`}
+                      className="h-full rounded-full bg-gradient-to-r from-[#FF6014] to-amber-500"
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{
+                        duration: AUTOPLAY_MS / 1000,
+                        ease: "linear",
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
             </div>
-          </nav>
-        </div>
 
-        {/* Detail panel */}
-        <div
-          className="grid border-t border-slate-200 lg:grid-cols-12"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-          {/* Spec */}
-          <div className="flex flex-col justify-between p-6 sm:p-8 lg:col-span-5 bg-white">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={active.step}
-                initial={{ opacity: 0, x: reduceMotion ? 0 : -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: reduceMotion ? 0 : 10 }}
-                transition={{ duration: 0.2 }}
-                className="space-y-4"
-              >
-                <div className="flex items-center gap-4">
-                  <span
-                    className="grid size-12 shrink-0 place-items-center rounded-xl text-white shadow-xs"
-                    style={{ background: BRAND }}
-                  >
-                    <ActiveIcon size={22} />
+            {/* Animated code window */}
+            <div className="flex min-w-0 flex-col bg-slate-950">
+              <div className="flex items-center justify-between gap-3 border-b border-white/[0.07] bg-slate-900/90 px-4 py-3 sm:px-5">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex shrink-0 gap-1.5" aria-hidden>
+                    <span className="size-2.5 rounded-full bg-rose-400/80" />
+                    <span className="size-2.5 rounded-full bg-amber-300/80" />
+                    <span className="size-2.5 rounded-full bg-emerald-300/80" />
+                  </div>
+                  <span className="h-4 w-px bg-white/10" aria-hidden />
+                  <span className="flex min-w-0 items-center gap-2 truncate font-mono text-[10px] text-slate-400 sm:text-xs">
+                    <Terminal
+                      size={13}
+                      className="shrink-0 text-orange-300"
+                      aria-hidden
+                    />
+                    <span className="truncate">{active.file}</span>
                   </span>
-                  <div>
-                    <p className="text-xs text-slate-500 font-mono">
-                      Stage {Number(active.step)} of {total}
-                    </p>
-                    <h4 className="text-lg sm:text-xl font-black leading-tight tracking-tight text-slate-900">
-                      {active.title}
-                    </h4>
-                  </div>
                 </div>
-
-                <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
-                  {active.howIWork}
-                </p>
-
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-orange-50/80 border border-orange-200 text-xs font-bold text-slate-800 shadow-2xs">
-                  <Cpu size={14} style={{ color: BRAND }} aria-hidden />
-                  <span>Built with <strong className="text-[#FF6014]">{active.tool}</strong></span>
-                </div>
-
-                <dl className="mt-4 space-y-3 border-t border-slate-100 pt-4">
-                  <div className="flex gap-3">
-                    <BrainCircuit
-                      size={16}
-                      className="mt-0.5 shrink-0"
-                      style={{ color: BRAND }}
-                      aria-hidden
-                    />
-                    <div>
-                      <dt className="text-xs font-extrabold text-slate-900 uppercase font-mono">
-                        What AI does
-                      </dt>
-                      <dd className="text-xs sm:text-sm leading-relaxed text-slate-700 font-medium">
-                        {active.aiRole}
-                      </dd>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <ShieldCheck
-                      size={16}
-                      className="mt-0.5 shrink-0 text-emerald-600"
-                      aria-hidden
-                    />
-                    <div>
-                      <dt className="text-xs font-extrabold text-slate-900 uppercase font-mono">
-                        What I check
-                      </dt>
-                      <dd className="text-xs sm:text-sm leading-relaxed text-slate-700 font-medium">
-                        {active.guardrail}
-                      </dd>
-                    </div>
-                  </div>
-                </dl>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Controls */}
-            <div className="mt-6 pt-3 border-t border-slate-100">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => selectStage(activeIdx - 1)}
-                    aria-label="Previous stage"
-                    className="grid size-9 place-items-center rounded-lg border border-slate-200 text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 cursor-pointer"
-                  >
-                    <ChevronLeft size={18} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => selectStage(activeIdx + 1)}
-                    aria-label="Next stage"
-                    className="grid size-9 place-items-center rounded-lg border border-slate-200 text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 cursor-pointer"
-                  >
-                    <ChevronRight size={18} />
-                  </button>
-                </div>
-
                 <button
                   type="button"
-                  onClick={() => setIsAutoPlay((v) => !v)}
-                  aria-pressed={isAutoPlay}
-                  className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50 cursor-pointer"
+                  onClick={handleCopy}
+                  className="flex shrink-0 items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-2.5 py-1.5 text-[10px] font-medium text-slate-300 transition-colors hover:bg-white/[0.1] focus-visible:outline-2 focus-visible:outline-orange-300"
+                  aria-label="Copy code sample"
                 >
-                  {isAutoPlay ? <Pause size={14} className="text-[#FF6014]" /> : <Play size={14} className="text-[#FF6014]" />}
-                  <span>{isAutoPlay ? "Pause auto-cycle" : "Resume auto-cycle"}</span>
+                  {copied ? (
+                    <>
+                      <Check size={12} className="text-emerald-300" />
+                      <span className="text-emerald-200">Copied</span>
+                    </>
+                  ) : copyError ? (
+                    <span className="text-rose-300">Copy unavailable</span>
+                  ) : (
+                    <>
+                      <Copy size={12} />
+                      <span>Copy</span>
+                    </>
+                  )}
                 </button>
               </div>
 
-              <div
-                className="mt-3.5 h-[3px] overflow-hidden rounded-full bg-slate-100"
-                aria-hidden
-              >
-                {running && (
-                  <motion.div
-                    key={`progress-${activeIdx}`}
-                    className="h-full rounded-full"
-                    style={{ background: BRAND }}
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: AUTOPLAY_MS / 1000, ease: "linear" }}
-                    onAnimationComplete={() =>
-                      setActiveIdx((p) => (p + 1) % total)
-                    }
-                  />
-                )}
+              <div className="min-h-[285px] flex-1 overflow-x-auto px-3 py-5 sm:px-5">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.ol
+                    key={active.step}
+                    initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: reduceMotion ? 0 : -5 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.22 }}
+                    className="min-w-max font-mono text-[11px] leading-[1.9] sm:text-xs"
+                  >
+                    {codeLines.map((line, index) => (
+                      <li
+                        key={`${active.step}-${index}`}
+                        className="code-line flex gap-4"
+                      >
+                        <span
+                          aria-hidden
+                          className="w-5 shrink-0 select-none text-right text-slate-700"
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="whitespace-pre text-slate-300">
+                          {renderLine(line)}
+                        </span>
+                      </li>
+                    ))}
+                  </motion.ol>
+                </AnimatePresence>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.07] px-4 py-3 text-[10px] text-slate-500 sm:px-5">
+                <span className="flex items-center gap-2 text-emerald-200/80">
+                  <CheckCircle2 size={13} aria-hidden />
+                  Human-reviewed workflow
+                </span>
+                <span className="font-mono">TypeScript · Node.js</span>
               </div>
             </div>
           </div>
+        </motion.div>
 
-          {/* Terminal */}
-          <div className="flex flex-col bg-slate-950 text-slate-200 lg:col-span-7">
-            <div className="flex items-center justify-between gap-3 border-b border-white/10 px-5 py-3 bg-slate-900/90">
-              <div className="flex min-w-0 items-center gap-3">
-                <div className="flex shrink-0 gap-1.5" aria-hidden>
-                  <span className="size-3 rounded-full bg-red-500/80" />
-                  <span className="size-3 rounded-full bg-yellow-500/80" />
-                  <span className="size-3 rounded-full bg-green-500/80" />
-                </div>
-                <span className="flex min-w-0 items-center gap-1.5 truncate font-mono text-xs text-slate-400">
-                  <Terminal
-                    size={13}
-                    className="shrink-0 text-[#FF8A4C]"
+        {/* Toolkit */}
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.12 }}
+          transition={{ duration: 0.65, delay: 0.08, ease: "easeOut" }}
+          className="mt-16"
+        >
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF6014]">
+                <Layers size={13} aria-hidden />
+                The toolkit
+              </div>
+              <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                Every tool has a job.
+              </h3>
+            </div>
+            <p className="max-w-sm text-xs leading-5 text-slate-600 sm:text-sm">
+              The tools involved in the selected stage are highlighted below.
+            </p>
+          </div>
+
+          <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {TOOLKIT.map((tool, index) => {
+              const isInUse = active.tool.includes(tool.key);
+              return (
+                <motion.li
+                  key={tool.name}
+                  layout
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className={`relative overflow-hidden rounded-2xl border p-4 transition-colors duration-300 ${
+                    isInUse
+                      ? "border-orange-200 bg-orange-50/70 shadow-sm"
+                      : "border-slate-200/80 bg-white shadow-2xs hover:border-slate-300 hover:shadow-sm"
+                  }`}
+                >
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-y-0 left-0 w-[2px] origin-top bg-gradient-to-b from-[#FF6014] to-amber-500"
+                    initial={false}
+                    animate={{ scaleY: isInUse ? 1 : 0 }}
+                    transition={{ duration: 0.25 }}
+                  />
+                  <div className="flex items-start gap-3">
+                    <div
+                      className={`grid size-10 shrink-0 place-items-center rounded-xl border font-mono text-xs font-bold ${
+                        isInUse
+                          ? "border-orange-200 bg-orange-100/70 text-[#FF6014]"
+                          : "border-slate-200 bg-slate-50 text-slate-600"
+                      }`}
+                    >
+                      {tool.monogram}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <div>
+                          <h4 className="text-sm font-bold text-slate-900">
+                            {tool.name}
+                          </h4>
+                          <p className="mt-0.5 text-[10px] text-slate-500">
+                            {tool.role}
+                          </p>
+                        </div>
+                        <span
+                          className={`rounded-full border px-2 py-1 text-[9px] ${
+                            isInUse
+                              ? "border-orange-200 bg-white font-medium text-[#FF6014]"
+                              : "border-slate-200 bg-slate-50 text-slate-500"
+                          }`}
+                        >
+                          {tool.tag}
+                        </span>
+                      </div>
+                      <p className="mt-3 text-xs leading-5 text-slate-600">
+                        {tool.useCase}
+                      </p>
+                      <AnimatePresence>
+                        {isInUse && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0, y: 4 }}
+                            animate={{ opacity: 1, height: "auto", y: 0 }}
+                            exit={{ opacity: 0, height: 0, y: 4 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-3 flex items-center gap-1.5 text-[10px] font-semibold text-[#FF6014]">
+                              <Activity size={12} aria-hidden />
+                              Active in stage {active.step}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                  <span className="pointer-events-none absolute -bottom-7 -right-3 font-mono text-7xl font-bold text-slate-100">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </motion.li>
+              );
+            })}
+          </ul>
+        </motion.div>
+
+        {/* Human ownership */}
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.16 }}
+          transition={{ duration: 0.65, ease: "easeOut" }}
+          className="relative mt-16 overflow-hidden rounded-[1.6rem] border border-orange-200 bg-gradient-to-br from-orange-50/80 via-white to-amber-50/40 p-5 shadow-sm sm:p-8"
+        >
+          <div
+            aria-hidden
+            className="absolute -right-20 -top-28 size-72 rounded-full border border-orange-200/50"
+          />
+          <div
+            aria-hidden
+            className="absolute -right-8 -top-16 size-48 rounded-full border border-orange-200/50"
+          />
+          <div className="relative grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#FF6014] shadow-2xs">
+                <BadgeCheck size={13} aria-hidden />
+                Human-in-the-loop
+              </div>
+              <h3 className="max-w-xl text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-3xl">
+                AI can help build it.
+                <br />
+                People own what ships.
+              </h3>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+                AI is a productivity multiplier—not a substitute for
+                engineering judgment. Architecture, code review, security, and
+                release validation remain deliberate parts of the process.
+              </p>
+              <div className="mt-5 flex flex-wrap items-center gap-2 text-[11px] font-medium">
+                {["AI proposes", "I audit", "CI enforces"].map(
+                  (label, index, items) => (
+                    <React.Fragment key={label}>
+                      <span className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-800 shadow-2xs">
+                        {label}
+                      </span>
+                      {index < items.length - 1 && (
+                        <ArrowRight
+                          size={13}
+                          className="text-[#FF6014]"
+                          aria-hidden
+                        />
+                      )}
+                    </React.Fragment>
+                  ),
+                )}
+              </div>
+            </div>
+
+            <ul className="space-y-2.5">
+              {OWNERSHIP_CHECKS.map((text, index) => (
+                <motion.li
+                  key={text}
+                  initial={{
+                    opacity: 0,
+                    x: reduceMotion ? 0 : 14,
+                  }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.4,
+                    delay: index * 0.08,
+                  }}
+                  className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-800 shadow-2xs"
+                >
+                  <CheckCircle2
+                    size={17}
+                    className="shrink-0 text-emerald-600"
                     aria-hidden
                   />
-                  <span className="truncate">{active.file}</span>
-                </span>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleCopy}
-                className="flex shrink-0 items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-slate-300 transition-colors hover:bg-white/10 cursor-pointer"
-              >
-                {copied ? (
-                  <>
-                    <Check size={13} className="text-emerald-400" />
-                    <span className="text-emerald-400 font-bold">Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy size={13} />
-                    <span>Copy code</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            <div className="min-h-[268px] flex-1 overflow-x-auto px-5 py-5 custom-scrollbar">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.ol
-                  key={active.step}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.18 }}
-                  className="min-w-max font-mono text-[12.5px] leading-6"
-                >
-                  {codeLines.map((line, i) => (
-                    <li key={i} className="flex gap-4">
-                      <span
-                        aria-hidden
-                        className="w-5 shrink-0 select-none text-right font-mono text-slate-600"
-                      >
-                        {i + 1}
-                      </span>
-                      <span className="whitespace-pre text-slate-200">
-                        {renderLine(line)}
-                      </span>
-                    </li>
-                  ))}
-                </motion.ol>
-              </AnimatePresence>
-            </div>
-
-            <div className="flex items-center justify-between gap-3 border-t border-white/10 px-5 py-3 text-xs text-slate-400">
-              <span className="flex items-center gap-2 text-emerald-400">
-                <span
-                  className="size-2 rounded-full bg-emerald-500 motion-safe:animate-pulse"
-                  aria-hidden
-                />
-                Pipeline verified and type-checked
-              </span>
-              <span className="hidden font-mono text-slate-500 sm:inline">
-                TypeScript 5.4 | Node v22
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ------------------------------ Toolkit ------------------------------ */}
-      <div className="mt-16">
-        <h3 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-          The toolkit
-        </h3>
-        <p className="mt-1.5 max-w-xl text-xs sm:text-sm leading-relaxed text-slate-600 font-medium">
-          Six tools, each with one job. Whichever ones are used in the stage
-          you&apos;re viewing are marked.
-        </p>
-
-        <ul className="mt-6 divide-y divide-slate-200 border-y border-slate-200 bg-white rounded-2xl overflow-hidden shadow-2xs">
-          {TOOLKIT.map((tool) => {
-            const inUse = active.tool.includes(tool.key);
-            return (
-              <li
-                key={tool.name}
-                className={`relative grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-1.5 px-3 py-5 transition-colors duration-300 sm:px-5 md:grid-cols-[auto_minmax(0,1.1fr)_minmax(0,1.6fr)_9.5rem] md:gap-x-6 ${
-                  inUse ? "bg-orange-50/70" : ""
-                }`}
-              >
-                <span
-                  aria-hidden
-                  className={`absolute inset-y-0 left-0 w-[3px] origin-center transition-transform duration-300 ${
-                    inUse ? "scale-y-100" : "scale-y-0"
-                  }`}
-                  style={{ background: BRAND }}
-                />
-
-                <img
-                  src={tool.icon}
-                  alt=""
-                  width={40}
-                  height={40}
-                  loading="lazy"
-                  className="size-10 rounded-lg bg-white object-contain p-1 ring-1 ring-slate-200 md:row-auto shadow-2xs"
-                />
-
-                <div>
-                  <h4 className="text-base font-black text-slate-900">
-                    {tool.name}
-                  </h4>
-                  <p className="text-xs font-bold text-[#FF6014]">{tool.role}</p>
-                </div>
-
-                <p className="col-start-2 text-xs sm:text-sm leading-relaxed text-slate-700 font-medium md:col-start-auto">
-                  {tool.useCase}
-                </p>
-
-                <div className="col-start-2 flex items-center gap-2 md:col-start-auto md:flex-col md:items-end md:gap-1.5">
-                  <span className="text-xs sm:text-sm font-extrabold text-slate-700 bg-slate-100/80 border border-slate-200 px-2.5 py-0.5 rounded-md">
-                    {tool.tag}
-                  </span>
-                  <span
-                    aria-hidden={!inUse}
-                    className={`rounded-full px-2.5 py-0.5 text-xs font-bold text-white transition-opacity duration-300 ${
-                      inUse ? "opacity-100" : "opacity-0"
-                    }`}
-                    style={{ background: BRAND }}
-                  >
-                    Stage {active.step}
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      {/* ------------------------------ Ownership Protocol (Light Glass Design) ---------------------------- */}
-      <div className="relative mt-16 overflow-hidden rounded-2xl glass-card-featured p-6 sm:p-8 shadow-sm hover:shadow-md transition-all text-left">
-        <span
-          aria-hidden
-          className="absolute inset-y-0 left-0 w-1.5 bg-[#FF6014]"
-        />
-        <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-7 space-y-3">
-            <div className="flex items-center gap-2 text-[#FF6014]">
-              <ShieldCheck size={18} aria-hidden />
-              <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-900">
-                Human-in-the-loop protocol
-              </span>
-            </div>
-            <h4 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-snug">
-              Strict code ownership &amp; zero-hallucination guarantee
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
-              AI serves strictly as an intelligent productivity multiplier and coding assistant. I maintain complete architectural responsibility, manual code inspection, security vulnerability auditing, and strict deterministic validation for every line of code deployed to production.
-            </p>
-
-            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-extrabold text-slate-800">
-              {["AI proposes", "I audit", "CI enforces"].map((label, i, arr) => (
-                <React.Fragment key={label}>
-                  <span className="rounded-lg border border-orange-200/80 bg-white px-3 py-1 text-slate-900 shadow-2xs">
-                    {label}
-                  </span>
-                  {i < arr.length - 1 && (
-                    <ArrowRight
-                      size={14}
-                      className="text-[#FF6014]"
-                      aria-hidden
-                    />
-                  )}
-                </React.Fragment>
+                  <span>{text}</span>
+                </motion.li>
               ))}
-            </div>
+            </ul>
           </div>
+        </motion.div>
 
-          <ul className="space-y-2.5 self-center lg:col-span-5">
-            {OWNERSHIP_CHECKS.map((text) => (
-              <li
-                key={text}
-                className="flex items-center gap-3 rounded-xl border border-orange-200/80 bg-white/90 px-4 py-3 text-xs sm:text-sm font-bold text-slate-900 shadow-2xs"
-              >
-                <CheckCircle2
-                  size={18}
-                  className="shrink-0 text-[#FF6014]"
-                  aria-hidden
-                />
-                <span>{text}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="mt-8 flex items-center justify-between gap-3 border-t border-slate-200 pt-5 text-[10px] text-slate-500">
+          <span className="flex items-center gap-2">
+            <span className="size-1.5 rounded-full bg-[#FF6014]" />
+            Built with intention
+          </span>
+          <span className="font-mono">PLAN → BUILD → VERIFY → SHIP</span>
         </div>
       </div>
     </section>

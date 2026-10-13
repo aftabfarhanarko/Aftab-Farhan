@@ -19,7 +19,6 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-
 type TypingLineProps = {
   text: string;
   style: CSSProperties;
@@ -38,44 +37,50 @@ function TypingLine({ text, style, delay, duration }: TypingLineProps) {
     const timeout = setTimeout(() => {
       setPhase("typing");
     }, delay);
+
     return () => clearTimeout(timeout);
   }, [delay]);
 
   useEffect(() => {
     if (phase === "typing") {
       if (displayed.length < text.length) {
-        const t = setTimeout(
+        const timeout = setTimeout(
           () => setDisplayed(text.slice(0, displayed.length + 1)),
           duration / text.length,
         );
-        return () => clearTimeout(t);
+
+        return () => clearTimeout(timeout);
       }
-      const t = setTimeout(() => setPhase("hold"), 3000);
-      return () => clearTimeout(t);
+
+      const timeout = setTimeout(() => setPhase("hold"), 3000);
+      return () => clearTimeout(timeout);
     }
 
     if (phase === "hold") {
-      const t = setTimeout(() => setPhase("erasing"), 1000);
-      return () => clearTimeout(t);
+      const timeout = setTimeout(() => setPhase("erasing"), 1000);
+      return () => clearTimeout(timeout);
     }
 
     if (phase === "erasing") {
       if (displayed.length > 0) {
-        const t = setTimeout(
+        const timeout = setTimeout(
           () => setDisplayed(displayed.slice(0, -1)),
           duration / (text.length * 2),
         );
-        return () => clearTimeout(t);
+
+        return () => clearTimeout(timeout);
       }
-      const t = setTimeout(() => setPhase("typing"), 500);
-      return () => clearTimeout(t);
+
+      const timeout = setTimeout(() => setPhase("typing"), 500);
+      return () => clearTimeout(timeout);
     }
   }, [displayed, phase, text, duration]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setShowCursor((prev) => !prev);
+      setShowCursor((previous) => !previous);
     }, 500);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -161,29 +166,29 @@ function AmbientTypingBackground({ isDark }: { isDark: boolean }) {
 
   return (
     <div
-      className="absolute inset-0 overflow-hidden pointer-events-none select-none"
+      className="pointer-events-none absolute inset-0 select-none overflow-hidden"
       style={{
         fontFamily: "'Bai Jamjuree', system-ui, sans-serif",
         fontSize: "11px",
       }}
     >
-      {snippets.map((s, i) => (
+      {snippets.map((snippet, index) => (
         <div
-          key={i}
+          key={index}
           className="absolute whitespace-nowrap"
-          style={{ top: s.top, left: s.left }}
+          style={{ top: snippet.top, left: snippet.left }}
         >
           <TypingLine
-            text={s.text}
-            delay={i * 350 + 200}
-            duration={s.text.length * 60}
+            text={snippet.text}
+            delay={index * 350 + 200}
+            duration={snippet.text.length * 60}
             style={{
               color: isDark
-                ? `rgba(134, 239, 172, ${s.opacity})`
-                : `rgba(22, 163, 74, ${s.opacity * 0.55})`,
+                ? `rgba(187, 247, 208, ${snippet.opacity})`
+                : `rgba(53, 74, 57, ${snippet.opacity * 0.58})`,
               textShadow: isDark
-                ? "0 0 10px rgba(22, 163, 74, 0.5)"
-                : "0 0 10px rgba(22, 163, 74, 0.18)",
+                ? "0 0 10px rgba(74, 222, 128, 0.38)"
+                : "0 0 10px rgba(87, 106, 69, 0.12)",
               letterSpacing: "0.03em",
             }}
           />
@@ -199,10 +204,16 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const gridLine = isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.06)";
+  const gridLine = isDark
+    ? "rgba(255,255,255,0.045)"
+    : "rgba(50,62,51,0.075)";
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    // Dashboard uses its own inner overflow-y-auto scroll container —
+    // Lenis must NOT run there or it will hijack scroll and break it.
+    if (isDashboard) return;
 
     window.scrollTo(0, 0);
 
@@ -241,11 +252,18 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
       lenis.destroy();
       gsap.ticker.remove(updateTicker);
     };
-  }, [pathname]);
+  }, [pathname, isDashboard]);
 
   return (
     <>
-      <div className="fixed inset-0 z-0 pointer-events-none">
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background: isDark
+            ? "linear-gradient(135deg, #101713 0%, #151d17 52%, #111713 100%)"
+            : "linear-gradient(135deg, #f7f5ef 0%, #f0efe7 52%, #f7f5ef 100%)",
+        }}
+      >
         <div
           className="absolute inset-0"
           style={{
@@ -260,13 +278,13 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
         <AmbientTypingBackground isDark={isDark} />
 
         <motion.div
-          className="absolute top-[-10%] left-[-10%] rounded-full blur-[120px]"
+          className="absolute left-[-10%] top-[-10%] rounded-full blur-[120px]"
           style={{
             width: "40%",
             height: "40%",
             background: isDark
               ? "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(0,0,0,0.04) 0%, transparent 70%)",
+              : "radial-gradient(circle, rgba(201,168,107,0.11) 0%, transparent 72%)",
           }}
           animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -279,7 +297,7 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
             height: "30%",
             background: isDark
               ? "radial-gradient(circle, rgba(22,163,74,0.15) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(22,163,74,0.10) 0%, transparent 70%)",
+              : "radial-gradient(circle, rgba(105,126,85,0.12) 0%, transparent 70%)",
           }}
           animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{
@@ -291,13 +309,13 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
         />
 
         <motion.div
-          className="absolute top-[20%] right-[10%] rounded-full blur-[80px]"
+          className="absolute right-[10%] top-[20%] rounded-full blur-[80px]"
           style={{
             width: "25%",
             height: "25%",
             background: isDark
               ? "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%)",
+              : "radial-gradient(circle, rgba(122,110,84,0.08) 0%, transparent 70%)",
           }}
           animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
           transition={{
@@ -313,13 +331,18 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
       <GlobalGSAPAnimations />
 
       <div id="smooth-wrapper" className="w-full">
-        <div id="smooth-content" className="w-full flex flex-col min-h-screen">
+        <div
+          id="smooth-content"
+          className="flex min-h-screen w-full flex-col"
+        >
           <QueryProvider>
             <ReduxProvider>
               <AnimatePresence mode="wait">
                 <motion.main
                   key={isDashboard ? "dashboard" : pathname}
-                  className={`flex-1 relative z-10 ${!isDashboard ? "pt-20" : ""}`}
+                  className={`relative z-10 flex-1 ${
+                    !isDashboard ? "pt-20" : ""
+                  }`}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
@@ -340,7 +363,11 @@ function RootLayoutClientInner({ children }: { children: ReactNode }) {
   );
 }
 
-export default function RootLayoutClient({ children }: { children: ReactNode }) {
+export default function RootLayoutClient({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <ThemeProvider>
       <RootLayoutClientInner>{children}</RootLayoutClientInner>
